@@ -532,8 +532,11 @@ package_select $selcat # select packages
 install_packages $selpkg # install packages
 
 # configure section
-conf_kernel_modules # run depmod, so that no problem with subfs
-chroot ./ /sbin/netconfig # configure network
+
+# run depmod, so that no problem with subfs
+conf_kernel_modules || leave "$confbacktitle"
+chroot ./ /sbin/netconfig || leave "$confbacktitle" # configure network
+chroot ./ /sbin/grubconfig || leave "$confbacktitle" # configure grub
 
 # end
 leave "$confbacktitle" "$endsetupt" "$endsetupd"
