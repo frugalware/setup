@@ -4,7 +4,7 @@ bindir=/root/programz/frugalware/frugalware-current/frugalware
 core=(glibc ncurses bash coreutils popt chkconfig)
 logdev=/dev/tty4
 
-### mkswap -c, clear
+### clear;mkswap
 
 # do NOT modify anything above this line
 
@@ -14,6 +14,9 @@ logdev=/dev/tty4
 # swap section
 swapparts=
 setswapbacktitle="$setswap - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
+
+# rootdev section
+prefstab=
 
 # packages section
 selcat=
@@ -51,13 +54,15 @@ selswappart()
 
 doswap ()
 {
+	[ -z "$prefstab" ] && prefstab=`mktemp`
+	printf "%-16s %-16s %-11s %-16s %-3s %s\n" "none" "/proc" "proc" "defaults" "0" "0" >>$prefstab
+	printf "%-16s %-16s %-11s %-16s %-3s %s\n" "none" "/sys" "sysfs" "defaults" "0" "0" >>$prefstab
+	printf "%-16s %-16s %-11s %-16s %-3s %s\n" "devpts" "/dev/pts" "devpts" "gid=5,mode=620" "0" "0" >>$prefstab
 	for i in $*
 	do
 		dialog --backtitle "$setswapbacktitle" --title "$formatpartst" --infobox "$formatpartsd1 $i $formatpartsd2" 0 0
 		echo mkswap -c $i >$logdev
-		sleep 4
-		[ -d etc/ ] || mkdir etc
-		printf "%-16s %-16s %-11s %-16s %-3s %s\n" "$i" "swap" "swap" "defaults" "0" "0" >>etc/fstab
+		printf "%-16s %-16s %-11s %-16s %-3s %s\n" "$i" "swap" "swap" "defaults" "0" "0" >>$prefstab
 	done
 }
 
