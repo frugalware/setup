@@ -640,7 +640,7 @@ install_packages()
 		( mkdir -p var/cache/pacman
 		  cd var/cache/pacman 
 		  [ -e pkg ] && rm pkg
-		  ln -s $pacbindir pkg )
+		  ln -sf $pacbindir pkg )
 	fi
 	pkginstall=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $pkginstall
