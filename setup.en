@@ -100,8 +100,8 @@ categorystring="Selecting categories"
 pkgstring="Selecting packages"
 instpkgstring="Installing packages"
 sect="section" #will be displaied like this: Installing packages (base section)
-pleaseselectcategories="Please select wich categories to install"
-pleaseselectpkgs="Please select wich packages to install"
+pleaseselectcategories="Please select which categories to install"
+pleaseselectpkgs="Please select which packages to install"
 
 neednextt="Insert next disc"
 neednextd="Please insert the next Frugalware install disc and press enter to continue installing packages."

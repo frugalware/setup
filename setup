@@ -462,6 +462,12 @@ pkgsize()
 	du -h $1 |sed 's/\([0-9\.]*[A-Za-z]\).*/\1/'
 }
 
+pkgdesc()
+{
+	descname=`echo $2|sed 's|.*/\(.*\).fpm|\1|'`
+	tar xzOf $1 $descname/desc|sed -ne '8 p'
+}
+
 category_search()
 {
 	dialog --backtitle "$categorysearchbacktitle" --infobox "$categorychk" 0 0
@@ -525,9 +531,11 @@ package_select_install()
 	repro=$1
 	shift
 	if [ "$repro" = "frugalware" ]; then
+		reponame="current"
 		pkglstf="$bindir/../Packages.lst"
 		pacbindir=$bindir
 	elif [ "$repro" = "extra" ]; then
+		reponame="extra"
 		pkglstf="$exbindir/../Packages.lst"
 		pacbindir=$exbindir
 	fi
@@ -558,7 +566,7 @@ package_select_install()
 		if [ "$repro" = "extra" ]; then
 			echo $i|egrep -q "$extrapkgs$locpkgs" || state=off
 		fi
-		echo -n "$i \"(`pkgsize $pacbindir/$i`)\" $state ">>$pkglstselect
+		echo -n "$i \"(`pkgdesc $pacbindir/$reponame.fdb $pacbindir/$i`, `pkgsize $pacbindir/$i`)\" $state ">>$pkglstselect
 	done
 	rm $prepkglst
 	$pkglstselect 2>$whichselected || leave "$selectpkgsbacktitle"
