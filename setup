@@ -38,6 +38,9 @@ categorysearchbacktitle=$selectcategoriesbacktitle
 pkgsearchbacktitle=$selectpkgsbacktitle
 installpkgsbacktitle="$instpkgstring - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
 
+# configure section
+confbacktitle="$confstring - FrugalWare `cat /etc/frugalware-release | cut -d ' ' -f 2` $setup"
+
 ### functions
 # selecting media section
 search_source()
@@ -100,7 +103,11 @@ selswappart()
 	fdisk -l|grep -q 'Linux swap$'
 	if [ "$?" != 0 ]; then
 		dialog --backtitle "$setswapbacktitle" --title "$noswaptitle" \
-			--yesno "$noswap" 0 0 || exit 1
+			--yesno "$noswap" 0 0
+		if [ "$?" != 0 ]; then
+			swapparts=""
+			return 1
+		fi
 	else
 		swapqfile=`mktemp /tmp/tmp.XXXXXX`
 		swapafile=`mktemp /tmp/tmp.XXXXXX`
@@ -160,7 +167,7 @@ selrootdev()
 	echo "--ok-label \"$select\" --menu \"$selrootdevd\" 0 0 0 \\">>$selrootpart
 	lstparts $selrootpart
 	echo "2>$rootpartf">>$selrootpart
-	$selrootpart || exit 1 # aborted when choosing root device
+	$selrootpart || leave "$rootdevbacktitle" # aborted when choosing root device
 	rm $selrootpart
 	rootdev=`cat $rootpartf`
 	rm $rootpartf
@@ -192,7 +199,7 @@ formatdev() # $1: which device
 	junk=`mktemp /tmp/tmp.XXXXXX`
 	dialog --backtitle "$miscdevbacktitle" --title "$formatpart $1" \
 	--menu "$wantformatq" 0 0 0 \
-	"$formatt" "$fromatd" "$checkt" "$checkd" "$nofromatt" "$noformatd" 2>$junk || exit 1 # aborted when choosing format mode
+	"$formatt" "$fromatd" "$checkt" "$checkd" "$nofromatt" "$noformatd" 2>$junk || leave "$miscdevbacktitle" # aborted when choosing format mode
 	howformat=`cat $junk`
 	rm $junk
 	if [ "$howformat" != "$nofromatt" ]; then
@@ -226,7 +233,7 @@ formatdev() # $1: which device
 			\"$xfsshortdesc\" \\" >>$selfsf
 		junk=`mktemp /tmp/tmp.XXXXXX`
 		echo "2>$junk">>$selfsf
-		$selfsf || exit 1 # aborted when choosing fs
+		$selfsf || leave "$miscdevbacktitle" # aborted when choosing fs
 		rm $selfsf
 		mkfss $1 `cat $junk` $howformat
 		rm $junk
@@ -375,7 +382,7 @@ category_select ()
 	do
 		echo -n "$i \"(`categorysize $i`)\" on ">>$selecttempfile
 	done
-	$selecttempfile 2>$whichselectedtempfile || exit 1
+	$selecttempfile 2>$whichselectedtempfile || leave "$selectcategoriesbacktitle"
 	rm $selecttempfile
 	for i in `cat $whichselectedtempfile`
 	do
@@ -411,7 +418,7 @@ package_select()
 		echo -n "$i \"(`pkgsize $bindir/$i`)\" on ">>$pkglstselect
 	done
 	rm $prepkglst
-	$pkglstselect 2>$whichselected || exit 1
+	$pkglstselect 2>$whichselected || leave "$selectpkgsbacktitle"
 	rm $pkglstselect
 	for i in `cat $whichselected`
 	do
@@ -458,9 +465,39 @@ install_packages()
 		info "$doneinstpkg"
 	else
 		info "$errinstpkg"
-		exit 1
+		sleep 1
+		leave "$errinstpkg"
 	fi
 	rm $pkginstall
+}
+
+# configure section
+
+conf_kernel_modules()
+{
+	dialog --backtitle "$confbacktitle" --title "$confkmodt" \
+		--aspect 20 --infobox "$confkmodd" 0 0
+	chroot ./ /sbin/depmod -a
+	sleep 1
+}
+
+leave() # $1: backtitle, $2: title, $3: text
+{
+	[ -z "$1" ] && return 1
+	[ -z "$2" ] && reboottitle="$ferrort" || reboottitle="$2"
+	[ -z "$3" ] && reboottext="$ferrord" || reboottext="$3"
+	dialog --aspect 20 --backtitle "$1" --title "$reboottitle" \
+	--yesno "$reboottext" 0 0
+	if [ "$?" = 0 ]; then
+		clear
+		/sbin/reboot
+		exit 0
+	else
+		clear
+		/bin/bash
+		/sbin/reboot
+		exit 0
+	fi
 }
 
 ### main
@@ -495,14 +532,8 @@ package_select $selcat # select packages
 install_packages $selpkg # install packages
 
 # configure section
-# these two have to move to a function, or better to move to a setup script
-echo kernel
-chroot ./ /sbin/depmod -a
-echo cups
-killall cupsd
-chroot ./ /usr/sbin/cupsd
-killall cupsd
-echo network
-chroot ./ /sbin/netconfig
-clear
-/bin/bash
+conf_kernel_modules # run depmod, so that no problem with subfs
+chroot ./ /sbin/netconfig # configure network
+
+# end
+leave "$confbacktitle" "$endsetupt" "$endsetupd"

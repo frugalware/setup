@@ -81,3 +81,15 @@ pleaseselectpkgs="Please select wich packages to install"
 instpkg="Installing selected packages"
 doneinstpkg="Done installing selected packages"
 errinstpkg="Errors occured while installing selected packages"
+
+# configure section
+confstring="Configuring the installed system"
+confkmodt="Configuring kernel modules"
+confkmodd="Updating module dependencies..."
+endsetupt="Setup complete"
+erebootd="If you want to do something special, hit no, and you will get a shell. Do you want to reboot your machine now?"
+endsetupd="System installation and configuration is complete. $erebootd"
+ferrort="Installation error"
+ferrord="There was a fatal error during installation. $erebootd"
+
+# vim: ft=sh
