@@ -5,6 +5,5 @@ clear
 mount -t ramfs none /tmp
 cat /proc/mounts >/etc/mtab
 modprobe iso9660
-# lang&keyb
 
 # vim: ft=sh

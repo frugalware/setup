@@ -4,11 +4,74 @@ greetstring="Köszöntjük a Frugalware felhasználóinak táborában!\n\n \
 A Frugalware létrehozásával munkájának gyorsabbá és egyszerûbbé tétele volt a célunk. Reméljük, hogy kedvelni fogja termékünket! \n\n \
 A Frugalware készítõi\n "
 
+# keyboard section
+kbdconf="A billentyûzet beállítása"
+selmapt="A billentyûzetkiosztás beállítása"
+selmapd="Kiválaszthat egyet a következõ billentyûzetkiosztásokból. Ha egyet sem választ ki, a 'qwerty/us.map.gz' (az amerika kiosztás) lesz az alapértelmezett. Használja a fel/le nyilakat ill. a PageUp/PageDown-t hogy a teljes listát megtekintse."
+
 # selecting media section
 searchmedia="A telepítési forrás kiválasztása"
 scanmediat="Keresés"
 scanmediad="A Frugalware telepítõ lemezt tartalmazó CD/DVD meghajtó keresése..."
 mediafoundt="Megtalált CD/DVD meghajtó"
 mediafoundd="Frugalware telepítõ lemez a következõ eszközön:"
+
+# partitioning section
+partitioning="A partíciók létrehozása"
+selppt="A partícionáló program kiválasztása"
+selppd="Válassza ki, hogy melyik programot kívánja használni a partícionáláshoz."
+selhdt="A merevlemez kiválasztása"
+selhdd="Válassza ki a partícionálni kívánt merevlemezt. A következõ lemezek lehetségesek:"
+fdiskd="A hagyományos partícionáló program Linux alá"
+cfdiskd="Felhasználóbarát (curses alapú) verziója az fdisknek"
+
+# swap section
+setswap="A swap beállítása"
+noswaptitle="Nincs swap partíció"
+noswap="Nem hozott létre swap partíciót. Folytatni kívánja a telepítést swap partíció nélkül?"
+detectedswapt="Swap partíciók érzékelve"
+detectedswapd="Kérem válassza ki, hogy mely swap partíciókat használhatja a Frugalware:"
+formatpartst="A swap partíció formázása"
+formatpartsd1="Formázás"
+formatpartsd2="swap partícióként, és a bad blockok keresése"
+
+# rootdev section
+rootdevstring="A root partíció beállítása"
+miscdevstring="A partíciók beállítása"
+selrootdevt="A Linux telepítési partíciójának kiválasztása"
+select="Kiválasztás"
+continue="Folytatás"
+selrootdevd="Kérem válasszon ki egy partíciót a következõ listából, melyet root (/) partícióként kíván használni."
+formatpart="Partíció formázása"
+wantformatq="Ha a partíció még nincs megformázva, akkor meg kell formáznia. \n MEGJEGYZÉS: Ez az összes adatot törölni fogja a partíción. Meg kívánja formázni ezt a partíciót?"
+formatt="Formázás"
+fromatd="Gyors formázás bad block keresés nélkül"
+checkt="Check"
+checkd="Lassú formázás bad block kereséssel"
+nofromatt="Nincs"
+noformatd="Nem, ne formázza ezt a partíciót"
+ext2predesc="Az ext2 a hagyományos fájlrendszer, gyors és stabil.\n"
+reiserpredesc="A reiserfs egy naplózó fájlrendszer, a fájlokat és könyvtárakat egy kiegyensúlyozott fa-struktúrában tárolja.\n"
+ext3predesc="Az ext3 az ext2 fájlrendszer naplózó változata.\n"
+jfspredesc="A jfs az IBM's naplózó fájlrendszere, fõként IBS enterprise szervereken használják.\n"
+xfspredesc="az xfs az SGI naplózó fájlrendszere, az IRIXhez lett létrehozva.\n"
+selectfst="Fájlrendszer kiválasztása:"
+selectfsd="Kérem válasszon fájlrendszert az adott eszköznek. Itt talál leírásokat az elérhetõ fájlrendszerekhez:\n"
+ext2shortdesc="Normál Linux ext2fs fájlrendszer"
+reisershortdesc="Hans Reiser naplózó fájlrendszere"
+ext3shortdesc="Az ext2fs naplózó verziója"
+jfsshortdesc="Az IBM naplózó fáljrendszere"
+xfsshortdesc="Az SGI naplózó fáljrendszere"
+duringformatt="Formázás"
+formatdevicestring="Formázott eszköz:"
+formatfsstring="Fájlrendszer:"
+
+# linux partitions section
+
+sellinuxpartst="Egyéb LinuxLinux partíciók beállítása a /etc/fstab-ban"
+sellinuxpartsd="Úgy néz ki, hogy több Linux partíciója van. Felhasználhatja ezeket arra, hogy Linux rendszere több partícióra legyen telepítve. Jelenleg csak a / partíció van csatolva. Külön partícióra tehet könyvtárakat a partíciók például /home vagy /usr/local-ba való csatolásával. Ne próbálja a /etc-t, /sbin-t vagy a /bin-t külön partícióra tenni, mivel olyan eszközöket tartalmaznak, amik pont a rendszer indulásához, és a partíciók csatolásához szükségesek. Szintén figyeljen, hogy két partíciót ne csatoljon egy helyre. Kérem válasszon ki egyet az alább listázott Linux partíciók közül, majd ha végzett, válassza a <$continue>-t."
+inuse="használatban"
+askwherelt="Csatolási pont kiválasztása a következõnek:"
+askwhereld="Ki kell válassza, hogy a partíciót hova kívánja csatolni. Például ha a /home-ba akarja csatolni, írja be, hogy /home.\n\n Hova kívánja csatolni ezt a partíciót?"
 
 # vim: ft=sh

@@ -1,15 +1,17 @@
-#!/bin/bash
+#!/bin/sh
 
 ### constants
 osver=`cat /etc/frugalware-release |cut -d ' ' -f 2`
 . setup.en
 bindir=/mnt/source/frugalware
+exbindir=/mnt/source/extra/frugalware
 target=/mnt/target
 core="bash coreutils chkconfig frugalware grep sed"
+extrapkgs="k3b-i18n"
 logdev=/dev/tty4
 
 ### before strings
-function ask_lang()
+ask_lang()
 {
 	langbacktitle="$sellang - Frugalware $osver $setup"
 	langf=`mktemp /tmp/tmp.XXXXXX`
@@ -67,7 +69,7 @@ confbacktitle="$confstring - Frugalware $osver $setup"
 
 ### functions
 # greeting section
-function dolangsh()
+dolangsh()
 {
 	cat << EOF > /tmp/lang.sh
 #!/bin/sh
@@ -83,7 +85,7 @@ export CHARSET=$CHARSET
 EOF
 }
 
-function greet()
+greet()
 {
 	dialog --backtitle "$welcomebacktitle" \
 		--title "$welcome" --aspect 20 \
@@ -91,7 +93,7 @@ function greet()
 }
 
 # keyboard section
-function ask_map()
+ask_map()
 {
 	selmap=`mktemp /tmp/tmp.XXXXXX`
 	selmapf=`mktemp /tmp/tmp.XXXXXX`
@@ -111,7 +113,7 @@ function ask_map()
 	map=`echo $mapfile|sed 's|^.*/\(.*\).map.gz$|\1|'`
 }
 
-function set_keymap()
+set_keymap()
 {
 	if ! ask_map; then
 		mapfile=/usr/share/kbd/keymaps/i386/qwerty/us.map.gz
@@ -137,12 +139,13 @@ search_source()
 	
 	for i in `cat /proc/sys/dev/cdrom/info |grep name`
 	do
-		[ "$i" == "drive" -o "$i" == "name:" ] && continue
+		[ "$i" = "drive" -o "$i" = "name:" ] && continue
 		mount -o ro -t iso9660 /dev/$i $sourcedir 1>$logdev 2>&1
-		if [ "$?" == 0 ]; then
+		if [ "$?" = 0 ]; then
 			dialog --aspect 20 --backtitle "$mediabacktitle" \
 				--title "$mediafoundt" \
 				--infobox "$mediafoundd $i." 0 0
+			srcdev=$i
 			break
 		fi
 	done
@@ -428,12 +431,21 @@ info()
 
 categorysize ()
 {
+	repro=$1
+	shift
+	if [ "$repro" = "frugalware" ]; then
+		pkglstf="$bindir/../Packages.lst"
+		pacbindir=$bindir
+	elif [ "$repro" = "extra" ]; then
+		pkglstf="$exbindir/../Packages.lst"
+		pacbindir=$exbindir
+	fi
 	categorytempfile=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $categorytempfile
 	echo -n "( du -ch ">$categorytempfile
-	for i in `cat $bindir/../Packages.lst |grep ^$1|sed 's|.*/\(.*\)|\1|'`
+	for i in `cat $pkglstf |grep ^$1|sed 's|.*/\(.*\)|\1|'`
 	do
-		echo -n "$bindir/$i ">>$categorytempfile
+		echo -n "$pacbindir/$i ">>$categorytempfile
 	done
 	echo ") |tail -n 1 |sed 's/\([0-9\.]*[A-Za-z]\).*/\1/'" >>$categorytempfile
 	echo `$categorytempfile`
@@ -457,15 +469,29 @@ pkg_search()
 category_select ()
 {
 	category_search
+	repro=$1
+	if [ "$repro" = "frugalware" ]; then
+		pkglstf="$bindir/../Packages.lst"
+		pacbindir=$bindir
+	elif [ "$repro" = "extra" ]; then
+		pkglstf="$exbindir/../Packages.lst"
+		pacbindir=$exbindir
+	fi
 	selecttempfile=`mktemp /tmp/tmp.XXXXXX`
 	whichselectedtempfile=`mktemp /tmp/tmp.XXXXXX`
 	whichselectedtempfile2=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $selecttempfile
 	echo -n "dialog --backtitle \"$selectcategoriesbacktitle\" --title \"$categorystring\" --checklist \"$pleaseselectcategories\" 0 0 0 " >$selecttempfile
-	categories=`cat $bindir/../Packages.lst|sed 's|\(.*\)/.*|\1|'|sort|uniq`
+	categories=`cat $pkglstf|sed 's|\(.*\)/.*|\1|'|sort|uniq`
 	for i in $categories
 	do
-		echo -n "$i \"(`categorysize $i`)\" on ">>$selecttempfile
+		state=on
+		if [ "$repro" = "extra" ]; then
+			if [ "$i" != "locale" ]; then
+				state=off
+			fi
+		fi
+		echo -n "$i \"(`categorysize $repro $i`)\" $state ">>$selecttempfile
 	done
 	$selecttempfile 2>$whichselectedtempfile || leave "$selectcategoriesbacktitle"
 	rm $selecttempfile
@@ -478,13 +504,30 @@ category_select ()
 	rm $whichselectedtempfile2
 }
 
+gen_locpkgs()
+{
+	for i in `ls $exbindir|grep $language|sed 's/\(.*\)-[0-9].*-[0-9].*fpm/\1/'`
+	do
+		echo -n "|$i"
+	done
+}
+
 package_select_install()
 {
+	repro=$1
+	shift
+	if [ "$repro" = "frugalware" ]; then
+		pkglstf="$bindir/../Packages.lst"
+		pacbindir=$bindir
+	elif [ "$repro" = "extra" ]; then
+		pkglstf="$exbindir/../Packages.lst"
+		pacbindir=$exbindir
+	fi
 	pkg_search
 	printpkgtemp=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $printpkgtemp
 	prepkglst=`mktemp /tmp/tmp.XXXXXX`
-	echo -n "cat $bindir/../Packages.lst |egrep ' " >$printpkgtemp
+	echo -n "cat $pkglstf |egrep ' " >$printpkgtemp
 	for i in $*
 	do
 		echo -n "|^$i" >>$printpkgtemp
@@ -498,9 +541,16 @@ package_select_install()
 	whichselected3=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $pkglstselect
 	echo -n "dialog --backtitle \"$selectpkgsbacktitle\" --title \"$pkgstring\" --checklist \"$pleaseselectpkgs\" 0 0 0 " >$pkglstselect
+	if [ "$repro" = "extra" ]; then
+		locpkgs=`gen_locpkgs`
+	fi
 	for i in `cat $prepkglst`
 	do
-		echo -n "$i \"(`pkgsize $bindir/$i`)\" on ">>$pkglstselect
+		state=on
+		if [ "$repro" = "extra" ]; then
+			echo $i|egrep -q "$extrapkgs$locpkgs" || state=off
+		fi
+		echo -n "$i \"(`pkgsize $pacbindir/$i`)\" $state ">>$pkglstselect
 	done
 	rm $prepkglst
 	$pkglstselect 2>$whichselected || leave "$selectpkgsbacktitle"
@@ -523,48 +573,69 @@ package_select_install()
 	mkdir -p /tmp/pkgcat
 	for i in $allselpkg
 	do
-		icategory=`grep "/$i-[0-9]" $bindir/../Packages.lst |sed 's|^\(.*\)/.*$|\1|'`
+		icategory=`grep "/$i-[0-9]" $pkglstf |sed 's|^\(.*\)/.*$|\1|'`
 		echo -n "$i ">>/tmp/pkgcat/$icategory
 		
 	done
 	clear
-	for i in base apps lib multimedia network
-	do
-		if [ -e /tmp/pkgcat/$i ]; then
-			selpkg=`cat /tmp/pkgcat/$i`
-			install_packages `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
-		fi
-	done
-	#TODO: eject cd, etc
-	clear
-	for i in x11 xlib xapps gnome kde devel
-	do
-		if [ -e /tmp/pkgcat/$i ]; then
-			selpkg=`cat /tmp/pkgcat/$i`
-			install_packages `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
-		fi
-	done
+	if [ "$repro" = "frugalware" ]; then
+		for i in base apps lib multimedia network
+		do
+			if [ -e /tmp/pkgcat/$i ]; then
+				selpkg=`cat /tmp/pkgcat/$i`
+				install_packages $repro `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
+			fi
+		done
+		#TODO: eject cd, etc
+		clear
+		for i in x11 xlib xapps gnome kde devel
+		do
+			if [ -e /tmp/pkgcat/$i ]; then
+				selpkg=`cat /tmp/pkgcat/$i`
+				install_packages $repro `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
+			fi
+		done
+	elif [ "$repro" = "extra" ]; then
+		for i in $*
+		do
+			if [ -e /tmp/pkgcat/$i ]; then
+				selpkg=`cat /tmp/pkgcat/$i`
+				install_packages $repro `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
+			fi
+		done
+		[ -h var/cache/pacman/pkg ] && rm var/cache/pacman/pkg
+	fi
 	rm -rf /tmp/pkgcat
-	[ -h var/cache/pacman/pkg ] && rm var/cache/pacman/pkg
 }
 
 install_packages()
 {
+	repro=$1
+	if [ "$repro" = "frugalware" ]; then
+		reproname="current"
+		pkglstf="$bindir/../Packages.lst"
+		pacbindir=$bindir
+	elif [ "$repro" = "extra" ]; then
+		reproname="extra"
+		pkglstf="$exbindir/../Packages.lst"
+		pacbindir=$exbindir
+	fi
+	shift
 	name=$1
-	[ "$name" == "base" ] && extrapkg="$core" || extrapkg=""
+	[ "$name" = "base" ] && extrapkg="$core" || extrapkg=""
 	shift
 	# preparing pkgdb
 	info "$instpkg ($name $sect)"
-	if ! [ -d tmp ]; then
-		mkdir tmp
-		( mkdir -p var/lib/pacman/current
-		  cd var/lib/pacman/current
-		  tar xzf $bindir/current.fdb )
-		echo "[current]" >/etc/pacman.conf
-		echo "Server = file://$bindir" >>/etc/pacman.conf
+	if ! [ -d var/lib/pacman/$reproname ]; then
+		[ -d tmp ] || mkdir tmp
+		( mkdir -p var/lib/pacman/$reproname
+		  cd var/lib/pacman/$reproname
+		  tar xzf $pacbindir/$reproname.fdb )
+		echo "[$reproname]" >>/etc/pacman.conf
+		echo "Server = file://$pacbindir" >>/etc/pacman.conf
 		( mkdir -p var/cache/pacman
 		  cd var/cache/pacman 
-		  ln -s $bindir pkg )
+		  ln -sf $pacbindir pkg )
 	fi
 	pkginstall=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $pkginstall
@@ -576,7 +647,7 @@ install_packages()
 	# we will leave setup if errors occured: no way to configure a
 	# not-installed system ;-)
 	$pkginstall
-	if [ "$?" == 0 ]; then
+	if [ "$?" = 0 ]; then
 		info "$doneinstpkg ($name $sect)"
 	else
 		info "$errinstpkg"
@@ -584,6 +655,24 @@ install_packages()
 		leave "$errinstpkg"
 	fi
 	rm $pkginstall
+}
+
+cd_change()
+{
+	umount /mnt/source
+	$target/usr/bin/eject $srcdev
+	nextf=`mktemp /tmp/tmp.XXXXXX`
+	dialog --backtitle "$installpkgsbacktitle" --title "$neednextt" \
+		--aspect 20 --menu "$neednextd" 0 0 0 \
+		"$continue" "$continued" "$quit" "$quitd" 2>$nextf \
+		|| echo "$quit" >$nextf
+	next=`cat $nextf`
+	rm $nextf
+	if [ "$next" = "$quit" ]; then
+		return 1
+	else
+		search_source
+	fi
 }
 
 # configure section
@@ -602,7 +691,7 @@ conf_passwd()
 	while [ -z "`cat etc/shadow |grep ^root |cut -d : -f 2`" ]; do
 		dialog --backtitle "$confbacktitle" --title "$nopasswdt" \
 			--aspect 20 --yesno "$nopasswdd" 0 0
-		if [ $? == 0 ]; then
+		if [ $? = 0 ]; then
 			clear
 			chroot ./ /usr/bin/passwd root
 		else
@@ -614,7 +703,7 @@ conf_passwd()
 	while ! grep -q :100: etc/passwd; do
 		dialog --backtitle "$confbacktitle" --title "$nonormalusert" \
 			--aspect 20 --yesno "$nonormaluserd" 0 0
-		if [ $? == 0 ]; then
+		if [ $? = 0 ]; then
 			clear
 			chroot ./ /usr/sbin/adduser
 		else
@@ -636,7 +725,7 @@ leave() # $1: backtitle, $2: title, $3: text
 		exit 0
 	else
 		clear
-		/bin/bash
+		/bin/sh
 		/sbin/reboot
 		exit 0
 	fi
@@ -677,12 +766,11 @@ setup_linux
 # dos partitions section
 setup_dos
 
-# packages section
+# packages section, installation
 cd $target
-category_select # selected categories now in $selcat
-package_select_install $selcat # select and install packages
-# we do'nt call install_packages directly, package_select_install will do that
-# install_packages $selpkg # install packages
+category_select frugalware # selected categories now in $selcat
+package_select_install frugalware $selcat # select and install base packages
+cd_change && category_select extra && package_select_install extra $selcat
 
 # configure section
 

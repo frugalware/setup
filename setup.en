@@ -102,6 +102,13 @@ instpkgstring="Installing packages"
 sect="section" #will be displaied like this: Installing packages (base section)
 pleaseselectcategories="Please select wich categories to install"
 pleaseselectpkgs="Please select wich packages to install"
+
+neednextt="Insert next disc"
+neednextd="Please insert the next Frugalware install disc and press enter to continue installing packages."
+continued="Install packages from the next disc"
+quit="Quit"
+quitd="Quit installing packages and finish up"
+
 instpkg="Installing selected packages"
 doneinstpkg="Done installing selected packages"
 errinstpkg="Errors occured while installing selected packages"
