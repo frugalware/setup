@@ -243,8 +243,18 @@ doswap ()
 	printf "%-16s %-16s %-11s %-16s %-3s %s\n" "devpts" "/dev/pts" "devpts" "gid=5,mode=620" "0" "0" >>$prefstab
 	for i in $*
 	do
+		junk=`mktemp /tmp/tmp.XXXXXX`
+		dialog --backtitle "$setswapbacktitle" --title "$formatpart $1" \
+		--menu "$wantformatq" 0 0 0 \
+		"$formatt" "$fromatd" "$checkt" "$checkd" "$nofromatt" "$noformatd" 2>$junk || leave "$setswapbacktitle"
+		howformat=`cat $junk`
+		rm $junk
 		dialog --backtitle "$setswapbacktitle" --title "$formatpartst" --infobox "$formatpartsd1 $i $formatpartsd2" 0 0
-		mkswap -c $i >$logdev
+		if [ "$howformat" = "$formatt" ]; then
+			mkswap $i >$logdev
+		elif [ "$howformat" = "$checkt" ]; then
+			mkswap -c $i >$logdev
+		fi
 		swapon $i >$logdev
 		printf "%-16s %-16s %-11s %-16s %-3s %s\n" "$i" "swap" "swap" "defaults" "0" "0" >>$prefstab
 	done
