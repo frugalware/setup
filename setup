@@ -442,6 +442,7 @@ package_select_install()
 		echo -n "$i ">>/tmp/pkgcat/$icategory
 		
 	done
+	clear
 	for i in base apps lib multimedia network
 	do
 		if [ -e /tmp/pkgcat/$i ]; then
@@ -450,6 +451,7 @@ package_select_install()
 		fi
 	done
 	#TODO: eject cd, etc
+	clear
 	for i in x11 xlib xapps kde gnome devel
 	do
 		if [ -e /tmp/pkgcat/$i ]; then
@@ -463,8 +465,8 @@ package_select_install()
 
 install_packages()
 {
-	clear
 	name=$1
+	[ "$name" == "base" ] && extrapkg="$core" || extrapkg=""
 	shift
 	# preparing pkgdb
 	info "$instpkg ($name $sect)"
