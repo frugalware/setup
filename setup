@@ -66,7 +66,7 @@ installpkgsbacktitle="$instpkgstring - Frugalware $osver $setup"
 confbacktitle="$confstring - Frugalware $osver $setup"
 
 ### functions
-# greeing section
+# greeting section
 function dolangsh()
 {
 	cat << EOF > /tmp/lang.sh
@@ -661,6 +661,7 @@ package_select_install $selcat # select and install packages
 
 # run depmod, so that no problem with subfs
 conf_kernel_modules || leave "$confbacktitle"
+echo "font=$font" >>$target/etc/sysconfig/font # save the console font
 chroot ./ /sbin/netconfig || leave "$confbacktitle" # configure network
 chroot ./ /sbin/grubconfig || leave "$confbacktitle" # configure grub
 pacman -r /mnt/target -Q xorg &>/dev/null && chroot ./ /sbin/xconfig # conf x
