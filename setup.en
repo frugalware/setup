@@ -110,6 +110,13 @@ errinstpkg="Errors occured while installing selected packages"
 confstring="Configuring the installed system"
 confkmodt="Configuring kernel modules"
 confkmodd="Updating module dependencies..."
+
+nopasswdt="No root password detected"
+nopasswdd="There is currently no password set on the system administrator account (root). It is recommended that you set one now so that it is active the first time the machine is rebooted.  This is especially important if you're using a network enabled kernel and the machine is on an internet connected lan.  Would you like to set a root password?"
+
+nonormalusert="No normal user account detected"
+nonormaluserd="There is currently no non-root user account configured. It is strongly recommended to create one. Would you like to create a normal user now?"
+
 endsetupt="Setup complete"
 erebootd="If you want to do something special, hit no, and you will get a shell. Do you want to reboot your machine now?"
 endsetupd="System installation and configuration is successfully completed. We hope that Frugalware $osver will take you content. $erebootd"

@@ -596,6 +596,33 @@ conf_kernel_modules()
 	sleep 1
 }
 
+conf_passwd()
+{
+	# root
+	while [ -z "`cat etc/shadow |grep ^root |cut -d : -f 2`" ]; do
+		dialog --backtitle "$confbacktitle" --title "$nopasswdt" \
+			--aspect 20 --yesno "$nopasswdd" 0 0
+		if [ $? == 0 ]; then
+			clear
+			chroot ./ /usr/bin/passwd root
+		else
+			break;
+		fi
+	done
+	
+	# create a normal user
+	while ! grep -q :100: etc/passwd; do
+		dialog --backtitle "$confbacktitle" --title "$nonormalusert" \
+			--aspect 20 --yesno "$nonormaluserd" 0 0
+		if [ $? == 0 ]; then
+			clear
+			chroot ./ /usr/sbin/adduser
+		else
+			break;
+		fi
+	done
+}
+
 leave() # $1: backtitle, $2: title, $3: text
 {
 	[ -z "$1" ] && return 1
@@ -661,6 +688,7 @@ package_select_install $selcat # select and install packages
 
 # run depmod, so that no problem with subfs
 conf_kernel_modules || leave "$confbacktitle"
+conf_passwd || leave "$confbacktitle"
 echo "font=$font" >>$target/etc/sysconfig/font # save the console font
 chroot ./ /sbin/netconfig || leave "$confbacktitle" # configure network
 chroot ./ /sbin/grubconfig || leave "$confbacktitle" # configure grub
