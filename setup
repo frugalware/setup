@@ -483,7 +483,7 @@ install_packages()
 	fi
 	pkginstall=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $pkginstall
-	echo -n "pacman -S -r ./ --noconfirm $core ">$pkginstall
+	echo -n "pacman -S -r ./ --noconfirm $extrapkg ">$pkginstall
 	for i in $*
 	do
 		echo -n "$i ">>$pkginstall
