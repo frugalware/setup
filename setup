@@ -350,7 +350,7 @@ categorysize ()
 	do
 		echo -n "$bindir/$i ">>$categorytempfile
 	done
-	echo ") |tail -1 |sed 's/\([0-9\.]*[A-Za-z]\).*/\1/'" >>$categorytempfile
+	echo ") |tail -n 1 |sed 's/\([0-9\.]*[A-Za-z]\).*/\1/'" >>$categorytempfile
 	echo `$categorytempfile`
 	rm $categorytempfile
 }
@@ -393,7 +393,7 @@ category_select ()
 	rm $whichselectedtempfile2
 }
 
-package_select()
+package_select_install()
 {
 	pkg_search
 	printpkgtemp=`mktemp /tmp/tmp.XXXXXX`
@@ -431,15 +431,43 @@ package_select()
 			>>$whichselected3
 	done
 	rm $whichselected2
-	selpkg=`cat $whichselected3`
+	allselpkg=`cat $whichselected3`
 	rm $whichselected3
+	
+	rm -rf /tmp/pkgcat
+	mkdir -p /tmp/pkgcat
+	for i in $allselpkg
+	do
+		icategory=`grep "/$i-[0-9]" $bindir/../Packages.lst |sed 's|^\(.*\)/.*$|\1|'`
+		echo -n "$i ">>/tmp/pkgcat/$icategory
+		
+	done
+	for i in base apps lib multimedia network
+	do
+		if [ -e /tmp/pkgcat/$i ]; then
+			selpkg=`cat /tmp/pkgcat/$i`
+			install_packages `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
+		fi
+	done
+	#TODO: eject cd, etc
+	for i in x11 xlib xapps kde gnome devel
+	do
+		if [ -e /tmp/pkgcat/$i ]; then
+			selpkg=`cat /tmp/pkgcat/$i`
+			install_packages `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
+		fi
+	done
+	rm -rf /tmp/pkgcat
+	[ -h var/cache/pacman/pkg ] && rm var/cache/pacman/pkg
 }
 
 install_packages()
 {
 	clear
+	name=$1
+	shift
 	# preparing pkgdb
-	info "$instpkg"
+	info "$instpkg ($name $sect)"
 	if ! [ -d tmp ]; then
 		mkdir tmp
 		( mkdir -p var/lib/pacman/current
@@ -462,14 +490,13 @@ install_packages()
 	# not-installed system ;-)
 	$pkginstall
 	if [ "$?" == 0 ]; then
-		info "$doneinstpkg"
+		info "$doneinstpkg ($name $sect)"
 	else
 		info "$errinstpkg"
 		sleep 5
 		leave "$errinstpkg"
 	fi
 	rm $pkginstall
-	[ -h var/cache/pacman/pkg ] && rm var/cache/pacman/pkg
 }
 
 # configure section
@@ -529,8 +556,9 @@ setup_dos
 # packages section
 cd $target
 category_select # selected categories now in $selcat
-package_select $selcat # select packages
-install_packages $selpkg # install packages
+package_select_install $selcat # select and install packages
+# we do'nt call install_packages directly, package_select_install will do that
+# install_packages $selpkg # install packages
 
 # configure section
 

@@ -76,6 +76,7 @@ pkgchk="Searching for packages. Please wait..."
 categorystring="Selecting categories"
 pkgstring="Selecting packages"
 instpkgstring="Installing packages"
+sect="section" #will be displaied like this: Installing packages (base section)
 pleaseselectcategories="Please select wich categories to install"
 pleaseselectpkgs="Please select wich packages to install"
 instpkg="Installing selected packages"
