@@ -664,6 +664,7 @@ conf_kernel_modules || leave "$confbacktitle"
 echo "font=$font" >>$target/etc/sysconfig/font # save the console font
 chroot ./ /sbin/netconfig || leave "$confbacktitle" # configure network
 chroot ./ /sbin/grubconfig || leave "$confbacktitle" # configure grub
+chroot ./ /sbin/mouseconfig || leave "$confbacktitle" # configure gpm
 pacman -r /mnt/target -Q xorg &>/dev/null && chroot ./ /sbin/xconfig # conf x
 
 # end
