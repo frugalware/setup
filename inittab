@@ -1,0 +1,19 @@
+# /etc/inittab for frugalware setup
+# Boot-time system configuration/initialization script.
+# This is run first except when booting in single-user mode.
+::sysinit:/etc/rc.d/rc.S
+
+# Login /bin/sh invocations on selected ttys.
+#
+# Start the setup on the console
+::respawn:-/bin/setup
+# Start an "askfirst" shell on tty2 and tty3
+tty2::askfirst:-/bin/sh
+tty3::askfirst:-/bin/sh
+
+# Reboot when ctrl-alt-del keys are pressed. 
+::ctrlaltdel:/sbin/reboot 
+
+# Stuff to do before halting or rebooting.
+::shutdown:/sbin/swapoff -a >/dev/null 2>&1 
+::shutdown:/bin/umount -a -r >/dev/null 2>&1 

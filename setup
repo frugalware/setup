@@ -1,47 +1,90 @@
 #!/bin/bash
 
-. setup.en
-
 ### constants
+. setup.en
+osver=`cat /etc/frugalware-release |cut -d ' ' -f 2`
 bindir=/mnt/source/frugalware
 target=/mnt/target
 core="bash coreutils chkconfig frugalware grep sed"
 logdev=/dev/tty4
 
-### strings 
+### before strings
+function ask_lang()
+{
+	langbacktitle="$sellang - Frugalware $osver $setup"
+	langf=`mktemp /tmp/tmp.XXXXXX`
+	dialog --backtitle "$langbacktitle" --title "$sellangt" \
+		--aspect 20 --menu "$sellangd" 0 0 0 \
+		"en" "$end" "de" "$ded" "it" "$itd" "hu" "$hud" \
+		2>$langf || exit 1
+	language=`cat $langf`
+	rm $langf
+}				
+
+ask_lang
+. $language.conf
+. setup.$language
+
+### strings
+# greeing section
+welcomebacktitle="$welcome Frugalware $osver $setup"
 # slecting media section
-mediabacktitle="$searchmedia - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
+mediabacktitle="$searchmedia - Frugalware $osver $setup"
 
 # partitioning section
-partitioningbacktitle="$partitioning - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
+partitioningbacktitle="$partitioning - Frugalware $osver $setup"
 
 # swap section
 swapparts=
-setswapbacktitle="$setswap - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
+setswapbacktitle="$setswap - Frugalware $osver $setup"
 
 # rootdev section
 prefstab=
-rootdevbacktitle="$rootdevstring - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
+rootdevbacktitle="$rootdevstring - Frugalware $osver $setup"
 
 # linux partitions section
 towhere=
-miscdevbacktitle="$miscdevstring - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
+miscdevbacktitle="$miscdevstring - Frugalware $osver $setup"
 
 # packages section
 selcat=
 selpkg=
 instlog=
 yesdeps=
-selectcategoriesbacktitle="$categorystring - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
-selectpkgsbacktitle="$pkgstring - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
+selectcategoriesbacktitle="$categorystring - Frugalware $osver $setup"
+selectpkgsbacktitle="$pkgstring - Frugalware $osver $setup"
 categorysearchbacktitle=$selectcategoriesbacktitle
 pkgsearchbacktitle=$selectpkgsbacktitle
-installpkgsbacktitle="$instpkgstring - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
+installpkgsbacktitle="$instpkgstring - Frugalware $osver $setup"
 
 # configure section
-confbacktitle="$confstring - FrugalWare `cat /etc/frugalware-release | cut -d ' ' -f 2` $setup"
+confbacktitle="$confstring - Frugalware $osver $setup"
 
 ### functions
+# greeing section
+function dolangsh()
+{
+	cat << EOF > /tmp/lang.sh
+#!/bin/sh
+
+# /etc/profile.d/lang.sh
+
+# Set the system locale
+# For a list of locales which are supported by this machine, type: locale -a
+
+export LANG=$LANG
+export LC_ALL=\$LANG
+export CHARSET=$CHARSET
+EOF
+}
+
+function greet()
+{
+	dialog --backtitle "$welcomebacktitle" \
+		--title "$welcome Frugalware $osver" --aspect 20 \
+		--msgbox "$greetstring" 0 0
+}
+
 # selecting media section
 search_source()
 {
@@ -531,6 +574,9 @@ leave() # $1: backtitle, $2: title, $3: text
 }
 
 ### main
+# greeting section
+dolangsh # creates /tmp/lang.sh
+greet
 # selecting media section
 search_source # now the cd/dvd is mounted on /mnt/source
 
@@ -545,8 +591,9 @@ doswap $swapparts # format selected partitions
 selrootdev #root device now in $rootdev
 formatdev $rootdev
 mountdev $rootdev /
-[ -d $target/etc ] || mkdir $target/etc
+[ -d $target/etc/profile.d ] || mkdir -p $target/etc/profile.d
 mv -f $prefstab $target/etc/fstab
+mf -f /tmp/lang.sh $target/etc/profile.d/lang.sh
 prefstab=$target/etc/fstab
 
 # linux partitions section

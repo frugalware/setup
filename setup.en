@@ -1,5 +1,21 @@
 setup="Setup"
 
+# selecting language section - it's NO good translating this section
+sellang="Selecting language"
+sellangt="Please select your language"
+sellangd="Please select your language from the list. If your language is not in the list, you probably should choose English."
+end="English"
+ded="German / Deutsch"
+itd="Italian / Italiano"
+hud="Hungarian / magyar"
+
+# greeting section
+welcome="Welcome to"
+# TODO
+greetstring="Welcome to Frugalware!\n\n \
+Have fun with Frugalware!\n\n \
+Frugalware Team"
+
 # selecting media section
 searchmedia="Selecting source media"
 scanmediat="Scanning"

@@ -1,0 +1,14 @@
+# greeting section
+welcome="Üdvözli a"
+greetstring="Köszöntjük a Frugalware felhasználóinak táborában!\n\n \
+A Frugalware létrehozásával munkájának gyorsabbá és egyszerûbbé tétele volt a célunk. Reméljük, hogy kedvelni fogja termékünket! \n\n \
+A Frugalware készítõi\n "
+
+# selecting media section
+searchmedia="A telepítési forrás kiválasztása"
+scanmediat="Keresés"
+scanmediad="A Frugalware telepítõ lemezt tartalmazó CD/DVD meghajtó keresése..."
+mediafoundt="Megtalált CD/DVD meghajtó"
+mediafoundd="Frugalware telepítõ lemez a következõ eszközön:"
+
+# vim: ft=sh
