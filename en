@@ -10,7 +10,7 @@ formatpartst="Formatting swap partitions"
 formatpartsd1="Formatting"
 formatpartsd2="as a swap partition and checking for bad blocks"
 
-# rootdev dection
+# rootdev section
 rootdevstring="Setting up root partition"
 miscdevstring="Setting up partitions"
 selrootdevt="Select Linux installation partition"
@@ -40,6 +40,19 @@ xfsshortdesc="SGI's journaling filesystem"
 duringformatt="Formatting"
 formatdevicestring="Formatting device:"
 formatfsstring="Filesystem:"
+
+# linux partitions section
+
+sellinuxpartst="Select other Linux partitions for /etc/fstab"
+sellinuxpartsd="You seem to have more than one partition tagged as type Linux. You may use these to distribute your Linux system across more than one partition.  Currently, you have only mounted your / partition. You might want to mount directories such as /home or /usr/local on separate partitions.  You should not try to mount /etc, /sbin, or /bin on their own partitions since they contain utilities needed to bring the system up and mount partitions.  Also, do not reuse a partition that you've already entered before.  Please select one of the Linux partitions listed below, or if you're done, hit <$continue>"
+inuse="in use"
+askwherelt="Select mount point for"
+askwhereld="You need to specify where you want the new partition mounted. For example, if you want to put it under /usr/local, then respond: /usr/local\n\n Where would you like to mount this partition?"
+
+# dos partitions section
+
+seldospartst="Select partition to add to /etc/fstab"
+seldospartsd="In order to make these partitions visible from Linux, we need to add them to your /etc/fstab.  Please pick a partition to add to /etc/fstab, or if you're done, hit <$continue>"
 
 # packages section
 categorychk="Searching for categories. Please wait..."
