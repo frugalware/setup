@@ -1,5 +1,12 @@
 setup="Setup"
 
+# selecting media section
+searchmedia="Selecting source media"
+scanmediat="Scanning"
+scanmediad="Scanning for a CD/DVD drive containing a Frugalware install disc..."
+mediafoundt="CD/DVD drive found"
+mediafoundd="A Frugalware install disc was found in device"
+
 # partitioning section
 partitioning="Creating partitions"
 selppt="Select partitioning program"

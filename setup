@@ -9,6 +9,9 @@ core="bash coreutils chkconfig frugalware grep sed"
 logdev=/dev/tty4
 
 ### strings 
+# slecting media section
+mediabacktitle="$searchmedia - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
+
 # partitioning section
 partitioningbacktitle="$partitioning - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
 
@@ -36,8 +39,29 @@ pkgsearchbacktitle=$selectpkgsbacktitle
 installpkgsbacktitle="$instpkgstring - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
 
 ### functions
-# partitioning section
+# selecting media section
+search_source()
+{
+	sourcedir=`echo $bindir|sed 's|/frugalware||'`
+	mount|grep $sourcedir && umount $sourcedir
+	dialog --backtitle "$mediabacktitle" --title "$scanmediat" \
+		--aspect 20 --infobox "$scanmediad" 0 0
+	
+	for i in `cat /proc/sys/dev/cdrom/info |grep name`
+	do
+		[ "$i" == "drive" -o "$i" == "name:" ] && continue
+		mount -o ro -t iso9660 /dev/$i $sourcedir 1>$logdev 2>&1
+		if [ "$?" == 0 ]; then
+			dialog --aspect 20 --backtitle "$mediabacktitle" \
+				--title "$mediafoundt" \
+				--infobox "$mediafoundd $i." 0 0
+			break
+		fi
+	done
+	sleep 1
+}
 
+# partitioning section
 parthd()
 {
 	selppf=`mktemp /tmp/tmp.XXXXXX`
@@ -440,6 +464,9 @@ install_packages()
 }
 
 ### main
+# selecting media section
+search_source # now the cd/dvd is mounted on /mnt/source
+
 # partitioning section
 selhd # this will select hard disks, and then call fdisk/cfdisk/etc
 
@@ -478,3 +505,4 @@ killall cupsd
 echo network
 chroot ./ /sbin/netconfig
 clear
+/bin/bash
