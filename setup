@@ -2,7 +2,7 @@
 
 bindir=/mnt/source/frugalware
 target=/mnt/target
-core=(bash coreutils chkconfig frugalware grep sed)
+core="bash coreutils chkconfig frugalware grep sed"
 logdev=/dev/tty4
 
 ### clear
@@ -46,8 +46,8 @@ selswappart()
 		dialog --backtitle "$setswapbacktitle" --title "$noswaptitle" \
 			--yesno "$noswap" 0 0 || exit 1
 	else
-		swapqfile=`mktemp`
-		swapafile=`mktemp`
+		swapqfile=`mktemp /tmp/tmp.XXXXXX`
+		swapafile=`mktemp /tmp/tmp.XXXXXX`
 		chmod +x $swapqfile
 		echo -n "dialog --backtitle \"$setswapbacktitle\" --title \"$detectedswapt\" --checklist \"$detectedswapd\" 0 0 0 ">$swapqfile
 		fdisk -l|grep 'Linux swap$'|tr -s ' '|sed 's/\(.*\) [0-9]* [0-9]* [0-9+]* [0-9]* \(.*\)/\1 "\2" On \\/'>>$swapqfile
@@ -61,7 +61,7 @@ selswappart()
 
 doswap ()
 {
-	[ -z "$prefstab" ] && prefstab=`mktemp`
+	[ -z "$prefstab" ] && prefstab=`mktemp /tmp/tmp.XXXXXX`
 	printf "%-16s %-16s %-11s %-16s %-3s %s\n" "none" "/proc" "proc" "defaults" "0" "0" >>$prefstab
 	printf "%-16s %-16s %-11s %-16s %-3s %s\n" "none" "/sys" "sysfs" "defaults" "0" "0" >>$prefstab
 	printf "%-16s %-16s %-11s %-16s %-3s %s\n" "devpts" "/dev/pts" "devpts" "gid=5,mode=620" "0" "0" >>$prefstab
@@ -97,10 +97,10 @@ lstparts()
 
 selrootdev()
 {
-	[ -z "$prefstab" ] && prefstab=`mktemp`
-	selrootpart=`mktemp`
+	[ -z "$prefstab" ] && prefstab=`mktemp /tmp/tmp.XXXXXX`
+	selrootpart=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $selrootpart
-	rootpartf=`mktemp`
+	rootpartf=`mktemp /tmp/tmp.XXXXXX`
 	echo "dialog --backtitle \"$rootdevbacktitle\" --title \"$selrootdevt\" \\" >$selrootpart
 	echo "--ok-label \"$select\" --menu \"$selrootdevd\" 0 0 0 \\">>$selrootpart
 	lstparts $selrootpart
@@ -134,7 +134,7 @@ mkfss() # $1 which device, $2 which fs, $3 how: $formatt or $checkt
 
 formatdev() # $1: which device
 {
-	junk=`mktemp`
+	junk=`mktemp /tmp/tmp.XXXXXX`
 	dialog --backtitle "$miscdevbacktitle" --title "$formatpart $1" \
 	--menu "$wantformatq" 0 0 0 \
 	"$formatt" "$fromatd" "$checkt" "$checkd" "$nofromatt" "$noformatd" 2>$junk || exit 1 # aborted when choosing format mode
@@ -152,7 +152,7 @@ formatdev() # $1: which device
 			jfsdesc=$jfspredesc && default=jfs
 		grep ' xfs' -q /proc/filesystems && \
 			xfsdesc=$xfspredesc && default=xfs
-		selfsf=`mktemp`
+		selfsf=`mktemp /tmp/tmp.XXXXXX`
 		chmod +x $selfsf
 		echo "dialog --backtitle \"$miscdevbacktitle\" \
 		--title \"$selectfst $1\" --default-item \"$default\" \
@@ -169,7 +169,7 @@ formatdev() # $1: which device
 			\"$jfsshortdesc\" \\" >>$selfsf
 		[ -z "$xfsdesc" ] || echo "\"xfs\" \
 			\"$xfsshortdesc\" \\" >>$selfsf
-		junk=`mktemp`
+		junk=`mktemp /tmp/tmp.XXXXXX`
 		echo "2>$junk">>$selfsf
 		$selfsf || exit 1 # aborted when choosing fs
 		rm $selfsf
@@ -191,7 +191,7 @@ mountdev() # $1: which device $2: mount point
 
 askwhere() # $1: which device
 {
-	askwheref=`mktemp`
+	askwheref=`mktemp /tmp/tmp.XXXXXX`
 	dialog --backtitle "$miscdevbacktitle" --title "$askwherelt $1" \
 		--inputbox "$askwhereld" 0 0 2>$askwheref || return 1
 	towhere=`cat $askwheref`
@@ -203,12 +203,12 @@ askwhere() # $1: which device
 }
 
 setup_linux() {
-	[ "`fdisk -l|grep Linux$|wc -l`" != 1 ] || return 1
+	[ "`fdisk -l|grep Linux$|wc -l|tr -s ' '|sed 's/ //'`" != 1 ] || return 1
 	while /bin/true
 	do
-		sellinuxparts=`mktemp`
+		sellinuxparts=`mktemp /tmp/tmp.XXXXXX`
 		chmod +x $sellinuxparts
-		linuxpartsf=`mktemp`
+		linuxpartsf=`mktemp /tmp/tmp.XXXXXX`
 		echo "dialog --backtitle \"$miscdevbacktitle\" --title \"$sellinuxpartst\" \\" >$sellinuxparts
 		echo "--ok-label \"$select\" --cancel-label "$continue" --menu \"$sellinuxpartsd\" 0 0 0 \\">>$sellinuxparts
 		lstparts $sellinuxparts
@@ -249,12 +249,12 @@ lstdosparts()
 }
 
 setup_dos() {
-	[ "`fdisk -l|egrep 'Win95 F|Win98 F|HPFS|W95 F|FAT12|FAT16'|wc -l`" != 0 ] || return 1
+	[ "`fdisk -l|egrep 'Win95 F|Win98 F|HPFS|W95 F|FAT12|FAT16'|wc -l|tr -s ' '|sed 's/ //'`" != 0 ] || return 1
 	while /bin/true
 	do
-		seldosparts=`mktemp`
+		seldosparts=`mktemp /tmp/tmp.XXXXXX`
 		chmod +x $seldosparts
-		dospartsf=`mktemp`
+		dospartsf=`mktemp /tmp/tmp.XXXXXX`
 		echo "dialog --backtitle \"$miscdevbacktitle\" --title \"$seldospartst\" \\" >$seldosparts
 		echo "--ok-label \"$select\" --cancel-label "$continue" --menu \"$seldospartsd\" 0 0 0 \\">>$seldosparts
 		lstdosparts $seldosparts
@@ -281,21 +281,21 @@ info()
 
 categorysize ()
 {
-	categorytempfile=`mktemp`
+	categorytempfile=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $categorytempfile
 	echo -n "( du -ch ">$categorytempfile
 	for i in `cat $bindir/../Packages.lst |grep ^$1|sed 's|.*/\(.*\)|\1|'`
 	do
 		echo -n "$bindir/$i ">>$categorytempfile
 	done
-	echo ") |tail -1 |sed 's/\(.*\)\t.*/\1/'" >>$categorytempfile
+	echo ") |tail -1 |sed 's/\([0-9\.]*[A-Za-z]\).*/\1/'" >>$categorytempfile
 	echo `$categorytempfile`
 	rm $categorytempfile
 }
 
 pkgsize()
 {
-	du -h $1 |sed 's/\(.*\)\t.*/\1/'
+	du -h $1 |sed 's/\([0-9\.]*[A-Za-z]\).*/\1/'
 }
 
 category_search()
@@ -310,9 +310,9 @@ pkg_search()
 category_select ()
 {
 	category_search
-	selecttempfile=`mktemp`
-	whichselectedtempfile=`mktemp`
-	whichselectedtempfile2=`mktemp`
+	selecttempfile=`mktemp /tmp/tmp.XXXXXX`
+	whichselectedtempfile=`mktemp /tmp/tmp.XXXXXX`
+	whichselectedtempfile2=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $selecttempfile
 	echo -n "dialog --backtitle \"$selectcategoriesbacktitle\" --title \"$categorystring\" --checklist \"$pleaseselectcategories\" 0 0 0 " >$selecttempfile
 	categories=`cat $bindir/../Packages.lst|sed 's|\(.*\)/.*|\1|'|sort|uniq`
@@ -334,9 +334,9 @@ category_select ()
 package_select()
 {
 	pkg_search
-	printpkgtemp=`mktemp`
+	printpkgtemp=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $printpkgtemp
-	prepkglst=`mktemp`
+	prepkglst=`mktemp /tmp/tmp.XXXXXX`
 	echo -n "cat $bindir/../Packages.lst |egrep ' " >$printpkgtemp
 	for i in $*
 	do
@@ -345,10 +345,10 @@ package_select()
 	echo "| '|sed 's|.*/\(.*\)|\1|'">>$printpkgtemp
 	$printpkgtemp >$prepkglst
 	rm $printpkgtemp
-	pkglstselect=`mktemp`
-	whichselected=`mktemp`
-	whichselected2=`mktemp`
-	whichselected3=`mktemp`
+	pkglstselect=`mktemp /tmp/tmp.XXXXXX`
+	whichselected=`mktemp /tmp/tmp.XXXXXX`
+	whichselected2=`mktemp /tmp/tmp.XXXXXX`
+	whichselected3=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $pkglstselect
 	echo -n "dialog --backtitle \"$selectpkgsbacktitle\" --title \"$pkgstring\" --checklist \"$pleaseselectpkgs\" 0 0 0 " >$pkglstselect
 	for i in `cat $prepkglst`
@@ -389,16 +389,22 @@ install_packages()
 		  cd var/cache/pacman 
 		  ln -s $bindir pkg )
 	fi
-	pkginstall=`mktemp`
+	pkginstall=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $pkginstall
-	echo -n "pacman -S -r ./ --noconfirm ${core[@]} ">$pkginstall
+	echo -n "pacman -S -r ./ --noconfirm $core ">$pkginstall
 	for i in $*
 	do
 		echo -n "$i ">>$pkginstall
 	done
 	# we will leave setup if errors occured: no way to configure a
 	# not-installed system ;-)
-	$pkginstall && info "$doneinstpkg" || (info "$errinstpkg" && exit 1)
+	$pkginstall
+	if [ "$?" == 0 ]; then
+		info "$doneinstpkg"
+	else
+		info "$errinstpkg"
+		exit 1
+	fi
 	rm $pkginstall
 }
 
