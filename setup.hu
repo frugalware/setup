@@ -1,5 +1,5 @@
 # greeting section
-welcome="Üdvözli a"
+welcome="Üdvözli a Frugalware $osver"
 greetstring="Köszöntjük a Frugalware felhasználóinak táborában!\n\n \
 A Frugalware létrehozásával munkájának gyorsabbá és egyszerûbbé tétele volt a célunk. Reméljük, hogy kedvelni fogja termékünket! \n\n \
 A Frugalware készítõi\n "

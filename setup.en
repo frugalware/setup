@@ -1,3 +1,6 @@
+# (c) 2003-2004 Vajna Miklos <mamajom@axelero.hu>
+# (c)           Patrick J. Volkerding, <volkerdi@slackware.com>
+
 setup="Setup"
 
 # selecting language section - it's NO good translating this section
@@ -10,10 +13,15 @@ itd="Italian / Italiano"
 hud="Hungarian / magyar"
 
 # greeting section
-welcome="Welcome to"
+welcome="Welcome to Frugalware $osver"
 greetstring="Welcome among the users of Frugalware!\n\n \
 Creating Frugalware our goal was to help you make your work faster and simpler. We hope that you will like our product.\n\n \
 Frugalware developers"
+
+# keyboard section
+kbdconf="Configuring the keyboard"
+selmapt="Keyboard map selection"
+selmapd="You may select one of the following keyboard maps.  If you do not select a keyboard map, 'qwerty/us.map.gz' (the US keyboard map) is the default.  Usethe UP/DOWN arrow keys and PageUp/PageDown to scroll through the whole list of choices."
 
 # selecting media section
 searchmedia="Selecting source media"
