@@ -1,7 +1,7 @@
 #!/bin/bash
 
 bindir=/root/programz/frugalware/frugalware-current/frugalware
-core=(glibc ncurses bash coreutils popt chkconfig)
+core=(glibc ncurses bash coreutils popt chkconfig frugalware)
 logdev=/dev/tty4
 target=/mnt/target
 
@@ -425,4 +425,7 @@ cd $target
 category_select # selected categories now in $selcat
 package_select $selcat # select packages
 install_packages $selpkg # install packages
+
+chroot ./ /sbin/depmod -a
+chroot ./ /usr/sbin/cupsd
 #clear
