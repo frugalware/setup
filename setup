@@ -35,7 +35,7 @@ welcomebacktitle="$welcome Frugalware $osver $setup"
 # keyboard section
 kbdbacktitle="$kbdconf - Frugalware $osver $setup"
 
-# slecting media section
+# selecting media section
 mediabacktitle="$searchmedia - Frugalware $osver $setup"
 
 # partitioning section
@@ -663,19 +663,22 @@ install_packages()
 
 cd_change()
 {
-	umount /mnt/source
-	$target/usr/bin/eject $srcdev
-	nextf=`mktemp /tmp/tmp.XXXXXX`
-	dialog --backtitle "$installpkgsbacktitle" --title "$neednextt" \
-		--aspect 20 --menu "$neednextd" 0 0 0 \
-		"$continue" "$continued" "$quit" "$quitd" 2>$nextf \
-		|| echo "$quit" >$nextf
-	next=`cat $nextf`
-	rm $nextf
-	if [ "$next" = "$quit" ]; then
-		return 1
-	else
-		search_source
+	# we eject only if there is no extra repo on the disc (not dvd)
+	if ! [ -d /mnt/source/extra/frugalware/ ]; then
+		umount /mnt/source
+		$target/usr/bin/eject $srcdev
+		nextf=`mktemp /tmp/tmp.XXXXXX`
+		dialog --backtitle "$installpkgsbacktitle" --title "$neednextt" \
+			--aspect 20 --menu "$neednextd" 0 0 0 \
+			"$continue" "$continued" "$quit" "$quitd" 2>$nextf \
+			|| echo "$quit" >$nextf
+		next=`cat $nextf`
+		rm $nextf
+		if [ "$next" = "$quit" ]; then
+			return 1
+		else
+			search_source
+		fi
 	fi
 }
 
