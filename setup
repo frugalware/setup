@@ -507,7 +507,7 @@ category_select ()
 	rm $whichselectedtempfile
 	selcat=`cat $whichselectedtempfile2`
 	rm $whichselectedtempfile2
-	if [ -z $selcat ]; then
+	if [ -z "$selcat" ]; then
 		return 1
 	fi
 }
