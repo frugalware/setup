@@ -639,7 +639,8 @@ install_packages()
 		echo "Server = file://$pacbindir" >>/etc/pacman.conf
 		( mkdir -p var/cache/pacman
 		  cd var/cache/pacman 
-		  ln -sf $pacbindir pkg )
+		  [ -e pkg ] && rm pkg
+		  ln -s $pacbindir pkg )
 	fi
 	pkginstall=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $pkginstall
