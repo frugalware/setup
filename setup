@@ -385,14 +385,15 @@ lstdosparts()
 	for i in `fdisk -l|egrep 'Win95 F|Win98 F|HPFS|W95 F|FAT12|FAT16'|cut -d ' ' -f 1`
 	do
 		size=`fdisk -s $i`
+		type=`fdisk -l |grep $i|sed 's/\*//'|tr -s ' '|cut -d ' ' -f 6-`
 		unset altname
 		if grep -q $i $prefstab; then
 			# added already
 			on=`grep $i $prefstab |tr -s ' ' |cut -f 2 -d ' '`
-			altname="$i $on Linux ${size}K"
+			altname="$i $on $type ${size}K"
 		fi
 		if [ -z "$altname" ]; then
-			echo "\"$i\" \"Linux ${size}K\" \\" >>$1
+			echo "\"$i\" \"$type ${size}K\" \\" >>$1
 		else
 			echo "\"($inuse)\" \"$altname\" \\" >>$1
 		fi
