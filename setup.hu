@@ -2,7 +2,7 @@
 welcome="Üdvözli a Frugalware $osver"
 greetstring="Köszöntjük a Frugalware felhasználóinak táborában!\n\n \
 A Frugalware létrehozásával munkájának gyorsabbá és egyszerûbbé tétele volt a célunk. Reméljük, hogy kedvelni fogja termékünket! \n\n \
-A Frugalware készítõi\n "
+A Frugalware készítõi"
 
 # keyboard section
 kbdconf="A billentyûzet beállítása"
@@ -67,11 +67,52 @@ formatdevicestring="Formázott eszköz:"
 formatfsstring="Fájlrendszer:"
 
 # linux partitions section
-
 sellinuxpartst="Egyéb LinuxLinux partíciók beállítása a /etc/fstab-ban"
-sellinuxpartsd="Úgy néz ki, hogy több Linux partíciója van. Felhasználhatja ezeket arra, hogy Linux rendszere több partícióra legyen telepítve. Jelenleg csak a / partíció van csatolva. Külön partícióra tehet könyvtárakat a partíciók például /home vagy /usr/local-ba való csatolásával. Ne próbálja a /etc-t, /sbin-t vagy a /bin-t külön partícióra tenni, mivel olyan eszközöket tartalmaznak, amik pont a rendszer indulásához, és a partíciók csatolásához szükségesek. Szintén figyeljen, hogy két partíciót ne csatoljon egy helyre. Kérem válasszon ki egyet az alább listázott Linux partíciók közül, majd ha végzett, válassza a <$continue>-t."
+sellinuxpartsd="Úgy néz ki, hogy több Linux partíciója van. Felhasználhatja ezeket arra, hogy Linux rendszere több partícióra legyen telepítve. Jelenleg csak a / partíció van csatolva. Külön partícióra tehet könyvtárakat a partíciók például /home vagy /usr/local-ba való csatolásával. Ne próbálja a /etc-t, /sbin-t vagy a /bin-t külön partícióra tenni, mivel olyan eszközöket tartalmaznak, amik pont a rendszer indulásához, és a partíciók csatolásához szükségesek. Szintén figyeljen, hogy két partíciót ne csato
+ljon egy helyre. Kérem válasszon ki egyet az alább listázott Linux partíciók közül, majd ha végzett, válassza a <$continue>-t."
 inuse="használatban"
 askwherelt="Csatolási pont kiválasztása a következõnek:"
 askwhereld="Ki kell válassza, hogy a partíciót hova kívánja csatolni. Például ha a /home-ba akarja csatolni, írja be, hogy /home.\n\n Hova kívánja csatolni ezt a partíciót?"
+
+# dos partitions section
+seldospartst="Válassza ki azt a partíciót, mely a /etc/fstab fájlhoz lesz írva"
+seldospartsd="Ha szeretné látni ezeket a partíciókat Linux alól, hozzá kell adnunk a /etc/fstab fájlhoz. Kérem, jelölje ki a partíciót, mely a /etc/fstab fájlhoz lesz írva. Ha kész, válassza a <$continue>-t."
+
+# packages section
+categorychk="Kategóriák keresése, Kérem várjon..."
+pkgchk="Csomagok keresése. Kérem várjon..."
+categorystring="Kategóriák kiválasztása"
+pkgstring="Csomagok kiválasztása"
+instpkgstring="Csomagok telepítése"
+sect="szekció"
+pleaseselectcategories="Kérem válassza ki a telepítendõ kategóriát"
+pleaseselectpkgs="Kérem válassza ki a telepítendõ csomagot"
+
+neednextt="Kérem helyezze be a következõ lemezt"
+neednextd="Kérem helyezze be a következõ Frugalware telepítõlemezt és nyomja meg az entert a csomagok telepítésének folytatásához."
+continued="Csomagok telepítése a következõ lemezrõl"
+quit="Kilépés"
+quitd="Kilépés a csomagtelepítésbõl és befejezés"
+
+instpkg="Kiválasztott csomagok telepítése"
+doneinstpkg="Kiválasztott csomagok telepítésének vége"
+errinstpkg="Hiba merült fel a kiválasztott csomagok telepítése közben"
+
+# configure section
+confstring="A telepített rendszer beállítása"
+confkmodt="Kernel modulok beállítása"
+confkmodd="Modul függõségek frissítése..."
+
+nopasswdt="Nem találtam rendszergazda (root) jelszót"
+nopasswdd="Jelenleg nincs beállítva a rendszergazdának (root) jelszó. Ajánlott megadni most, mert ez lesz aktív a gép elsõ újrainditása után. Ez különösen fontos, ha a gépe az internetre van csatlakozva. Szeretné beállítani a rendszergazda jelszavát?"
+
+nonormalusert="Nem találtam normál felhasználót"
+nonormaluserd="Jelenleg nincs nem-rendszergazda felhasználói fiók beállítva. Erõsen ajánlott létrehozni legalább egyet. Szeretne létrehozni egyet?"
+
+endsetupt="Rendszerbeállítás vége"
+erebootd="Ha szeretne valamilyen speciális dolgot tenni, válassza a nemet, ezzel egy parancssort fog kapni. Újra akarja indítani a gépét most?"
+endsetupd="A rendszertelepítés és beállítás sikeresen befejezõdött. Reméljük, hogy a Frugalware $osver elnyeri tetszését. $erebootd"
+ferrort="Telepítési hiba"
+ferrord="Hiba keletkezett a telepítés közben. $erebootd"
 
 # vim: ft=sh
