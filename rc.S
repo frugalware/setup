@@ -15,5 +15,6 @@ modprobe -q ohci-hcd >/dev/null 2>&1
 modprobe -q uhci-hcd >/dev/null 2>&1
 				
 /etc/rc.d/rc.udev
+setterm -blank 0
 
 # vim: ft=sh
