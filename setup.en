@@ -8,9 +8,9 @@ sellang="Selecting language"
 sellangt="Please select your language"
 sellangd="Please select your language from the list. If your language is not in the list, you probably should choose English."
 end="English"
-ded="German / Deutsch"
-itd="Italian / Italiano"
-hud="Hungarian / magyar"
+ded="German / Deutsch (incomplete)"
+itd="Italian / Italiano (incomplete)"
+hud="Hungarian / magyar (incomplete)"
 
 # greeting section
 welcome="Welcome to Frugalware $osver"

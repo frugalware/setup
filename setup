@@ -25,7 +25,7 @@ ask_lang()
 
 ask_lang
 . $language.conf
-. setup.$language
+[ -e /bin/setup.$language ] && . setup.$language
 setfont $font
 
 ### strings
@@ -173,7 +173,7 @@ selhd()
 	        chmod +x $selhdm
 	        selhddevf=`mktemp /tmp/tmp.XXXXXX`
 		echo "dialog --clear --backtitle \"$partitioningbacktitle\" --title \"$selhdt\" \\" >$selhdm
-		echo "--ok-label \"$select\" --cancel-label \"$continue\" --menu \"$selhdd\" 0 0 0 \\">>$selhdm
+		echo "--aspect 20 --ok-label \"$select\" --cancel-label \"$continue\" --menu \"$selhdd\" 0 0 0 \\">>$selhdm
 		fdisk -l|grep ^Disk|sed 's/^Disk \(.*\): \([0-9].*\), [0-9].*$/"\1" "\2" \\/'>>$selhdm
 		echo "2>$selhddevf">>$selhdm
 		$selhdm || break; # aborted when choosing hds
@@ -426,7 +426,11 @@ setup_dos() {
 
 info()
 {
-	echo -e "\033[1;32m==>\033[1;0m \033[1;1m$1\033[1;0m" >&2
+	echo
+	# old color version, used against bash
+	# echo -e "\033[1;32m==>\033[1;0m \033[1;1m$1\033[1;0m" >&2
+	echo "*** $1 ***"
+	echo
 }
 
 categorysize ()
@@ -753,7 +757,7 @@ doswap $swapparts # format selected partitions
 selrootdev #root device now in $rootdev
 formatdev $rootdev
 mountdev $rootdev /
-[ -d $target/etc/profile.d ] || mkdir -p $target/etc/{profile.d,sysconfig}
+[ -d $target/etc/profile.d ] || mkdir -p $target/etc/profile.d $target/etc/sysconfig
 mv -f $prefstab $target/etc/fstab
 mv -f /tmp/lang.sh $target/etc/profile.d/lang.sh
 mv -f /tmp/keymap $target/etc/sysconfig/keymap

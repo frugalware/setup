@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 clear
 /etc/rc.d/rc.udev
