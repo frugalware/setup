@@ -568,6 +568,7 @@ package_select_install $selcat # select and install packages
 conf_kernel_modules || leave "$confbacktitle"
 chroot ./ /sbin/netconfig || leave "$confbacktitle" # configure network
 chroot ./ /sbin/grubconfig || leave "$confbacktitle" # configure grub
+pacman -r /mnt/target -Q xorg &>/dev/null && chroot ./ /sbin/xconfig # conf x
 
 # end
 leave "$confbacktitle" "$endsetupt" "$endsetupd"
