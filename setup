@@ -532,11 +532,11 @@ package_select_install()
 	repro=$1
 	shift
 	if [ "$repro" = "frugalware" ]; then
-		reponame="current"
+		reponame="frugalware-current"
 		pkglstf="$bindir/../Packages.lst"
 		pacbindir=$bindir
 	elif [ "$repro" = "extra" ]; then
-		reponame="extra"
+		reponame="extra-current"
 		pkglstf="$exbindir/../Packages.lst"
 		pacbindir=$exbindir
 	fi
@@ -603,7 +603,7 @@ package_select_install()
 				install_packages $repro `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
 			fi
 		done
-		#TODO: eject cd, etc
+		cd_change
 		clear
 		for i in x11 xlib xapps gnome kde devel
 		do

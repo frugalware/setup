@@ -3,7 +3,7 @@
 clear
 mount -t proc none /proc
 mount -t sysfs none /sys
-mount -t ramfs none /tmp
+mount -t tmpfs none /tmp
 cat /proc/mounts >/etc/mtab
 modprobe iso9660
 modprobe BusLogic 2>/dev/null

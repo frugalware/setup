@@ -21,7 +21,7 @@ Frugalware developers"
 # keyboard section
 kbdconf="Configuring the keyboard"
 selmapt="Keyboard map selection"
-selmapd="You may select one of the following keyboard maps.  If you do not select a keyboard map, 'qwerty/us.map.gz' (the US keyboard map) is the default.  Usethe UP/DOWN arrow keys and PageUp/PageDown to scroll through the whole list of choices."
+selmapd="You may select one of the following keyboard maps.  If you do not select a keyboard map, 'qwerty/us.map.gz' (the US keyboard map) is the default.  Use the UP/DOWN arrow keys and PageUp/PageDown to scroll through the whole list of choices."
 
 # selecting media section
 searchmedia="Selecting source media"
