@@ -607,15 +607,17 @@ package_select_install()
 				install_packages $repro `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
 			fi
 		done
-		cd_change
-		clear
-		for i in x11 xlib xapps gnome kde devel
-		do
-			if [ -e /tmp/pkgcat/$i ]; then
-				selpkg=`cat /tmp/pkgcat/$i`
-				install_packages $repro `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
-			fi
-		done
+		cd_change || skip=1
+		if [ "$skip" != 1 ]; then
+			clear
+			for i in x11 xlib xapps xfce4 gnome kde devel
+			do
+				if [ -e /tmp/pkgcat/$i ]; then
+					selpkg=`cat /tmp/pkgcat/$i`
+					install_packages $repro `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
+				fi
+			done
+		fi
 	elif [ "$repro" = "extra" ]; then
 		if ! [ -z $* ]; then
 			for i in $*
@@ -737,6 +739,8 @@ conf_passwd()
 		if [ $? = 0 ]; then
 			clear
 			chroot ./ /usr/sbin/adduser
+			# add the user to the disk group to be able to eject cds
+			chroot ./ /usr/bin/sed -i "s/\(^disk:.*\)$/\1,`sed -n 's/^\([^:]*\):.*/\1/;$ p' etc/passwd`/" etc/group
 		else
 			break;
 		fi
@@ -801,7 +805,9 @@ setup_dos
 cd $target
 category_select frugalware # selected categories now in $selcat
 package_select_install frugalware $selcat # select and install base packages
-cd_change && category_select extra && package_select_install extra $selcat
+if [ "$skip" != 1 ]; then
+	cd_change && category_select extra && package_select_install extra $selcat
+fi
 
 # configure section
 
