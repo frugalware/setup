@@ -788,6 +788,7 @@ conf_passwd || leave "$confbacktitle"
 echo "font=$font" >>$target/etc/sysconfig/font # save the console font
 chroot ./ /sbin/netconfig || leave "$confbacktitle" # configure network
 chroot ./ /sbin/grubconfig || leave "$confbacktitle" # configure grub
+chroot ./ /sbin/timeconfig || leave "$confbacktitle" # configure timezones
 chroot ./ /sbin/mouseconfig || leave "$confbacktitle" # configure gpm
 pacman -r /mnt/target -Q xorg >$logdev 2>&1 && chroot ./ /sbin/xconfig # conf x
 
