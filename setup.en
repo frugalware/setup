@@ -11,10 +11,9 @@ hud="Hungarian / magyar"
 
 # greeting section
 welcome="Welcome to"
-# TODO
-greetstring="Welcome to Frugalware!\n\n \
-Have fun with Frugalware!\n\n \
-Frugalware Team"
+greetstring="Welcome among the users of Frugalware!\n\n \
+Creating Frugalware our goal was to help you make your work faster and simpler. We hope that you will like our product.\n\n \
+Frugalware developers"
 
 # selecting media section
 searchmedia="Selecting source media"
@@ -105,7 +104,7 @@ confkmodt="Configuring kernel modules"
 confkmodd="Updating module dependencies..."
 endsetupt="Setup complete"
 erebootd="If you want to do something special, hit no, and you will get a shell. Do you want to reboot your machine now?"
-endsetupd="System installation and configuration is complete. $erebootd"
+endsetupd="System installation and configuration is successfully completed. We hope that Frugalware $osver will take you content. $erebootd"
 ferrort="Installation error"
 ferrord="There was a fatal error during installation. $erebootd"
 

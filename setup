@@ -1,8 +1,8 @@
 #!/bin/bash
 
 ### constants
-. setup.en
 osver=`cat /etc/frugalware-release |cut -d ' ' -f 2`
+. setup.en
 bindir=/mnt/source/frugalware
 target=/mnt/target
 core="bash coreutils chkconfig frugalware grep sed"
@@ -24,6 +24,7 @@ function ask_lang()
 ask_lang
 . $language.conf
 . setup.$language
+setfont $font
 
 ### strings
 # greeing section
@@ -593,7 +594,8 @@ formatdev $rootdev
 mountdev $rootdev /
 [ -d $target/etc/profile.d ] || mkdir -p $target/etc/profile.d
 mv -f $prefstab $target/etc/fstab
-mf -f /tmp/lang.sh $target/etc/profile.d/lang.sh
+mv -f /tmp/lang.sh $target/etc/profile.d/lang.sh
+chmod 755 $target/etc/profile.d/lang.sh
 prefstab=$target/etc/fstab
 
 # linux partitions section
