@@ -30,10 +30,13 @@ setfont $font
 
 ### strings
 # greeing section
-welcomebacktitle="$welcome Frugalware $osver $setup"
+welcomebacktitle="$welcome $setup"
 
 # keyboard section
 kbdbacktitle="$kbdconf - Frugalware $osver $setup"
+
+# hotplug section
+hotplugbacktitle="$hotplug - Frugalware $osver $setup"
 
 # selecting media section
 mediabacktitle="$searchmedia - Frugalware $osver $setup"
@@ -129,6 +132,15 @@ keymap=$map
 EOF
 }
 
+do_hotplug()
+{
+	dialog --backtitle "$hotplugbacktitle" --title "$hotplugt" \
+		--aspect 20 --infobox "$hotplugd" 0 0
+	/etc/rc.d/rc.hotplug >$logdev 2>$logdev
+	sleep 1
+}
+
+
 # selecting media section
 search_source()
 {
@@ -150,6 +162,18 @@ search_source()
 		fi
 	done
 	sleep 1
+	if ! [ -d $bindir -o -d $exbindir ]; then #netinstall
+		netinstall=1
+		umount $sourcedir
+		netconfig
+		/etc/rc.d/rc.interfaces
+		# ugly hack
+		mkdir -p /mnt/source/frugalware /mnt/source/extra/frugalware
+		lynx -source -dump ftp://ftp5.frugalware.org/packages/frugalware/pub/frugalware/frugalware-current/Packages.lst >/mnt/source/Packages.lst
+		lynx -source -dump ftp://ftp5.frugalware.org/packages/frugalware/pub/frugalware/frugalware-current/frugalware/frugalware-current.fdb >/mnt/source/frugalware/frugalware-current.fdb
+		lynx -source -dump ftp://ftp5.frugalware.org/packages/frugalware/pub/frugalware/frugalware-current/extra/Packages.lst >/mnt/source/extra/Packages.lst
+		lynx -source -dump ftp://ftp5.frugalware.org/packages/frugalware/pub/frugalware/frugalware-current/extra/frugalware/extra-current.fdb >/mnt/source/extra/frugalware/extra-current.fdb
+	fi
 }
 
 # partitioning section
@@ -437,12 +461,12 @@ info()
 
 categorysize ()
 {
-#	repro=$1
+#	repo=$1
 #	shift
-#	if [ "$repro" = "frugalware" ]; then
+#	if [ "$repo" = "frugalware" ]; then
 #		pkglstf="$bindir/../Packages.lst"
 #		pacbindir=$bindir
-#	elif [ "$repro" = "extra" ]; then
+#	elif [ "$repo" = "extra" ]; then
 #		pkglstf="$exbindir/../Packages.lst"
 #		pacbindir=$exbindir
 #	fi
@@ -485,11 +509,11 @@ pkg_search()
 category_select ()
 {
 	category_search
-	repro=$1
-	if [ "$repro" = "frugalware" ]; then
+	repo=$1
+	if [ "$repo" = "frugalware" ]; then
 		pkglstf="$bindir/../Packages.lst"
 		pacbindir=$bindir
-	elif [ "$repro" = "extra" ]; then
+	elif [ "$repo" = "extra" ]; then
 		pkglstf="$exbindir/../Packages.lst"
 		pacbindir=$exbindir
 	fi
@@ -502,12 +526,12 @@ category_select ()
 	for i in $categories
 	do
 		state=on
-		if [ "$repro" = "extra" ]; then
+		if [ "$repo" = "extra" ]; then
 			if [ "$i" != "locale" ]; then
 				state=off
 			fi
 		fi
-		echo -n "$i \"(`categorysize $repro $i`)\" $state ">>$selecttempfile
+		echo -n "$i \"(`categorysize $repo $i`)\" $state ">>$selecttempfile
 	done
 	$selecttempfile 2>$whichselectedtempfile || leave "$selectcategoriesbacktitle"
 	rm $selecttempfile
@@ -533,13 +557,13 @@ gen_locpkgs()
 
 package_select_install()
 {
-	repro=$1
+	repo=$1
 	shift
-	if [ "$repro" = "frugalware" ]; then
+	if [ "$repo" = "frugalware" ]; then
 		reponame="frugalware-current"
 		pkglstf="$bindir/../Packages.lst"
 		pacbindir=$bindir
-	elif [ "$repro" = "extra" ]; then
+	elif [ "$repo" = "extra" ]; then
 		reponame="extra-current"
 		pkglstf="$exbindir/../Packages.lst"
 		pacbindir=$exbindir
@@ -562,13 +586,13 @@ package_select_install()
 	whichselected3=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $pkglstselect
 	echo -n "dialog --backtitle \"$selectpkgsbacktitle\" --title \"$pkgstring\" --checklist \"$pleaseselectpkgs\" 0 0 0 " >$pkglstselect
-	if [ "$repro" = "extra" ]; then
+	if [ "$repo" = "extra" ]; then
 		locpkgs=`gen_locpkgs`
 	fi
 	for i in `cat $prepkglst`
 	do
 		state=on
-		if [ "$repro" = "extra" ]; then
+		if [ "$repo" = "extra" ]; then
 			echo $i|egrep -q "$extrapkgs$locpkgs" || state=off
 		fi
 		echo -n "$i \"(`pkgdesc $pacbindir/$reponame.fdb $pacbindir/$i`, `pkgsize $pacbindir/$reponame.fdb $pacbindir/$i`)\" $state ">>$pkglstselect
@@ -599,49 +623,48 @@ package_select_install()
 		
 	done
 	clear
-	if [ "$repro" = "frugalware" ]; then
-		for i in base apps lib multimedia network
+	if [ "$repo" = "frugalware" ]; then
+		for i in base apps lib multimedia network devel
 		do
 			if [ -e /tmp/pkgcat/$i ]; then
 				selpkg=`cat /tmp/pkgcat/$i`
-				install_packages $repro `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
+				install_packages $repo `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
 			fi
 		done
 		cd_change || skip=1
 		if [ "$skip" != 1 ]; then
 			clear
-			for i in x11 xlib xapps xfce4 gnome kde devel
+			for i in x11 xlib xapps xfce4 gnome kde
 			do
 				if [ -e /tmp/pkgcat/$i ]; then
 					selpkg=`cat /tmp/pkgcat/$i`
-					install_packages $repro `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
+					install_packages $repo `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
 				fi
 			done
 		fi
-	elif [ "$repro" = "extra" ]; then
+	elif [ "$repo" = "extra" ]; then
 		if ! [ -z $* ]; then
 			for i in $*
 			do
 				if [ -e /tmp/pkgcat/$i ]; then
 						selpkg=`cat /tmp/pkgcat/$i`
-					install_packages $repro `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
+					install_packages $repo `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
 				fi
 			done
 		fi
-		[ -h var/cache/pacman/pkg ] && rm var/cache/pacman/pkg
 	fi
 	rm -rf /tmp/pkgcat
 }
 
 install_packages()
 {
-	repro=$1
-	if [ "$repro" = "frugalware" ]; then
-		reproname="frugalware-current"
+	repo=$1
+	if [ "$repo" = "frugalware" ]; then
+		reponame="frugalware-current"
 		pkglstf="$bindir/../Packages.lst"
 		pacbindir=$bindir
-	elif [ "$repro" = "extra" ]; then
-		reproname="extra-current"
+	elif [ "$repo" = "extra" ]; then
+		reponame="extra-current"
 		pkglstf="$exbindir/../Packages.lst"
 		pacbindir=$exbindir
 	fi
@@ -651,17 +674,27 @@ install_packages()
 	shift
 	# preparing pkgdb
 	info "$instpkg ($name $sect)"
-	if ! [ -d var/lib/pacman/$reproname ]; then
+	if ! [ -d var/lib/pacman/$reponame ]; then
 		[ -d tmp ] || mkdir tmp
-		( mkdir -p var/lib/pacman/$reproname
-		  cd var/lib/pacman/$reproname
-		  tar xzf $pacbindir/$reproname.fdb )
-		echo "[$reproname]" >>/etc/pacman.conf
-		echo "Server = file://$pacbindir" >>/etc/pacman.conf
+		if [ "$netinstall" != 1 ]; then
+			( mkdir -p var/lib/pacman/$reponame
+			  cd var/lib/pacman/$reponame
+			  tar xzf $pacbindir/$reponame.fdb )
+		else
+			pacman -Sy -r ./
+		fi
+		if [ "$netinstall" != 1 ]; then
+			if [ "$reponame" = "frugalware" -o "$reponame" = "frugalware-current" ]; then
+				echo "[$reponame]" >/etc/pacman.conf
+			else
+				echo "[$reponame]" >>/etc/pacman.conf
+			fi
+			echo "Server = file://$pacbindir" >>/etc/pacman.conf
+		fi
 		( mkdir -p var/cache/pacman
 		  cd var/cache/pacman 
 		  [ -e pkg ] && rm pkg
-		  ln -sf $pacbindir pkg )
+		  [ "$netinstall" != 1 ] && ln -sf $pacbindir pkg )
 	fi
 	pkginstall=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $pkginstall
@@ -688,7 +721,7 @@ install_packages()
 cd_change()
 {
 	# we eject only if there is no extra repo on the disc (not dvd)
-	if ! [ -d /mnt/source/extra/frugalware/ ]; then
+	if ! [ -d /mnt/source/extra/frugalware/ -o "$netinstall" = 1 ]; then
 		umount /mnt/source
 		$target/usr/bin/eject $srcdev
 		nextf=`mktemp /tmp/tmp.XXXXXX`
@@ -699,8 +732,6 @@ cd_change()
 		next=`cat $nextf`
 		rm $nextf
 		if [ "$next" = "$quit" ]; then
-			[ -h $target/var/cache/pacman/pkg ] && \
-				rm $target/var/cache/pacman/pkg
 			return 1
 		else
 			search_source
@@ -754,6 +785,8 @@ leave() # $1: backtitle, $2: title, $3: text
 	[ -z "$3" ] && reboottext="$ferrord" || reboottext="$3"
 	dialog --aspect 20 --backtitle "$1" --title "$reboottitle" \
 	--yesno "$reboottext" 0 0
+			[ -h $target/var/cache/pacman/pkg ] && \
+				rm $target/var/cache/pacman/pkg
 	if [ "$?" = 0 ]; then
 		clear
 		/sbin/reboot
@@ -773,6 +806,9 @@ greet
 
 # keyboard section
 set_keymap # set keyboard map && creates /tmp/keymap
+
+# hotplug section
+do_hotplug # now pci & scsi modules are loaded
 
 # selecting media section
 search_source # now the cd/dvd is mounted on /mnt/source

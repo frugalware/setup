@@ -11,6 +11,7 @@ end="English"
 ded="German / Deutsch (incomplete)"
 itd="Italian / Italiano (incomplete)"
 hud="Hungarian / magyar"
+skd="Slovak / Slovensky"
 
 # greeting section
 welcome="Welcome to Frugalware $osver"
@@ -22,6 +23,11 @@ Frugalware developers"
 kbdconf="Configuring the keyboard"
 selmapt="Keyboard map selection"
 selmapd="You may select one of the following keyboard maps.  If you do not select a keyboard map, 'qwerty/us.map.gz' (the US keyboard map) is the default.  Use the UP/DOWN arrow keys and PageUp/PageDown to scroll through the whole list of choices."
+
+# hotplug section
+hotplug="Detecting hardware"
+hotplugt="Please wait"
+hotplugd="Scanning for SCSI and PCI cards"
 
 # selecting media section
 searchmedia="Selecting source media"

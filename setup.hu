@@ -9,6 +9,11 @@ kbdconf="A billentyûzet beállítása"
 selmapt="A billentyûzetkiosztás beállítása"
 selmapd="Kiválaszthat egyet a következõ billentyûzetkiosztásokból. Ha egyet sem választ ki, a 'qwerty/us.map.gz' (az amerikai kiosztás) lesz az alapértelmezett. Használja a fel/le nyilakat ill. a PageUp/PageDown-t a teljes lista megtekintéséhez."
 
+# hotplug section
+hotplug="Hardver keresése"
+hotplugt="Kérem várjon"
+hotplugd="SCSI és PCI kártyák keresése"
+
 # selecting media section
 searchmedia="A telepítési forrás kiválasztása"
 scanmediat="Keresés"
