@@ -1,17 +1,16 @@
 #!/bin/bash
 
-bindir=/root/programz/frugalware/frugalware-current/frugalware
-# core=(glibc ncurses bash coreutils popt chkconfig frugalware)
+bindir=/mnt/source/frugalware
+target=/mnt/target
 core=(bash coreutils chkconfig frugalware grep sed)
 logdev=/dev/tty4
-target=/mnt/target
 
 ### clear
 ### mkswap -c!!!
 
 # do NOT modify anything above this line
 
-. en
+. setup.en
 
 ### strings 
 # swap section
@@ -436,7 +435,6 @@ echo cups
 killall cupsd
 chroot ./ /usr/sbin/cupsd
 killall cupsd
-echo begin network, press enter
-read junk;
+echo network
 chroot ./ /sbin/netconfig
 #clear
