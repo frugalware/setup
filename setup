@@ -188,7 +188,7 @@ selhd()
 
 selswappart()
 {
-	fdisk -l|grep -q 'Linux swap$'
+	fdisk -l|grep -q 'Linux swap'
 	if [ "$?" != 0 ]; then
 		dialog --backtitle "$setswapbacktitle" --title "$noswaptitle" \
 			--yesno "$noswap" 0 0
@@ -201,7 +201,7 @@ selswappart()
 		swapafile=`mktemp /tmp/tmp.XXXXXX`
 		chmod +x $swapqfile
 		echo -n "dialog --backtitle \"$setswapbacktitle\" --title \"$detectedswapt\" --checklist \"$detectedswapd\" 0 0 0 ">$swapqfile
-		fdisk -l|grep 'Linux swap$'|tr -s ' '|sed 's/\(.*\) [0-9]* [0-9]* [0-9+]* [0-9]* \(.*\)/\1 "\2" On \\/'>>$swapqfile
+		fdisk -l|grep 'Linux swap'|tr -s ' '|sed 's/\(.*\) [0-9]* [0-9]* [0-9+]* [0-9]* \(.*\)/\1 "\2" On \\/'>>$swapqfile
 		echo >>$swapqfile
 		$swapqfile 2>$swapafile
 		rm $swapqfile
