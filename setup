@@ -465,10 +465,11 @@ install_packages()
 		info "$doneinstpkg"
 	else
 		info "$errinstpkg"
-		sleep 1
+		sleep 5
 		leave "$errinstpkg"
 	fi
 	rm $pkginstall
+	[ -h var/cache/pacman/pkg ] && rm var/cache/pacman/pkg
 }
 
 # configure section
