@@ -1,7 +1,8 @@
 #!/bin/bash
 
 bindir=/root/programz/frugalware/frugalware-current/frugalware
-core=(glibc ncurses bash coreutils popt chkconfig frugalware)
+# core=(glibc ncurses bash coreutils popt chkconfig frugalware)
+core=(bash coreutils chkconfig frugalware grep sed)
 logdev=/dev/tty4
 target=/mnt/target
 
@@ -376,8 +377,9 @@ package_select()
 install_packages()
 {
 	clear
+	# preparing pkgdb
+	info "$instpkg"
 	if ! [ -d tmp ]; then
-		info "$instcore"
 		mkdir tmp
 		( mkdir -p var/lib/pacman/current
 		  cd var/lib/pacman/current
@@ -387,9 +389,7 @@ install_packages()
 		( mkdir -p var/cache/pacman
 		  cd var/cache/pacman 
 		  ln -s $bindir pkg )
-		info "$doneinstcore"
 	fi
-	info "$instpkg"
 	pkginstall=`mktemp`
 	chmod +x $pkginstall
 	echo -n "pacman -S -r ./ --noconfirm ${core[@]} ">$pkginstall
@@ -397,7 +397,9 @@ install_packages()
 	do
 		echo -n "$i ">>$pkginstall
 	done
-	$pkginstall && info "$doneinstpkg" || info "$errinstpkg"
+	# we will leave setup if errors occured: no way to configure a
+	# not-installed system ;-)
+	$pkginstall && info "$doneinstpkg" || (info "$errinstpkg" && exit 1)
 	rm $pkginstall
 }
 
@@ -426,6 +428,15 @@ category_select # selected categories now in $selcat
 package_select $selcat # select packages
 install_packages $selpkg # install packages
 
+# configure section
+# these two have to move to a function, or better to move to a setup script
+echo kernel
 chroot ./ /sbin/depmod -a
+echo cups
+killall cupsd
 chroot ./ /usr/sbin/cupsd
+killall cupsd
+echo begin network, press enter
+read junk;
+chroot ./ /sbin/netconfig
 #clear
