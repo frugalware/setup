@@ -506,6 +506,9 @@ category_select ()
 	rm $whichselectedtempfile
 	selcat=`cat $whichselectedtempfile2`
 	rm $whichselectedtempfile2
+	if [ -z $selcat ]; then
+		return 1
+	fi
 }
 
 gen_locpkgs()
@@ -600,13 +603,15 @@ package_select_install()
 			fi
 		done
 	elif [ "$repro" = "extra" ]; then
-		for i in $*
-		do
-			if [ -e /tmp/pkgcat/$i ]; then
-				selpkg=`cat /tmp/pkgcat/$i`
-				install_packages $repro `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
-			fi
-		done
+		if ! [ -z $* ]; then
+			for i in $*
+			do
+				if [ -e /tmp/pkgcat/$i ]; then
+						selpkg=`cat /tmp/pkgcat/$i`
+					install_packages $repro `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
+				fi
+			done
+		fi
 		[ -h var/cache/pacman/pkg ] && rm var/cache/pacman/pkg
 	fi
 	rm -rf /tmp/pkgcat
