@@ -437,30 +437,34 @@ info()
 
 categorysize ()
 {
-	repro=$1
-	shift
-	if [ "$repro" = "frugalware" ]; then
-		pkglstf="$bindir/../Packages.lst"
-		pacbindir=$bindir
-	elif [ "$repro" = "extra" ]; then
-		pkglstf="$exbindir/../Packages.lst"
-		pacbindir=$exbindir
-	fi
-	categorytempfile=`mktemp /tmp/tmp.XXXXXX`
-	chmod +x $categorytempfile
-	echo -n "( du -ch ">$categorytempfile
-	for i in `cat $pkglstf |grep ^$1|sed 's|.*/\(.*\)|\1|'`
-	do
-		echo -n "$pacbindir/$i ">>$categorytempfile
-	done
-	echo ") |tail -n 1 |sed 's/\([0-9\.]*[A-Za-z]\).*/\1/'" >>$categorytempfile
-	echo `$categorytempfile`
-	rm $categorytempfile
+#	repro=$1
+#	shift
+#	if [ "$repro" = "frugalware" ]; then
+#		pkglstf="$bindir/../Packages.lst"
+#		pacbindir=$bindir
+#	elif [ "$repro" = "extra" ]; then
+#		pkglstf="$exbindir/../Packages.lst"
+#		pacbindir=$exbindir
+#	fi
+#	categorytempfile=`mktemp /tmp/tmp.XXXXXX`
+#	chmod +x $categorytempfile
+#	echo -n "( du -ch ">$categorytempfile
+#	for i in `cat $pkglstf |grep ^$1|sed 's|.*/\(.*\)|\1|'`
+#	do
+#		echo -n "$pacbindir/$i ">>$categorytempfile
+#	done
+#	echo ") |tail -n 1 |sed 's/\([0-9\.]*[A-Za-z]\).*/\1/'" >>$categorytempfile
+#	echo `$categorytempfile`
+#	rm $categorytempfile
+	echo "   "
 }
 
 pkgsize()
 {
-	du -h $1 |sed 's/\([0-9\.]*[A-Za-z]\).*/\1/'
+	# du -h $1 |sed 's/\([0-9\.]*[A-Za-z]\).*/\1/'
+	sizename=`echo $2|sed 's|.*/\(.*\).fpm|\1|'`
+	echo $((`tar xzOf $1 $sizename/desc|sed -n '11 p'`/1048576))MB
+
 }
 
 pkgdesc()
@@ -567,7 +571,7 @@ package_select_install()
 		if [ "$repro" = "extra" ]; then
 			echo $i|egrep -q "$extrapkgs$locpkgs" || state=off
 		fi
-		echo -n "$i \"(`pkgdesc $pacbindir/$reponame.fdb $pacbindir/$i`, `pkgsize $pacbindir/$i`)\" $state ">>$pkglstselect
+		echo -n "$i \"(`pkgdesc $pacbindir/$reponame.fdb $pacbindir/$i`, `pkgsize $pacbindir/$reponame.fdb $pacbindir/$i`)\" $state ">>$pkglstselect
 	done
 	rm $prepkglst
 	$pkglstselect 2>$whichselected || leave "$selectpkgsbacktitle"
@@ -631,11 +635,11 @@ install_packages()
 {
 	repro=$1
 	if [ "$repro" = "frugalware" ]; then
-		reproname="current"
+		reproname="frugalware-current"
 		pkglstf="$bindir/../Packages.lst"
 		pacbindir=$bindir
 	elif [ "$repro" = "extra" ]; then
-		reproname="extra"
+		reproname="extra-current"
 		pkglstf="$exbindir/../Packages.lst"
 		pacbindir=$exbindir
 	fi
