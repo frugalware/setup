@@ -2,12 +2,20 @@
 
 bindir=/root/programz/frugalware/frugalware-current/frugalware
 core=(glibc ncurses bash coreutils popt chkconfig)
+logdev=/dev/tty4
+
+### mkswap -c, clear
 
 # do NOT modify anything above this line
 
 . en
 
-# strings 
+### strings 
+# swap section
+swapparts=
+setswapbacktitle="$setswap - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
+
+# packages section
 selcat=
 selpkg=
 instlog=
@@ -18,7 +26,43 @@ categorysearchbacktitle=$selectcategoriesbacktitle
 pkgsearchbacktitle=$selectpkgsbacktitle
 installpkgsbacktitle="$instpkgstring - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
 
-# functions
+### functions
+# swap section
+
+selswappart()
+{
+	fdisk -l|grep -q 'Linux swap$'
+	if [ "$?" != 0 ]; then
+		dialog --backtitle "$setswapbacktitle" --title "$noswaptitle" \
+			--yesno "$noswap" 0 0 || exit 1
+	else
+		swapqfile=`mktemp`
+		swapafile=`mktemp`
+		chmod +x $swapqfile
+		echo -n "dialog --backtitle \"$setswapbacktitle\" --title \"$detectedswapt\" --checklist \"$detectedswapd\" 0 0 0 ">$swapqfile
+		fdisk -l|grep 'Linux swap$'|tr -s ' '|sed 's/\(.*\) [0-9]* [0-9]* [0-9+]* [0-9]* \(.*\)/\1 "\2" On \\/'>>$swapqfile
+		echo >>$swapqfile
+		$swapqfile 2>$swapafile
+		rm $swapqfile
+		swapparts=`cat $swapafile|sed 's/"//g'`
+		rm $swapafile
+	fi
+}
+
+doswap ()
+{
+	for i in $*
+	do
+		dialog --backtitle "$setswapbacktitle" --title "$formatpartst" --infobox "$formatpartsd1 $i $formatpartsd2" 0 0
+		echo mkswap -c $i >$logdev
+		sleep 4
+		[ -d etc/ ] || mkdir etc
+		printf "%-16s %-16s %-11s %-16s %-3s %s\n" "$i" "swap" "swap" "defaults" "0" "0" >>etc/fstab
+	done
+}
+
+# packages section
+
 info()
 {
 	echo -e "\033[1;32m==>\033[1;0m \033[1;1m$1\033[1;0m" >&2
@@ -147,7 +191,9 @@ install_packages()
 }
 
 # main
-category_select
-package_select $selcat
-install_packages $selpkg
+selswappart # selected swap partitions now in $swapparts
+doswap $swapparts # format selected partitions
+category_select # selected categories now in $selcat
+package_select $selcat # select packages
+install_packages $selpkg # install packages
 #clear

@@ -1,4 +1,16 @@
 setup="Setup"
+
+# swap section
+setswap="Setting up swap space"
+noswaptitle="No swap partition detected"
+noswap="You have not created a swap partition. Do you want to continue installing without one?"
+detectedswapt="Swap partitions detected"
+detectedswapd="Please select which swap partitions do you want Frugalware to use:"
+formatpartst="Formatting swap partitions"
+formatpartsd1="Formatting"
+formatpartsd2="as a swap partition and checking for bad blocks"
+
+# packages section
 categorychk="Searching for categories. Please wait..."
 pkgchk="Searching for packages. Please wait..."
 categorystring="Selecting categories"
