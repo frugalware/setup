@@ -17,7 +17,7 @@ ask_lang()
 	langf=`mktemp /tmp/tmp.XXXXXX`
 	dialog --backtitle "$langbacktitle" --title "$sellangt" \
 		--aspect 20 --menu "$sellangd" 0 0 0 \
-		"en" "$end" "de" "$ded" "it" "$itd" "hu" "$hud" \
+		"en" "$end" "de" "$ded" "hu" "$hud" "it" "$itd" \
 		2>$langf || exit 1
 	language=`cat $langf`
 	rm $langf
@@ -675,6 +675,8 @@ install_packages()
 		leave "$errinstpkg"
 	fi
 	rm $pkginstall
+	[ "$name" = "base" ] &&
+		(chroot ./ /sbin/grubconfig  && clear || leave "$confbacktitle") # configure grub
 }
 
 cd_change()
@@ -691,6 +693,8 @@ cd_change()
 		next=`cat $nextf`
 		rm $nextf
 		if [ "$next" = "$quit" ]; then
+			[ -h $target/var/cache/pacman/pkg ] && \
+				rm $target/var/cache/pacman/pkg
 			return 1
 		else
 			search_source
@@ -802,7 +806,6 @@ conf_kernel_modules || leave "$confbacktitle"
 conf_passwd || leave "$confbacktitle"
 echo "font=$font" >>$target/etc/sysconfig/font # save the console font
 chroot ./ /sbin/netconfig || leave "$confbacktitle" # configure network
-chroot ./ /sbin/grubconfig || leave "$confbacktitle" # configure grub
 chroot ./ /sbin/timeconfig || leave "$confbacktitle" # configure timezones
 chroot ./ /sbin/mouseconfig || leave "$confbacktitle" # configure gpm
 pacman -r /mnt/target -Q xorg >$logdev 2>&1 && chroot ./ /sbin/xconfig # conf x

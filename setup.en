@@ -10,7 +10,7 @@ sellangd="Please select your language from the list. If your language is not in 
 end="English"
 ded="German / Deutsch (incomplete)"
 itd="Italian / Italiano (incomplete)"
-hud="Hungarian / magyar (incomplete)"
+hud="Hungarian / magyar"
 
 # greeting section
 welcome="Welcome to Frugalware $osver"
