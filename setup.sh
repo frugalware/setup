@@ -5,8 +5,8 @@ core=(glibc ncurses bash coreutils popt chkconfig)
 logdev=/dev/tty4
 target=/mnt/target
 
-### clear;mkswap
-#mkfs!!!
+### clear
+### mkswap -c!!!
 
 # do NOT modify anything above this line
 
@@ -68,7 +68,8 @@ doswap ()
 	for i in $*
 	do
 		dialog --backtitle "$setswapbacktitle" --title "$formatpartst" --infobox "$formatpartsd1 $i $formatpartsd2" 0 0
-		echo mkswap -c $i >$logdev
+		#mkswap -c $i >$logdev
+		mkswap $i >$logdev
 		printf "%-16s %-16s %-11s %-16s %-3s %s\n" "$i" "swap" "swap" "defaults" "0" "0" >>$prefstab
 	done
 }
@@ -123,7 +124,7 @@ mkfss() # $1 which device, $2 which fs, $3 how: $formatt or $checkt
 	elif [ "$2" = "reiserfs" ]; then
 		echo y | mkreiserfs $1 >$logdev 2>&1
 	elif [ "$2" = "ext3" ]; then
-		echo mke2fs -j $opts $1 >$logdev 2>&1
+		mke2fs -j $opts $1 >$logdev 2>&1
 	elif [ "$2" = "jfs" ]; then
 		mkfs.jfs -q $opts $1 >$logdev 2>&1
 	elif [ "$2" = "xfs" ]; then
