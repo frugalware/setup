@@ -137,7 +137,7 @@ install_packages()
 	info "$instpkg"
 	pkginstall=`mktemp`
 	chmod +x $pkginstall
-	echo -n "yes |pacman -S -r ./ ${core[@]} ">$pkginstall
+	echo -n "pacman -S -r ./ --noconfirm ${core[@]} ">$pkginstall
 	for i in $*
 	do
 		echo -n "$i ">>$pkginstall
