@@ -220,6 +220,7 @@ doswap ()
 	do
 		dialog --backtitle "$setswapbacktitle" --title "$formatpartst" --infobox "$formatpartsd1 $i $formatpartsd2" 0 0
 		mkswap -c $i >$logdev
+		swapon $i >$logdev
 		printf "%-16s %-16s %-11s %-16s %-3s %s\n" "$i" "swap" "swap" "defaults" "0" "0" >>$prefstab
 	done
 }
