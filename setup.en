@@ -1,5 +1,14 @@
 setup="Setup"
 
+# partitioning section
+partitioning="Creating partitions"
+selppt="Select partitioning program"
+selppd="Select which program do you want to use for partitioning:"
+selhdt="Select a hard disk to partition"
+selhdd="Please select a hard disk to partition. The following one are available:"
+fdiskd="The traditional partitioning program for Linux"
+cfdiskd="User frendly (curses based) version of fdisk"
+
 # swap section
 setswap="Setting up swap space"
 noswaptitle="No swap partition detected"

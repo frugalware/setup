@@ -13,6 +13,9 @@ logdev=/dev/tty4
 . setup.en
 
 ### strings 
+# partitioning section
+partitioningbacktitle="$partitioning - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
+
 # swap section
 swapparts=
 setswapbacktitle="$setswap - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
@@ -37,6 +40,39 @@ pkgsearchbacktitle=$selectpkgsbacktitle
 installpkgsbacktitle="$instpkgstring - FrugalWare `cat /etc/frugalware-release |cut -d ' ' -f 2` $setup"
 
 ### functions
+# partitioning section
+
+parthd()
+{
+	selppf=`mktemp /tmp/tmp.XXXXXX`
+	dialog --clear --backtitle "$partitioningbacktitle" --title "$selppt" \
+		--default-item cfdisk --menu "$selppd" 0 0 0 \
+		"fdisk" "$fdiskd" \
+		"cfdisk" "$cfdiskd" 2>$selppf || return 1
+	selpp=`cat $selppf`
+	rm $selppf
+	$selpp $1
+}
+
+selhd()
+{
+	while /bin/true
+	do
+		selhdm=`mktemp /tmp/tmp.XXXXXX`
+	        chmod +x $selhdm
+	        selhddevf=`mktemp /tmp/tmp.XXXXXX`
+		echo "dialog --clear --backtitle \"$partitioningbacktitle\" --title \"$selhdt\" \\" >$selhdm
+		echo "--ok-label \"$select\" --cancel-label \"$continue\" --menu \"$selhdd\" 0 0 0 \\">>$selhdm
+		fdisk -l|grep ^Disk|sed 's/^Disk \(.*\): \([0-9].*\), [0-9].*$/"\1" "\2" \\/'>>$selhdm
+		echo "2>$selhddevf">>$selhdm
+		$selhdm || break; # aborted when choosing hds
+		rm $selhdm
+		selhddev=`cat $selhddevf`
+		rm $selhddevf
+		parthd $selhddev
+	done
+}
+
 # swap section
 
 selswappart()
@@ -210,7 +246,7 @@ setup_linux() {
 		chmod +x $sellinuxparts
 		linuxpartsf=`mktemp /tmp/tmp.XXXXXX`
 		echo "dialog --backtitle \"$miscdevbacktitle\" --title \"$sellinuxpartst\" \\" >$sellinuxparts
-		echo "--ok-label \"$select\" --cancel-label "$continue" --menu \"$sellinuxpartsd\" 0 0 0 \\">>$sellinuxparts
+		echo "--ok-label \"$select\" --cancel-label \"$continue\" --menu \"$sellinuxpartsd\" 0 0 0 \\">>$sellinuxparts
 		lstparts $sellinuxparts
 		echo "2>$linuxpartsf">>$sellinuxparts
 		$sellinuxparts || break; # aborted when choosing linux parts
@@ -409,6 +445,9 @@ install_packages()
 }
 
 ### main
+# partitioning section
+selhd # this will select hard disks, and then call fdisk/cfdisk/etc
+
 # swap section
 selswappart # selected swap partitions now in $swapparts
 doswap $swapparts # format selected partitions
