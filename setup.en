@@ -118,6 +118,7 @@ quitd="Quit installing packages and finish up"
 instpkg="Installing selected packages"
 doneinstpkg="Done installing selected packages"
 errinstpkg="Errors occured while installing selected packages"
+pressenter="Press ENTER to continue..."
 
 # configure section
 confstring="Configuring the installed system"

@@ -9,7 +9,6 @@ target=/mnt/target
 core="bash coreutils chkconfig frugalware grep sed"
 extrapkgs="k3b-i18n"
 logdev=/dev/tty4
-sleepcmd="sleep 5"
 
 ### before strings
 ask_lang()
@@ -721,7 +720,8 @@ install_packages()
 		info "$doneinstpkg ($name $sect)"
 	else
 		info "$errinstpkg"
-		$sleepcmd
+		info "$pressenter"
+		read junk
 		leave "$errinstpkg"
 	fi
 	rm $pkginstall

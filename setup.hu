@@ -101,6 +101,7 @@ quitd="Kilépés a csomagtelepítésbõl és befejezés"
 instpkg="Kiválasztott csomagok telepítése"
 doneinstpkg="Kiválasztott csomagok telepítésének vége"
 errinstpkg="Hiba merült fel a kiválasztott csomagok telepítése közben"
+pressenter="Üssön ENTER-t a folytatáshoz..."
 
 # configure section
 confstring="A telepített rendszer beállítása"
