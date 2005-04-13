@@ -794,10 +794,10 @@ leave() # $1: backtitle, $2: title, $3: text
 	[ -z "$1" ] && return 1
 	[ -z "$2" ] && reboottitle="$ferrort" || reboottitle="$2"
 	[ -z "$3" ] && reboottext="$ferrord" || reboottext="$3"
+	[ -h $target/var/cache/pacman/pkg ] && \
+		rm $target/var/cache/pacman/pkg
 	dialog --aspect 20 --backtitle "$1" --title "$reboottitle" \
 	--yesno "$reboottext" 0 0
-			[ -h $target/var/cache/pacman/pkg ] && \
-				rm $target/var/cache/pacman/pkg
 	if [ "$?" = 0 ]; then
 		clear
 		/sbin/reboot
