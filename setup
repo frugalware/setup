@@ -866,6 +866,7 @@ chroot ./ /sbin/netconfig || leave "$confbacktitle" # configure network
 chroot ./ /sbin/timeconfig || leave "$confbacktitle" # configure timezones
 chroot ./ /sbin/mouseconfig || leave "$confbacktitle" # configure gpm
 pacman -r /mnt/target -Q xorg >$logdev 2>&1 && chroot ./ /sbin/xconfig # conf x
+pacman -r /mnt/target -Q xorg >$logdev 2>&1 && chroot ./ /sbin/xwmconfig --silent
 
 # end
 leave "$confbacktitle" "$endsetupt" "$endsetupd"
