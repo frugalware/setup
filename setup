@@ -641,16 +641,18 @@ package_select_install()
 				install_packages $repo `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
 			fi
 		done
-		cd_change || skip=1
-		if [ "$skip" != 1 ]; then
-			clear
-			for i in x11 xlib xapps xfce4 gnome kde
-			do
-				if [ -e /tmp/pkgcat/$i ]; then
-					selpkg=`cat /tmp/pkgcat/$i`
-					install_packages $repo `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
-				fi
-			done
+		if [ -e /tmp/pkgcat/x11 -o -e /tmp/pkgcat/xlib -o -e /tmp/pkgcat/xapps -o -e /tmp/pkgcat/xfce4 -o -e /tmp/pkgcat/gnome -o -e /tmp/pkgcat/kde ]; then
+			cd_change || skip=1
+			if [ "$skip" != 1 ]; then
+				clear
+				for i in x11 xlib xapps xfce4 gnome kde
+				do
+					if [ -e /tmp/pkgcat/$i ]; then
+						selpkg=`cat /tmp/pkgcat/$i`
+						install_packages $repo `echo $i|sed 's|.*/\(.*\)$|\1|'` $selpkg
+					fi
+				done
+			fi
 		fi
 	elif [ "$repo" = "extra" ]; then
 		if ! [ -z $* ]; then
