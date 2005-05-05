@@ -1,0 +1,142 @@
+# (c) 2003-2004 Vajna Miklos <mamajom@axelero.hu>
+# (c)           Patrick J. Volkerding, <volkerdi@slackware.com>
+
+setup="Setup"
+
+# selecting language section - it's NO good translating this section
+sellang="Selecting language"
+sellangt="Please select your language"
+sellangd="Please select your language from the list. If your language is not in the list, you probably should choose English."
+end="English"
+ded="German / Deutsch (incomplete)"
+itd="Italian / Italiano (incomplete)"
+hud="Hungarian / magyar"
+skd="Slovak / Slovensky"
+
+
+# Wilkkommens Sektion
+welcome="Willkommen zu Frugalware $osver"
+greetstring="Willkommen bei den Anwendern von Frugalware!\n\n \
+Beim Erstellen von Frugalware war es unser Ziel, dass Sie ihre Arbeit schneller und einfacher erledigen können. Wir hoffen, das Ihnen unser Produkt gefällt.\n\n \
+Frugalware developers"
+
+# keyboard Sektion
+kbdconf="Einstellen des Keyboard"
+selmapt="Auswahl der Zeichenkarte für das Keyboard"
+selmapd="Sie können eine der folgenden Zeichensätze auswählen. 
+Falls sie keinen Zeichensatz auswählen,  'qwerty/us.map.gz' (der Zeichensatz für US Keyboard) ist die Voreinstellung. Verwenden Sie die RAUF/RUNTER Pfeiltasten, und die BildRauf/BildRunter Tasten um durch die ganze Auswahl zu stöbern."
+
+# hotplug Sektion
+hotplug="Erkennen der Hardware"
+hotplugt="Bitte warten Sie"
+hotplugd="Suchen nach SCSI und PCI Karten"
+
+# Auswählen des Quellen Datenträger
+searchmedia="Auswählen des Quellen Datenträger"
+scanmediat="Suchen"
+scanmediad="Suche nach einem CD/DVD Laufwerk mit einer Frugalware Installations CD-ROM/DVD"
+mediafoundt="CD/DVD Laufwerk gefunden"
+mediafoundd="Ein Frugalware Installations Datenträger wurde gefunden im Laufwerk"
+
+# Partitions Sektion
+partitioning="Erstellen der Partitionen"
+selppt="Wählen Sie das Partitionierungs Programm aus"
+selppd="Wählen Sie aus, welches Programm sie für die Partitionierung verwenden möchten:"
+selhdt="Wählen Sie eine Festplatte zum Partitionieren aus"
+selhdd="Bitte wählen Sie eine Festplatte zum Partitionieren aus. Die folgenden sind verfügbar:"
+fdiskd="Das traditionelle Partitionierungs Programm für Linux"
+cfdiskd="Anwender freundliche (basierend auf curses) Version von fdisk"
+
+# swap Sektion
+setswap="Einrichten des SWAP Bereiches"
+noswaptitle="Keine swap Partition erkannt"
+noswap="Sie haben keine swap Partition erstellt. Wollen Sie die Installation ohne swap Partition weiter führen?"
+detectedswapt="Swap Partition erkannt"
+detectedswapd="Bitte wählen sie aus, welche swap Partition sie für Frugalware verwenden möchten:"
+formatpartst="Formatiere swap Partition"
+formatpartsd1="Formatiere"
+formatpartsd2="als eine swap Partition und kontrollieren nach schlechten Bereichen"
+
+# rootdev Sektion
+rootdevstring="Erstellen der Root Partition"
+miscdevstring="Einrichten der Partitionen"
+selrootdevt="Wähle Linux Installations Partition"
+select="Auswählen"
+continue="Fortführen"
+selrootdevd="Bitte wählen Sie eine Partition von der folgenden Liste, die als ihre Root (/) Partition verwendet wird."
+formatpart="Formatiere Partition"
+wantformatq="Wenn diese Partition nicht formatiert wurde, so sollten sie dies tun. \n ANMERKUNG: Das wird alle Information darauf löschen.  Wollen Sie diese Partition formatieren?"
+formatt="Formatiere"
+fromatd="Schnelles Formatieren ohne schlechte Bereichsüberprüfung"
+checkt="Prüfen"
+checkd="Langsames Formatieren mit Prüfen nach schlechten Bereichen"
+nofromatt="Nein"
+noformatd="Nein, formatiere nicht diese Partition"
+ext2predesc="Ext2 ist das traditionelle Linux Datei System und ist schnell und stabil.\n"
+reiserpredesc="ReiserFS ist ein Journaling Datei System, welches alle Dateien und Dateinamen in einer balancierten Baumstruktur speichert.\n"
+ext3predesc="Ext3 ist die Journaling Variante des Ext2 Datei Systemes.\n"
+jfspredesc="JFS ist IBM's Journaled Datei System, welches zur Zeit in IBM Firmen Servern verwendet wird.\n"
+xfspredesc="XFS ist SGI's Journaling Datei System mit Ursprung auf IRIX.\n"
+selectfst="Wähle Datei System für"
+selectfsd="Bitte wählen sie die Art des Dateisystems aus für ihre Festplatte. Hier folgen die Beschreibungen der verfügbaren Datei Systeme:\n"
+ext2shortdesc="Standard Linux ext2fs Datei System"
+reisershortdesc="Hans Reiser's journaling Datei System"
+ext3shortdesc="Journaling Variante des ext2fs Datei Systemes"
+jfsshortdesc="IBM's journaled Datei System"
+xfsshortdesc="SGI's journaling filesystem"
+duringformatt="Formatiere"
+formatdevicestring="Formatiere Laufwerk:"
+formatfsstring="Datei System:"
+
+# linux Partitions Sektion
+
+sellinuxpartst="Wähle andere Linux Partition aus für /etc/fstab"
+sellinuxpartsd="Sie scheinen mehr als eine Partition des Linux Typ zu haben. Sie können diese verwenden, um ihr Linux System über mehr als eine Partition zu verteilen.  Gegenwärtig haben Sie nur die / Partition eingebunden. Sie wollen vielleicht Verzeichnisse wie /home oder /usr/local auf separaten Partitionen einbinden. Sie sollten nicht Verzeichnisse wie /etc, /sbin, oder /bin auf eine eigene Partition einbinden, da diese Verzeichnisse Anwendungen besitzen, die zum Starten des Systems und zum einbinden von Partitionen notwendig sind. Ausserdem, verwenden Sie nicht erneut eine Partition, die Sie bereits eingegeben haben. Bitte wählen Sie eine der folgenden Linux Partitionen aus, oder - sofern Sie fertig sind - drücken sie <$continue>"
+inuse="in Verwendung"
+askwherelt="Wähle Einbindungs Punkt (mount points) aus"
+askwhereld="Sie müssen angeben, wo sie die neuen Partitionen einbinden möchten. Als Beispiel, wenn Sie sie nach /usr/local einbinden möchten, dann geben sie ein: /usr/local\n\n Wo wollen Sie ihre Partition einbinden?"
+
+# dos partitions section
+
+seldospartst="Wählen Sie die Partition aus, die zu /etc/fstab hinzugefügt werden soll"
+seldospartsd="Damit diese Partitionen sichtbar sind unter Linux, müssen wir sie zu der Datei /etc/fstab hinzufügen. Bitte wählen Sie eine Partition aus, die zu /etc/fstab hinzugefügt werden soll, und sofern Sie fertig sind, drücken Sie <$continue>"
+
+# packages section
+categorychk="Suchen nach Kategorien. Bitte warten Sie..."
+pkgchk="Suchen nach Packeten. Bitte warten Sie..."
+categorystring="Wähle aus Kategorien"
+pkgstring="Wähle aus Packete"
+instpkgstring="Installiere Packete"
+sect="Sektion" #wird derart dargestellt: Installiere Packete (Grund Sektion)
+pleaseselectcategories="Bitte wählen Sie aus, welche Kategorien Sie installieren möchten"
+pleaseselectpkgs="Bitte wählen Sie aus, welche Packete Sie installieren möchten"
+
+neednextt="Legen Sie das nächste Medium ein"
+neednextd="Bitte legen sie das nächste Frugalware Installationsmedium ein und drücken Sie Enter um die Installation der Packete fortzuführen."
+continued="Installiere Packete von der nächsten Diskette/CD/DVD"
+quit="Beenden"
+quitd="Beenden des Installieren von Packeten und Aufräumen"
+
+instpkg="Installiere ausgewählte Packete"
+doneinstpkg="Fertig mit der Installation der ausgewählten Packete"
+errinstpkg="Fehler traten auf während die ausgewählten Packete installiert wurden"
+pressenter="Drücken Sie ENTER um fortzusetzen..."
+
+# Konfigurations Sektion
+confstring="Konfiguration des Installierten System"
+confkmodt="Konfiguration der Kernel Module"
+confkmodd="Aktualisieren der Modul-Abhängigkeiten..."
+
+nopasswdt="Kein Root Password gefunden"
+nopasswdd="Es gibt zur Zeit kein Passwort für den System Administrator (Root). Es wird empfohlen, das Sie ein Password nun setzen, so dass es bereits beim Ersten Reboot verfügbar ist. Das ist besonders wichtig wenn sie einen Kernel benutzen, der netzwerkfähig ist, und die Maschine an ein LAN angeschlossen ist, das Zugang zum Internet hat. Wollen Sie ein Root Password setzen?"
+
+nonormalusert="Kein normaler Benutzer erkannt"
+nonormaluserd="Zur Zeit gibt es keinen Nicht-Root Benutzer. Es wird sehr empfohlen, einen Nicht-Root Benutzer zu erstellen. Wollen Sie nun einen normalen Benutzer erstellen?"
+
+endsetupt="Setup vollständig"
+erebootd="Sofern sie etwas besonderes durchführen möchten, drücken sie auf Nein, und sie erhalten eine Shell. Wollen Sie ihren Computer neu starten?"
+endsetupd="System Installation und Konfiguration wurde erfolgreich beendet. Wir hoffen das Frugalware $osver Sie zufrieden stellen wird. $erebootd"
+ferrort="Installations Fehler"
+ferrord="Es gab einen fatalen Fehler während der Installation. $erebootd"
+
+# vim: ft=sh
