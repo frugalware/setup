@@ -171,7 +171,7 @@ kernel:
 	mkdir $(BDIR)
 	rm -rf kernel
 	mkdir -p kernel
-	cd $(BDIR) && tar xjf ../$(CDIR)/linux-$(KERNELVER).tar.bz2
+	cd $(BDIR) && tar xjf ../$(CDIR)/linux-$(KERNELVER).tar.bz2; \
 	cd linux-$(KERNELVER); \
 	for i in $(kpatches); do \
 		patch -p1 < ../../$(CDIR)/$$i; \
