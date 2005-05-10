@@ -69,7 +69,7 @@ clean:
 	rm -rf $(BDIR) $(MDIR) $(packages)
 
 distclean: clean
-	rm -rf $(CDIR) vmlinuz-$(KERNELVER)-fw$(KERNELREL)
+	rm -rf $(CDIR)/* vmlinuz-$(KERNELVER)-fw$(KERNELREL)
 
 merge: $(packages)
 	rm -rf $(MDIR)
