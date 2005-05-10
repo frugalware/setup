@@ -53,8 +53,17 @@ packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 kpatches = linux-$(KERNELVER)-2.6.11.7.diff linux-2.6-seg-5.patch \
 	   bootsplash-3.1.4-$(KERNELVER).diff
+sources = $(kpatches) bash-$(BASHVER).fpm busybox-$(BUSYVER).tar.gz \
+	  dhcpcd-$(DHCPVER).fpm dialog-$(DIALOGVER).fpm \
+	  e2fsprogs-$(E2VER).fpm eject-$(EJECTVER).fpm frugalware-$(FWVER).fpm \
+	  glibc-$(LIBCVER).fpm kbd-$(KBDVER).fpm linux-$(KERNELVER).tar.bz2 \
+	  lynx-$(LYNXVER).fpm module-init-tools-$(MODULEVER).fpm \
+	  ncurses-$(NCVER).fpm netkit-base-$(NETKITVER).fpm \
+	  net-tools-$(NETVER).fpm pacman-$(PACVER).fpm \
+	  reiserfsprogs-$(REISERVER).fpm udev-$(UDEVVER).tar.gz \
+	  util-linux-$(UTILVER).fpm
 
-compile: $(packages) misc
+compile: check $(packages) misc
 
 clean:
 	rm -rf $(BDIR) $(MDIR) $(packages)
@@ -93,6 +102,11 @@ initrd: devices
 	umount initrd.img
 	rmdir i
 	gzip -9 initrd.img
+
+check:
+	@for i in $(sources); do \
+		ls cache/$$i || exit 1; \
+	done
 
 bash:
 	rm -rf $(BDIR)
