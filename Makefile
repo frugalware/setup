@@ -89,7 +89,7 @@ bash:
 	mkdir $(BDIR)
 	rm -rf bash
 	mkdir -p bash/{bin,etc}
-	cd $(BDIR) && tar xvzf ../$(CDIR)/bash-$(BASHVER).fpm
+	cd $(BDIR) && tar xzf ../$(CDIR)/bash-$(BASHVER).fpm
 	cp -a $(BDIR)/bin/bash bash/bin/
 	echo "root:x:0:0::/root:/bin/sh" >bash/etc/passwd
 
@@ -99,7 +99,7 @@ busybox:
 	rm -rf busybox
 	mkdir -p busybox/mnt/{source,target}
 	mkdir -p busybox/tmp
-	cd $(BDIR) && tar xvzf ../$(CDIR)/busybox-$(BUSYVER).tar.gz
+	cd $(BDIR) && tar xzf ../$(CDIR)/busybox-$(BUSYVER).tar.gz
 	cp $(CONFDIR)/busybox.config $(BDIR)/busybox-$(BUSYVER)/.config
 	cd $(BDIR)/busybox-$(BUSYVER); \
 	sed -i "s/-march=i686/$(CFLAGS)/" .config; \
@@ -119,7 +119,7 @@ e2fsprogs:
 	mkdir $(BDIR)
 	rm -rf e2fsprogs
 	mkdir -p e2fsprogs/{sbin,lib}
-	cd $(BDIR) && tar xvzf ../$(CDIR)/e2fsprogs-$(E2VER).fpm
+	cd $(BDIR) && tar xzf ../$(CDIR)/e2fsprogs-$(E2VER).fpm
 	cp -a $(BDIR)/sbin/{mke2fs,e2fsck} e2fsprogs/sbin/
 	cp -a $(BDIR)/lib/{libblkid*,libcom_err*,libe2p*,libext2fs*,libuuid*} e2fsprogs/lib/
 	mkdir e2fsprogs/etc/
@@ -130,7 +130,7 @@ reiserfsprogs:
 	mkdir $(BDIR)
 	rm -rf reiserfsprog
 	mkdir -p reiserfsprogs/sbin
-	cd $(BDIR) && tar xvzf ../$(CDIR)/reiserfsprogs-$(REISERVER).fpm
+	cd $(BDIR) && tar xzf ../$(CDIR)/reiserfsprogs-$(REISERVER).fpm
 	cp -a $(BDIR)/sbin/{mkreiserfs,reiserfsck} reiserfsprogs/sbin/
 	mkdir reiserfsprogs/etc/
 	touch reiserfsprogs/etc/fstab
@@ -139,7 +139,7 @@ lynx:
 	mkdir $(BDIR)
 	rm -rf lynx
 	mkdir -p lynx/usr/bin lynx/usr/lib
-	cd $(BDIR) && tar xvzf ../$(CDIR)/lynx-$(LYNXVER).fpm
+	cd $(BDIR) && tar xzf ../$(CDIR)/lynx-$(LYNXVER).fpm
 	cp -a $(BDIR)/usr/bin/lynx lynx/usr/bin/
 	cp -a $(BDIR)/usr/lib/lynx.cfg lynx/usr/lib/
 
@@ -148,7 +148,7 @@ dhcpcd:
 	mkdir $(BDIR)
 	rm -rf dhcpcd
 	mkdir -p dhcpcd/sbin
-	cd $(BDIR) && tar xvzf ../$(CDIR)/dhcpcd-$(DHCPVER).fpm
+	cd $(BDIR) && tar xzf ../$(CDIR)/dhcpcd-$(DHCPVER).fpm
 	cp -a $(BDIR)/sbin/dhcpcd dhcpcd/sbin/
 
 frugalware:
@@ -156,7 +156,7 @@ frugalware:
 	mkdir $(BDIR)
 	rm -rf frugalware
 	mkdir -p frugalware/{var/lib/frugalware/messages/,etc}
-	cd $(BDIR) && tar xvzf ../$(CDIR)/frugalware-$(FWVER).fpm
+	cd $(BDIR) && tar xzf ../$(CDIR)/frugalware-$(FWVER).fpm
 	cp -a $(BDIR)/var/lib/frugalware/messages/rc.messages \
 	        frugalware/var/lib/frugalware/messages/
 	cp $(BDIR)/etc/frugalware-release frugalware/etc/
@@ -167,7 +167,7 @@ net-tools:
 	rm -rf net-tools
 	mkdir -p net-tools/{etc/rc.d/,etc/sysconfig/,sbin/} \
 		net-tools/var/lib/frugalware/{messages,system}
-	cd $(BDIR) && tar xvzf ../$(CDIR)/net-tools-$(NETVER).fpm; \
+	cd $(BDIR) && tar xzf ../$(CDIR)/net-tools-$(NETVER).fpm; \
 	cp -a var/lib/frugalware/messages/* \
 		../net-tools/var/lib/frugalware/messages/; \
 	sed -i 's/^\(gethostname .*\)/# \1\nhname=frugalware\ndname=example.net/;s/--default-item lo/--default-item dhcp/' \
@@ -184,7 +184,7 @@ glibc:
 	mkdir $(BDIR)
 	rm -rf glibc
 	mkdir -p glibc/lib
-	cd $(BDIR) && tar xvzf ../$(CDIR)/glibc-$(LIBCVER).fpm
+	cd $(BDIR) && tar xzf ../$(CDIR)/glibc-$(LIBCVER).fpm
 	cp -a $(BDIR)/lib/{ld*,libc*,libm*,libdl*,libnss*,libresolv*} glibc/lib/
 
 kbd:
@@ -226,7 +226,7 @@ module-init-tools:
 	mkdir $(BDIR)
 	rm -rf module-init-tools
 	mkdir -p module-init-tools/{bin,sbin}
-	cd $(BDIR) && tar xvzf ../$(CDIR)/module-init-tools-$(MODULEVER).fpm
+	cd $(BDIR) && tar xzf ../$(CDIR)/module-init-tools-$(MODULEVER).fpm
 	cp -a $(BDIR)/bin/* module-init-tools/bin/
 	cp -a $(BDIR)/sbin/* module-init-tools/sbin/
 
@@ -244,7 +244,7 @@ pacman:
 	mkdir $(BDIR)
 	rm -rf pacman
 	mkdir -p pacman/bin pacman/etc/pacman.d/
-	cd $(BDIR) && tar xvzf ../$(CDIR)/pacman-$(PACVER).fpm
+	cd $(BDIR) && tar xzf ../$(CDIR)/pacman-$(PACVER).fpm
 	cp -a $(BDIR)/usr/bin/pacman.static pacman/bin/pacman
 	cp -a $(BDIR)/usr/bin/vercmp pacman/bin/
 	cp -a $(BDIR)/etc/pacman.d/* pacman/etc/pacman.d/
@@ -275,7 +275,7 @@ eject:
 	mkdir $(BDIR)
 	rm -rf eject
 	mkdir -p eject/bin
-	cd $(BDIR) && tar xvzf ../$(CDIR)/eject-$(EJECTVER).fpm
+	cd $(BDIR) && tar xzf ../$(CDIR)/eject-$(EJECTVER).fpm
 	cp -a $(BDIR)/usr/bin/eject eject/bin/
 
 util-linux:
@@ -283,7 +283,7 @@ util-linux:
 	mkdir $(BDIR)
 	rm -rf util-linux
 	mkdir -p util-linux/{sbin,usr/bin}
-	cd $(BDIR) && tar xvzf ../$(CDIR)/util-linux-$(UTILVER).fpm
+	cd $(BDIR) && tar xzf ../$(CDIR)/util-linux-$(UTILVER).fpm
 	cp -a $(BDIR)/sbin/{cfdisk,fdisk} util-linux/sbin/
 	cp -a $(BDIR)/usr/bin/setterm util-linux/usr/bin/
 
@@ -292,5 +292,5 @@ netkit-base:
 	mkdir $(BDIR)
 	rm -rf netkit-base
 	mkdir -p netkit-base/etc
-	cd $(BDIR) && tar xvzf ../$(CDIR)/netkit-base-$(NETKITVER).fpm
+	cd $(BDIR) && tar xzf ../$(CDIR)/netkit-base-$(NETKITVER).fpm
 	cp -a $(BDIR)/etc/services netkit-base/etc/
