@@ -30,6 +30,13 @@ LIBCVER = 2.3.5-1
 KBDVER = 1.12-9
 KERNELVER = 2.6.11
 KERNELREL = 3
+MODULEVER = 3.1-4
+NCVER = 5.4-2
+PACVER = 2.9.5-8
+EJECTVER = 2.0.13-2
+UDEVVER = 057
+UTILVER = 2.12-15
+NETKITVER = 0.17-3
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
 export CFLAGS = -march=i686 -O2 -pipe
@@ -37,18 +44,30 @@ export CFLAGS = -march=i686 -O2 -pipe
 CDIR = cache
 CONFDIR = config
 BDIR = build
+MDIR = merge
 CWD=`pwd`
 
 packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
-	   net-tools glibc kbd kernel
+	   net-tools glibc kbd kernel module-init-tools ncurses pacman eject \
+	   udev util-linux netkit-base
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 kpatches = linux-$(KERNELVER)-2.6.11.7.diff linux-2.6-seg-5.patch \
 	   bootsplash-3.1.4-$(KERNELVER).diff
 
-compile: $(packages)
+compile: $(packages) merge
 
 clean:
-	rm -rf $(BDIR) $(packages)
+	rm -rf $(BDIR) $(MDIR) $(packages)
+
+distclean: clean
+	rm -rf $(CDIR) vmlinuz-$(KERNELVER)-fw$(KERNELREL)
+
+merge:
+	rm -rf $(MDIR)
+	mkdir $(MDIR)
+	for i in $(packages); do \
+		cp -a $$i/* $(MDIR)/; \
+	done
 
 bash:
 	rm -rf $(BDIR)
@@ -185,6 +204,80 @@ kernel:
 	cp arch/i386/boot/bzImage \
 		$(CWD)/../../vmlinuz-$(KERNELVER)-fw$(KERNELREL)
 	cd kernel/ && find . -name *ko|xargs gzip
+
+module-init-tools:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf module-init-tools
+	mkdir -p module-init-tools/{bin,sbin}
+	cd $(BDIR) && tar xvzf ../$(CDIR)/module-init-tools-$(MODULEVER).fpm
+	cp -a $(BDIR)/bin/* module-init-tools/bin/
+	cp -a $(BDIR)/sbin/* module-init-tools/sbin/
+
+ncurses:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf ncurses
+	mkdir -p ncurses/{lib,usr/share/terminfo/l}
+	cd $(BDIR) && tar xzf ../$(CDIR)/ncurses-$(NCVER).fpm
+	cp -a $(BDIR)/lib/libncurses* ncurses/lib/
+	cp -a $(BDIR)/usr/share/terminfo/l/linux ncurses/usr/share/terminfo/l/
+
+pacman:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf pacman
+	mkdir -p pacman/bin pacman/etc/pacman.d/
+	cd $(BDIR) && tar xvzf ../$(CDIR)/pacman-$(PACVER).fpm
+	cp -a $(BDIR)/usr/bin/pacman.static pacman/bin/pacman
+	cp -a $(BDIR)/usr/bin/vercmp pacman/bin/
+	cp -a $(BDIR)/etc/pacman.d/* pacman/etc/pacman.d/
+	echo "Include = /etc/pacman.d/frugalware-current" >> pacman/etc/pacman.conf
+	echo "Include = /etc/pacman.d/extra-current" >>pacman/etc/pacman.conf
+	echo "# Include = /etc/pacman.d/frugalware" >>pacman/etc/pacman.conf
+	echo "# Include = /etc/pacman.d/extra" >>pacman/etc/pacman.conf
+
+udev:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf udev
+	mkdir -p udev
+	cd $(BDIR) && tar xzf ../$(CDIR)/udev-$(UDEVVER).tar.gz; \
+	cd udev-$(UDEVVER); \
+	sed -i 's|udevdir =\t$${prefix}/udev|udevdir =\t$${prefix}/dev|' Makefile; \
+	make; \
+	make DESTDIR=$(CWD)/../../udev install
+	mkdir udev/etc/rc.d/
+	cat $(BDIR)/udev-$(UDEVVER)/extras/start_udev |sed 's/echo "/#echo "/' \
+		>udev/etc/rc.d/rc.udev
+	chmod 755 udev/etc/rc.d/rc.udev
+	mkdir udev/{proc,sys}
+	ln -s udevsend udev/sbin/hotplug
+
+eject:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf eject
+	mkdir -p eject/bin
+	cd $(BDIR) && tar xvzf ../$(CDIR)/eject-$(EJECTVER).fpm
+	cp -a $(BDIR)/usr/bin/eject eject/bin/
+
+util-linux:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf util-linux
+	mkdir -p util-linux/{sbin,usr/bin}
+	cd $(BDIR) && tar xvzf ../$(CDIR)/util-linux-$(UTILVER).fpm
+	cp -a $(BDIR)/sbin/{cfdisk,fdisk} util-linux/sbin/
+	cp -a $(BDIR)/usr/bin/setterm util-linux/usr/bin/
+
+netkit-base:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf netkit-base
+	mkdir -p netkit-base/etc
+	cd $(BDIR) && tar xvzf ../$(CDIR)/netkit-base-$(NETKITVER).fpm
+	cp -a $(BDIR)/etc/services netkit-base/etc/
 
 test:
 	@echo $(CWD)
