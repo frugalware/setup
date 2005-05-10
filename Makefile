@@ -54,7 +54,7 @@ fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 kpatches = linux-$(KERNELVER)-2.6.11.7.diff linux-2.6-seg-5.patch \
 	   bootsplash-3.1.4-$(KERNELVER).diff
 
-compile: $(packages) merge
+compile: $(packages) misc
 
 clean:
 	rm -rf $(BDIR) $(MDIR) $(packages)
@@ -68,6 +68,21 @@ merge:
 	for i in $(packages); do \
 		cp -a $$i/* $(MDIR)/; \
 	done
+
+misc: merge
+	cp src/setup* src/*.conf $(MDIR)/bin/
+	cp src/inittab $(MDIR)/etc/
+	cp src/rc.S $(MDIR)/etc/rc.d/
+	cp src/rc.hotplug $(MDIR)/etc/rc.d/
+	@echo "All done. Start 'make initrd' now."
+
+devices:
+	mknod -m 700 $(MDIR)/console c 5 1
+	mknod -m 600 $(MDIR)/null c 1 3
+	mknod -m 700 $(MDIR)/tty c 5 0
+	mknod -m 700 $(MDIR)/tty1 c 4 1
+	mknod -m 700 $(MDIR)/tty2 c 4 2
+	mknod -m 700 $(MDIR)/tty3 c 4 3
 
 bash:
 	rm -rf $(BDIR)
@@ -140,10 +155,11 @@ frugalware:
 	rm -rf $(BDIR)
 	mkdir $(BDIR)
 	rm -rf frugalware
-	mkdir -p frugalware/var/lib/frugalware/messages/
+	mkdir -p frugalware/{var/lib/frugalware/messages/,etc}
 	cd $(BDIR) && tar xvzf ../$(CDIR)/frugalware-$(FWVER).fpm
 	cp -a $(BDIR)/var/lib/frugalware/messages/rc.messages \
 	        frugalware/var/lib/frugalware/messages/
+	cp $(BDIR)/etc/frugalware-release frugalware/etc/
 
 net-tools:
 	rm -rf $(BDIR)
@@ -278,6 +294,3 @@ netkit-base:
 	mkdir -p netkit-base/etc
 	cd $(BDIR) && tar xvzf ../$(CDIR)/netkit-base-$(NETKITVER).fpm
 	cp -a $(BDIR)/etc/services netkit-base/etc/
-
-test:
-	@echo $(CWD)
