@@ -62,7 +62,7 @@ clean:
 distclean: clean
 	rm -rf $(CDIR) vmlinuz-$(KERNELVER)-fw$(KERNELREL)
 
-merge:
+merge: $(packages)
 	rm -rf $(MDIR)
 	mkdir $(MDIR)
 	for i in $(packages); do \
@@ -76,13 +76,23 @@ misc: merge
 	cp src/rc.hotplug $(MDIR)/etc/rc.d/
 	@echo "All done. Start 'make initrd' now."
 
-devices:
+devices: misc
 	mknod -m 700 $(MDIR)/console c 5 1
 	mknod -m 600 $(MDIR)/null c 1 3
 	mknod -m 700 $(MDIR)/tty c 5 0
 	mknod -m 700 $(MDIR)/tty1 c 4 1
 	mknod -m 700 $(MDIR)/tty2 c 4 2
 	mknod -m 700 $(MDIR)/tty3 c 4 3
+
+initrd: devices
+	dd if=/dev/zero of=initrd.img bs=1k count=$$(echo "$$(`which du` -s $(MDIR)|sed 's/^\(.*\)\t.*$$/\1/')+500"|bc)
+	/sbin/mke2fs -F initrd.img
+	mkdir i
+	mount -o loop initrd.img i
+	cp -a $(MDIR)/* i/
+	umount initrd.img
+	rmdir i
+	gzip -9 initrd.img
 
 bash:
 	rm -rf $(BDIR)
