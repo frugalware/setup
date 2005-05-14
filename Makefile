@@ -80,9 +80,12 @@ merge: $(packages)
 
 misc: merge
 	cp src/setup* src/*.conf $(MDIR)/bin/
+	chmod +x $(MDIR)/bin/setup
 	cp src/inittab $(MDIR)/etc/
 	cp src/rc.S $(MDIR)/etc/rc.d/
+	chmod +x $(MDIR)/etc/rc.d/rc.S
 	cp src/rc.hotplug $(MDIR)/etc/rc.d/
+	chmod +x $(MDIR)/etc/rc.d/rc.hotplug
 	@echo "All done. Start 'make initrd' now."
 
 devices: misc
