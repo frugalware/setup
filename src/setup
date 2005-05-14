@@ -263,7 +263,7 @@ doswap ()
 
 lstparts()
 {
-	for i in `fdisk -l 2>/dev/null|(grep -E 'Linux$ | raid';ls /dev/md* )|cut -d ' ' -f 1`
+	for i in `fdisk -l 2>/dev/null|(grep -E 'Linux$| raid';ls /dev/md* 2>/dev/null)|cut -d ' ' -f 1`
 	do
 		size=`fdisk -s $i`
 		unset altname
@@ -388,7 +388,7 @@ askwhere() # $1: which device
 }
 
 setup_linux() {
-	[ "`fdisk -l 2>/dev/null|(grep -E 'Linux$ | raid';ls /dev/md* )|wc -l|tr -s ' '|sed 's/ //'`" != 1 ] || return 1
+	[ "`fdisk -l 2>/dev/null|(grep -E 'Linux$| raid';ls /dev/md* 2>/dev/null)|wc -l|tr -s ' '|sed 's/ //'`" != 1 ] || return 1
 	while /bin/true
 	do
 		sellinuxparts=`mktemp /tmp/tmp.XXXXXX`
