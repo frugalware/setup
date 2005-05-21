@@ -32,7 +32,7 @@ LIBCVER = 2.3.5-1
 KBDVER = 1.12-9
 KERNELVER = 2.6.11
 KERNELREL = 6
-MODULEVER = 3.1-4
+MODULEVER = 3.1-5
 NCVER = 5.4-2
 PACVER = 2.9.5-8
 EJECTVER = 2.0.13-2
@@ -256,8 +256,7 @@ module-init-tools:
 	mkdir $(BDIR)
 	rm -rf module-init-tools
 	mkdir -p module-init-tools/{bin,sbin}
-	cd $(BDIR) && tar xzf ../$(CDIR)/module-init-tools-$(MODULEVER).fpm
-	cp -a $(BDIR)/bin/* module-init-tools/bin/
+	cd $(BDIR) && tar xzf ../$(CDIR)/module-init-tools-$(MODULEVER)-$(CARCH).fpm
 	cp -a $(BDIR)/sbin/* module-init-tools/sbin/
 
 ncurses:
