@@ -1,5 +1,7 @@
 # Makefile for Frugalware Linux Setup
 #
+# Compiling Time: ~45 minutes on factory.frugalware.org
+#
 # Copyright (C) 2005 Miklos Vajna <mamajom@axelero.hu>
 #
 # This program is free software; you can redistribute it and/or modify
