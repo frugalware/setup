@@ -100,6 +100,7 @@ initrd: devices
 	dd if=/dev/zero of=initrd.img bs=1k count=$$(echo "$$(`which du` -s $(MDIR)|sed 's/^\(.*\)\t.*$$/\1/')+500"|bc)
 	/sbin/mke2fs -F initrd.img
 	mkdir i
+	grep -q loop /proc/modules || /sbin/modprobe loop
 	mount -o loop initrd.img i
 	cp -a $(MDIR)/* i/
 	umount initrd.img
