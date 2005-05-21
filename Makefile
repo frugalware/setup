@@ -29,7 +29,7 @@ NETVER = 1.60-10
 LIBCVER = 2.3.5-1
 KBDVER = 1.12-9
 KERNELVER = 2.6.11
-KERNELREL = 3
+KERNELREL = 6
 MODULEVER = 3.1-4
 NCVER = 5.4-2
 PACVER = 2.9.5-8
@@ -51,7 +51,7 @@ packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 	   net-tools glibc kbd kernel module-init-tools ncurses pacman eject \
 	   udev util-linux netkit-base
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
-kpatches = linux-$(KERNELVER)-2.6.11.7.diff linux-2.6-seg-5.patch \
+kpatches = linux-$(KERNELVER)-2.6.11.10.diff linux-2.6-seg-5.patch \
 	   bootsplash-3.1.4-$(KERNELVER).diff
 sources = $(kpatches) bash-$(BASHVER).fpm busybox-$(BUSYVER).tar.gz \
 	  dhcpcd-$(DHCPVER).fpm dialog-$(DIALOGVER).fpm \
