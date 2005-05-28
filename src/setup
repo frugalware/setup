@@ -522,18 +522,40 @@ category_select ()
 	category_search
 	repo=$1
 	if [ "$repo" = "frugalware" ]; then
-		pkglstf="$bindir/../Packages.lst"
+		reponame="frugalware-current"
 		pacbindir=$bindir
 	elif [ "$repo" = "extra" ]; then
-		pkglstf="$exbindir/../Packages.lst"
+		reponame="extra-current"
 		pacbindir=$exbindir
+	fi
+	# preparing pkgdb
+	if ! [ -d var/lib/pacman/$reponame ]; then
+		[ -d tmp ] || mkdir tmp
+		if [ "$netinstall" != 1 ]; then
+			( mkdir -p var/lib/pacman/$reponame
+			  cd var/lib/pacman/$reponame
+			  tar xzf $pacbindir/$reponame.fdb )
+			if [ "$reponame" = "frugalware" -o \
+				"$reponame" = "frugalware-current" ]; then
+				echo "[$reponame]" >/etc/pacman.conf
+			else
+				echo "[$reponame]" >>/etc/pacman.conf
+			fi
+			echo "Server = file://$pacbindir" >>/etc/pacman.conf
+		else
+			pacman -Sy -r ./ >$logdev 2>$logdev
+		fi
+		( mkdir -p var/cache/pacman
+		  cd var/cache/pacman 
+		  [ -e pkg ] && rm pkg
+		  [ "$netinstall" != 1 ] && ln -sf $pacbindir pkg )
 	fi
 	selecttempfile=`mktemp /tmp/tmp.XXXXXX`
 	whichselectedtempfile=`mktemp /tmp/tmp.XXXXXX`
 	whichselectedtempfile2=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $selecttempfile
 	echo -n "dialog --backtitle \"$selectcategoriesbacktitle\" --title \"$categorystring\" --checklist \"$pleaseselectcategories\" 0 0 0 " >$selecttempfile
-	categories=`cat $pkglstf|sed 's|\(.*\)/.*|\1|'|sort|uniq`
+	categories=`pacman -Sg -r ./ |grep -v '\(core\|\-\)'`
 	for i in $categories
 	do
 		state=on
@@ -572,25 +594,14 @@ package_select_install()
 	shift
 	if [ "$repo" = "frugalware" ]; then
 		reponame="frugalware-current"
-		pkglstf="$bindir/../Packages.lst"
 		pacbindir=$bindir
 	elif [ "$repo" = "extra" ]; then
 		reponame="extra-current"
-		pkglstf="$exbindir/../Packages.lst"
 		pacbindir=$exbindir
 	fi
 	pkg_search
-	printpkgtemp=`mktemp /tmp/tmp.XXXXXX`
-	chmod +x $printpkgtemp
 	prepkglst=`mktemp /tmp/tmp.XXXXXX`
-	echo -n "cat $pkglstf |egrep ' " >$printpkgtemp
-	for i in $*
-	do
-		echo -n "|^$i" >>$printpkgtemp
-	done
-	echo "| '|sed 's|.*/\(.*\)|\1|'">>$printpkgtemp
-	$printpkgtemp >$prepkglst
-	rm $printpkgtemp
+	for i in `pacman -Sg $* -r ./ |grep -v '^\w'`; do echo $i; done >$prepkglst
 	pkglstselect=`mktemp /tmp/tmp.XXXXXX`
 	whichselected=`mktemp /tmp/tmp.XXXXXX`
 	whichselected2=`mktemp /tmp/tmp.XXXXXX`
@@ -618,8 +629,7 @@ package_select_install()
 	rm $whichselected
 	for i in `cat $whichselected2`
 	do
-		echo $i|sed "s/\(.*\)-[0-9].*-[0-9].*-$arch.fpm/\1/" \
-			>>$whichselected3
+		echo $i >>$whichselected3
 	done
 	rm $whichselected2
 	allselpkg=`cat $whichselected3`
@@ -629,7 +639,8 @@ package_select_install()
 	mkdir -p /tmp/pkgcat
 	for i in $allselpkg
 	do
-		icategory=`grep "/$i-[0-9]" $pkglstf |sed 's|^\(.*\)/.*$|\1|'`
+		ipath=`ls var/lib/pacman/$reponame |grep ^$i|sed -n 's|\(.*\)/|\1|;1 p'`
+		icategory=`grep -A 1 '%GROUPS%' var/lib/pacman/$reponame/$ipath/desc |sed -n "2 p"`
 		echo -n "$i ">>/tmp/pkgcat/$icategory
 		
 	done
@@ -685,30 +696,7 @@ install_packages()
 	name=$1
 	[ "$name" = "base" ] && extrapkg="$core" || extrapkg=""
 	shift
-	# preparing pkgdb
 	info "$instpkg ($name $sect)"
-	if ! [ -d var/lib/pacman/$reponame ]; then
-		[ -d tmp ] || mkdir tmp
-		if [ "$netinstall" != 1 ]; then
-			( mkdir -p var/lib/pacman/$reponame
-			  cd var/lib/pacman/$reponame
-			  tar xzf $pacbindir/$reponame.fdb )
-		else
-			pacman -Sy -r ./
-		fi
-		if [ "$netinstall" != 1 ]; then
-			if [ "$reponame" = "frugalware" -o "$reponame" = "frugalware-current" ]; then
-				echo "[$reponame]" >/etc/pacman.conf
-			else
-				echo "[$reponame]" >>/etc/pacman.conf
-			fi
-			echo "Server = file://$pacbindir" >>/etc/pacman.conf
-		fi
-		( mkdir -p var/cache/pacman
-		  cd var/cache/pacman 
-		  [ -e pkg ] && rm pkg
-		  [ "$netinstall" != 1 ] && ln -sf $pacbindir pkg )
-	fi
 	pkginstall=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $pkginstall
 	echo -n "pacman -S -r ./ --noconfirm $extrapkg ">$pkginstall
