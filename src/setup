@@ -496,16 +496,15 @@ categorysize ()
 
 pkgsize()
 {
-	# du -h $1 |sed 's/\([0-9\.]*[A-Za-z]\).*/\1/'
-	sizename=`echo $2|sed "s|.*/\(.*\)-$arch.fpm|\1|"`
-	echo $((`tar xzOf $1 $sizename/desc|sed -n '11 p'`/1048576))MB
+	pspath=`ls var/lib/pacman/$1 |grep ^$2|sed -n 's|\(.*\)/|\1|;1 p'`
+	echo $((`grep -A 1 '%CSIZE%' var/lib/pacman/$1/$pspath/desc |sed -n "2 p"`/1048576))MB
 
 }
 
 pkgdesc()
 {
-	descname=`echo $2|sed "s|.*/\(.*\)-$arch.fpm|\1|"`
-	tar xzOf $1 $descname/desc|sed -ne '8 p'
+	pspath=`ls var/lib/pacman/$1 |grep ^$2|sed -n 's|\(.*\)/|\1|;1 p'`
+	grep -A 1 '%DESC%' var/lib/pacman/$1/$pspath/desc |sed -n "2 p"
 }
 
 category_search()
@@ -617,7 +616,7 @@ package_select_install()
 		if [ "$repo" = "extra" ]; then
 			echo $i|egrep -q "$extrapkgs$locpkgs" || state=off
 		fi
-		echo -n "$i \"(`pkgdesc $pacbindir/$reponame.fdb $pacbindir/$i`, `pkgsize $pacbindir/$reponame.fdb $pacbindir/$i`)\" $state ">>$pkglstselect
+		echo -n "$i \"(`pkgdesc $reponame $i`, `pkgsize $reponame $i`)\" $state ">>$pkglstselect
 	done
 	rm $prepkglst
 	$pkglstselect 2>$whichselected || leave "$selectpkgsbacktitle"
