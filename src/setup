@@ -165,13 +165,8 @@ search_source()
 	sleep 1
 	if ! [ -d $bindir -o -d $exbindir ]; then #netinstall
 		netinstall=1
-		umount $sourcedir
 		netconfig
 		/etc/rc.d/rc.interfaces
-		# ugly hack
-		mkdir -p /mnt/source/frugalware-$arch /mnt/source/extra/frugalware-$arch
-		lynx -source -dump ftp://ftp5.frugalware.org/packages/frugalware/pub/frugalware/frugalware-current/frugalware-$arch/frugalware-current.fdb >/mnt/source/frugalware-$arch/frugalware-current.fdb
-		lynx -source -dump ftp://ftp5.frugalware.org/packages/frugalware/pub/frugalware/frugalware-current/extra/frugalware-$arch/extra-current.fdb >/mnt/source/extra/frugalware-$arch/extra-current.fdb
 	fi
 }
 
