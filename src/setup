@@ -7,7 +7,7 @@ arch=i686
 bindir=/mnt/source/frugalware-$arch
 exbindir=/mnt/source/extra/frugalware-$arch
 target=/mnt/target
-core="bash coreutils chkconfig frugalware grep sed"
+core="bash coreutils chkconfig frugalware grep sed udev"
 extrapkgs="k3b-i18n"
 logdev=/dev/tty4
 
