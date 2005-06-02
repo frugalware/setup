@@ -547,12 +547,16 @@ category_select ()
 	whichselectedtempfile2=`mktemp /tmp/tmp.XXXXXX`
 	chmod +x $selecttempfile
 	echo -n "dialog --backtitle \"$selectcategoriesbacktitle\" --title \"$categorystring\" --checklist \"$pleaseselectcategories\" 0 0 0 " >$selecttempfile
-	categories=`pacman -Sg -r ./ |grep -v '\(core\|\-\)'`
+	if [ "$repo" = "frugalware" ]; then
+		categories=`pacman -Sg -r ./ |grep -v '\(core\|\-\)'`
+	else
+		categories=`pacman -Sg -r ./ |grep '\-extra$'`
+	fi
 	for i in $categories
 	do
 		state=on
 		if [ "$repo" = "extra" ]; then
-			if [ "$i" != "locale" ]; then
+			if [ "$i" != "locale-extra" ]; then
 				state=off
 			fi
 		fi
