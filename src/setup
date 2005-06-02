@@ -578,7 +578,7 @@ category_select ()
 
 gen_locpkgs()
 {
-	for i in `pacman -Sg locale-extra -r / |grep -v '^\w'`
+	for i in `pacman -Sg locale-extra -r ./ |grep -v '^\w'`
 	do
 		echo $i |grep -q "\-$language$" && echo -n "|$i"
 	done
