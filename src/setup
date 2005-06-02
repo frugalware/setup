@@ -578,9 +578,9 @@ category_select ()
 
 gen_locpkgs()
 {
-	for i in `ls $exbindir|grep "\-$language"|sed "s/\(.*\)-[0-9].*-[0-9].*-$arch.fpm/\1/"`
+	for i in `pacman -Sg locale-extra -r / |grep -v '^\w'`
 	do
-		echo -n "|$i"
+		echo $i |grep -q "\-$language$" && echo -n "|$i"
 	done
 }
 
