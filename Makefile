@@ -30,14 +30,14 @@ FWVER = 0.2-1
 NETVER = 1.60-10
 LIBCVER = 2.3.5-1
 KBDVER = 1.12-9
-KERNELVER = 2.6.11
-KERNELREL = 6
+KERNELVER = 2.6.12
+KERNELREL = 1
 MODULEVER = 3.1-5
 NCVER = 5.4-2
-PACVER = 2.9.5-11
+PACVER = 2.9.6-1
 EJECTVER = 2.0.13-2
-UDEVVER = 057
-UTILVER = 2.12-15
+UDEVVER = 058
+UTILVER = 2.12-16
 NETKITVER = 0.17-3
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
@@ -54,8 +54,7 @@ packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 	   net-tools glibc kbd kernel module-init-tools ncurses pacman eject \
 	   udev util-linux netkit-base
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
-kpatches = linux-$(KERNELVER)-2.6.11.10.diff linux-2.6-seg-5.patch \
-	   bootsplash-3.1.4-$(KERNELVER).diff
+kpatches = bootsplash-3.1.6-$(KERNELVER).diff
 sources = $(kpatches) bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYVER).tar.gz \
 	  dhcpcd-$(DHCPVER)-$(CARCH).fpm dialog-$(DIALOGVER)-$(CARCH).fpm \
 	  e2fsprogs-$(E2VER)-$(CARCH).fpm eject-$(EJECTVER)-$(CARCH).fpm \
