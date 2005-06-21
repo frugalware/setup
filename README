@@ -1,7 +1,8 @@
 This is the source of the Frugalware Linux installer.
 
 To create an initrd image, you'll need some extrenal sources.
-You can download them by 'cd cache; wget -i ../dl.lst'.
+You can download them by 'cd cache; wget -i ../dl.lst' (or on amd64
+  you need to use dl.lst.amd64).
 If you don't care about building as root, you can simply 'sudo make initrd',
 and hopefully you'll get a vmlinuz* file and az initrd.img.gz.
 
