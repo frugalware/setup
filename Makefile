@@ -249,11 +249,11 @@ kernel:
 	mkdir -p kernel
 	cd $(BDIR) && tar xjf ../$(CDIR)/linux-$(KERNELVER).tar.bz2; \
 	cd linux-$(KERNELVER); \
+	sed "s/486/`echo $(MARCH)|sed 's/^i//'`/" \
+		../../$(CONFDIR)/kernel.config >.config; \
 	for i in $(kpatches); do \
 		patch -p1 < ../../$(CDIR)/$$i; \
 	done; \
-	sed "s/486/`echo $(MARCH)|sed 's/^i//'`/" \
-		../../$(CONFDIR)/kernel.config >.config; \
 	sed -i "s/EXTRAVERSION =.*/EXTRAVERSION = -fw$(KERNELREL)/" Makefile; \
 	yes "" | make config >/dev/null; \
 	make; \
