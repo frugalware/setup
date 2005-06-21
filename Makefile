@@ -41,8 +41,16 @@ UTILVER = 2.12-16
 NETKITVER = 0.17-3
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
-CARCH=i686
-export CFLAGS = -march=$(CARCH) -O2 -pipe
+CARCH ?= $(shell arch)
+ifeq ($(CARCH),i686)
+	KARCH ?= i386
+endif
+ifeq ($(CARCH),x86_64)
+	MARCH ?= k8
+endif
+MARCH ?= $(CARCH)
+KARCH ?= $(CARCH)
+export CFLAGS = -march=$(MARCH) -O2 -pipe
 
 CDIR = cache
 CONFDIR = config
@@ -250,7 +258,7 @@ kernel:
 	make; \
 	mkdir -p $(CWD)/../../kernel/lib; \
 	make INSTALL_MOD_PATH=$(CWD)/../../kernel/ modules_install; \
-	cp arch/i386/boot/bzImage \
+	cp arch/$(KARCH)/boot/bzImage \
 		$(CWD)/../../vmlinuz-$(KERNELVER)-fw$(KERNELREL)
 	cd kernel/ && find . -name *ko|xargs gzip
 
