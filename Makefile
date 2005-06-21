@@ -63,6 +63,9 @@ packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 	   udev util-linux netkit-base
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 kpatches = bootsplash-3.1.6-$(KERNELVER).diff
+ifeq ($(CARCH),x86_64)
+	kpatches += linux-2.6.11-x86_64_config.patch
+endif
 sources = $(kpatches) bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYVER).tar.gz \
 	  dhcpcd-$(DHCPVER)-$(CARCH).fpm dialog-$(DIALOGVER)-$(CARCH).fpm \
 	  e2fsprogs-$(E2VER)-$(CARCH).fpm eject-$(EJECTVER)-$(CARCH).fpm \
