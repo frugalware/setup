@@ -252,7 +252,8 @@ kernel:
 	for i in $(kpatches); do \
 		patch -p1 < ../../$(CDIR)/$$i; \
 	done; \
-	cp ../../$(CONFDIR)/kernel.config .config; \
+	sed "s/486/`echo $(MARCH)|sed 's/^i//'`/" \
+		../../$(CONFDIR)/kernel.config >.config; \
 	sed -i "s/EXTRAVERSION =.*/EXTRAVERSION = -fw$(KERNELREL)/" Makefile; \
 	yes "" | make config >/dev/null; \
 	make; \
