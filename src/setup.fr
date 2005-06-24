@@ -1,0 +1,130 @@
+# (c) 2003-2004 Vajna Miklos <mamajom@axelero.hu>
+# (c)           Patrick J. Volkerding, volkerdi@slackware.com
+
+setup="Installation"
+
+# greeting section
+welcome="Bienvenue sur Frugalware $osver"
+greetstring="Bienvenue au utilisateur de Frugalware!\n\n \
+En créant Frugalware notre but est de vous aider à rendre votre travail plus rapide et plus simple. Nous espérons que vous aimerez nos produits.\n\n \
+Les développeurs de Frugalware"
+
+# keyboard section
+kbdconf="Configuration du clavier"
+selmapt="Sélection du type de clavier"
+selmapd="Vous devez choisir l'un des types de clavier si dessous.  Si vous ne choisissez pas de clavier, 'qwerty/us.map.gz' (clavier US) sera celui par defaut.  Utilisez les touches HAUT/BAS et PageUp/PageDown afin de faire défiler la liste de choix."
+
+# hotplug section
+hotplug="Détection du hardware"
+hotplugt="Veuillez patienter"
+hotplugd="Recherche des cartes SCSI et PCI"
+
+# selecting media section
+searchmedia="Sélection de la source media"
+scanmediat="Recherche"
+scanmediad="Recherche d'un lecteur CD/DVD contenant un disque d'installation de Frugalware..."
+mediafoundt="Lecteur CD/DVD trouvé"
+mediafoundd="Un CD d'installation pour Frugalware a été trouvé dans un lecteur"
+
+# partitioning section
+partitioning="Création des partitions"
+selppt="Sélectionner le programme de partitionnement"
+selppd="Sélectionner le mode de partitionnement que vous désirez utiliser:"
+selhdt="Sélectionner une partition sur le Disque Dur"
+selhdd="Veuillez sélectionner une partition sur le Disque Dur. Les options suivantes sont disponibles:"
+fdiskd="Outil traditionnel de partitionnement linux"
+cfdiskd="Version simplifié (basé sur des curseur) de fdisk"
+
+# swap section
+setswap="Configuration de l'espace swap"
+noswaptitle="Aucune partition swap détecté"
+noswap="Vous n'avez pas créé de partition swap. Voulez vous continuer l'installation sans celle ci ?"
+detectedswapt="Partition swap détecté"
+detectedswapd="Veuillez sélectionner la partition swap que Frugalware peut utiliser:"
+formatpartst="Formatage de la partition swap"
+formatpartsd1="Formatage ..."
+formatpartsd2="as a swap partition and checking for bad blocks"
+
+# rootdev section
+rootdevstring="Configuration de la partition root"
+miscdevstring="Configuration des partitions"
+selrootdevt="Choisir une partition d'installation linux"
+select="Sélectionner"
+continue="Continuer"
+selrootdevd="Veuillez sélectionner une partition dans la liste suivante a utiliser pour la partition root (/)."
+formatpart="Formatage de la partition"
+wantformatq="Si cette partition n'a pas été formaté, vous devez la formater. \n NOTE: Ceci efface toute donnés contenu sur le disque.  Voulez vous formater cette partition?"
+formatt="Formatage"
+fromatd="Formatage rapide sans vérification des mauvais block"
+checkt="Vérification"
+checkd="Formatage lent avec vérification des mauvais block"
+nofromatt="Non"
+noformatd="Non, ne formater pas cet partition"
+ext2predesc="Ext2 est le système de fichiers traditionnel et est rapide et stable.\n"
+reiserpredesc="ReiserFS est un système de fichiers journalisé qui stocke tout les fichiers et noms de fichiers dans une in a balanced tree structure.\n"
+ext3predesc="Ext3 est le système de fichiers journalisé de Ext2.\n"
+jfspredesc="JFS est un système de fichiers journalisé d'IBM, aujourd'hui utilisé sur les serveurs de l'entreprise d'IBM.\n"
+xfspredesc="XFS est un système de fichiers SGIj journalisé originaire d'IRIX.\n"
+selectfst="Sélection d'un système de fichiers"
+selectfsd="Veuillez sélectionner le système de fichier a utiliser pour ce disque.  Voici les descriptions des Système de fichier disponible :\n"
+ext2shortdesc="système de fichiers standard Linux ext2fs"
+reisershortdesc="Système de fichier journalisé de Hans Reiser"
+ext3shortdesc="Version journalisé du système de fichiers ext2fs"
+jfsshortdesc="Système de fichiers journalisé IBM"
+xfsshortdesc="Système de fichiers journalisé SGI"
+duringformatt="Formatage"
+formatdevicestring="Formatage des disques :"
+formatfsstring="Système de fichiers :"
+
+# linux partitions section
+
+sellinuxpartst="Sélectionner une autre partition linux pour /etc/fstab"
+sellinuxpartsd="Il semble que vous aillez plus d'une partition marqué comme etant de type linux. Vous pouvez les utiliser afin de distribuer votre système linux sur plusieurs partitions. Pour le moment, vous avez uniquement monté la partition / .  Vous devez monter les dossier /home ou /usr/local sur des partition séparé.  Vous ne devez pas essayé de monter /etc, /sbin, or /bin sur leur propre partition car elle contienne des fonction utile au démarrage du système et au montage de partitions.  Alors, il ne faut pas réutiliser une partition déjà choisit précédemment.  Please select one of the Linux partitions listed below, or if you're done, hit <$continue>"
+inuse="En utilisation"
+askwherelt="Sélectionner un point de montage pour"
+askwhereld="Vous devez spécifier ou vous voulez monter la nouvelle partition. Par exemple, Si vous voulez la mettre sous /usr/local, alors choisissez: /usr/local\n\n Ou voulez vous monter cette partition?"
+
+# dos partitions section
+
+seldospartst="Sélectionnez la partition à ajouter à /etc/fstab"
+seldospartsd="Afin de la faire apparaître de linux, nous avons besoin de l'ajouter à votre /etc/fstab.  Veuillez sélectionner une partition à ajouter à /etc/fstab, ou si vous avez finit, pressez <$continue>"
+
+# packages section
+categorychk="Recherche des catégories. Veuillez patienter..."
+pkgchk="Recherche des paquetages. Veuillez patienter..."
+categorystring="Sélection des catégories"
+pkgstring="Sélection des paquetages"
+instpkgstring="Installation des paquetages"
+sect="section" #will be displaied like this: Installing packages (base section)
+pleaseselectcategories="Veuillez sélectionner quel catégorie installer"
+pleaseselectpkgs="Veuillez sélectionner les paquetages à installer"
+
+neednextt="Insérez le nouveau disque"
+neednextd="Veuillez insérer le disque suivant d'installation de Frugalware et appuyez sur entrée pour continuer l'installation des paquetages."
+continued="Installer les packages du disque suivant"
+quit="Quitter"
+quitd="Quitter l'installation des paquetages et finaliser"
+
+instpkg="Installation des paquetages sélectionnés"
+doneinstpkg="Installation des paquetages terminé"
+errinstpkg="Des erreurs se sont produites pendant l'installation des paquetages séléctionnés"
+pressenter="Appuyez sur ENTREE pour continuer..."
+
+# configure section
+confstring="Configuration du système installé"
+confkmodt="Configuration des modules du kernel"
+confkmodd="Mise a jour du module de dépendances..."
+
+nopasswdt="Pas de mot de passe root détecté"
+nopasswdd="Il n'y a pour le moment pas de mot de passe pour le compte de l'administrateur système (root). Il est recommandé d'en choisir un qui sera activé au prochain redémarre.  Il est particulièrement important si vous utilisez un kernel ou le network est activé et que la machine est connecté a internet.  Voulez vous ajouter un mot de passe?"
+
+nonormalusert="Pas de compte utilisateur normal détecté"
+nonormaluserd="Il n'y a pour le moment pas compte utilisateur normal (non-root). Il est fortement recommandé d'en créer un. Voulez vous créer un utilisateur normal maintenant?"
+
+endsetupt="installation complete"
+erebootd="If you want to do something special, hit no, and you will get a shell. Do you want to reboot your machine now?"
+endsetupd="System installation and configuration is successfully completed. We hope that Frugalware $osver will take you content. $erebootd"
+ferrort="Erreur d'installation"
+ferrord="Il y a eu des erreur fatal lors de l'installation. $erebootd"
+
+# vim: ft=sh
