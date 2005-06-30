@@ -611,6 +611,8 @@ package_select_install()
 	do
 		state=on
 		if [ "$repo" = "extra" ]; then
+			pacman -r ./ -Si $extrapkgs >/dev/null 2>/dev/null || \
+				unset extrapkgs
 			echo $i|egrep -q "$extrapkgs$locpkgs" || state=off
 		fi
 		echo -n "$i \"(`pkgdesc $reponame $i`, `pkgsize $reponame $i`)\" $state ">>$pkglstselect
