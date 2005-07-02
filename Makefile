@@ -39,6 +39,7 @@ EJECTVER = 2.0.13-2
 UDEVVER = 058
 UTILVER = 2.12-16
 NETKITVER = 0.17-3
+MDVER = 1.12.0-1
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
 CARCH ?= $(shell arch)
@@ -60,7 +61,7 @@ CWD=`pwd`
 
 packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 	   net-tools glibc kbd kernel module-init-tools ncurses pacman eject \
-	   udev util-linux netkit-base
+	   udev util-linux netkit-base mdadm
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 kpatches = bootsplash-3.1.6-$(KERNELVER).diff
 ifeq ($(CARCH),x86_64)
@@ -338,3 +339,11 @@ netkit-base:
 	mkdir -p netkit-base/etc
 	cd $(BDIR) && tar xzf ../$(CDIR)/netkit-base-$(NETKITVER)-$(CARCH).fpm
 	cp -a $(BDIR)/etc/services netkit-base/etc/
+
+mdadm:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf mdadm
+	mkdir -p mdadm/sbin
+	cd $(BDIR) && tar xzf ../$(CDIR)/mdadm-$(MDVER)-$(CARCH).fpm
+	cp -a $(BDIR)/sbin/mdadm mdadm/sbin/
