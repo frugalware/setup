@@ -39,7 +39,7 @@ EJECTVER = 2.1.0-1
 UDEVVER = 063
 UTILVER = 2.12-16
 NETKITVER = 0.17-3
-MDVER = 1.12.0-2
+MDVER = 1.12.0-3
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
 CARCH ?= $(shell arch)
