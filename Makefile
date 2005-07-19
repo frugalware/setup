@@ -344,6 +344,11 @@ mdadm:
 	rm -rf $(BDIR)
 	mkdir $(BDIR)
 	rm -rf mdadm
-	mkdir -p mdadm/sbin
-	cd $(BDIR) && tar xzf ../$(CDIR)/mdadm-$(MDVER)-$(CARCH).fpm
-	cp -a $(BDIR)/sbin/mdadm mdadm/sbin/
+	mkdir -p mdadm/sbin mdadm/var/lib/frugalware/{messages,system}
+	cd $(BDIR) && tar xzf ../$(CDIR)/mdadm-$(MDVER)-$(CARCH).fpm; \
+	cp -a sbin/mdadm ../mdadm/sbin/; \
+	cp -a var/lib/frugalware/messages/* \
+		../mdadm/var/lib/frugalware/messages/; \
+	cp -a var/lib/frugalware/system/* \
+		../mdadm/var/lib/frugalware/system/; \
+	cp -a sbin/raidconfig ../mdadm/sbin/
