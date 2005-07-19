@@ -23,7 +23,7 @@ mediafoundd="Frugalware telepítõ lemez a következõ eszközön:"
 
 # partitioning section
 partitioning="A partíciók létrehozása"
-createraid="RAID létrehozása"
+createraid="RAID építése"
 selppt="A particionáló program kiválasztása"
 selppd="Válassza ki, hogy melyik programot kívánja használni a particionáláshoz."
 selhdt="A merevlemez kiválasztása"
