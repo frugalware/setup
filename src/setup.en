@@ -38,6 +38,7 @@ mediafoundd="A Frugalware install disc was found in device"
 
 # partitioning section
 partitioning="Creating partitions"
+createraid="Create RAID"
 selppt="Select partitioning program"
 selppd="Select which program do you want to use for partitioning:"
 selhdt="Select a hard disk to partition"

@@ -191,10 +191,13 @@ selhd()
 	        chmod +x $selhdm
 	        selhddevf=`mktemp /tmp/tmp.XXXXXX`
 		echo "dialog --clear --backtitle \"$partitioningbacktitle\" --title \"$selhdt\" \\" >$selhdm
-		echo "--aspect 20 --ok-label \"$select\" --cancel-label \"$continue\" --menu \"$selhdd\" 0 0 0 \\">>$selhdm
+		echo "--aspect 30 --ok-label \"$select\" --cancel-label \"$continue\" --extra-button --extra-label \"$createraid\" --menu \"$selhdd\" 0 0 0 \\">>$selhdm
 		fdisk -l|grep ^Disk|sed 's/^Disk \(.*\): \([0-9].*\), [0-9].*$/"\1" "\2" \\/'>>$selhdm
 		echo "2>$selhddevf">>$selhdm
-		$selhdm || break; # aborted when choosing hds
+		$selhdm
+		ret=$?
+		[ "$ret" = 3 ] && raidconfig && continue;
+		[ "$ret" = 1 ] && break; # aborted when choosing hds
 		rm $selhdm
 		selhddev=`cat $selhddevf`
 		rm $selhddevf
