@@ -6,7 +6,7 @@ http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/di
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/e2fsprogs-1.38-1-x86_64.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/eject-2.1.0-1-x86_64.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/frugalware-0.3pre1-1-x86_64.fpm
-http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/glibc-2.3.5-1-x86_64.fpm
+http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/glibc-2.3.5-3-x86_64.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/kbd-1.12-9-x86_64.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/source/base/kernel/linux-2.6.12.tar.bz2
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/lynx-2.8.5-2-x86_64.fpm
@@ -14,8 +14,8 @@ http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/mo
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/ncurses-5.4-2-x86_64.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/netkit-base-0.17-3-x86_64.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/net-tools-1.60-10-x86_64.fpm
-http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/pacman-2.9.6-6-x86_64.fpm
+http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/pacman-2.9.6-11-x86_64.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/reiserfsprogs-3.6.19-2-x86_64.fpm
-http://ftp.frugalware.org/pub/frugalware/frugalware-current/source/base/udev/udev-063.tar.gz
+http://ftp.frugalware.org/pub/frugalware/frugalware-current/source/base/udev/udev-065.tar.gz
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/util-linux-2.12-16-x86_64.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-x86_64/mdadm-1.12.0-4-x86_64.fpm
