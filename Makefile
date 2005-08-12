@@ -18,7 +18,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #
 
-VERSION = 0.6.2
+VERSION = 0.6.3
 BASHVER = 3.0-6
 BUSYVER = 1.00
 DIALOGVER = 1.0_20050306-1
@@ -86,7 +86,8 @@ clean:
 	rm -rf $(BDIR) $(MDIR) $(packages)
 
 distclean: clean
-	rm -rf $(CDIR)/* vmlinuz-$(KERNELVER)-fw$(KERNELREL)
+	rm -rf $(CDIR)/* vmlinuz-$(KERNELVER)-fw$(KERNELREL)-$(CARCH) \
+		initrd-$(CARCH).img.gz
 
 merge: $(packages)
 	rm -rf $(MDIR)
@@ -114,15 +115,15 @@ devices: misc
 	mknod -m 700 $(MDIR)/dev/tty3 c 4 3
 
 initrd: devices
-	dd if=/dev/zero of=initrd.img bs=1k count=$$(echo "$$(`which du` -s $(MDIR)|sed 's/^\(.*\)\t.*$$/\1/')+500"|bc)
-	/sbin/mke2fs -F initrd.img
+	dd if=/dev/zero of=initrd-$(CARCH).img bs=1k count=$$(echo "$$(`which du` -s $(MDIR)|sed 's/^\(.*\)\t.*$$/\1/')+500"|bc)
+	/sbin/mke2fs -F initrd-$(CARCH).img
 	mkdir i
 	grep -q loop /proc/modules || /sbin/modprobe loop
-	mount -o loop initrd.img i
+	mount -o loop initrd-$(CARCH).img i
 	cp -a $(MDIR)/* i/
-	umount initrd.img
+	umount initrd-$(CARCH).img
 	rmdir i
-	gzip -9 initrd.img
+	gzip -9 initrd-$(CARCH).img
 
 check:
 	@for i in $(sources); do \
@@ -264,7 +265,7 @@ kernel:
 	mkdir -p $(CWD)/../../kernel/lib; \
 	make INSTALL_MOD_PATH=$(CWD)/../../kernel/ modules_install; \
 	cp arch/$(KARCH)/boot/bzImage \
-		$(CWD)/../../vmlinuz-$(KERNELVER)-fw$(KERNELREL)
+		$(CWD)/../../vmlinuz-$(KERNELVER)-fw$(KERNELREL)-$(CARCH)
 	cd kernel/ && find . -name *ko|xargs gzip
 
 module-init-tools:
