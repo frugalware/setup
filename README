@@ -6,8 +6,8 @@ You can download them by 'cd cache; wget -i ../dl.lst' (or on amd64
 If you don't care about building as root, you can simply 'sudo make initrd',
 and hopefully you'll get a vmlinuz* file and az initrd.img.gz.
 
-If you want to run the commands as root those are really necessary, first use
-'make' and then 'sudo make initrd'
+If you want to run the commands as root only those are really necessary, first
+use 'make' and then 'sudo make initrd'
 
 Greetings,
 VMiklos
