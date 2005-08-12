@@ -42,6 +42,10 @@ NETKITVER = 0.17-3
 MDVER = 1.12.0-5
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
+install -d -m 2775 /var/cache/ccache/setup
+export CCACHE_DIR=/var/cache/ccache/setup
+export CCACHE_NOLINK=1
+export CCACHE_UMASK=002
 CARCH ?= $(shell arch)
 ifeq ($(CARCH),i686)
 	KARCH ?= i386
