@@ -42,7 +42,6 @@ NETKITVER = 0.17-3
 MDVER = 1.12.0-5
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
-install -d -m 2775 /var/cache/ccache/setup
 export CCACHE_DIR=/var/cache/ccache/setup
 export CCACHE_NOLINK=1
 export CCACHE_UMASK=002
@@ -85,7 +84,7 @@ sources = $(kpatches) bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYVER).tar.gz \
 	  reiserfsprogs-$(REISERVER)-$(CARCH).fpm udev-$(UDEVVER).tar.gz \
 	  util-linux-$(UTILVER)-$(CARCH).fpm
 
-compile: check $(packages) misc
+compile: check ccache $(packages) misc
 
 clean:
 	rm -rf $(BDIR) $(MDIR) $(packages)
@@ -93,6 +92,8 @@ clean:
 distclean: clean
 	rm -rf $(CDIR)/* vmlinuz-$(KERNELVER)-fw$(KERNELREL)-$(CARCH) \
 		initrd-$(CARCH).img.gz
+ccache:
+	install -d -m 2775 /var/cache/ccache/setup
 
 merge: $(packages)
 	rm -rf $(MDIR)
