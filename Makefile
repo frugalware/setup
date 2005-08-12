@@ -210,7 +210,7 @@ frugalware:
 	mkdir $(BDIR)
 	rm -rf frugalware
 	mkdir -p frugalware/{var/lib/frugalware/messages/,etc}
-	cd $(BDIR) && tar xzf ../$(CDIR)/frugalware-$(FWVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/frugalware-$(FWVER)-$(CARCH).fpm
 	cp -a $(BDIR)/var/lib/frugalware/messages/rc.messages \
 	        frugalware/var/lib/frugalware/messages/
 	cp $(BDIR)/etc/frugalware-release frugalware/etc/
