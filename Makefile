@@ -68,6 +68,7 @@ ifeq ($(CARCH),x86_64)
 	kpatches += linux-2.6.11-x86_64_config.patch
 endif
 sources = $(kpatches) bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYVER).tar.gz \
+	  busybox-$(BUSYVER)-gcc4.patch \
 	  dhcpcd-$(DHCPVER)-$(CARCH).fpm dialog-$(DIALOGVER)-$(CARCH).fpm \
 	  e2fsprogs-$(E2VER)-$(CARCH).fpm eject-$(EJECTVER)-$(CARCH).fpm \
 	  frugalware-$(FWVER)-$(CARCH).fpm \
@@ -146,6 +147,8 @@ busybox:
 	mkdir -p busybox/mnt/{source,target}
 	mkdir -p busybox/tmp
 	cd $(BDIR) && tar xzf ../$(CDIR)/busybox-$(BUSYVER).tar.gz
+	cd $(BDIR)/busybox-$(BUSYVER) && \
+		patch -p1 < ../../$(CDIR)/busybox-$(BUSYVER)-gcc4.patch
 	cp $(CONFDIR)/busybox.config $(BDIR)/busybox-$(BUSYVER)/.config
 	cd $(BDIR)/busybox-$(BUSYVER); \
 	sed -i "s/-march=i686/$(CFLAGS)/" .config; \
