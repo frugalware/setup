@@ -214,6 +214,9 @@ frugalware:
 	cp -a $(BDIR)/var/lib/frugalware/messages/rc.messages \
 	        frugalware/var/lib/frugalware/messages/
 	cp $(BDIR)/etc/frugalware-release frugalware/etc/
+ifeq ($(CARCH),x86_64)
+	cp -a $(BDIR)/lib64 frugalware/lib64
+endif
 
 net-tools:
 	rm -rf $(BDIR)
