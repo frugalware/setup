@@ -7,6 +7,7 @@ arch=`uname -m`
 bindir=/mnt/source/frugalware-$arch
 exbindir=/mnt/source/extra/frugalware-$arch
 target=/mnt/target
+defaultmirror="ftp://ftp5.frugalware.org/packages/frugalware/pub/frugalware/frugalware-current/"
 core="bash coreutils chkconfig frugalware grep sed udev"
 extrapkgs="k3b-i18n"
 logdev=/dev/tty4
@@ -62,6 +63,7 @@ selcat=
 selpkg=
 instlog=
 yesdeps=
+mirrorconfbacktitle="$mirrorconfstring - Frugalware $osver $setup"
 selectcategoriesbacktitle="$categorystring - Frugalware $osver $setup"
 selectpkgsbacktitle="$pkgstring - Frugalware $osver $setup"
 categorysearchbacktitle=$selectcategoriesbacktitle
@@ -167,7 +169,22 @@ search_source()
 		netinstall=1
 		netconfig
 		/etc/rc.d/rc.interfaces
+		mirrorconf
 	fi
+}
+
+mirrorconf()
+{
+	mirrorfile=`mktemp /tmp/tmp.XXXXXX`
+	dialog --backtitle "$mirrorconfbacktitle" --title "$mirrorconft" \
+		--inputbox "$mirrorconfd" 0 0 \
+		$defaultmirror 2>$mirrorfile || return 1
+	mirror=`cat $mirrorfile`
+	rm $mirrorfile
+	sed -i "s|]$|]\nServer = $mirror/frugalware-$arch|" \
+		/etc/pacman.d/frugalware-current
+	sed -i "s|]$|]\nServer = $mirror/extra/frugalware-$arch|" \
+		/etc/pacman.d/extra-current
 }
 
 # partitioning section

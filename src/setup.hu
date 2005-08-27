@@ -84,6 +84,9 @@ seldospartst="Válassza ki az /etc/fstab-hoz hozzáadandó partíciót"
 seldospartsd="Ha szeretné látni ezeket a partíciókat Linux alól, hozzá kell adnunk az /etc/fstab fájlhoz. Kérem, jelölje ki a partíciót, amely az /etc/fstab fájlhoz lesz írva. Ha kész, válassza a <$continue>-t."
 
 # packages section
+mirrorconfstring="Tükör kiválasztása"
+mirrorconft="Kérem válasszon"
+mirrorconfd="A gyorsabb letöltés érdekében megadhatja a legközelebbi tükörszerver címét. A legtöbb esetben az alapértelmezett érték megfelelõ lesz."
 categorychk="Kategóriák keresése, Kérem várjon..."
 pkgchk="Csomagok keresése. Kérem várjon..."
 categorystring="Kategóriák kiválasztása"

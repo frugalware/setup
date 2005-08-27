@@ -102,6 +102,9 @@ seldospartst="Select partition to add to /etc/fstab"
 seldospartsd="In order to make these partitions visible from Linux, we need to add them to your /etc/fstab.  Please pick a partition to add to /etc/fstab, or if you're done, hit <$continue>"
 
 # packages section
+mirrorconfstring="Selecting a mirror"
+mirrorconft="Please select a mirror"
+mirrorconfd="You may now specify the mirror closest to you in order to download the packages faster. In most cases the default value will be fine."
 categorychk="Searching for categories. Please wait..."
 pkgchk="Searching for packages. Please wait..."
 categorystring="Selecting categories"
