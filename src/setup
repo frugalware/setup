@@ -332,7 +332,7 @@ formatdev() # $1: which device
 			ext3desc=$ext3predesc && default=ext3
 		grep jfs -q /proc/filesystems && \
 			jfsdesc=$jfspredesc && default=jfs
-		grep ' xfs' -q /proc/filesystems && \
+		grep '\Wxfs' -q /proc/filesystems && \
 			xfsdesc=$xfspredesc && default=xfs
 		selfsf=`mktemp /tmp/tmp.XXXXXX`
 		chmod +x $selfsf

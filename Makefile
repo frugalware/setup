@@ -40,6 +40,7 @@ UDEVVER = 068
 UTILVER = 2.12-17
 NETKITVER = 0.17-3
 MDVER = 1.12.0-5
+XFSVER = 2.6.36-1
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
 export CCACHE_DIR=/var/cache/ccache/setup
@@ -64,7 +65,7 @@ CWD=`pwd`
 
 packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 	   net-tools glibc kbd kernel module-init-tools ncurses pacman eject \
-	   udev util-linux netkit-base mdadm
+	   udev util-linux netkit-base mdadm xfsprogs
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 kpatches = bootsplash-3.1.6-$(KERNELVER).diff
 ifeq ($(CARCH),x86_64)
@@ -364,3 +365,11 @@ mdadm:
 	cp -a var/lib/frugalware/system/* \
 		../mdadm/var/lib/frugalware/system/; \
 	cp -a sbin/raidconfig ../mdadm/sbin/
+
+xfsprogs:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf xfsprogs
+	mkdir -p xfsprogs/sbin
+	cd $(BDIR) && tar xzf ../$(CDIR)/xfsprogs-$(XFSVER)-$(CARCH).fpm; \
+	cp -a sbin/mkfs.xfs ../xfsprogs/sbin/

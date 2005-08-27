@@ -6,6 +6,7 @@ mount -t sysfs none /sys
 mount -t tmpfs none /tmp
 cat /proc/mounts >/etc/mtab
 depmod -a
+modprobe xfs
 modprobe iso9660
 modprobe BusLogic 2>/dev/null
 
