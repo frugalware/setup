@@ -2,7 +2,7 @@
 #
 # Compiling Time: ~45 minutes on factory.frugalware.org
 #
-# Copyright (C) 2005 Miklos Vajna <mamajom@axelero.hu>
+# Copyright (C) 2005 Miklos Vajna <vmiklos@frugalware.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
