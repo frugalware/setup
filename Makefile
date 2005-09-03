@@ -358,7 +358,7 @@ mdadm:
 	mkdir $(BDIR)
 	rm -rf mdadm
 	mkdir -p mdadm/sbin mdadm/var/lib/frugalware/{messages,system}
-	cd $(BDIR) && tar xzf ../$(CDIR)/mdadm-$(MDVER)-$(CARCH).fpm; \
+	cd $(BDIR) && tar xjf ../$(CDIR)/mdadm-$(MDVER)-$(CARCH).fpm; \
 	cp -a sbin/mdadm ../mdadm/sbin/; \
 	cp -a var/lib/frugalware/messages/* \
 		../mdadm/var/lib/frugalware/messages/; \
