@@ -238,6 +238,7 @@ net-tools:
 	sed -i 's/grep -w/grep/;s/grep -vw/grep -v/' etc/rc.d/rc.interfaces; \
 	cp -a etc/rc.d/rc.interfaces ../net-tools/etc/rc.d/; \
 	cp -a sbin/netconfig ../net-tools/sbin/
+	sed -i 's|adslconfig$$|adslconfig --fast\nmkdir /var/run\nmount -t devpts none /dev/pts\npppoe-connect >/dev/tty4 2>/dev/tty4 \&|' net-tools/var/lib/frugalware/system/netconfig
 
 glibc:
 	rm -rf $(BDIR)
