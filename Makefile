@@ -42,6 +42,7 @@ NETKITVER = 0.17-3
 MDVER = 2.0-1
 XFSVER = 2.6.36-1
 PPPVER = 2.4.3-5
+PPPOEVER = 3.6-2
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
 export CCACHE_DIR=/var/cache/ccache/setup
@@ -66,7 +67,7 @@ CWD=`pwd`
 
 packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 	   net-tools glibc kbd kernel module-init-tools ncurses pacman eject \
-	   udev util-linux netkit-base mdadm xfsprogs ppp
+	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 kpatches = bootsplash-3.1.6-$(KERNELVER).diff
 ifeq ($(CARCH),x86_64)
@@ -383,3 +384,14 @@ ppp:
 	cd $(BDIR) && tar xzf ../$(CDIR)/ppp-$(PPPVER)-$(CARCH).fpm; \
 	cp -a etc ../ppp/; \
 	cp -a usr/{lib,sbin} ../ppp/usr/
+
+pppoe:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf pppoe
+	mkdir -p pppoe/usr/share
+	cd $(BDIR) && tar xjf ../$(CDIR)/rp-pppoe-$(PPPOEVER)-$(CARCH).fpm; \
+	cp -a etc ../pppoe/; \
+	cp -a usr/sbin ../pppoe/usr/; \
+	cp -a usr/share/locale ../pppoe/usr/share/
+	sed -i 's|/bin/sh|/bin/bash|' pppoe/usr/sbin/adslconfig
