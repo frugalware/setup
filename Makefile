@@ -167,7 +167,7 @@ dialog:
 	mkdir $(BDIR)
 	rm -rf dialog
 	mkdir -p dialog/bin
-	cd $(BDIR) && tar xzf ../$(CDIR)/dialog-$(DIALOGVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/dialog-$(DIALOGVER)-$(CARCH).fpm
 	cp -a $(BDIR)/bin/dialog dialog/bin/
 
 e2fsprogs:
@@ -226,7 +226,7 @@ net-tools:
 	rm -rf net-tools
 	mkdir -p net-tools/{etc/rc.d/,etc/sysconfig/,sbin/} \
 		net-tools/var/lib/frugalware/{messages,system}
-	cd $(BDIR) && tar xzf ../$(CDIR)/net-tools-$(NETVER)-$(CARCH).fpm; \
+	cd $(BDIR) && tar xjf ../$(CDIR)/net-tools-$(NETVER)-$(CARCH).fpm; \
 	cp -a var/lib/frugalware/messages/* \
 		../net-tools/var/lib/frugalware/messages/; \
 	sed -i 's/^\(gethostname .*\)/# \1\nhname=frugalware\ndname=example.net/;s/--default-item lo/--default-item dhcp/' \
@@ -381,5 +381,5 @@ ppp:
 	rm -rf ppp
 	mkdir -p ppp/usr
 	cd $(BDIR) && tar xzf ../$(CDIR)/ppp-$(PPPVER)-$(CARCH).fpm; \
-	cp -a etc ../ppp/
+	cp -a etc ../ppp/; \
 	cp -a usr/{lib,sbin} ../ppp/usr/
