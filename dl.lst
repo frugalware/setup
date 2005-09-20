@@ -2,7 +2,7 @@ http://ftp.frugalware.org/pub/frugalware/frugalware-current/source/base/kernel/b
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/bash-3.0-6-i686.fpm
 http://www.busybox.net/downloads/busybox-1.00.tar.gz
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/dhcpcd-1.3.22pl4-2-i686.fpm
-http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/dialog-1.0_20050306-1-i686.fpm
+http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/dialog-1.0_20050911-1-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/e2fsprogs-1.38-1-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/eject-2.1.0-1-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/frugalware-0.3rc1-1-i686.fpm
@@ -13,8 +13,8 @@ http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/lynx-2.8.
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/module-init-tools-3.1-6-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/ncurses-5.4-2-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/netkit-base-0.17-3-i686.fpm
-http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/net-tools-1.60-11-i686.fpm
-http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/pacman-2.9.6-21-i686.fpm
+http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/net-tools-1.60-12-i686.fpm
+http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/pacman-2.9.7-3-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/reiserfsprogs-3.6.19-2-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/source/base/udev/udev-068.tar.gz
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware/util-linux-2.12-17-i686.fpm
