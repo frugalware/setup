@@ -562,6 +562,7 @@ category_select ()
 		  [ -e pkg ] && rm pkg
 		  [ "$netinstall" != 1 ] && ln -sf $pacbindir pkg )
 	fi
+	mkdir -p var/log # pacman can't log without this
 	selecttempfile=`mktemp /tmp/tmp.XXXXXX`
 	whichselectedtempfile=`mktemp /tmp/tmp.XXXXXX`
 	whichselectedtempfile2=`mktemp /tmp/tmp.XXXXXX`
