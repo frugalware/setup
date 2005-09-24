@@ -309,6 +309,8 @@ pacman:
 	cp -a $(BDIR)/usr/bin/pacman.static pacman/bin/pacman
 	cp -a $(BDIR)/usr/bin/vercmp pacman/bin/
 	cp -a $(BDIR)/etc/pacman.d/* pacman/etc/pacman.d/
+	echo "[options]" >>pacman/etc/pacman.conf
+	echo "LogFile     = /mnt/target/var/log/pacman.log" >> pacman/etc/pacman.conf
 	echo "Include = /etc/pacman.d/frugalware-current" >> pacman/etc/pacman.conf
 	echo "Include = /etc/pacman.d/extra-current" >>pacman/etc/pacman.conf
 	echo "# Include = /etc/pacman.d/frugalware" >>pacman/etc/pacman.conf
