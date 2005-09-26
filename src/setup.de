@@ -18,7 +18,7 @@ skd="Slovak / Slovensky"
 
 # Wilkkommens Sektion
 welcome="Willkommen zu Frugalware $osver"
-greetstring="Willkommen bei den Anwendern von Frugalware!\n\n \
+greetstring="Willkommen unter den Benutzern von Frugalware!\n\n \
 Beim Erstellen von Frugalware war es unser Ziel, dass Sie ihre Arbeit schneller und einfacher erledigen können. Wir hoffen, dass Ihnen unser Produkt gefällt.\n\n \
 Frugalware developers"
 
@@ -47,7 +47,7 @@ selppd="Wählen Sie aus, welches Programm sie für die Partitionierung verwenden m
 selhdt="Wählen Sie eine Festplatte zum Partitionieren aus"
 selhdd="Bitte wählen Sie eine Festplatte zum Partitionieren aus. Die folgenden sind verfügbar:"
 fdiskd="Das traditionelle Partitionierungsprogramm für Linux"
-cfdiskd="Anwenderfreundliche Version von fdisk (basierend auf curses)"
+cfdiskd="Bernutzerfreundliche Version von fdisk (basierend auf curses)"
 
 # swap Sektion
 setswap="Einrichten des Swap-Bereiches"
@@ -64,7 +64,7 @@ rootdevstring="Erstellen der Root-Partition"
 miscdevstring="Einrichten der Partitionen"
 selrootdevt="Wählen Sie die Linux-Installations-Partition"
 select="Auswählen"
-continue="Fortführen"
+continue="Weiter"
 selrootdevd="Bitte wählen Sie eine Partition von der folgenden Liste, die als ihre Root (/) Partition verwendet wird."
 formatpart="Formatiere Partition"
 wantformatq="Wenn diese Partition nicht formatiert wurde, sollten sie dies tun. \n ANMERKUNG: Das wird alle Information darauf löschen.  Wollen Sie diese Partition formatieren?"
