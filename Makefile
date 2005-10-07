@@ -130,6 +130,7 @@ initrd: devices
 	grep -q loop /proc/modules || /sbin/modprobe loop
 	mount -o loop initrd-$(CARCH).img i
 	cp -a $(MDIR)/* i/
+	chown -R root.root i/
 	umount initrd-$(CARCH).img
 	rmdir i
 	gzip -9 initrd-$(CARCH).img
