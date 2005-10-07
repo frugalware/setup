@@ -25,19 +25,19 @@ DIALOGVER = 1.0_20050911-1
 E2VER = 1.38-1
 REISERVER = 3.6.19-2
 LYNXVER = 2.8.5-2
-DHCPVER = 1.3.22pl4-2
+DHCPVER = 1.3.22pl4-3
 FWVER = 0.3-1
 NETVER = 1.60-12
 LIBCVER = 2.3.5-3
 KBDVER = 1.12-9
 KERNELVER = 2.6.13
-KERNELREL = 1
+KERNELREL = 2
 MODULEVER = 3.1-6
 NCVER = 5.4-2
 PACVER = 2.9.7-5
 EJECTVER = 2.1.0-1
 UDEVVER = 068
-UTILVER = 2.12-17
+UTILVER = 2.12-18
 NETKITVER = 0.17-3
 MDVER = 2.1-1
 XFSVER = 2.6.36-1
@@ -205,7 +205,7 @@ dhcpcd:
 	mkdir $(BDIR)
 	rm -rf dhcpcd
 	mkdir -p dhcpcd/sbin
-	cd $(BDIR) && tar xzf ../$(CDIR)/dhcpcd-$(DHCPVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/dhcpcd-$(DHCPVER)-$(CARCH).fpm
 	cp -a $(BDIR)/sbin/dhcpcd dhcpcd/sbin/
 
 frugalware:
@@ -346,7 +346,7 @@ util-linux:
 	mkdir $(BDIR)
 	rm -rf util-linux
 	mkdir -p util-linux/{sbin,usr/bin}
-	cd $(BDIR) && tar xzf ../$(CDIR)/util-linux-$(UTILVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/util-linux-$(UTILVER)-$(CARCH).fpm
 	cp -a $(BDIR)/sbin/{cfdisk,fdisk} util-linux/sbin/
 	cp -a $(BDIR)/usr/bin/setterm util-linux/usr/bin/
 
