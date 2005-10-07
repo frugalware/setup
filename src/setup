@@ -549,7 +549,9 @@ category_select ()
 			  tar xzf $pacbindir/$reponame.fdb )
 			if [ "$reponame" = "frugalware" -o \
 				"$reponame" = "frugalware-current" ]; then
-				echo "[$reponame]" >/etc/pacman.conf
+				echo "[options]" >/etc/pacman.conf
+				echo "LogFile = $target/var/log/pacman.log" >>/etc/pacman.conf
+				echo "[$reponame]" >>/etc/pacman.conf
 			else
 				echo "[$reponame]" >>/etc/pacman.conf
 			fi
