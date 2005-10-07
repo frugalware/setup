@@ -791,8 +791,6 @@ conf_passwd()
 		if [ $? = 0 ]; then
 			clear
 			chroot ./ /usr/sbin/adduser
-			# add the user to the cdrom group to be able to eject cds
-			chroot ./ /usr/bin/sed -i "s/\(^cdrom:.*\)$/\1,`sed -n 's/^\([^:]*\):.*/\1/;$ p' etc/passwd`/" etc/group
 		else
 			break;
 		fi
