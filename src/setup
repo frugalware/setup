@@ -845,6 +845,7 @@ formatdev $rootdev
 mountdev $rootdev /
 [ -d $target/etc/profile.d ] || mkdir -p $target/etc/profile.d $target/etc/sysconfig
 mv -f $prefstab $target/etc/fstab
+chmod 644 $target/etc/fstab
 mv -f /tmp/lang.sh $target/etc/profile.d/lang.sh
 mv -f /tmp/keymap $target/etc/sysconfig/keymap
 chmod 755 $target/etc/profile.d/lang.sh
