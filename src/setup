@@ -19,7 +19,7 @@ ask_lang()
 	langf=`mktemp /tmp/tmp.XXXXXX`
 	dialog --backtitle "$langbacktitle" --title "$sellangt" \
 		--aspect 20 --menu "$sellangd" 0 0 0 \
-		"en" "$end" "de" "$ded" "fr" "$frd" "hu" "$hud" "it" "$itd" \
+		"en" "$end" "es" "$esd" "de" "$ded" "fr" "$frd" "hu" "$hud" "it" "$itd" \
 		"pl" "$pld" "sk" "$skd" 2>$langf || exit 1
 	language=`cat $langf`
 	rm $langf
