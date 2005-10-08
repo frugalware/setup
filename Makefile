@@ -108,6 +108,9 @@ merge: $(packages)
 
 misc: merge
 	cp src/setup* src/*.conf $(MDIR)/bin/
+	ifneq ($(STABLE),false)
+		sed -i 's/^stable="false"$/stable=""/' $(MDIR)/bin/setup
+	endif
 	chmod +x $(MDIR)/bin/setup
 	cp src/inittab $(MDIR)/etc/
 	cp src/rc.S $(MDIR)/etc/rc.d/

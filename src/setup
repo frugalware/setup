@@ -3,6 +3,7 @@
 ### constants
 osver=`cat /etc/frugalware-release |cut -d ' ' -f 2`
 . setup.en
+# don't edit this here, edit the Makefile instead!
 stable="false"
 arch=`uname -m`
 bindir=/mnt/source/frugalware-$arch
