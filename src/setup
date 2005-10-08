@@ -3,11 +3,16 @@
 ### constants
 osver=`cat /etc/frugalware-release |cut -d ' ' -f 2`
 . setup.en
+stable="false"
 arch=`uname -m`
 bindir=/mnt/source/frugalware-$arch
 exbindir=/mnt/source/extra/frugalware-$arch
 target=/mnt/target
-defaultmirror="ftp://ftp5.frugalware.org/packages/frugalware/pub/frugalware/frugalware-current/"
+if [ "$stable" = "false" ]; then
+	defaultmirror="ftp://ftp5.frugalware.org/packages/frugalware/pub/frugalware/frugalware-current/"
+else
+	defaultmirror="ftp://ftp5.frugalware.org/packages/frugalware/pub/frugalware/frugalware-stable/"
+fi
 core="bash coreutils chkconfig frugalware grep sed udev"
 extrapkgs="k3b-i18n"
 logdev=/dev/tty4
@@ -181,10 +186,17 @@ mirrorconf()
 		$defaultmirror 2>$mirrorfile || return 1
 	mirror=`cat $mirrorfile`
 	rm $mirrorfile
-	sed -i "s|]$|]\nServer = $mirror/frugalware-$arch|" \
-		/etc/pacman.d/frugalware-current
-	sed -i "s|]$|]\nServer = $mirror/extra/frugalware-$arch|" \
-		/etc/pacman.d/extra-current
+	if [ "$stable" = "false" ]; then
+		sed -i "s|]$|]\nServer = $mirror/frugalware-$arch|" \
+			/etc/pacman.d/frugalware-current
+		sed -i "s|]$|]\nServer = $mirror/extra/frugalware-$arch|" \
+			/etc/pacman.d/extra-current
+	else
+		sed -i "s|]$|]\nServer = $mirror/frugalware-$arch|" \
+			/etc/pacman.d/frugalware
+		sed -i "s|]$|]\nServer = $mirror/extra/frugalware-$arch|" \
+			/etc/pacman.d/extra
+	fi
 }
 
 # partitioning section
@@ -534,10 +546,18 @@ category_select ()
 	category_search
 	repo=$1
 	if [ "$repo" = "frugalware" ]; then
-		reponame="frugalware-current"
+		if [ "$stable" = "false" ]; then
+			reponame="frugalware-current"
+		else
+			reponame="frugalware"
+		fi
 		pacbindir=$bindir
 	elif [ "$repo" = "extra" ]; then
-		reponame="extra-current"
+		if [ "$stable" = "false" ]; then
+			reponame="extra-current"
+		else
+			reponame="extra"
+		fi
 		pacbindir=$exbindir
 	fi
 	# preparing pkgdb
@@ -612,10 +632,18 @@ package_select_install()
 	repo=$1
 	shift
 	if [ "$repo" = "frugalware" ]; then
-		reponame="frugalware-current"
+		if [ "$stable" = "false" ]; then
+			reponame="frugalware-current"
+		else
+			reponame="frugalware"
+		fi
 		pacbindir=$bindir
 	elif [ "$repo" = "extra" ]; then
-		reponame="extra-current"
+		if [ "$stable" = "false" ]; then
+			reponame="extra-current"
+		else
+			reponame="extra"
+		fi
 		pacbindir=$exbindir
 	fi
 	pkg_search
@@ -705,10 +733,18 @@ install_packages()
 {
 	repo=$1
 	if [ "$repo" = "frugalware" ]; then
-		reponame="frugalware-current"
+		if [ "$stable" = "false" ]; then
+			reponame="frugalware-current"
+		else
+			reponame="frugalware"
+		fi
 		pacbindir=$bindir
 	elif [ "$repo" = "extra" ]; then
-		reponame="extra-current"
+		if [ "$stable" = "false" ]; then
+			reponame="extra-current"
+		else
+			reponame="extra"
+		fi
 		pacbindir=$exbindir
 	fi
 	shift
