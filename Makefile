@@ -108,9 +108,9 @@ merge: $(packages)
 
 misc: merge
 	cp src/setup* src/*.conf $(MDIR)/bin/
-	ifneq ($(STABLE),false)
-		sed -i 's/^stable="false"$/stable=""/' $(MDIR)/bin/setup
-	endif
+ifneq ($(STABLE),false)
+	sed -i 's/^stable="false"$/stable=""/' $(MDIR)/bin/setup
+endif
 	chmod +x $(MDIR)/bin/setup
 	cp src/inittab $(MDIR)/etc/
 	cp src/rc.S $(MDIR)/etc/rc.d/
@@ -316,13 +316,13 @@ pacman:
 	cp -a $(BDIR)/etc/pacman.d/* pacman/etc/pacman.d/
 	echo "[options]" >>pacman/etc/pacman.conf
 	echo "LogFile     = /mnt/target/var/log/pacman.log" >> pacman/etc/pacman.conf
-	ifeq ($(STABLE),false)
-		echo "Include = /etc/pacman.d/frugalware-current" >> pacman/etc/pacman.conf
-		echo "Include = /etc/pacman.d/extra-current" >>pacman/etc/pacman.conf
-	else
-		echo "Include = /etc/pacman.d/frugalware" >> pacman/etc/pacman.conf
-		echo "Include = /etc/pacman.d/extra" >>pacman/etc/pacman.conf
-	endif
+ifeq ($(STABLE),false)
+	echo "Include = /etc/pacman.d/frugalware-current" >> pacman/etc/pacman.conf
+	echo "Include = /etc/pacman.d/extra-current" >>pacman/etc/pacman.conf
+else
+	echo "Include = /etc/pacman.d/frugalware" >> pacman/etc/pacman.conf
+	echo "Include = /etc/pacman.d/extra" >>pacman/etc/pacman.conf
+endif
 
 
 udev:
