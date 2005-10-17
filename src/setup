@@ -780,7 +780,7 @@ cd_change()
 {
 	# we eject only if there is no extra repo on the disc (not dvd)
 	if ! [ -d /mnt/source/extra/frugalware-$arch/ -o "$netinstall" = 1 ]; then
-		umount /mnt/source
+		$target/bin/umount /mnt/source
 		$target/usr/bin/eject $srcdev
 		nextf=`mktemp /tmp/tmp.XXXXXX`
 		dialog --backtitle "$installpkgsbacktitle" --title "$neednextt" \
