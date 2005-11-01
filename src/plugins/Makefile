@@ -1,5 +1,8 @@
 CFLAGS ?= -Wall -O2 -pipe
 CFLAGS += -I..
+ifeq ($(shell arch),x86_64)
+CFLAGS += -fPIC
+endif
 
 PLUGINS=foo bar
 
