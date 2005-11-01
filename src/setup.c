@@ -76,6 +76,11 @@ int main()
 {
 	int i;
 	plugin_t *plugin;
+
+	setlocale(LC_ALL, "en_US");
+	bindtextdomain("setup", "/usr/share/locale");
+	bind_textdomain_codeset("setup", "ISO-8859-2");
+	textdomain("setup");
 	
 	init_plugins(PLUGDIR);
 	for (i=0; i<g_list_length(plugin_list); i++)
