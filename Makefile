@@ -88,7 +88,7 @@ sources = $(kpatches) bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYVER).tar.gz \
 	  reiserfsprogs-$(REISERVER)-$(CARCH).fpm udev-$(UDEVVER).tar.gz \
 	  util-linux-$(UTILVER)-$(CARCH).fpm
 
-compile: check ccache $(packages) misc
+compile: check ccache setup $(packages) misc
 
 clean:
 	rm -rf $(BDIR) $(MDIR) $(packages)
@@ -98,6 +98,9 @@ distclean: clean
 		initrd-$(CARCH).img.gz
 ccache:
 	install -d -m 2775 /var/cache/ccache/setup
+
+setup:
+	$(MAKE) -C setup
 
 merge: $(packages)
 	rm -rf $(MDIR)
