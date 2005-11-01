@@ -107,11 +107,12 @@ merge: $(packages)
 	done
 
 misc: merge
-	cp src/setup* src/*.conf $(MDIR)/bin/
+	mkdir $(MDIR)/lib/plugins
+	cp src/setup src/*.conf $(MDIR)/bin/
+	cp src/plugins/*.so $(MDIR)/lib/plugins/
 ifneq ($(STABLE),false)
 	sed -i 's/^stable="false"$$/stable=""/' $(MDIR)/bin/setup
 endif
-	chmod +x $(MDIR)/bin/setup
 	cp src/inittab $(MDIR)/etc/
 	cp src/rc.S $(MDIR)/etc/rc.d/
 	chmod +x $(MDIR)/etc/rc.d/rc.S
