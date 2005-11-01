@@ -113,10 +113,10 @@ misc: merge
 ifneq ($(STABLE),false)
 	sed -i 's/^stable="false"$$/stable=""/' $(MDIR)/bin/setup
 endif
-	cp src/inittab $(MDIR)/etc/
-	cp src/rc.S $(MDIR)/etc/rc.d/
+	cp etc/inittab $(MDIR)/etc/
+	cp etc/rc.S $(MDIR)/etc/rc.d/
 	chmod +x $(MDIR)/etc/rc.d/rc.S
-	cp src/rc.hotplug $(MDIR)/etc/rc.d/
+	cp etc/rc.hotplug $(MDIR)/etc/rc.d/
 	chmod +x $(MDIR)/etc/rc.d/rc.hotplug
 	@echo "All done. Start 'make initrd' now."
 
