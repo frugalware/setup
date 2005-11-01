@@ -13,3 +13,4 @@ bar: bar.o
 
 clean:
 	rm -f $(PLUGINS) *.o
+	rm -f *.so
