@@ -39,6 +39,8 @@ int init_plugins(char *dirname)
 	struct dirent *ent;
 	struct stat statbuf;
 
+	printf(_("Starting initizaling plugins...\n"));
+
 	dir = opendir(dirname);
 	if (!dir)
 	{

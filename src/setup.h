@@ -1,3 +1,8 @@
+#include <locale.h>
+#include <libintl.h>
+
+#define _(text) gettext(text)
+
 #define PLUGDIR "plugins"
 
 #define SHARED_LIB_EXT ".so"
