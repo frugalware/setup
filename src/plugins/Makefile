@@ -1,4 +1,4 @@
-CFLAGS ?= -Wall -march=i686 -O2 -pipe
+CFLAGS ?= -Wall -O2 -pipe
 CFLAGS += -I..
 
 PLUGINS=foo bar
