@@ -17,6 +17,11 @@ plugin_t *info()
 
 int main(void)
 {
-	printf("foo\n");
+	// hardwire this for now
+	setlocale(LC_ALL, "en_US");
+	bindtextdomain("setup", "/usr/share/locale");
+	bind_textdomain_codeset("setup", "ISO-8859-2");
+	textdomain("setup");
+
 	return(0);
 }
