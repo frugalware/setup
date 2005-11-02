@@ -16,7 +16,7 @@ char *langs[] =
 	"de_DE", "German / Deutsch                ",
 	"fr_FR", "French / francais               ",
 	"it_IT", "Italian / Italiano              ",
-	"hu_HU", "Hungarian / magyar              ",
+	"hu_HU", "Hungarian / Magyar              ",
 	"pl_PL", "Polish / Polski                 ",
 	"sk_SK", "Slovak / Slovensky              "
 };
