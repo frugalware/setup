@@ -17,6 +17,6 @@ plugin_t *info()
 
 int main(void)
 {
-	printf("bar\n");
+	printf(_("bar\n"));
 	return(0);
 }
