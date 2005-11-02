@@ -4,12 +4,12 @@ ifeq ($(shell arch),x86_64)
 CFLAGS += -fPIC
 endif
 
-PLUGINS=foo bar
+PLUGINS=asklang bar
 
 all: $(PLUGINS)
 
-foo: foo.o
-	$(CC) -shared -Wl,-soname,foo.so -o foo.so foo.o
+asklang: asklang.o
+	$(CC) -shared -Wl,-soname,asklang.so -o asklang.so asklang.o
 	
 bar: bar.o
 	$(CC) -shared -Wl,-soname,bar.so -o bar.so bar.o

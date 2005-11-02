@@ -1,11 +1,11 @@
 #include <stdio.h>
 
 #include <setup.h>
-#include "foo.h"
+#include "asklang.h"
 
 plugin_t plugin =
 {
-	"foo",
+	"asklang",
 	main,
 	NULL // dlopen handle
 };
