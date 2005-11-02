@@ -9,10 +9,10 @@ PLUGINS=asklang bar
 all: $(PLUGINS)
 
 asklang: asklang.o
-	$(CC) -shared -Wl,-soname,asklang.so -o asklang.so asklang.o
+	$(CC) -shared -Wl,-soname,asklang.so -o 01asklang.so $<
 	
 bar: bar.o
-	$(CC) -shared -Wl,-soname,bar.so -o bar.so bar.o
+	$(CC) -shared -Wl,-soname,bar.so -o 50bar.so $<
 
 clean:
 	rm -f $(PLUGINS) *.o
