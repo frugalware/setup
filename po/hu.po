@@ -12,11 +12,11 @@ msgstr ""
 "Last-Translator:  <vmiklos@frugalware.org>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: ../src/plugins/bar.c:20
 #, c-format
 msgid "bar\n"
-msgstr "bár"
+msgstr "bár\n"
