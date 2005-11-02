@@ -5,3 +5,4 @@
 #define FREE(p) { if (p) { free(p); (p) = NULL; }}
 
 char *get_version(void);
+char *gen_backtitle(char *section);

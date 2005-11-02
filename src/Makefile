@@ -6,7 +6,7 @@ LDFLAGS += $(shell pkg-config --libs glib-2.0)
 all: setup
 	$(MAKE) -C plugins
 
-setup: setup.o
+setup: setup.o util.o
 	$(CC) $(CFLAGS) -o $@ $< $(LDFLAGS)
 
 clean:

@@ -7,6 +7,17 @@
 
 #define VERSIONFILE "/etc/frugalware-release"
 
+char *gen_backtitle(char *section)
+{
+	char *backtitle;
+	char *version = get_version();
+	MALLOC(backtitle, 256);
+
+	snprintf(backtitle, 255, "%s - %s %s", section, version, _("Setup"));
+	FREE(version);
+	return(backtitle);
+}
+
 char *get_version(void)
 {
 	FILE *fp;

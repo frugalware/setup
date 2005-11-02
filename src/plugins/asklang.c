@@ -2,6 +2,7 @@
 #include <dialog.h>
 
 #include <setup.h>
+#include <util.h>
 #include "asklang.h"
 
 #define LANGSNUM 2
@@ -31,6 +32,8 @@ int main(void)
 	init_dialog(input, dialog_state.output);
 
 	dialog_vars.input_result = my_buffer;
+	dialog_vars.backtitle=gen_backtitle("Selecting language");
+	dlg_put_backtitle();
 	dialog_menu("Please select your language",
 		"Please select your language from the list. If your language"
 		"is not in the list, you probably should choose English.",
