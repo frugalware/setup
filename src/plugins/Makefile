@@ -3,13 +3,14 @@ CFLAGS += -I..
 ifeq ($(shell arch),x86_64)
 CFLAGS += -fPIC
 endif
+LDFLAGS=-ldialog -lcurses -lm
 
 PLUGINS=asklang bar
 
 all: $(PLUGINS)
 
 asklang: asklang.o
-	$(CC) -shared -Wl,-soname,asklang.so -o 01asklang.so $<
+	$(CC) -shared -Wl,-soname,asklang.so -o 01asklang.so $< $(LDFLAGS)
 	
 bar: bar.o
 	$(CC) -shared -Wl,-soname,bar.so -o 50bar.so $<

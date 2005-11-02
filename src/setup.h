@@ -1,7 +1,9 @@
 #include <locale.h>
 #include <libintl.h>
 
+#ifndef _
 #define _(text) gettext(text)
+#endif
 
 #define PLUGDIR "plugins"
 
