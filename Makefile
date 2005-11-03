@@ -41,9 +41,9 @@ UDEVVER = 071
 UTILVER = 2.12-18
 NETKITVER = 0.17-3
 MDVER = 2.1-2
-XFSVER = 2.6.36-1
+XFSVER = 2.7.3-1
 PPPVER = 2.4.3-5
-PPPOEVER = 3.6-2
+PPPOEVER = 3.6-3
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
 export CCACHE_DIR=/var/cache/ccache/setup
