@@ -8,7 +8,7 @@
 plugin_t plugin =
 {
 	"bar",
-	main,
+	run,
 	NULL // dlopen handle
 };
 
@@ -17,8 +17,9 @@ plugin_t *info()
 	return &plugin;
 }
 
-int main(void)
+int run(GList **config)
 {
+	int i;
 	printf(_("bar\n"));
 	printf("%s\n", getenv("LC_ALL"));
 	printf("%s\n", getenv("CHARSET"));

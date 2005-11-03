@@ -13,7 +13,7 @@
 typedef struct
 {
 	char *name;
-	int (*main)(void);
+	int (*run)(GList **config);
 	void *handle;
 } plugin_t;
 

@@ -23,7 +23,7 @@ char *langs[] =
 plugin_t plugin =
 {
 	"asklang",
-	main,
+	run,
 	NULL // dlopen handle
 };
 
@@ -40,7 +40,7 @@ int setcharset(char *name)
 	return(0);
 }
 
-int main(void)
+int run(GList **config)
 {
 	FILE *input = stdin;
 	dialog_state.output = stderr;

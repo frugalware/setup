@@ -74,12 +74,13 @@ int main()
 {
 	int i;
 	plugin_t *plugin;
+	GList *config=NULL;
 
 	init_plugins(PLUGDIR);
 	for (i=0; i<g_list_length(plugin_list); i++)
 	{
 		plugin = g_list_nth_data(plugin_list, i);
-		plugin->main();
+		plugin->run(&config);
 	}
 	cleanup_plugins();
 	return(0);
