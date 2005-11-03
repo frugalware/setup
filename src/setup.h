@@ -1,5 +1,6 @@
 #include <locale.h>
 #include <libintl.h>
+#include <glib.h>
 
 #ifndef _
 #define _(text) gettext(text)
@@ -15,3 +16,9 @@ typedef struct
 	int (*main)(void);
 	void *handle;
 } plugin_t;
+
+typedef struct
+{
+	char *name;
+	void *data;
+} data_t;

@@ -2,7 +2,6 @@
 #include <dialog.h>
 #include <stdlib.h>
 #include <string.h>
-#include <glib.h>
 
 #include <setup.h>
 #include <util.h>

@@ -6,3 +6,4 @@
 
 char *get_version(void);
 char *gen_backtitle(char *section);
+data_t *data_new(void);

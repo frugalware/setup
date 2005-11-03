@@ -34,3 +34,15 @@ char *get_version(void)
 	fclose(fp);
 	return(version);
 }
+
+data_t *data_new(void)
+{
+	data_t *data=NULL;
+	
+	data = (data_t*)malloc(sizeof(data_t));
+	if(data==NULL)
+		return(NULL);
+	data->name=NULL;
+	data->data=NULL;
+	return(data);
+}
