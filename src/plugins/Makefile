@@ -7,7 +7,7 @@ LDFLAGS=-ldialog -lcurses -lm
 CFLAGS += $(shell pkg-config --cflags glib-2.0)
 LDFLAGS += $(shell pkg-config --libs glib-2.0)
 
-PLUGINS=asklang bar
+PLUGINS=asklang
 
 all: $(PLUGINS)
 
@@ -15,10 +15,6 @@ asklang: asklang.o ../util.o
 	$(CC) $(CFLAGS) -shared -Wl,-soname,asklang.so -o 01asklang.so \
 		asklang.o ../util.o $(LDFLAGS)
 	
-bar: bar.o ../util.o
-	$(CC) $(CFLAGS) -shared -Wl,-soname,bar.so -o 50bar.so \
-		bar.o ../util.o $(LDFLAGS)
-
 clean:
 	rm -f $(PLUGINS) *.o
 	rm -f *.so
