@@ -204,10 +204,10 @@ lynx:
 	rm -rf $(BDIR)
 	mkdir $(BDIR)
 	rm -rf lynx
-	mkdir -p lynx/usr/bin lynx/usr/lib
-	cd $(BDIR) && tar xzf ../$(CDIR)/lynx-$(LYNXVER)-$(CARCH).fpm
+	mkdir -p lynx/usr/bin lynx/etc/lynx
+	cd $(BDIR) && tar xjf ../$(CDIR)/lynx-$(LYNXVER)-$(CARCH).fpm
 	cp -a $(BDIR)/usr/bin/lynx lynx/usr/bin/
-	cp -a $(BDIR)/usr/lib/lynx.cfg lynx/usr/lib/
+	cp -a $(BDIR)/etc/lynx/lynx.cfg lynx/etc/lynx/
 
 dhcpcd:
 	rm -rf $(BDIR)
@@ -262,7 +262,7 @@ kbd:
 	mkdir $(BDIR)
 	rm -rf kbd
 	mkdir -p kbd/usr/{bin,share/kbd/keymaps,share/kbd/consolefonts}
-	cd $(BDIR) && tar xzf ../$(CDIR)/kbd-$(KBDVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/kbd-$(KBDVER)-$(CARCH).fpm
 	cp -a $(BDIR)/{bin/loadkeys,usr/bin/setfont} kbd/usr/bin/
 	cp -a $(BDIR)/usr/share/kbd/keymaps/{i386,include} \
 		kbd/usr/share/kbd/keymaps/
@@ -305,7 +305,7 @@ ncurses:
 	mkdir $(BDIR)
 	rm -rf ncurses
 	mkdir -p ncurses/{lib,usr/share/terminfo/l}
-	cd $(BDIR) && tar xzf ../$(CDIR)/ncurses-$(NCVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/ncurses-$(NCVER)-$(CARCH).fpm
 	cp -a $(BDIR)/lib/libncurses* ncurses/lib/
 	cp -a $(BDIR)/usr/share/terminfo/l/linux ncurses/usr/share/terminfo/l/
 
@@ -314,7 +314,7 @@ pacman:
 	mkdir $(BDIR)
 	rm -rf pacman
 	mkdir -p pacman/bin pacman/etc/pacman.d/
-	cd $(BDIR) && tar xzf ../$(CDIR)/pacman-$(PACVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/pacman-$(PACVER)-$(CARCH).fpm
 	cp -a $(BDIR)/usr/bin/pacman.static pacman/bin/pacman
 	cp -a $(BDIR)/usr/bin/vercmp pacman/bin/
 	cp -a $(BDIR)/etc/pacman.d/* pacman/etc/pacman.d/
@@ -389,7 +389,7 @@ xfsprogs:
 	mkdir $(BDIR)
 	rm -rf xfsprogs
 	mkdir -p xfsprogs/sbin
-	cd $(BDIR) && tar xzf ../$(CDIR)/xfsprogs-$(XFSVER)-$(CARCH).fpm; \
+	cd $(BDIR) && tar xjf ../$(CDIR)/xfsprogs-$(XFSVER)-$(CARCH).fpm; \
 	cp -a sbin/mkfs.xfs ../xfsprogs/sbin/
 
 ppp:
