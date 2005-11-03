@@ -19,17 +19,10 @@ int run(GList **config)
 {
 	data_t *data;
 
-	// sample: dump the config list
-	for (i=0; i<g_list_length(*config); i++)
-	{
-		data = g_list_nth_data((*config), i);
-		printf("detected conf data: %s (%s)\n", data->name, (char*)data->data);
-	}
+	// sample: gets the string titled "stuff" from the config list
+	printf("%s\n", (char*)data_get(*config, "stuff"));
 	
 	// sample: adds a "content" string titled "stuff" to the config list
-	data_t *data = data_new();
-	data->name = strdup("stuff");
-	data->data = strdup("content");
-	*config = g_list_append(*config, data);
+	data_put(config, "stuff", "content");
 	return(0);
 }

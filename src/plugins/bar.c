@@ -3,6 +3,7 @@
 #include <unistd.h>
 
 #include <setup.h>
+#include <util.h>
 #include "bar.h"
 
 plugin_t plugin =
@@ -19,7 +20,6 @@ plugin_t *info()
 
 int run(GList **config)
 {
-	int i;
 	printf(_("bar\n"));
 	printf("%s\n", getenv("LC_ALL"));
 	printf("%s\n", getenv("CHARSET"));

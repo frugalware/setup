@@ -15,8 +15,9 @@ asklang: asklang.o ../util.o
 	$(CC) $(CFLAGS) -shared -Wl,-soname,asklang.so -o 01asklang.so \
 		asklang.o ../util.o $(LDFLAGS)
 	
-bar: bar.o
-	$(CC) $(CFLAGS) -shared -Wl,-soname,bar.so -o 50bar.so $< $(LDFLAGS)
+bar: bar.o ../util.o
+	$(CC) $(CFLAGS) -shared -Wl,-soname,bar.so -o 50bar.so \
+		bar.o ../util.o $(LDFLAGS)
 
 clean:
 	rm -f $(PLUGINS) *.o
