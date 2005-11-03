@@ -111,7 +111,7 @@ merge: $(packages)
 
 misc: merge
 	mkdir $(MDIR)/lib/plugins
-	cp src/setup src/*.conf $(MDIR)/bin/
+	cp src/setup $(MDIR)/bin/
 	cp src/plugins/*.so $(MDIR)/lib/plugins/
 ifneq ($(STABLE),false)
 	sed -i 's/^stable="false"$$/stable=""/' $(MDIR)/bin/setup
