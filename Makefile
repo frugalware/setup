@@ -44,6 +44,7 @@ MDVER = 2.1-2
 XFSVER = 2.7.3-1
 PPPVER = 2.4.3-5
 PPPOEVER = 3.6-3
+GLIBVER = 2.8.3-1
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
 export CCACHE_DIR=/var/cache/ccache/setup
@@ -68,7 +69,7 @@ CWD=`pwd`
 
 packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 	   net-tools glibc kbd kernel module-init-tools ncurses pacman eject \
-	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe
+	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 kpatches = bootsplash-3.1.6-$(KERNELVER).diff
 ifeq ($(CARCH),x86_64)
@@ -411,3 +412,11 @@ pppoe:
 	cp -a usr/sbin ../pppoe/usr/; \
 	cp -a usr/share/locale ../pppoe/usr/share/
 	sed -i 's|/bin/sh|/bin/bash|' pppoe/usr/sbin/adslconfig
+
+glib2:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf glib2
+	mkdir -p glib2/usr/lib
+	cd $(BDIR) && tar xjf ../$(CDIR)/glib2-$(GLIBVER)-$(CARCH).fpm; \
+	cp -a usr/lib/libglib-2.0.so* ../glib2/usr/lib/
