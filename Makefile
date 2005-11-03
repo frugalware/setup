@@ -123,7 +123,7 @@ endif
 	chmod +x $(MDIR)/etc/rc.d/rc.hotplug
 	@echo "All done. Start 'make initrd' now."
 
-devices: misc
+devices: compile
 	mknod -m 700 $(MDIR)/dev/console c 5 1
 	mknod -m 600 $(MDIR)/dev/null c 1 3
 	mknod -m 700 $(MDIR)/dev/tty c 5 0
