@@ -1,4 +1,4 @@
-http://ftp.frugalware.org/pub/frugalware/frugalware-current/source/base/kernel/bootsplash-3.1.6-2.6.13.diff
+http://ftp.frugalware.org/pub/frugalware/frugalware-current/source/base/kernel/bootsplash-3.1.6-2.6.14.diff
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/bash-3.0-6-i686.fpm
 http://www.busybox.net/downloads/busybox-1.00.tar.gz
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/dhcpcd-1.3.22pl4-3-i686.fpm
@@ -8,8 +8,8 @@ http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/ejec
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/frugalware-0.3-3-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/glibc-2.3.5-3-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/kbd-1.12-12-i686.fpm
-http://ftp.frugalware.org/pub/frugalware/frugalware-current/source/base/kernel/linux-2.6.13.tar.bz2
-http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/lynx-2.8.5-2-i686.fpm
+http://ftp.frugalware.org/pub/frugalware/frugalware-current/source/base/kernel/linux-2.6.14.tar.bz2
+http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/lynx-2.8.5-3-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/module-init-tools-3.1-6-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/ncurses-5.4-2-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/netkit-base-0.17-3-i686.fpm
