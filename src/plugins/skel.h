@@ -1,2 +1,2 @@
 plugin_t *info();
-int main(void);
+int run(GList **config);
