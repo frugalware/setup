@@ -35,7 +35,7 @@ plugin_t *info()
 int setcharset(char *name)
 {
 	//TODO: maybe there is a proper system call for this?
-	execlp("setfont", "setfont", name, (char *)0);
+	system(g_strdup_printf("setfont %s >%s 2>%s", name, LOGDEV, LOGDEV));
 	bind_textdomain_codeset("setup", g_ascii_strup(name, strlen(name)-1));
 	return(0);
 }

@@ -6,6 +6,8 @@
 #define _(text) gettext(text)
 #endif
 
+#define LOGDEV "/dev/tty4"
+
 #define PLUGDIR "plugins"
 
 #define SHARED_LIB_EXT ".so"
