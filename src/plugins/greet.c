@@ -22,7 +22,6 @@ int run(GList **config)
 {
 	FILE *input = stdin;
 	dialog_state.output = stderr;
-	char my_buffer[MAX_LEN + 1] = "";
 	char *version = get_version();
 	char *title=NULL;
 
@@ -30,7 +29,6 @@ int run(GList **config)
 
 	init_dialog(input, dialog_state.output);
 
-	dialog_vars.input_result = my_buffer;
 	dialog_vars.backtitle=gen_backtitle(_("Welcome"));
 	dlg_put_backtitle();
 	dialog_msgbox(title, _("Welcome among the users of Frugalware!\n\n"
