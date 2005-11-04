@@ -95,6 +95,9 @@ int main()
 	{
 		plugin = g_list_nth_data(plugin_list, i);
 		plugin->run(&config);
+#ifdef DIALOG
+		dialog_vars.input_result[0]='\0';
+#endif
 	}
 
 #ifdef DIALOG
