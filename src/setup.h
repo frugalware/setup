@@ -8,7 +8,11 @@
 
 #define LOGDEV "/dev/tty4"
 
+#ifdef FINAL
+#define PLUGDIR "/lib/plugins"
+#else
 #define PLUGDIR "plugins"
+#endif
 
 #define SHARED_LIB_EXT ".so"
 

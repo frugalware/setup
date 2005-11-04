@@ -87,8 +87,11 @@ int exit_perform(void)
 	end_dialog();
 #endif
 
-	// TODO
+#ifdef FINAL
+	system(g_strdup_printf("/sbin/reboot >%s 2>%s", LOGDEV, LOGDEV));
+#else
 	printf("/sbin/reboot\n");
+#endif
 	exit(1);
 }
 

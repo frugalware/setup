@@ -101,7 +101,7 @@ ccache:
 	install -d -m 2775 /var/cache/ccache/setup
 
 setup:
-	$(MAKE) -C src
+	$(MAKE) -C src final
 
 merge: $(packages)
 	rm -rf $(MDIR)

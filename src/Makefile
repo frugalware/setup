@@ -3,6 +3,7 @@ LDFLAGS = -ldl
 CFLAGS += $(shell pkg-config --cflags glib-2.0)
 LDFLAGS += $(shell pkg-config --libs glib-2.0)
 CFLAGS += -DDIALOG
+CFLAGS += $(FINAL)
 LDFLAGS += -ldialog -lcurses -lm -rdynamic
 ifeq ($(shell arch),x86_64)
 CFLAGS += -fPIC
@@ -13,6 +14,9 @@ all: setup
 
 setup: setup.o util.o
 	$(CC) $(CFLAGS) -o $@ setup.o util.o $(LDFLAGS)
+
+final:
+	$(MAKE) FINAL="-DFINAL"
 
 clean:
 	rm -f setup *.o
