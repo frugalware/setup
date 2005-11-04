@@ -6,7 +6,7 @@
 plugin_t plugin =
 {
 	"skel",
-	main,
+	run,
 	NULL // dlopen handle
 };
 
@@ -17,8 +17,6 @@ plugin_t *info()
 
 int run(GList **config)
 {
-	data_t *data;
-
 	// sample: gets the string titled "stuff" from the config list
 	printf("%s\n", (char*)data_get(*config, "stuff"));
 	
