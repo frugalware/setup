@@ -98,6 +98,7 @@ int main()
 	}
 
 #if 1
+	dlg_clear();
 	end_dialog();
 #endif
 

@@ -42,13 +42,21 @@ int setcharset(char *name)
 
 int run(GList **config)
 {
+	int ret;
 	dialog_vars.backtitle=gen_backtitle("Selecting language");
 	dlg_put_backtitle();
 	dlg_clear();
-	dialog_menu("Please select your language",
+	while(1)
+	{
+		ret = dialog_menu("Please select your language",
 		"Please select your language from the list. If your language"
 		"is not in the list, you probably should choose English.",
 		0, 0, 0, LANGSNUM, langs);
+		if (ret != DLG_EXIT_CANCEL)
+			break;
+		if(exit_confirm())
+			exit_perform();
+	}
 
 	setenv("LC_ALL", dialog_vars.input_result, 1);
 	setenv("LANG",   dialog_vars.input_result, 1);

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <dialog.h>
 
 #include "setup.h"
 #include "util.h"
@@ -67,4 +68,26 @@ void data_put(GList **config, char *name, void *data)
 	dp->name = name;
 	dp->data = data;
 	(*config) = g_list_append((*config), dp);
+}
+
+int exit_confirm(void)
+{
+	int ret;
+	ret = dialog_yesno(_("Exit from the installer"),
+		_("Are you sure you want to exit from the installer?"), 0, 0);
+	if(ret==DLG_EXIT_OK)
+		return(1);
+	else
+		return(0);
+}
+
+int exit_perform(void)
+{
+#if 1
+	end_dialog();
+#endif
+
+	// TODO
+	printf("/sbin/reboot\n");
+	exit(1);
 }
