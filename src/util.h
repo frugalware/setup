@@ -11,3 +11,4 @@ void *data_get(GList *config, char *title);
 void data_put(GList **config, char *name, void *data);
 int exit_confirm(void);
 int exit_perform(void);
+char **glist4dialog(GList *list, char *blank);

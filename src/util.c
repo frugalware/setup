@@ -91,3 +91,18 @@ int exit_perform(void)
 	printf("/sbin/reboot\n");
 	exit(1);
 }
+
+char **glist4dialog(GList *list, char *blank)
+{
+	int i;
+	char **array;
+
+	MALLOC(array, 2*g_list_length(list)*sizeof(char*));
+	
+	for (i=0; i<2*g_list_length(list); i=i+2)
+	{
+		array[i] = (char*)g_list_nth_data(list, i/2);
+		array[i+1] = blank;
+	}
+	return(array);
+}
