@@ -20,17 +20,14 @@ plugin_t *info()
 
 int run(GList **config)
 {
-	FILE *input = stdin;
-	dialog_state.output = stderr;
 	char *version = get_version();
 	char *title=NULL;
 
 	asprintf(&title, _("Welcome to %s"), version);
 
-	init_dialog(input, dialog_state.output);
-
 	dialog_vars.backtitle=gen_backtitle(_("Welcome"));
 	dlg_put_backtitle();
+	dlg_clear();
 	dialog_msgbox(title, _("Welcome among the users of Frugalware!\n\n"
 		"The aim of creating Frugalware was to help you make your work "
 		"faster and simpler. We hope that you will like our "
@@ -38,6 +35,5 @@ int run(GList **config)
 		"The Frugalware Developer Team"), 0, 0, 1);
 	FREE(version);
 
-	end_dialog();
 	return(0);
 }

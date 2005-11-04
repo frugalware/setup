@@ -4,6 +4,9 @@
 #include <string.h>
 #include <glib.h>
 #include <dlfcn.h>
+#if 1
+#include <dialog.h>
+#endif
 
 #include "setup.h"
 
@@ -75,13 +78,29 @@ int main()
 	int i;
 	plugin_t *plugin;
 	GList *config=NULL;
+#if 1
+	FILE *input = stdin;
+	dialog_state.output = stderr;
+	char my_buffer[MAX_LEN + 1] = "";
+#endif
 
 	init_plugins(PLUGDIR);
+
+#if 1
+	init_dialog(input, dialog_state.output);
+	dialog_vars.input_result = my_buffer;
+#endif
+
 	for (i=0; i<g_list_length(plugin_list); i++)
 	{
 		plugin = g_list_nth_data(plugin_list, i);
 		plugin->run(&config);
 	}
+
+#if 1
+	end_dialog();
+#endif
+
 	cleanup_plugins();
 	return(0);
 }
