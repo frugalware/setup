@@ -5,7 +5,7 @@
 
 #include <setup.h>
 #include <util.h>
-#include "asklang.h"
+#include "common.h"
 
 #define LANGSNUM 8
 char *langs[] =

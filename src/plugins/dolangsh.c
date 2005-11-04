@@ -4,7 +4,7 @@
 
 #include <setup.h>
 #include <util.h>
-#include "dolangsh.h"
+#include "common.h"
 
 plugin_t plugin =
 {

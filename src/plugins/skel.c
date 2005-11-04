@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include <setup.h>
-#include "skel.h"
+#include "common.h"
 
 plugin_t plugin =
 {
