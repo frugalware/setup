@@ -3,12 +3,12 @@ CFLAGS += -I..
 ifeq ($(shell arch),x86_64)
 CFLAGS += -fPIC
 endif
-CFLAGS += $(FINAL)
+CFLAGS += $(FINAL) -DARCH=$(shell arch)
 LDFLAGS=-ldialog -lcurses -lm
 CFLAGS += $(shell pkg-config --cflags glib-2.0)
 LDFLAGS += $(shell pkg-config --libs glib-2.0)
 
-PLUGINS=asklang dolangsh greet layout hotplug
+PLUGINS=asklang dolangsh greet layout hotplug loadsource
 
 all: $(PLUGINS)
 
@@ -31,6 +31,10 @@ layout: layout.o ../util.o
 hotplug: hotplug.o ../util.o
 	$(CC) $(CFLAGS) -shared -Wl,-soname,hotplug.so -o 20hotplug.so \
 		hotplug.o ../util.o $(LDFLAGS)
+
+loadsource: loadsource.o ../util.o
+	$(CC) $(CFLAGS) -shared -Wl,-soname,loadsource.so -o 25loadsource.so \
+		loadsource.o ../util.o $(LDFLAGS)
 
 clean:
 	rm -f $(PLUGINS) *.o

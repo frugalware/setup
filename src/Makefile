@@ -3,7 +3,7 @@ LDFLAGS = -ldl
 CFLAGS += $(shell pkg-config --cflags glib-2.0)
 LDFLAGS += $(shell pkg-config --libs glib-2.0)
 CFLAGS += -DDIALOG
-CFLAGS += $(FINAL)
+CFLAGS += $(FINAL) -DARCH=$(shell arch)
 LDFLAGS += -ldialog -lcurses -lm -rdynamic
 ifeq ($(shell arch),x86_64)
 CFLAGS += -fPIC

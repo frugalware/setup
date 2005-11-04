@@ -7,6 +7,7 @@
 #endif
 
 #define LOGDEV "/dev/tty4"
+#define SOURCEDIR "/mnt/source"
 
 #ifdef FINAL
 #define PLUGDIR "/lib/plugins"
