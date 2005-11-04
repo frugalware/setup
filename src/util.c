@@ -83,7 +83,7 @@ int exit_confirm(void)
 
 int exit_perform(void)
 {
-#if 1
+#ifdef DIALOG
 	end_dialog();
 #endif
 

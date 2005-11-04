@@ -4,7 +4,7 @@
 #include <string.h>
 #include <glib.h>
 #include <dlfcn.h>
-#if 1
+#ifdef DIALOG
 #include <dialog.h>
 #endif
 
@@ -78,7 +78,7 @@ int main()
 	int i;
 	plugin_t *plugin;
 	GList *config=NULL;
-#if 1
+#ifdef DIALOG
 	FILE *input = stdin;
 	dialog_state.output = stderr;
 	char my_buffer[MAX_LEN + 1] = "";
@@ -86,7 +86,7 @@ int main()
 
 	init_plugins(PLUGDIR);
 
-#if 1
+#ifdef DIALOG
 	init_dialog(input, dialog_state.output);
 	dialog_vars.input_result = my_buffer;
 #endif
@@ -97,7 +97,7 @@ int main()
 		plugin->run(&config);
 	}
 
-#if 1
+#ifdef DIALOG
 	dlg_clear();
 	end_dialog();
 #endif
