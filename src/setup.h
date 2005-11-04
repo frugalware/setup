@@ -10,8 +10,10 @@
 
 #ifdef FINAL
 #define PLUGDIR "/lib/plugins"
+#define HOTPLUGSCRIPT "/etc/rc.d/rc.hotplug"
 #else
 #define PLUGDIR "plugins"
+#define HOTPLUGSCRIPT "echo /etc/rc.d/rc.hotplug"
 #endif
 
 #define SHARED_LIB_EXT ".so"
