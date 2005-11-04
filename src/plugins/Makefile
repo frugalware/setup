@@ -7,7 +7,7 @@ LDFLAGS=-ldialog -lcurses -lm
 CFLAGS += $(shell pkg-config --cflags glib-2.0)
 LDFLAGS += $(shell pkg-config --libs glib-2.0)
 
-PLUGINS=asklang dolangsh
+PLUGINS=asklang dolangsh greet
 
 all: $(PLUGINS)
 
@@ -18,6 +18,10 @@ asklang: asklang.o ../util.o
 dolangsh: dolangsh.o ../util.o
 	$(CC) $(CFLAGS) -shared -Wl,-soname,dolangsh.so -o 05dolangsh.so \
 		dolangsh.o ../util.o $(LDFLAGS)
+
+greet: greet.o ../util.o
+	$(CC) $(CFLAGS) -shared -Wl,-soname,greet.so -o 10greet.so \
+		greet.o ../util.o $(LDFLAGS)
 
 clean:
 	rm -f $(PLUGINS) *.o
