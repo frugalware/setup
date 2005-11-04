@@ -10,7 +10,7 @@ CFLAGS += -fPIC
 endif
 
 all: setup
-	$(MAKE) -C plugins
+	$(MAKE) -C plugins FINAL="$(FINAL)"
 
 setup: setup.o util.o
 	$(CC) $(CFLAGS) -o $@ setup.o util.o $(LDFLAGS)
