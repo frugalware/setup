@@ -32,4 +32,4 @@ clean:
 	rm -f *.so
 
 test: all
-	cd ..; ./setup
+	cd ..; sudo ./setup
