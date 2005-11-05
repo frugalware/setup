@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-02 01:02+0100\n"
+"POT-Creation-Date: 2005-11-05 01:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,21 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../src/plugins/bar.c:20
+#: ../src/plugins/greet.c:26
 #, c-format
-msgid "bar\n"
+msgid "Welcome to %s"
+msgstr ""
+
+#: ../src/plugins/greet.c:28
+msgid "Welcome"
+msgstr ""
+
+#: ../src/plugins/greet.c:31
+msgid ""
+"Welcome among the users of Frugalware!\n"
+"\n"
+"The aim of creating Frugalware was to help you make your work faster and "
+"simpler. We hope that you will like our product.\n"
+"\n"
+"The Frugalware Developer Team"
 msgstr ""

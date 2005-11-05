@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-02 01:02+0100\n"
-"PO-Revision-Date: 2005-11-02 01:03+0100\n"
+"POT-Creation-Date: 2005-11-05 01:43+0100\n"
+"PO-Revision-Date: 2005-11-05 01:43+0100\n"
 "Last-Translator:  <vmiklos@frugalware.org>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,27 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../src/plugins/bar.c:20
+#: ../src/plugins/greet.c:26
 #, c-format
-msgid "bar\n"
-msgstr "bár\n"
+msgid "Welcome to %s"
+msgstr ""
+
+#: ../src/plugins/greet.c:28
+msgid "Welcome"
+msgstr ""
+
+#: ../src/plugins/greet.c:31
+msgid ""
+"Welcome among the users of Frugalware!\n"
+"\n"
+"The aim of creating Frugalware was to help you make your work faster and "
+"simpler. We hope that you will like our product.\n"
+"\n"
+"The Frugalware Developer Team"
+msgstr ""
+"Köszöntjük a Frugalware felhasználóinak táborában!\n"
+"\n"
+"A Frugalware létrehozásával munkájának gyorsabbá és egyszerûbbé tétele volt a "
+"célunk. Reméljük, hogy kedvelni fogja termékünket!\n"
+"\n"
+"A Frugalware Fejlesztõcsapat"
