@@ -8,7 +8,7 @@ LDFLAGS=-ldialog -lcurses -lm
 CFLAGS += $(shell pkg-config --cflags glib-2.0)
 LDFLAGS += $(shell pkg-config --libs glib-2.0)
 
-PLUGINS=asklang dolangsh greet layout hotplug loadsource
+PLUGINS=asklang dolangsh greet layout hotplug loadsource restart
 
 all: $(PLUGINS)
 
@@ -35,6 +35,10 @@ hotplug: hotplug.o ../util.o
 loadsource: loadsource.o ../util.o
 	$(CC) $(CFLAGS) -shared -Wl,-soname,loadsource.so -o 25loadsource.so \
 		loadsource.o ../util.o $(LDFLAGS)
+
+restart: restart.o ../util.o
+	$(CC) $(CFLAGS) -shared -Wl,-soname,restart.so -o 95restart.so \
+		restart.o ../util.o $(LDFLAGS)
 
 clean:
 	rm -f $(PLUGINS) *.o
