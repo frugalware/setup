@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <dialog.h>
+#include <sys/stat.h>
 
 #include <setup.h>
 #include <util.h>
@@ -90,6 +91,17 @@ GList *grep_drives(char *file)
 	return(NULL);
 }
 
+int is_netinstall(char *path)
+{
+	struct stat statbuf;
+	if(!((!stat(g_strdup_printf("%s/frugalware-%s", path, ARCH), &statbuf)
+		&& S_ISDIR(statbuf.st_mode)) ||
+		(!stat(g_strdup_printf("%s/extra/frugalware-%s", path, ARCH),
+		&statbuf) && S_ISDIR(statbuf.st_mode))))
+		return(1);
+	else
+		return(0);
+}
 
 int run(GList **config)
 {
@@ -110,10 +122,10 @@ int run(GList **config)
 		if (!system(g_strdup_printf("mount -o ro -t iso9660 /dev/%s %s >%s 2>%s", (char*)g_list_nth_data(drives, i), SOURCEDIR, LOGDEV, LOGDEV)))
 		{
 			data_put(config, "srcdev", (char*)g_list_nth_data(drives, i));
-			// TODO: is this a netinstall cd?
 			dlg_put_backtitle();
 			dialog_msgbox(_("CD/DVD drive found"), g_strdup_printf(_("A Frugalware install disc was found in device /dev/%s."), (char*)g_list_nth_data(drives, i)), 0, 0, 0);
-			sleep(3);
+			if(is_netinstall(SOURCEDIR))
+				data_put(config, "netinstall", strdup("true"));
 			break;
 		}
 	}
