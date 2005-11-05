@@ -13,9 +13,13 @@
 #ifdef FINAL
 #define PLUGDIR "/lib/plugins"
 #define HOTPLUGSCRIPT "/etc/rc.d/rc.hotplug"
+#define NETCONFIGSCRIPT "netconfig"
+#define INTERFACESSCRIPT "/etc/rc.d/rc.interfaces"
 #else
 #define PLUGDIR "plugins"
 #define HOTPLUGSCRIPT "echo /etc/rc.d/rc.hotplug"
+#define NETCONFIGSCRIPT "echo netconfig >/dev/tty4"
+#define INTERFACESSCRIPT "echo /etc/rc.d/rc.interfaces"
 #endif
 
 #define SHARED_LIB_EXT ".so"
