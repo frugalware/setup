@@ -120,6 +120,7 @@ int mirrorconf(void)
 	mirror = firstmirror(fn);
 	dialog_vars.backtitle=gen_backtitle(_("Selecting a mirror"));
 	dlg_put_backtitle();
+	dlg_clear();
 	while(1)
 	{
 		ret = dialog_inputbox(_("Please select a mirror"), _("You may now specify the mirror closest to you in order to download the packages faster. In most cases the default value will be fine."), 0, 0, mirror, 0);

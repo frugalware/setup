@@ -25,6 +25,7 @@ int run(GList **config)
 		(char*)data_get(*config, "srcdev"), LOGDEV, LOGDEV));
 
 	dlg_put_backtitle();
+	dlg_clear();
 	dialog_msgbox(_("Setup complete"), g_strdup_printf(_("System "
 		"installation and configuration is successfully completed. We "
 		"hope that %s will take you content. Please remove "
