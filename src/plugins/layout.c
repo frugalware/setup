@@ -56,7 +56,6 @@ int find(char *dirname)
 
 int run(GList **config)
 {
-	int ret;
 	char **array;
 	char *fn;
 	FILE* fp;
@@ -67,19 +66,12 @@ int run(GList **config)
 	dialog_vars.backtitle=gen_backtitle(_("Configuring the keyboard"));
 	dlg_put_backtitle();
 	dlg_clear();
-	while(1)
-	{
-		ret = dialog_menu(_("Keyboard map selection"),
+	fw_menu(_("Keyboard map selection"),
 		_("You may select one of the following keyboard maps. If you "
 		"do not select a keyboard map, 'qwerty/us.map.gz' (the US "
 		"keyboard map) is the default. Use the UP/DOWN arrow keys and "
 		"PageUp/PageDown to scroll through the whole list of choices."),
 		0, 0, 0, g_list_length(layoutl), array);
-		if (ret != DLG_EXIT_CANCEL)
-			break;
-		if(exit_confirm())
-			exit_perform();
-	}
 
 	FREE(array);
 	// drop .map.gz

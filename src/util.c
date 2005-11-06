@@ -109,3 +109,19 @@ char **glist4dialog(GList *list, char *blank)
 	}
 	return(array);
 }
+
+int fw_menu(const char *title, const char *cprompt, int height, int width,
+	int menu_height, int item_no, char **items)
+{
+	int ret;
+
+	while(1)
+	{
+		ret = dialog_menu(title, cprompt, height, width, menu_height,
+			item_no, items);
+		if (ret != DLG_EXIT_CANCEL)
+			break;
+		if(exit_confirm())
+			exit_perform();
+	}
+}
