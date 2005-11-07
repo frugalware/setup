@@ -5,10 +5,12 @@ CFLAGS += -fPIC
 endif
 CFLAGS += $(FINAL) -DARCH="\"$(shell arch)\""
 LDFLAGS=-ldialog -lcurses -lm
+PEDLDFLAGS=-lparted -ldl
 CFLAGS += $(shell pkg-config --cflags glib-2.0)
 LDFLAGS += $(shell pkg-config --libs glib-2.0)
 
-PLUGINS=asklang dolangsh greet layout hotplug loadsource configsource restart
+PLUGINS=asklang dolangsh greet layout hotplug loadsource configsource partdisk \
+	restart
 
 all: $(PLUGINS)
 
@@ -39,6 +41,10 @@ loadsource: loadsource.o ../util.o
 configsource: configsource.o ../util.o
 	$(CC) $(CFLAGS) -shared -Wl,-soname,configsource.so -o \
 		30configsource.so configsource.o ../util.o $(LDFLAGS)
+
+partdisk: partdisk.o ../util.o
+	$(CC) $(CFLAGS) -shared -Wl,-soname,partdisk.so -o 35partdisk.so \
+		partdisk.o ../util.o $(LDFLAGS) $(PEDLDFLAGS)
 
 restart: restart.o ../util.o
 	$(CC) $(CFLAGS) -shared -Wl,-soname,restart.so -o 95restart.so \
