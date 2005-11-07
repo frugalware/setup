@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <limits.h>
+#include <string.h>
 #include <dialog.h>
 #include <parted/parted.h>
 
@@ -50,10 +52,31 @@ char **parts2dialog(GList *list)
 	return(array);
 }
 
+char *selpartsw()
+{
+	int swnum=2;
+	char *sws[] =
+	{
+		"cfdisk", _("User frendly (curses based) version of fdisk"),
+		"fdisk", _("The traditional partitioning program for Linux")
+	};
+	
+	dialog_vars.backtitle=gen_backtitle(_("Creating partitions"));
+	dlg_put_backtitle();
+	dlg_clear();
+	fw_menu(_("Select partitioning program"),
+		_("Select which program do you want to use for partitioning:"),
+		0, 0, 0, swnum, sws);
+
+	return(dialog_vars.input_result);
+}
+
 int run(GList **config)
 {
 	GList *lp;
 	char **array;
+	char path[PATH_MAX];
+	int ret;
 
 	if((lp = listparts())==NULL)
 	{
@@ -62,14 +85,26 @@ int run(GList **config)
 	}
 
 	array = parts2dialog(lp);
-	
-	dialog_vars.backtitle=gen_backtitle(_("Creating partitions"));
-	dlg_put_backtitle();
-	dlg_clear();
-	
-	fw_menu(_("Select a hard disk to partition"),
+
+	while(1)
+	{
+		dialog_vars.backtitle=gen_backtitle(_("Creating partitions"));
+		dlg_put_backtitle();
+		dlg_clear();
+		dialog_vars.cancel_label = strdup(_("Continue"));
+		dialog_vars.input_result[0]='\0';
+		ret = dialog_menu(_("Select a hard disk to partition"),
 		_("Please select a hard disk to partition. The following one "
 		"are available:"), 0, 0, 0, g_list_length(lp)/2, array);
+		if (ret != DLG_EXIT_CANCEL)
+		{
+			strcpy(path, dialog_vars.input_result);
+			dialog_vars.input_result[0]='\0';
+			system(g_strdup_printf("%s %s", selpartsw(), path));
+		}
+		else
+			break;
+	}
 
 	FREE(array);
 	return(0);
