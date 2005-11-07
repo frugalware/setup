@@ -55,4 +55,4 @@ clean:
 	rm -f *.so
 
 test: all
-	cd ..; sudo ./setup
+	cd ..; PATH=$$PATH:/sbin:/usr/sbin sudo ./setup
