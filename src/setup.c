@@ -16,7 +16,7 @@ int sort_plugins(gconstpointer a, gconstpointer b)
 {
 	const plugin_t *pa = a;
 	const plugin_t *pb = b;
-	return (memcmp(pa->priority, pb->priority, sizeof(int)));
+	return (memcmp(&pa->priority, &pb->priority, sizeof(int)));
 }
 
 int add_plugin(char *filename)
