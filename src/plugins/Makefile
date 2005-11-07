@@ -15,39 +15,39 @@ PLUGINS=asklang dolangsh greet layout hotplug loadsource configsource partdisk \
 all: $(PLUGINS)
 
 asklang: asklang.o ../util.o
-	$(CC) $(CFLAGS) -shared -Wl,-soname,asklang.so -o 01asklang.so \
+	$(CC) $(CFLAGS) -shared -Wl,-soname,asklang.so -o asklang.so \
 		asklang.o ../util.o $(LDFLAGS)
 
 dolangsh: dolangsh.o ../util.o
-	$(CC) $(CFLAGS) -shared -Wl,-soname,dolangsh.so -o 05dolangsh.so \
+	$(CC) $(CFLAGS) -shared -Wl,-soname,dolangsh.so -o dolangsh.so \
 		dolangsh.o ../util.o $(LDFLAGS)
 
 greet: greet.o ../util.o
-	$(CC) $(CFLAGS) -shared -Wl,-soname,greet.so -o 10greet.so \
+	$(CC) $(CFLAGS) -shared -Wl,-soname,greet.so -o greet.so \
 		greet.o ../util.o $(LDFLAGS)
 
 layout: layout.o ../util.o
-	$(CC) $(CFLAGS) -shared -Wl,-soname,layout.so -o 15layout.so \
+	$(CC) $(CFLAGS) -shared -Wl,-soname,layout.so -o layout.so \
 		layout.o ../util.o $(LDFLAGS)
 
 hotplug: hotplug.o ../util.o
-	$(CC) $(CFLAGS) -shared -Wl,-soname,hotplug.so -o 20hotplug.so \
+	$(CC) $(CFLAGS) -shared -Wl,-soname,hotplug.so -o hotplug.so \
 		hotplug.o ../util.o $(LDFLAGS)
 
 loadsource: loadsource.o ../util.o
-	$(CC) $(CFLAGS) -shared -Wl,-soname,loadsource.so -o 25loadsource.so \
+	$(CC) $(CFLAGS) -shared -Wl,-soname,loadsource.so -o loadsource.so \
 		loadsource.o ../util.o $(LDFLAGS)
 
 configsource: configsource.o ../util.o
 	$(CC) $(CFLAGS) -shared -Wl,-soname,configsource.so -o \
-		30configsource.so configsource.o ../util.o $(LDFLAGS)
+		configsource.so configsource.o ../util.o $(LDFLAGS)
 
 partdisk: partdisk.o ../util.o
-	$(CC) $(CFLAGS) -shared -Wl,-soname,partdisk.so -o 35partdisk.so \
+	$(CC) $(CFLAGS) -shared -Wl,-soname,partdisk.so -o partdisk.so \
 		partdisk.o ../util.o $(LDFLAGS) $(PEDLDFLAGS)
 
 restart: restart.o ../util.o
-	$(CC) $(CFLAGS) -shared -Wl,-soname,restart.so -o 95restart.so \
+	$(CC) $(CFLAGS) -shared -Wl,-soname,restart.so -o restart.so \
 		restart.o ../util.o $(LDFLAGS)
 
 clean:
