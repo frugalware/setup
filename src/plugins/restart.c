@@ -8,6 +8,7 @@
 plugin_t plugin =
 {
 	"restart",
+	95,
 	run,
 	NULL // dlopen handle
 };

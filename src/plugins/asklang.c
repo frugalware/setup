@@ -23,6 +23,7 @@ char *langs[] =
 plugin_t plugin =
 {
 	"asklang",
+	01,
 	run,
 	NULL // dlopen handle
 };

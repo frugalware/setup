@@ -15,6 +15,7 @@ GList *layoutl;
 plugin_t plugin =
 {
 	"layout",
+	15,
 	run,
 	NULL // dlopen handle
 };

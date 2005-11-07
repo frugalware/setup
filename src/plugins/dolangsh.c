@@ -9,6 +9,7 @@
 plugin_t plugin =
 {
 	"dolangsh",
+	05,
 	run,
 	NULL // dlopen handle
 };

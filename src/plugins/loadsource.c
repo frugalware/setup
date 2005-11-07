@@ -13,6 +13,7 @@
 plugin_t plugin =
 {
 	"loadsource",
+	25,
 	run,
 	NULL // dlopen handle
 };

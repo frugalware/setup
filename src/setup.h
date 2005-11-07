@@ -37,6 +37,7 @@
 typedef struct
 {
 	char *name;
+	int priority;
 	int (*run)(GList **config);
 	void *handle;
 } plugin_t;

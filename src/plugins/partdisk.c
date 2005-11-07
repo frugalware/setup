@@ -11,6 +11,7 @@
 plugin_t plugin =
 {
 	"partdisk",
+	35,
 	run,
 	NULL // dlopen handle
 };

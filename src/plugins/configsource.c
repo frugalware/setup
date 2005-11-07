@@ -10,6 +10,7 @@
 plugin_t plugin =
 {
 	"configsource",
+	30,
 	run,
 	NULL // dlopen handle
 };

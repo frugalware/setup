@@ -6,6 +6,7 @@
 plugin_t plugin =
 {
 	"skel",
+	99,
 	run,
 	NULL // dlopen handle
 };

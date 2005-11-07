@@ -9,6 +9,7 @@
 plugin_t plugin =
 {
 	"hotplug",
+	20,
 	run,
 	NULL // dlopen handle
 };

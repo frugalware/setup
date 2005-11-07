@@ -9,6 +9,7 @@
 plugin_t plugin =
 {
 	"greet",
+	10,
 	run,
 	NULL // dlopen handle
 };
