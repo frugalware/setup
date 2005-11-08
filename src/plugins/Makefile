@@ -1,11 +1,19 @@
+UI ?= dialog
 CFLAGS ?= -Wall -O2 -pipe
 CFLAGS += -I.. $(FINAL) -DARCH="\"$(shell arch)\""
+LDFLAGS += -lparted -ldl
 ifeq ($(shell arch),x86_64)
 CFLAGS += -fPIC
 endif
 
-LDFLAGS=-ldialog -lcurses -lm
-LDFLAGS += -lparted -ldl
+ifeq ($(UI),dialog)
+CFLAGS += -DDIALOG
+LDFLAGS += -ldialog -lcurses -lm
+else
+CFLAGS += -DDIALOG
+CFLAGS += $(shell pkg-config --cflags gtk+-2.0)
+LDFLAGS += $(shell pkg-config --libs gtk+-2.0)
+endif
 
 CFLAGS += $(shell pkg-config --cflags glib-2.0)
 LDFLAGS += $(shell pkg-config --libs glib-2.0)
@@ -17,8 +25,7 @@ all: $(PLUGINS)
 	@echo Build completed.
 
 clean:
-	rm -f $(PLUGINS) *.o
-	rm -f *.so
+	rm -f *.so *.o
 
 test: all
 	cd ..; PATH=$$PATH:/sbin:/usr/sbin sudo ./setup

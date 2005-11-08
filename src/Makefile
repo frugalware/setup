@@ -1,22 +1,31 @@
+UI ?= dialog
 CFLAGS ?= -Wall -O2 -pipe
-LDFLAGS = -ldl
+CFLAGS += $(FINAL) -DARCH="\"$(shell arch)\""
+LDFLAGS += -ldl -rdynamic
 CFLAGS += $(shell pkg-config --cflags glib-2.0)
 LDFLAGS += $(shell pkg-config --libs glib-2.0)
+
+ifeq ($(UI),dialog)
 CFLAGS += -DDIALOG
-CFLAGS += $(FINAL) -DARCH="\"$(shell arch)\""
-LDFLAGS += -ldialog -lcurses -lm -rdynamic
+LDFLAGS += -ldialog -lcurses -lm
+else
+CFLAGS += -DDIALOG
+CFLAGS += $(shell pkg-config --cflags gtk+-2.0)
+LDFLAGS += $(shell pkg-config --libs gtk+-2.0)
+endif
+
 ifeq ($(shell arch),x86_64)
 CFLAGS += -fPIC
 endif
 
 all: setup
-	$(MAKE) -C plugins FINAL="$(FINAL)"
+	$(MAKE) -C plugins FINAL="$(FINAL)" UI="$(UI)"
 
 setup: setup.o util.o
 	$(CC) $(CFLAGS) -o $@ setup.o util.o $(LDFLAGS)
 
 final:
-	$(MAKE) FINAL="-DFINAL"
+	$(MAKE) FINAL="-DFINAL" UI="$(UI)"
 
 clean:
 	rm -f setup *.o
