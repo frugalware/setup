@@ -99,6 +99,7 @@ int run(GList **config)
 		ret = dialog_menu(_("Select a hard disk to partition"),
 		_("Please select a hard disk to partition. The following one "
 		"are available:"), 0, 0, 0, g_list_length(lp)/2, array);
+		dialog_vars.cancel_label = '\0';
 		if (ret != DLG_EXIT_CANCEL)
 		{
 			strcpy(path, dialog_vars.input_result);
