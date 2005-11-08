@@ -22,7 +22,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#ifdef DIALOG
 #include <dialog.h>
+#endif
+#ifdef GTK
+#include <gtk/gtk.h>
+#endif
 
 #include "setup.h"
 #include "util.h"
@@ -170,5 +175,29 @@ int fw_end_dialog(void)
 	dlg_clear();
 	end_dialog();
 	return(0);
+}
+#endif
+
+#ifdef GTK
+void fw_init_gtk(void)
+{
+	gtk_init(NULL, NULL);
+	gtk_set_locale();
+}
+
+void fw_end_gtk(GtkWidget *win)
+{
+	gtk_widget_destroy(win);
+	gtk_main_quit();
+}
+
+void gtk_draw_framework(void)
+{
+	GtkWidget *mainwindow;
+	GtkWidget *hbox, *vbox, *frame;
+	
+	mainwindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+	g_signal_connect(G_OBJECT(mainwindow), "destroy", G_CALLBACK(fw_end_gtk), NULL);
+	gtk_widget_show(mainwindow);
 }
 #endif

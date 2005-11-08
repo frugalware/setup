@@ -40,3 +40,8 @@ int fw_menu(const char *title, const char *cprompt, int height, int width,
 int fw_init_dialog(void);
 int fw_end_dialog(void);
 #endif
+#ifdef GTK
+void fw_init_gtk(void);
+void fw_end_gtk(GtkWidget *win);
+void gtk_draw_framework(void);
+#endif

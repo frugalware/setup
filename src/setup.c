@@ -105,7 +105,7 @@ int cleanup_plugins()
 	return(0);
 }
 
-int main()
+int main(int argc, char *argv[])
 {
 	int i;
 	plugin_t *plugin;
@@ -115,6 +115,10 @@ int main()
 
 #ifdef DIALOG
 	fw_init_dialog();
+#endif
+#ifdef GTK
+	fw_init_gtk();
+	gtk_draw_framework();
 #endif
 
 	for (i=0; i<g_list_length(plugin_list); i++)
@@ -130,6 +134,10 @@ int main()
 	fw_end_dialog();
 #endif
 
+#ifdef GTK
+	gtk_main();
+#endif
+	printf("cleanup\n");
 	cleanup_plugins();
 	return(0);
 }
