@@ -22,7 +22,9 @@ int run(GList **config)
 {
 	char *version = get_version();
 
-	system(g_strdup_printf("%s/%s %s >%s 2>%s", EJECT, TARGETDIR,
+	dialog_msgbox(_("Setup complete"), _("Ejecting installation media..."),
+			0, 0, 0);
+	system(g_strdup_printf("%s/%s %s >%s 2>%s", TARGETDIR, EJECT,
 		(char*)data_get(*config, "srcdev"), LOGDEV, LOGDEV));
 
 	dlg_put_backtitle();
