@@ -98,6 +98,22 @@ char *selpartsw()
 	return(dialog_vars.input_result);
 }
 
+int raid_confirm(void)
+{
+#ifdef DIALOG
+	int ret;
+	dialog_vars.defaultno=1;
+	ret = dialog_yesno(_("Want to create RAID?"),
+		_("Do you want to create software raid partitions during "
+		"partitioning?"), 0, 0);
+	dialog_vars.defaultno=0;
+	if(ret==DLG_EXIT_OK)
+		return(1);
+	else
+		return(0);
+#endif
+}
+
 int run(GList **config)
 {
 	GList *lp;
@@ -106,6 +122,7 @@ int run(GList **config)
 	char partsw[PATH_MAX];
 	int ret;
 	char my_buffer[MAX_LEN + 1] = "";
+	int wantraid;
 
 	if((lp = listparts())==NULL)
 	{
@@ -115,9 +132,18 @@ int run(GList **config)
 
 	array = parts2dialog(lp);
 
+	dialog_vars.backtitle=gen_backtitle(_("Creating partitions"));
+	dlg_put_backtitle();
+	wantraid = raid_confirm();
+
 	while(1)
 	{
-		dialog_vars.backtitle=gen_backtitle(_("Creating partitions"));
+		if(wantraid)
+		{
+			dialog_vars.extra_button=1;
+			dialog_vars.extra_label=strdup(_("Create RAID"));
+		}
+
 		dlg_put_backtitle();
 		dlg_clear();
 		dialog_vars.cancel_label = strdup(_("Continue"));
@@ -127,7 +153,12 @@ int run(GList **config)
 		_("Please select a hard disk to partition. The following one "
 		"are available:"), 0, 0, 0, g_list_length(lp)/2, array);
 		dialog_vars.cancel_label = '\0';
-		if (ret != DLG_EXIT_CANCEL)
+		if(wantraid)
+		{
+			dialog_vars.extra_button=0;
+			dialog_vars.extra_label[0]='\0';
+		}
+		if (ret == DLG_EXIT_OK)
 		{
 			strcpy(path, dialog_vars.input_result);
 			dialog_vars.input_result[0]='\0';
@@ -135,6 +166,10 @@ int run(GList **config)
 			fw_end_dialog();
 			system(g_strdup_printf("%s %s", partsw, path));
 			fw_init_dialog();
+		}
+		else if (ret == DLG_EXIT_EXTRA)
+		{
+			system(RAIDCONFIGSCRIPT);
 		}
 		else
 			break;
