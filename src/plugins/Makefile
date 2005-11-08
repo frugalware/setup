@@ -10,7 +10,7 @@ ifeq ($(UI),dialog)
 CFLAGS += -DDIALOG
 LDFLAGS += -ldialog -lcurses -lm
 else
-CFLAGS += -DDIALOG
+CFLAGS += -DGTK
 CFLAGS += $(shell pkg-config --cflags gtk+-2.0)
 LDFLAGS += $(shell pkg-config --libs gtk+-2.0)
 endif
