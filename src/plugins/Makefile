@@ -21,8 +21,7 @@ LDFLAGS += $(shell pkg-config --libs glib-2.0)
 PLUGINS=asklang dolangsh greet layout hotplug loadsource configsource partdisk \
 	restart
 
-all: $(PLUGINS)
-	@echo Build completed.
+all: $(addsuffix .so,$(PLUGINS))
 
 clean:
 	rm -f *.so *.o
@@ -30,5 +29,6 @@ clean:
 test: all
 	cd ..; PATH=$$PATH:/sbin:/usr/sbin sudo ./setup
 
-%:
-	$(CC) $(CFLAGS) -shared -Wl,-soname,$@.so -o $@.so $@.c $(LDFLAGS)
+%.so:
+	$(CC) $(CFLAGS) -shared -Wl,-soname,$(basename $@).so -o \
+		$(basename $@).so $(basename $@).c $(LDFLAGS)
