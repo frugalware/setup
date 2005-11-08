@@ -16,12 +16,14 @@
 #define NETCONFIGSCRIPT "netconfig"
 #define INTERFACESSCRIPT "/etc/rc.d/rc.interfaces"
 #define PACCONFPATH "/etc/pacman.d/"
+#define EJECT "/usr/bin/eject"
 #else
 #define PLUGDIR "plugins"
 #define HOTPLUGSCRIPT "echo /etc/rc.d/rc.hotplug"
 #define NETCONFIGSCRIPT "echo netconfig >/dev/tty4"
 #define INTERFACESSCRIPT "echo /etc/rc.d/rc.interfaces"
 #define PACCONFPATH "plugins"
+#define EJECT "echo /usr/bin/eject"
 #endif
 
 #ifndef STABLE

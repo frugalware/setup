@@ -22,7 +22,7 @@ int run(GList **config)
 {
 	char *version = get_version();
 
-	system(g_strdup_printf("%s/usr/bin/eject %s >%s 2>%s", TARGETDIR,
+	system(g_strdup_printf("%s/%s %s >%s 2>%s", EJECT, TARGETDIR,
 		(char*)data_get(*config, "srcdev"), LOGDEV, LOGDEV));
 
 	dlg_put_backtitle();
