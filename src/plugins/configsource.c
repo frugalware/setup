@@ -1,5 +1,10 @@
 #include <stdio.h>
-#include <dialog.h>
+#ifdef DIALOG
+    #include <dialog.h>
+#endif
+#ifdef GTK
+    #include <gtk/gtk.h>
+#endif
 #include <unistd.h>
 #include <stdlib.h>
 

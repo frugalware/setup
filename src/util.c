@@ -93,7 +93,7 @@ void data_put(GList **config, char *name, void *data)
 
 int exit_confirm(void)
 {
-#if DIALOG
+#ifdef DIALOG
 	int ret;
 	dialog_vars.defaultno=1;
 	ret = dialog_yesno(_("Exit from the installer"),
@@ -135,7 +135,7 @@ char **glist4dialog(GList *list, char *blank)
 	return(array);
 }
 
-#if DIALOG
+#ifdef DIALOG
 int fw_menu(const char *title, const char *cprompt, int height, int width,
 	int menu_height, int item_no, char **items)
 {

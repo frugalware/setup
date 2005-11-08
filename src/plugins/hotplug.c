@@ -1,6 +1,11 @@
 #define _GNU_SOURCE
 #include <stdio.h>
-#include <dialog.h>
+#ifdef DIALOG
+    #include <dialog.h>
+#endif
+#ifdef GTK
+    #include <gtk/gtk.h>
+#endif
 
 #include <setup.h>
 #include <util.h>

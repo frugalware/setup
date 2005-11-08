@@ -1,7 +1,12 @@
 #include <stdio.h>
 #include <limits.h>
 #include <string.h>
-#include <dialog.h>
+#ifdef DIALOG
+    #include <dialog.h>
+#endif
+#ifdef GTK
+    #include <gtk/gtk.h>
+#endif
 #include <parted/parted.h>
 
 #include <setup.h>

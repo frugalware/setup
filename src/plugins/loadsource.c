@@ -3,7 +3,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <dialog.h>
+#ifdef DIALOG
+    #include <dialog.h>
+#endif
+#ifdef GTK
+    #include <gtk/gtk.h>
+#endif
 #include <sys/stat.h>
 
 #include <setup.h>

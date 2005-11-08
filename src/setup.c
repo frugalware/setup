@@ -28,6 +28,9 @@
 #ifdef DIALOG
 #include <dialog.h>
 #endif
+#ifdef GTK
+#include <gtk/gtk.h>
+#endif
 
 #include "setup.h"
 #include "util.h"
