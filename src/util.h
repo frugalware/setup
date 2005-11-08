@@ -15,3 +15,5 @@ char **glist4dialog(GList *list, char *blank);
 
 int fw_menu(const char *title, const char *cprompt, int height, int width,
 	int menu_height, int item_no, char **items);
+int fw_init_dialog(void);
+int fw_end_dialog(void);

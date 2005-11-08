@@ -116,9 +116,11 @@ int fw_menu(const char *title, const char *cprompt, int height, int width,
 	int menu_height, int item_no, char **items)
 {
 	int ret;
+	char my_buffer[MAX_LEN + 1] = "";
 
 	while(1)
 	{
+		dialog_vars.input_result = my_buffer;
 		ret = dialog_menu(title, cprompt, height, width, menu_height,
 			item_no, items);
 		if (ret != DLG_EXIT_CANCEL)
@@ -126,4 +128,26 @@ int fw_menu(const char *title, const char *cprompt, int height, int width,
 		if(exit_confirm())
 			exit_perform();
 	}
+	return(0);
+}
+
+int fw_init_dialog(void)
+{
+	FILE *input = stdin;
+	dialog_state.output = stderr;
+	//char *my_buffer;
+	
+	//MALLOC(my_buffer, MAX_LEN + 1);
+	//*my_buffer='\0';
+	init_dialog(input, dialog_state.output);
+	//dialog_vars.input_result = my_buffer;
+	return(0);
+}
+
+int fw_end_dialog(void)
+{
+	//FREE(dialog_vars.input_result);
+	dlg_clear();
+	end_dialog();
+	return(0);
 }

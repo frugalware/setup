@@ -78,6 +78,7 @@ int run(GList **config)
 	char **array;
 	char path[PATH_MAX];
 	int ret;
+	char my_buffer[MAX_LEN + 1] = "";
 
 	if((lp = listparts())==NULL)
 	{
@@ -93,6 +94,7 @@ int run(GList **config)
 		dlg_put_backtitle();
 		dlg_clear();
 		dialog_vars.cancel_label = strdup(_("Continue"));
+		dialog_vars.input_result = my_buffer;
 		dialog_vars.input_result[0]='\0';
 		ret = dialog_menu(_("Select a hard disk to partition"),
 		_("Please select a hard disk to partition. The following one "

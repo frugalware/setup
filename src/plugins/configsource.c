@@ -117,6 +117,7 @@ int mirrorconf(void)
 	char *fn, *mirror;
 	int ret;
 	fn = g_strdup_printf("%s/%s", PACCONFPATH, PACCONF);
+	char my_buffer[MAX_LEN + 1] = "";
 	
 	mirror = firstmirror(fn);
 	dialog_vars.backtitle=gen_backtitle(_("Selecting a mirror"));
@@ -124,6 +125,7 @@ int mirrorconf(void)
 	dlg_clear();
 	while(1)
 	{
+		dialog_vars.input_result = my_buffer;
 		ret = dialog_inputbox(_("Please select a mirror"), _("You may now specify the mirror closest to you in order to download the packages faster. In most cases the default value will be fine."), 0, 0, mirror, 0);
 		if (ret != DLG_EXIT_CANCEL)
 			break;
