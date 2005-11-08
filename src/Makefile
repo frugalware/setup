@@ -36,11 +36,17 @@ ifeq ($(shell arch),x86_64)
 CFLAGS += -fPIC
 endif
 
+ifeq ($(UI),dialog)
+objs = setup.o util.o
+else
+objs = setup.o util.o gtk.o
+endif
+
 all: setup
 	$(MAKE) -C plugins FINAL="$(FINAL)" UI="$(UI)"
 
-setup: setup.o util.o
-	$(CC) $(CFLAGS) -o $@ setup.o util.o $(LDFLAGS)
+setup: $(objs)
+	$(CC) $(CFLAGS) -o $@ $(objs) $(LDFLAGS)
 
 final:
 	$(MAKE) FINAL="-DFINAL" UI="$(UI)"
