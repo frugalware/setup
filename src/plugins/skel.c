@@ -20,8 +20,10 @@
  */
 
 #include <stdio.h>
+#include <dialog.h>
 
 #include <setup.h>
+#include <util.h>
 #include "common.h"
 
 plugin_t plugin =
