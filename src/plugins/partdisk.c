@@ -77,6 +77,7 @@ int run(GList **config)
 	GList *lp;
 	char **array;
 	char path[PATH_MAX];
+	char partsw[PATH_MAX];
 	int ret;
 	char my_buffer[MAX_LEN + 1] = "";
 
@@ -104,7 +105,10 @@ int run(GList **config)
 		{
 			strcpy(path, dialog_vars.input_result);
 			dialog_vars.input_result[0]='\0';
-			system(g_strdup_printf("%s %s", selpartsw(), path));
+			strcpy(partsw, selpartsw());
+			fw_end_dialog();
+			system(g_strdup_printf("%s %s", partsw, path));
+			fw_init_dialog();
 		}
 		else
 			break;

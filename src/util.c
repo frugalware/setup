@@ -147,6 +147,7 @@ int fw_init_dialog(void)
 int fw_end_dialog(void)
 {
 	//FREE(dialog_vars.input_result);
+	printf("\033[H\033[2J");
 	dlg_clear();
 	end_dialog();
 	return(0);
