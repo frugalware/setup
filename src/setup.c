@@ -121,20 +121,20 @@ int main(int argc, char *argv[])
 	gtk_draw_framework();
 #endif
 
+#ifdef DIALOG
 	for (i=0; i<g_list_length(plugin_list); i++)
 	{
 		plugin = g_list_nth_data(plugin_list, i);
 		plugin->run(&config);
-#ifdef DIALOG
 		dialog_vars.input_result[0]='\0';
-#endif
 	}
 
-#ifdef DIALOG
 	fw_end_dialog();
 #endif
 
 #ifdef GTK
+	plugin = g_list_nth_data(plugin_list, 0);
+	plugin->run(&config);
 	gtk_main();
 #endif
 	printf("cleanup\n");
