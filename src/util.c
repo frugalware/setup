@@ -191,13 +191,56 @@ void fw_end_gtk(GtkWidget *win)
 	gtk_main_quit();
 }
 
-void gtk_draw_framework(void)
+void gtk_draw_framework()
 {
 	GtkWidget *mainwindow;
-	GtkWidget *hbox, *vbox, *frame;
+	GtkWidget *hbox, *vbox, *label, *button;
 	
 	mainwindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	g_signal_connect(G_OBJECT(mainwindow), "destroy", G_CALLBACK(fw_end_gtk), NULL);
 	gtk_widget_show(mainwindow);
+
+	vbox = gtk_vbox_new(FALSE, 0);
+	gtk_container_add(mainwindow, vbox);
+	gtk_widget_show(vbox);
+
+	hbox = gtk_hbox_new(FALSE, 0);
+
+	label = gtk_label_new("Valamiiiii");
+	gtk_box_pack_start(GTK_BOX(vbox), label, 1,1,1);
+	gtk_widget_show(label);
+
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, 1,1,1);
+	gtk_widget_show(hbox);
+
+	label = gtk_label_new("Valamiiiii2/a");
+	gtk_box_pack_start(GTK_BOX(hbox), label, 1,1,1);
+	gtk_widget_show(label);
+
+	frame = gtk_frame_new("Valami");
+	gtk_widget_show_all(frame);
+	gtk_box_pack_end(GTK_BOX(hbox), frame, 1,1,1);
+	label = gtk_label_new("Valamiiiii2/b");
+
+	hbox = gtk_hbox_new(FALSE, 0);
+
+	button = gtk_button_new_with_label("Back");
+	gtk_box_pack_start(GTK_BOX(hbox), button, 1,1,1);
+	gtk_widget_show(hbox);
+	gtk_widget_show(button);
+	button = gtk_button_new_with_label("Next");
+	gtk_box_pack_start(GTK_BOX(hbox), button, 1,1,1);
+	g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(plugin_next), NULL);
+	gtk_widget_show(hbox);
+	gtk_widget_show(button);
+
+	gtk_box_pack_start(GTK_BOX(vbox), hbox, 0,1,0);
+
 }
+
+int plugin_next(GtkWidget *w, gpointer user_data)
+{
+	printf("Plugin name\n");
+}
+
 #endif

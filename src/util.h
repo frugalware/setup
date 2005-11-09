@@ -25,6 +25,12 @@
 	exit(1); }} else p = NULL; }
 #define FREE(p) { if (p) { free(p); (p) = NULL; }}
 
+#ifdef GTK
+    #include <gtk/gtk.h>
+
+GtkWidget *frame;
+#endif
+
 char *get_version(void);
 char *gen_backtitle(char *section);
 data_t *data_new(void);
@@ -43,5 +49,6 @@ int fw_end_dialog(void);
 #ifdef GTK
 void fw_init_gtk(void);
 void fw_end_gtk(GtkWidget *win);
-void gtk_draw_framework(void);
+void gtk_draw_framework();
+int plugin_next();
 #endif
