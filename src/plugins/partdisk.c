@@ -59,6 +59,9 @@ GList *listparts(void)
 
 	for(dev=ped_device_get_next(NULL);dev!=NULL;dev=dev->next)
 	{
+		if(dev->read_only)
+			// we don't want to partition cds ;-)
+			continue;
 		devs = g_list_append(devs, dev->path);
 		devs = g_list_append(devs, g_strdup_printf("%dGB\t%s", (int)dev->length/1953125, dev->model));
 	}
