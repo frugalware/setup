@@ -2,6 +2,7 @@
  *  asklang.c for Frugalware setup
  * 
  *  Copyright (c) 2005 by Miklos Vajna <vmiklos@frugalware.org>
+ *  Copyright (c) 2005 by Christian Hamar alias krix <krics@linuxforum.hu>
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -25,6 +26,7 @@
 #endif
 #ifdef GTK
     #include <gtk/gtk.h>
+    #include <gutil.h>
 #endif
 #include <stdlib.h>
 #include <string.h>
@@ -69,6 +71,14 @@ int setcharset(char *name)
 
 int run(GList **config)
 {
+#ifdef GTK
+	GtkWidget *label;
+	GtkWidget *tv;
+	GtkTreeIter iter;
+	int i = 0;
+#endif
+
+#ifdef DIALOG
 	dialog_vars.backtitle=gen_backtitle("Selecting language");
 	dlg_put_backtitle();
 	dlg_clear();
@@ -113,7 +123,19 @@ int run(GList **config)
 		setenv("CHARSET", "iso-8859-2", 1);
 		setcharset("lat2-16.psfu.gz");
 	}
-	textdomain("setup");
+#endif
 
+#ifdef GTK
+	tv = create_asklang_view();
+	gtk_container_add(GTK_CONTAINER(frame), tv);
+	while (i <= LANGSNUM + 2) {
+		gtk_list_store_append(GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(tv))), &iter);
+		gtk_list_store_set(GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(tv))), &iter,
+			0, langs[i], 1, langs[i+1], -1);
+		i = i+2;
+	}
+	gtk_widget_show_all(tv);
+#endif
+	textdomain("setup");
 	return(0);
 }
