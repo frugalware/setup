@@ -176,6 +176,20 @@ int fw_end_dialog(void)
 	end_dialog();
 	return(0);
 }
+
+char **parts2dialog(GList *list)
+{
+	int i;
+	char **array;
+
+	MALLOC(array, g_list_length(list)*sizeof(char*));
+	for (i=0; i<g_list_length(list); i++)
+	{
+		array[i] = (char*)g_list_nth_data(list, i);
+	}
+	return(array);
+}
+
 #endif
 
 #ifdef GTK
