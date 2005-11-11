@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
 	gtk_draw_framework();
 #endif
 
-	g_list_sort(plugin_list, sort_plugins());
+	g_list_sort(plugin_list, sort_plugins);
 #ifdef DIALOG
 	for (i=0; i<g_list_length(plugin_list); i++)
 	{
