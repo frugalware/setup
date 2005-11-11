@@ -47,6 +47,6 @@ clean:
 test: all
 	cd ..; PATH=$$PATH:/sbin:/usr/sbin sudo ./setup
 
-%.so:
+%.so: %.o
 	$(CC) $(CFLAGS) -shared -Wl,-soname,$(basename $@).so -o \
-		$(basename $@).so $(basename $@).c $(LDFLAGS)
+		$(basename $@).so $(basename $@).o $(LDFLAGS)
