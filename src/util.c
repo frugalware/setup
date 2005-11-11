@@ -190,6 +190,46 @@ char **parts2dialog(GList *list)
 	return(array);
 }
 
+GList* fw_checklist(const char *title, const char *cprompt, int height,
+	int width, int menu_height, int item_no, char **items, int flag)
+{
+	int ret;
+	char my_buffer[MAX_LEN + 1] = "";
+	char *ptr, *ptrn;
+	GList *list=NULL;
+
+	while(1)
+	{
+		dialog_vars.input_result = my_buffer;
+		ret = dialog_checklist(title, cprompt, height, width,
+			menu_height, item_no, items, flag);
+		if (ret != DLG_EXIT_CANCEL)
+			break;
+		if(exit_confirm())
+			exit_perform();
+	}
+
+	if(strlen(dialog_vars.input_result)==0)
+		// no item selected
+		return(list);
+
+	ptr=strstr(dialog_vars.input_result, "\"")+1;
+	while(strstr(ptr, "\" \""))
+	{
+		ptrn=strstr(ptr, "\" \"");
+		if(ptrn)
+		{
+			*ptrn='\0';
+			ptrn += 3;
+		}
+		list = g_list_append(list, ptr);
+		ptr=ptrn;
+	}
+	ptrn=ptr+strlen(ptr)-1;
+	*ptrn='\0';
+	list = g_list_append(list, ptr);
+	return(list);
+}
 #endif
 
 #ifdef GTK

@@ -43,6 +43,7 @@ plugin_t *info()
 }
 
 GList *parts=NULL;
+GList *partschk=NULL;
 
 int partdetails(PedPartition *part)
 {
@@ -61,8 +62,13 @@ int partdetails(PedPartition *part)
 	if((ptr = strstr(pname, "p-1"))!=NULL)
 		*ptr='\0';
 
+	// for dialog menus
 	parts = g_list_append(parts, pname);
 	parts = g_list_append(parts, g_strdup_printf("%dGB\t%s", (int)part->geom.length/1953125, ptype));
+	// for dialog checklists
+	partschk = g_list_append(partschk, pname);
+	partschk = g_list_append(partschk, g_strdup_printf("%dGB %s", (int)part->geom.length/1953125, ptype));
+	partschk = g_list_append(partschk, strdup("Off"));
 
 	return(0);
 }
@@ -129,6 +135,9 @@ int run(GList **config)
 	PedDevice *dev = NULL;
 	PedDisk *disk = NULL;
 	char **array;
+	char **arraychk;
+	GList *partlist;
+	int i;
 
 	ped_device_probe_all();
 
@@ -149,18 +158,29 @@ int run(GList **config)
 	// software raids
 	detect_raids();
 
+	// select swap partitions to use
 	array = parts2dialog(parts);
-	dialog_vars.backtitle=gen_backtitle(_("Setting up root the partition"));
+	arraychk = parts2dialog(partschk);
+
+	dialog_vars.backtitle=gen_backtitle(_("Setting up swap space"));
+	dlg_put_backtitle();
+	partlist = fw_checklist(_("Setting up swap partitions"),
+		_("Please select which swap partitions do you want Frugalware "
+		"to use:"), 0, 0, 0, g_list_length(partschk)/3, arraychk,
+		FLAG_CHECK);
+	return(0);
+	//never reached, TODO: remove this block
+	for (i=0; i<g_list_length(partlist); i++)
+		dialog_msgbox("title", g_strdup_printf("new item: %s\n", (char*)g_list_nth_data(partlist, i)), 0, 0, 1);
+	/*dialog_vars.backtitle=gen_backtitle(_("Setting up root the partition"));
 	dlg_put_backtitle();
 	fw_menu(_("Select the Linux installation partition"),
 		_("Please select a partition from the following list to use "
 		"for your root (/) partition. The following ones "
-		"are available:"), 0, 0, 0, g_list_length(parts)/2, array);
-	return(0);
+		"are available:"), 0, 0, 0, g_list_length(parts)/2, array);*/
 
-	//never reached, TODO: remove this block
 	// sample: simple msgbox
-	dialog_msgbox("title", "content", 0, 0, 1);
+	//dialog_msgbox("title", "content", 0, 0, 1);
 	
 	// sample: gets the string titled "stuff" from the config list
 	//printf("%s\n", (char*)data_get(*config, "stuff"));
