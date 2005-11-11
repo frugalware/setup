@@ -197,9 +197,19 @@ int doswap(GList *partlist, GList **config)
 		item = strdup((char*)g_list_nth_data(partlist, i));
 		ptr = selmkswapmode(item);
 		if(!strcmp("format", ptr))
+		{
+			fw_info(_("Formatting swap partition"),
+				g_strdup_printf(_("Formatting %s as a swap "
+				"partition"), item));
 			fw_system(g_strdup_printf("%s %s", MKSWAP, item));
+		}
 		else if (!strcmp("check", ptr))
+		{
+			fw_info(_("Formatting swap partition"),
+			g_strdup_printf(_("Formatting %s as a swap "
+			"partition and checking for bad blocks"), item));
 			fw_system(g_strdup_printf("%s -c %s", MKSWAP, item));
+		}
 		fw_system(g_strdup_printf("%s %s", SWAPON, item));
 		fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n",
 			item, "swap", "swap", "defaults", "0", "0");
