@@ -39,6 +39,7 @@ void data_put(GList **config, char *name, void *data);
 int exit_confirm(void);
 int exit_perform(void);
 char **glist4dialog(GList *list, char *blank);
+int fw_system(char* cmd);
 
 #ifdef DIALOG
 int fw_menu(const char *title, const char *cprompt, int height, int width,

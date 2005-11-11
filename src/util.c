@@ -140,6 +140,15 @@ char **glist4dialog(GList *list, char *blank)
 	return(array);
 }
 
+int fw_system(char* cmd)
+{
+#ifdef FINAL
+	return(system(g_strdup_printf("%s >%s", cmd, LOGDEV)));
+#else
+	return(system(g_strdup_printf("echo %s >%s", cmd, LOGDEV)));
+#endif
+}
+
 #ifdef DIALOG
 int fw_menu(const char *title, const char *cprompt, int height, int width,
 	int menu_height, int item_no, char **items)
