@@ -31,6 +31,9 @@
 #define SOURCEDIR "/mnt/source"
 #define TARGETDIR "/mnt/target"
 
+#define MKSWAP "/sbin/mkswap"
+#define SWAPON "/sbin/swapon"
+
 #ifdef FINAL
 #define PLUGDIR "/lib/plugins"
 #define HOTPLUGSCRIPT "/etc/rc.d/rc.hotplug"
@@ -39,8 +42,6 @@
 #define INTERFACESSCRIPT "/etc/rc.d/rc.interfaces"
 #define PACCONFPATH "/etc/pacman.d/"
 #define EJECT "/usr/bin/eject"
-#define MKSWAP "/sbin/mkswap"
-#define SWAPON "/sbin/swapon"
 #else
 #define PLUGDIR "plugins"
 #define HOTPLUGSCRIPT "echo /etc/rc.d/rc.hotplug"
@@ -49,8 +50,6 @@
 #define INTERFACESSCRIPT "echo /etc/rc.d/rc.interfaces"
 #define PACCONFPATH "plugins"
 #define EJECT "/usr/bin/echo /usr/bin/eject"
-#define MKSWAP "echo /sbin/mkswap"
-#define SWAPON "echo /sbin/swapon"
 #endif
 
 #ifndef STABLE
