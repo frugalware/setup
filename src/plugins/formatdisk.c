@@ -130,7 +130,7 @@ int detect_raids()
 	return(0);
 }
 
-int selswap(void)
+GList *selswap(void)
 {
 	char **arraychk;
 	GList *partlist;
