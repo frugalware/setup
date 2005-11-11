@@ -159,6 +159,8 @@ int fw_menu(const char *title, const char *cprompt, int height, int width,
 	while(1)
 	{
 		dialog_vars.input_result = my_buffer;
+		dlg_put_backtitle();
+		dlg_clear();
 		ret = dialog_menu(title, cprompt, height, width, menu_height,
 			item_no, items);
 		if (ret != DLG_EXIT_CANCEL)
