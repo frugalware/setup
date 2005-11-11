@@ -232,6 +232,27 @@ int fw_menu(const char *title, const char *cprompt, int height, int width,
 	return(0);
 }
 
+int fw_inputbox(const char *title, const char *cprompt, int height, int width,
+	const char *init, const int password)
+{
+	int ret;
+	char my_buffer[MAX_LEN + 1] = "";
+
+	while(1)
+	{
+		dialog_vars.input_result = my_buffer;
+		dlg_put_backtitle();
+		dlg_clear();
+		ret = dialog_inputbox(title, cprompt, height, width, init,
+			password);
+		if (ret != DLG_EXIT_CANCEL)
+			break;
+		if(exit_confirm())
+			exit_perform();
+	}
+	return(ret);
+}
+
 int fw_init_dialog(void)
 {
 	FILE *input = stdin;

@@ -46,6 +46,8 @@ int umount_if_needed(char *sourcedir);
 #ifdef DIALOG
 int fw_menu(const char *title, const char *cprompt, int height, int width,
 	int menu_height, int item_no, char **items);
+int fw_inputbox(const char *title, const char *cprompt, int height, int width,
+	const char *init, const int password);
 GList* fw_checklist(const char *title, const char *cprompt, int height,
 	int width, int menu_height, int item_no, char **items, int flag);
 int fw_info(char *title, char *msg);
