@@ -323,6 +323,35 @@ int formatdev(char *dev)
 	return(mkfss(dev, fs, check));
 }
 
+char *findfs(char *dev)
+{
+	FILE *fp;
+	char line[PATH_MAX], *ptr;
+	int i;
+
+	if ((fp = fopen("/proc/mounts", "r"))== NULL)
+	{
+		perror("Could not open output file for reading");
+		return(NULL);
+	}
+	while(!feof(fp))
+	{
+		if(fgets(line, PATH_MAX, fp) == NULL)
+			break;
+		if(strstr(line, dev)==line)
+		{
+			ptr = strstr(line, " ")+1;
+			ptr = strstr(ptr, " ")+1;
+			for(i=0;*(ptr+i)!='\0';i++)
+				if(*(ptr+i)==' ')
+					*(ptr+i)='\0';
+			return(ptr);
+		}
+	}
+	fclose(fp);
+	return(NULL);
+}
+
 int mountdev(char *dev, char *mountpoint, GList **config)
 {
 	char *type=NULL;
