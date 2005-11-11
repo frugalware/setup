@@ -139,6 +139,7 @@ GList *selswap(void)
 
 	dialog_vars.backtitle=gen_backtitle(_("Setting up swap space"));
 	dlg_put_backtitle();
+	dlg_clear();
 	partlist = fw_checklist(_("Setting up swap partitions"),
 		_("Please select which swap partitions do you want Frugalware "
 		"to use:"), 0, 0, 0, g_list_length(partschk)/3, arraychk,
@@ -146,13 +147,78 @@ GList *selswap(void)
 	return(partlist);
 }
 
+char *selmkswapmode(char *dev)
+{
+	int modenum=2;
+	char *modes[] =
+	{
+		"format", _("Quick format with no bad block checking"),
+		"check", _("Slow format that checks for bad blocks")
+	};
+	
+	dialog_vars.backtitle=gen_backtitle(_("Formatting partitions"));
+	dlg_put_backtitle();
+	dlg_clear();
+	fw_menu(g_strdup_printf(_("Format %s"), dev),
+		g_strdup_printf(_("If %s has not been formatted, you should "
+		"format it.\n"
+		"NOTE: This will erase all data on %s. Would you like to "
+		"format this partition?"), dev, dev),
+		0, 0, 0, modenum, modes);
+
+	return(dialog_vars.input_result);
+}
+
+int doswap(GList *partlist, GList **config)
+{
+	char *fn, *item, *ptr;
+	FILE* fp;
+	int i;
+
+	// create an initial fstab
+	fn = strdup("/tmp/setup_XXXXXX");
+	mkstemp(fn);
+	if ((fp = fopen(fn, "w")) == NULL)
+	{
+		perror(_("Could not open output file for writing"));
+		return(1);
+	}
+	fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n",
+		"none", "/proc", "proc", "defaults", "0", "0");
+	fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n",
+		"none", "/sys", "sysfs", "defaults", "0", "0");
+	fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n",
+		"devpts", "/dev/pts", "devpts", "gid=5,mode=620", "0", "0");
+
+	// format the partitions
+	for (i=0; i<g_list_length(partlist); i++)
+	{
+		dialog_vars.input_result[0]='\0';
+		item = strdup((char*)g_list_nth_data(partlist, i));
+		ptr = selmkswapmode(item);
+		if(!strcmp("format", ptr))
+			system(g_strdup_printf("%s %s >%s",
+				MKSWAP, item, LOGDEV));
+		else if (!strcmp("check", ptr))
+			system(g_strdup_printf("%s -c %s >%s",
+				MKSWAP, item, LOGDEV));
+		system(g_strdup_printf("%s %s >%s", SWAPON, item, LOGDEV));
+		fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n",
+			item, "swap", "swap", "defaults", "0", "0");
+	}
+	
+	fclose(fp);
+	
+	// save fstab location for later
+	data_put(config, "fstab", fn);
+	return(0);
+}
+
 int run(GList **config)
 {
 	PedDevice *dev = NULL;
 	PedDisk *disk = NULL;
-	char **array;
 	GList *partlist;
-	int i;
 
 	ped_device_probe_all();
 
@@ -176,11 +242,13 @@ int run(GList **config)
 	// select swap partitions to use
 	partlist = selswap();
 
+	// format swap partitions
+	doswap(partlist, config);
+
 	return(0);
 	//never reached, TODO: remove this block
-	for (i=0; i<g_list_length(partlist); i++)
-		dialog_msgbox("title", g_strdup_printf("new item: %s\n", (char*)g_list_nth_data(partlist, i)), 0, 0, 1);
-	/*array = parts2dialog(parts);
+	/*char **array;
+	array = parts2dialog(parts);
 	dialog_vars.backtitle=gen_backtitle(_("Setting up root the partition"));
 	dlg_put_backtitle();
 	fw_menu(_("Select the Linux installation partition"),
