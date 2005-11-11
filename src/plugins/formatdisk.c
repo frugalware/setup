@@ -130,12 +130,27 @@ int detect_raids()
 	return(0);
 }
 
+int selswap(void)
+{
+	char **arraychk;
+	GList *partlist;
+
+	arraychk = parts2dialog(partschk);
+
+	dialog_vars.backtitle=gen_backtitle(_("Setting up swap space"));
+	dlg_put_backtitle();
+	partlist = fw_checklist(_("Setting up swap partitions"),
+		_("Please select which swap partitions do you want Frugalware "
+		"to use:"), 0, 0, 0, g_list_length(partschk)/3, arraychk,
+		FLAG_CHECK);
+	return(partlist);
+}
+
 int run(GList **config)
 {
 	PedDevice *dev = NULL;
 	PedDisk *disk = NULL;
 	char **array;
-	char **arraychk;
 	GList *partlist;
 	int i;
 
@@ -159,20 +174,14 @@ int run(GList **config)
 	detect_raids();
 
 	// select swap partitions to use
-	array = parts2dialog(parts);
-	arraychk = parts2dialog(partschk);
+	partlist = selswap();
 
-	dialog_vars.backtitle=gen_backtitle(_("Setting up swap space"));
-	dlg_put_backtitle();
-	partlist = fw_checklist(_("Setting up swap partitions"),
-		_("Please select which swap partitions do you want Frugalware "
-		"to use:"), 0, 0, 0, g_list_length(partschk)/3, arraychk,
-		FLAG_CHECK);
 	return(0);
 	//never reached, TODO: remove this block
 	for (i=0; i<g_list_length(partlist); i++)
 		dialog_msgbox("title", g_strdup_printf("new item: %s\n", (char*)g_list_nth_data(partlist, i)), 0, 0, 1);
-	/*dialog_vars.backtitle=gen_backtitle(_("Setting up root the partition"));
+	/*array = parts2dialog(parts);
+	dialog_vars.backtitle=gen_backtitle(_("Setting up root the partition"));
 	dlg_put_backtitle();
 	fw_menu(_("Select the Linux installation partition"),
 		_("Please select a partition from the following list to use "
