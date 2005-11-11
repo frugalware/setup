@@ -171,6 +171,36 @@ int makepath(char *path)
 	return(0);
 }
 
+int umount_if_needed(char *sourcedir)
+{
+	FILE *fp;
+	char line[PATH_MAX];
+	char *dev=NULL;
+	int i;
+	
+	if ((fp = fopen("/proc/mounts", "r")) == NULL)
+	{
+		perror(_("Could not open output file for writing"));
+		return(1);
+	}
+	while(!feof(fp))
+	{
+		if(fgets(line, 256, fp) == NULL)
+			break;
+		if(strstr(line, sourcedir))
+		{
+			for(i=0;i<strlen(line);i++)
+				if(line[i]==' ')
+					line[i]='\0';
+			dev = strdup(line);
+		}
+	}
+	fclose(fp);
+	if(dev != NULL)
+		system(g_strdup_printf("umount %s >%s 2>%s", dev, LOGDEV, LOGDEV));
+	return(0);
+}
+
 int fw_system(char* cmd)
 {
 #ifdef FINAL
