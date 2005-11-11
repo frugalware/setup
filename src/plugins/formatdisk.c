@@ -214,11 +214,26 @@ int doswap(GList *partlist, GList **config)
 	return(0);
 }
 
+char *selrootdev()
+{
+	char **array;
+	
+	array = parts2dialog(parts);
+	dialog_vars.backtitle=gen_backtitle(_("Setting up root the partition"));
+	dlg_put_backtitle();
+	fw_menu(_("Select the Linux installation partition"),
+		_("Please select a partition from the following list to use "
+		"for your root (/) partition. The following ones "
+		"are available:"), 0, 0, 0, g_list_length(parts)/2, array);
+	return(strdup(dialog_vars.input_result));
+}
+
 int run(GList **config)
 {
 	PedDevice *dev = NULL;
 	PedDisk *disk = NULL;
 	GList *partlist;
+	char *ptr;
 
 	ped_device_probe_all();
 
@@ -245,19 +260,12 @@ int run(GList **config)
 	// format swap partitions
 	doswap(partlist, config);
 
+	ptr = selrootdev();
+
 	return(0);
 	//never reached, TODO: remove this block
-	/*char **array;
-	array = parts2dialog(parts);
-	dialog_vars.backtitle=gen_backtitle(_("Setting up root the partition"));
-	dlg_put_backtitle();
-	fw_menu(_("Select the Linux installation partition"),
-		_("Please select a partition from the following list to use "
-		"for your root (/) partition. The following ones "
-		"are available:"), 0, 0, 0, g_list_length(parts)/2, array);*/
-
 	// sample: simple msgbox
-	//dialog_msgbox("title", "content", 0, 0, 1);
+	//dialog_msgbox("title", ptr, 0, 0, 1);
 	
 	// sample: gets the string titled "stuff" from the config list
 	//printf("%s\n", (char*)data_get(*config, "stuff"));
