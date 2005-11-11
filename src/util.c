@@ -239,6 +239,13 @@ GList* fw_checklist(const char *title, const char *cprompt, int height,
 	list = g_list_append(list, strdup(ptr));
 	return(list);
 }
+
+int fw_info(char *title, char *msg)
+{
+	dlg_put_backtitle();
+	dlg_clear();
+	return(dialog_msgbox(title, msg, 0, 0, 0));
+}
 #endif
 
 #ifdef GTK
