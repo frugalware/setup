@@ -416,13 +416,4 @@ int run(GList **config)
 	mountdev(ptr, "/", config);
 
 	return(0);
-	//never reached, TODO: remove this block
-	// sample: simple msgbox
-	//dialog_msgbox("title", ptr, 0, 0, 1);
-	
-	// sample: gets the string titled "stuff" from the config list
-	//printf("%s\n", (char*)data_get(*config, "stuff"));
-	
-	// sample: adds a "content" string titled "stuff" to the config list
-	//data_put(config, "stuff", "content");
 }
