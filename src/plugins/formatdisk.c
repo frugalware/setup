@@ -364,9 +364,16 @@ int mountdev(char *dev, char *mountpoint, GList **config)
 		return(1);
 	}
 
-	// TODO: type, mount, etc
+	// mount
+	makepath(mountpoint);
+	umount_if_needed(mountpoint);
+	fw_system(g_strdup_printf("mount %s %s/%s",
+		dev, TARGETDIR, mountpoint));
 
-	fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n", dev, mountpoint, type, "defaults", "1", "1");
+	// make fstab entry
+	type = findfs(dev);
+	fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n", dev, mountpoint,
+		type, "defaults", "1", "1");
 	fclose(fp);
 	return(0);
 }
@@ -406,6 +413,7 @@ int run(GList **config)
 	// root partition
 	ptr = selrootdev();
 	formatdev(ptr);
+	mountdev(ptr, "/", config);
 
 	return(0);
 	//never reached, TODO: remove this block
