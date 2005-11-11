@@ -169,6 +169,50 @@ char *selmkswapmode(char *dev)
 	return(dialog_vars.input_result);
 }
 
+char *selformatmode(char *dev)
+{
+	int modenum=3;
+	char *modes[] =
+	{
+		"format", _("Quick format with no bad block checking"),
+		"check", _("Slow format that checks for bad blocks"),
+		"noformat", _("Do not format, just mount the partition")
+	};
+	
+	dialog_vars.backtitle=gen_backtitle(_("Formatting partitions"));
+	dlg_put_backtitle();
+	dlg_clear();
+	fw_menu(g_strdup_printf(_("Format %s"), dev),
+		g_strdup_printf(_("If %s has not been formatted, you should "
+		"format it.\n"
+		"NOTE: This will erase all data on %s. Would you like to "
+		"format this partition?"), dev, dev),
+		0, 0, 0, modenum, modes);
+
+	return(strdup(dialog_vars.input_result));
+}
+
+char *selfs(char *dev)
+{
+	int fsnum=4;
+	char *fss[] =
+	{
+		"ext2", _("Standard Linux ext2fs filesystem"),
+		"ext3", _("Journaling version of the ext2fs filesystem"),
+		"reiserfs", _("ans Reiser's journaling filesystem"),
+		"xfs", _("SGI's journaling filesystem")
+	};
+	
+	dialog_vars.backtitle=gen_backtitle(_("Formatting partitions"));
+	dlg_put_backtitle();
+	dlg_clear();
+	fw_menu(g_strdup_printf(_("Selecting filesystem for %s"), dev),
+		g_strdup_printf(_("Please select the type of filesystem to "
+		"use for %s."), dev), 0, 0, 0, fsnum, fss);
+
+	return(strdup(dialog_vars.input_result));
+}
+
 int doswap(GList *partlist, GList **config)
 {
 	char *fn, *item, *ptr;
@@ -236,6 +280,68 @@ char *selrootdev()
 	return(strdup(dialog_vars.input_result));
 }
 
+int mkfss(char *dev, char *fs, int check)
+{
+	char *opts=NULL;
+
+	opts = strdup(check ? "-c" : "");
+
+	fw_info(_("Formatting"), g_strdup_printf(check ?
+		_("Creating %s filesystem on %s") :
+		_("Ccreating %s filesystem on %s and checking for bad blocks"),
+		fs, dev));
+	// TODO: umount the filesystem if necessary
+	if(!strcmp(fs, "ext2"))
+		return(fw_system(g_strdup_printf("mke2fs %s %s", opts, dev)));
+	else if(!strcmp(fs, "ext3"))
+		return(fw_system(g_strdup_printf("mke2fs -j %s %s", opts, dev)));
+	else if(!strcmp(fs, "reiserfs"))
+		return(fw_system(g_strdup_printf("echo y |mkreiserfs %s", dev)));
+	else if(!strcmp(fs, "jfs"))
+		return(fw_system(g_strdup_printf("mkfs.jfs -q %s %s", opts, dev)));
+	else if(!strcmp(fs, "xfs"))
+		return(fw_system(g_strdup_printf("mkfs.xfs -f %s", dev)));
+	// never reached
+	return(1);
+}
+
+int formatdev(char *dev)
+{
+	char *mode, *fs;
+	int check=0;
+
+	dialog_vars.input_result[0]='\0';
+	mode = selformatmode(dev);
+
+	// if don't have to format, nothing to do
+	if(!strcmp("noformat", mode))
+		return(0);
+	if(!strcmp("check", mode))
+		check=1;
+
+	fs = selfs(dev);
+	return(mkfss(dev, fs, check));
+}
+
+int mountdev(char *dev, char *mountpoint, GList **config)
+{
+	char *type=NULL;
+	FILE* fp;
+
+	// open fstab
+	if ((fp = fopen((char*)data_get(*config, "fstab"), "a")) == NULL)
+	{
+		perror(_("Could not open output file for writing"));
+		return(1);
+	}
+
+	// TODO: type, mount, etc
+
+	fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n", dev, mountpoint, type, "defaults", "1", "1");
+	fclose(fp);
+	return(0);
+}
+
 int run(GList **config)
 {
 	PedDevice *dev = NULL;
@@ -268,7 +374,9 @@ int run(GList **config)
 	// format swap partitions
 	doswap(partlist, config);
 
+	// root partition
 	ptr = selrootdev();
+	formatdev(ptr);
 
 	return(0);
 	//never reached, TODO: remove this block
