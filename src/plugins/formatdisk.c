@@ -378,6 +378,16 @@ int mountdev(char *dev, char *mountpoint, GList **config)
 	return(0);
 }
 
+char *asktowhere(char *dev)
+{
+	fw_inputbox(g_strdup_printf(_("Select mount point for %s"), dev),
+		"You need to specify where you want the new partition mounted. "
+		"For example, if you want to put it under /usr/local, then "
+		"respond: /usr/local\n\nWhere would you like to mount this "
+		"partition?", 0, 0, "", 0);
+	return(strdup(dialog_vars.input_result));
+}
+
 int run(GList **config)
 {
 	PedDevice *dev = NULL;
