@@ -206,9 +206,11 @@ char *selfs(char *dev)
 	dialog_vars.backtitle=gen_backtitle(_("Formatting partitions"));
 	dlg_put_backtitle();
 	dlg_clear();
+	dialog_vars.default_item=strdup("ext3");
 	fw_menu(g_strdup_printf(_("Selecting filesystem for %s"), dev),
 		g_strdup_printf(_("Please select the type of filesystem to "
 		"use for %s."), dev), 0, 0, 0, fsnum, fss);
+	FREE(dialog_vars.default_item);
 
 	return(strdup(dialog_vars.input_result));
 }
