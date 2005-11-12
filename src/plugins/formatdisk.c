@@ -24,6 +24,7 @@
 #include <parted/parted.h>
 #include <string.h>
 #include <limits.h>
+#include <sys/stat.h>
 
 #include <setup.h>
 #include <util.h>
@@ -426,6 +427,23 @@ int run(GList **config)
 	ptr = selrootdev();
 	formatdev(ptr);
 	mountdev(ptr, "/", config);
+
+	// move temporarily stuff to the final location
+	rename((char*)data_get(*config, "fstab"),
+		g_strdup_printf("%s/%s", TARGETDIR, "/etc/fstab"));
+	chmod(g_strdup_printf("%s/%s", TARGETDIR, "/etc/fstab"),
+		S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+	data_put(config, "fstab", g_strdup_printf("%s/%s", TARGETDIR, "/etc/fstab"));
+	
+	makepath(g_strdup_printf("%s/%s", TARGETDIR, "/etc/profile.d"));
+	rename((char*)data_get(*config, "lang.sh"),
+		g_strdup_printf("%s/%s", TARGETDIR, "/etc/profile.d/lang.sh"));
+	chmod(g_strdup_printf("%s/%s", TARGETDIR, "/etc/profile.d/lang.sh"),
+		S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH);
+	
+	makepath(g_strdup_printf("%s/%s", TARGETDIR, "/etc/sysconfig"));
+	rename((char*)data_get(*config, "keymap"),
+		g_strdup_printf("%s/%s", TARGETDIR, "/etc/sysconfig/keymap"));
 
 	return(0);
 }
