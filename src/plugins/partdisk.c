@@ -120,7 +120,7 @@ int run(GList **config)
 		exit_perform();
 	}
 
-	array = parts2dialog(lp);
+	array = glist2dialog(lp);
 
 	dialog_vars.backtitle=gen_backtitle(_("Creating partitions"));
 	dlg_put_backtitle();

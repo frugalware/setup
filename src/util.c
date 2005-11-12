@@ -283,7 +283,7 @@ int fw_end_dialog(void)
 	return(0);
 }
 
-char **parts2dialog(GList *list)
+char **glist2dialog(GList *list)
 {
 	int i;
 	char **array;

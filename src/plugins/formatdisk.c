@@ -136,7 +136,7 @@ GList *selswap(void)
 	char **arraychk;
 	GList *partlist;
 
-	arraychk = parts2dialog(partschk);
+	arraychk = glist2dialog(partschk);
 
 	dialog_vars.backtitle=gen_backtitle(_("Setting up swap space"));
 	dlg_put_backtitle();
@@ -273,7 +273,7 @@ char *selrootdev()
 {
 	char **array;
 	
-	array = parts2dialog(parts);
+	array = glist2dialog(parts);
 	dialog_vars.backtitle=gen_backtitle(_("Setting up root the partition"));
 	dlg_put_backtitle();
 	fw_menu(_("Select the Linux installation partition"),
