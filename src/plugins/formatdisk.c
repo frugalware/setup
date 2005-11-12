@@ -326,7 +326,8 @@ int formatdev(char *dev)
 	return(mkfss(dev, fs, check));
 }
 
-char *findfs(char *dev)
+// mode=0: fs, mode=1: mountpoint
+char *findmount(char *dev, int mode)
 {
 	FILE *fp;
 	char line[PATH_MAX], *ptr;
@@ -344,7 +345,8 @@ char *findfs(char *dev)
 		if(strstr(line, dev)==line)
 		{
 			ptr = strstr(line, " ")+1;
-			ptr = strstr(ptr, " ")+1;
+			if(!mode)
+				ptr = strstr(ptr, " ")+1;
 			for(i=0;*(ptr+i)!='\0';i++)
 				if(*(ptr+i)==' ')
 					*(ptr+i)='\0';
@@ -374,7 +376,7 @@ int mountdev(char *dev, char *mountpoint, GList **config)
 		dev, TARGETDIR, mountpoint));
 
 	// make fstab entry
-	type = findfs(dev);
+	type = findmount(dev, 0);
 	fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n", dev, mountpoint,
 		type, "defaults", "1", "1");
 	fclose(fp);
