@@ -45,6 +45,7 @@ XFSVER = 2.7.3-1
 PPPVER = 2.4.3-5
 PPPOEVER = 3.6-3
 GLIBVER = 2.8.3-1
+PEDVER = 1.6.24-1
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
 export CCACHE_DIR=/var/cache/ccache/setup
@@ -69,7 +70,7 @@ CWD=`pwd`
 
 packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 	   net-tools glibc kbd kernel module-init-tools ncurses pacman eject \
-	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2
+	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 kpatches = bootsplash-3.1.6-$(KERNELVER).diff
 ifeq ($(CARCH),x86_64)
@@ -420,3 +421,13 @@ glib2:
 	mkdir -p glib2/usr/lib
 	cd $(BDIR) && tar xjf ../$(CDIR)/glib2-$(GLIBVER)-$(CARCH).fpm; \
 	cp -a usr/lib/libglib-2.0.so* ../glib2/usr/lib/
+
+parted:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf parted
+	mkdir -p parted/usr/{lib,sbin,share/locale}
+	cd $(BDIR) && tar xjf ../$(CDIR)/parted-$(PEDVER)-$(CARCH).fpm; \
+	cp -a usr/lib/{libparted.so,libparted-*} ../parted/usr/lib/; \
+	cp -a usr/sbin/* ../parted/usr/sbin/; \
+	cp -a usr/share/locale/* ../parted/usr/share/locale/
