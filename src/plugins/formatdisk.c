@@ -394,12 +394,45 @@ char *asktowhere(char *dev)
 	return(strdup(dialog_vars.input_result));
 }
 
+char **parts2dialog(GList *list)
+{
+	int i;
+	char **array, *ptr;
+
+	MALLOC(array, g_list_length(list)*sizeof(char*));
+	for (i=0; i<g_list_length(list); i++)
+	{
+		if(!(i%2))
+		{
+			ptr = findmount((char*)g_list_nth_data(list, i), 1);
+			if(ptr!=NULL)
+				array[i] = strdup(_("(in use)"));
+			else
+				array[i] = (char*)g_list_nth_data(list, i);
+		}
+		else
+		{
+			ptr = findmount((char*)g_list_nth_data(list, i-1), 1);
+			if(ptr!=NULL)
+				array[i] = g_strdup_printf(_("%s on %s\t%s"),
+					(char*)g_list_nth_data(list, i-1), ptr,
+					(char*)g_list_nth_data(list, i));
+			else
+				array[i] = g_strdup_printf("%s",
+					(char*)g_list_nth_data(list, i));
+		}
+	}
+	return(array);
+}
+
 int run(GList **config)
 {
 	PedDevice *dev = NULL;
 	PedDisk *disk = NULL;
 	GList *partlist;
-	char *ptr;
+	char **nrdevs, *ptr;
+	int ret;
+	char my_buffer[MAX_LEN + 1] = "";
 
 	ped_device_probe_all();
 
@@ -448,5 +481,43 @@ int run(GList **config)
 	rename((char*)data_get(*config, "keymap"),
 		g_strdup_printf("%s/%s", TARGETDIR, "/etc/sysconfig/keymap"));
 
+	// non-root partitions
+	dialog_vars.backtitle=gen_backtitle(_("Selecting other partitions"));
+	while(1)
+	{
+		dialog_vars.input_result = my_buffer;
+		nrdevs = parts2dialog(parts);
+		dlg_put_backtitle();
+		dlg_clear();
+		dialog_vars.cancel_label = _("Continue");
+		dialog_vars.input_result = my_buffer;
+		dialog_vars.input_result[0]='\0';
+		ret = dialog_menu(
+		_("Select other Linux partitions for /etc/fstab"),
+		_("You may use your other partitions to distribute your Linux "
+		"system across more than one partition. Currently, you have "
+		"only mounted your / partition. You might want to mount "
+		"directories such as /boot, /home or /usr/local on separate "
+		"partitions. You should not try to mount /usr, /etc, /sbin, or "
+		"/bin on their own partitions since they contain utilities "
+		"needed to bring the system up and mount partitions. Also, "
+		"do not reuse a partition that you've already entered before. "
+		"Please select one of the partitions listed below, or if "
+		"you're done, hit Continue."),
+		0, 0, 0, g_list_length(parts)/2, nrdevs);
+		dialog_vars.cancel_label = '\0';
+		FREE(nrdevs);
+		if (ret != DLG_EXIT_CANCEL)
+		{
+			if(!strcmp(_("(in use)"), dialog_vars.input_result))
+				continue;
+			ptr = strdup(dialog_vars.input_result);
+			formatdev(ptr);
+			mountdev(ptr, asktowhere(ptr), config);
+			FREE(ptr);
+		}
+		else
+			break;
+	}
 	return(0);
 }
