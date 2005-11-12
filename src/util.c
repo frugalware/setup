@@ -91,7 +91,20 @@ void *data_get(GList *config, char *title)
 
 void data_put(GList **config, char *name, void *data)
 {
-	data_t *dp = data_new();
+	int i;
+	data_t *dp;
+	
+	for (i=0; i<g_list_length(*config); i++)
+	{
+		dp = g_list_nth_data(*config, i);
+		if(!strcmp(name, dp->name))
+		{
+			dp->data=data;
+			return;
+		}
+	}
+	
+	dp = data_new();
 	dp->name = name;
 	dp->data = data;
 	(*config) = g_list_append((*config), dp);
