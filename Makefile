@@ -115,9 +115,6 @@ misc: merge
 	mkdir $(MDIR)/lib/plugins
 	cp src/setup $(MDIR)/bin/
 	cp src/plugins/*.so $(MDIR)/lib/plugins/
-ifneq ($(STABLE),false)
-	sed -i 's/^stable="false"$$/stable=""/' $(MDIR)/bin/setup
-endif
 	cp etc/inittab $(MDIR)/etc/
 	cp etc/rc.S $(MDIR)/etc/rc.d/
 	chmod +x $(MDIR)/etc/rc.d/rc.S
