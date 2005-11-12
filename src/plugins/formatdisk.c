@@ -350,6 +350,7 @@ char *findmount(char *dev, int mode)
 			for(i=0;*(ptr+i)!='\0';i++)
 				if(*(ptr+i)==' ')
 					*(ptr+i)='\0';
+			fclose(fp);
 			return(ptr);
 		}
 	}
