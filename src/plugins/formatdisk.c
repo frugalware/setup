@@ -371,7 +371,7 @@ int mountdev(char *dev, char *mountpoint, GList **config)
 	}
 
 	// mount
-	makepath(mountpoint);
+	makepath(g_strdup_printf("%s/%s", TARGETDIR, mountpoint));
 	umount_if_needed(mountpoint);
 	fw_system(g_strdup_printf("mount %s %s/%s",
 		dev, TARGETDIR, mountpoint));
