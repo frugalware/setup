@@ -217,9 +217,10 @@ int umount_if_needed(char *sourcedir)
 int fw_system(char* cmd)
 {
 #ifdef FINAL
-	return(system(g_strdup_printf("%s >%s", cmd, LOGDEV)));
+	return(system(g_strdup_printf("%s >%s 2>%s", cmd, LOGDEV, LOGDEV)));
 #else
-	return(system(g_strdup_printf("echo %s >%s", cmd, LOGDEV)));
+	return(system(g_strdup_printf("echo %s >%s 2>%s", cmd, LOGDEV,
+		LOGDEV)));
 #endif
 }
 
