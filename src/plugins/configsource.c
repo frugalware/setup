@@ -172,8 +172,7 @@ int run(GList **config)
 	if((char*)data_get(*config, "netinstall")!=NULL)
 	{
 		system(NETCONFIGSCRIPT);
-		system(g_strdup_printf("%s >%s 2>%s", INTERFACESSCRIPT,
-			LOGDEV, LOGDEV));
+		fw_system(INTERFACESSCRIPT);
 		mirrorconf();
 	}
 	return(0);
