@@ -32,7 +32,7 @@
 
 plugin_t plugin =
 {
-	"formatswap",
+	"formatdisk",
 	40,
 	run,
 	NULL // dlopen handle
@@ -200,7 +200,7 @@ char *selfs(char *dev)
 	{
 		"ext2", _("Standard Linux ext2fs filesystem"),
 		"ext3", _("Journaling version of the ext2fs filesystem"),
-		"reiserfs", _("ans Reiser's journaling filesystem"),
+		"reiserfs", _("Hans Reiser's journaling filesystem"),
 		"xfs", _("SGI's journaling filesystem")
 	};
 	
