@@ -171,7 +171,11 @@ int run(GList **config)
 	dlg_put_backtitle();
 	if((char*)data_get(*config, "netinstall")!=NULL)
 	{
+		fw_end_dialog();
 		system(NETCONFIGSCRIPT);
+		fw_init_dialog();
+		dialog_msgbox(_("Please wait"), _("Configuring network the "
+			"interface..."), 0, 0, 0);
 		fw_system(INTERFACESSCRIPT);
 		mirrorconf();
 	}
