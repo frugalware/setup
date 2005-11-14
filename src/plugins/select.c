@@ -67,7 +67,10 @@ char* categorysize(char *category)
 			ptr+=2;
 			*ptr = '\0';
 			pclose(pp);
-			return(line);
+			if(strlen(line)==10)
+				return(g_strdup_printf(" %s", line));
+			else
+				return(line);
 		}
 	}
 	FREE(line);
