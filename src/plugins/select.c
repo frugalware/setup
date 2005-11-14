@@ -171,6 +171,63 @@ char* pkgdesc(char *pkg)
 	return(ret);
 }
 
+// 0: frugalware; 1: extra
+GList *selcat(int repo)
+{
+	FILE *pp;
+	char *line, *ptr;
+	GList *catlist=NULL;
+	char **arraychk;
+	GList *ret;
+
+	// query the list
+	dlg_put_backtitle();
+	dlg_clear();
+	dialog_msgbox(_("Please wait"), _("Searching for categories..."),
+		0, 0, 0);
+	if ((pp = popen("pacman -Sg -r ./", "r"))== NULL)
+	{
+		perror("Could not open pipe for reading");
+		return(NULL);
+	}
+	MALLOC(line, 255);
+	while(!feof(pp))
+	{
+		if(fgets(line, 255, pp) == NULL)
+			break;
+		ptr = strchr(line, '\n');
+		*ptr = '\0';
+		if(!repo)
+		{
+			if((index(line, '-')==NULL) && strcmp(line, "core"))
+			{
+				catlist = g_list_append(catlist, strdup(line));
+				catlist = g_list_append(catlist, categorysize(line));
+				catlist = g_list_append(catlist, strdup("Off"));
+			}
+		}
+		else
+		{
+			if((index(line, '-')!=NULL) &&
+				(strstr(line, "-extra")!=NULL))
+				catlist = g_list_append(catlist, strdup(line));
+		}
+	}
+	FREE(line);
+	pclose(pp);
+
+	// now display the list
+	arraychk = glist2dialog(catlist);
+
+	dlg_put_backtitle();
+	dlg_clear();
+	ret = fw_checklist(_("Selecting categories"),
+		_("Please select which categories to install:"),
+		0, 0, 0, g_list_length(catlist)/3, arraychk,
+		FLAG_CHECK);
+	return(ret);
+}
+
 int run(GList **config)
 {
 	chdir(TARGETDIR);
