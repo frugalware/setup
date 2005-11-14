@@ -23,6 +23,9 @@
 #include <dialog.h>
 #include <unistd.h>
 #include <string.h>
+#include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
 
 #include <setup.h>
 #include <util.h>
@@ -46,7 +49,6 @@ char* categorysize(char *category)
 	FILE *pp;
 	char *line, *ptr;
 
-	chdir(TARGETDIR);
 	if ((pp = popen(g_strdup_printf("echo -e 'y\nn'|pacman -Syd %s -r ./", category), "r"))== NULL)
 	{
 		perror("Could not open pipe for reading");
@@ -73,9 +75,52 @@ char* categorysize(char *category)
 	return(NULL);
 }
 
+char* pkgdir(char *pkg, char *repo)
+{
+	DIR *dir;
+	struct dirent *ent;
+	struct stat sbuf;
+	char *targetdir, *dirname, *name, *ptr;
+	int gotit=0;
+
+	targetdir = g_strdup_printf("var/lib/pacman/%s", repo);
+	
+	dir = opendir(targetdir);
+	if (!dir)
+	{
+		perror(targetdir);
+		return(NULL);
+	}
+
+	while(!gotit && ((ent = readdir(dir)) != NULL))
+	{
+		if(!strcmp(ent->d_name, ".") || !strcmp(ent->d_name, ".."))
+			continue;
+		name = strdup(ent->d_name);
+		dirname = strdup(ent->d_name);
+		if((ptr = rindex(name, '-')))
+			*ptr = '\0';
+		if((ptr = rindex(name, '-')))
+			*ptr = '\0';
+		if(!strcmp(name, pkg))
+			gotit=1;
+		//FREE(name);
+	}
+	closedir(dir);
+	//FREE(targetdir);
+	if(gotit)
+	{
+		ptr = g_strdup_printf("var/lib/pacman/%s/%s", repo, dirname);
+		//FREE(dirname);
+		return(ptr);
+	}
+	else
+		return(NULL);
+}
+
 int run(GList **config)
 {
-	dialog_msgbox("base", categorysize("base"), 0, 0, 1);
-	
+	chdir(TARGETDIR);
+	dialog_msgbox("bash", pkgdir("bash", "frugalware-current"), 0, 0, 1);
 	return(0);
 }
