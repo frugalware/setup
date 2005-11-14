@@ -67,7 +67,9 @@ char* categorysize(char *category)
 			ptr+=2;
 			*ptr = '\0';
 			pclose(pp);
-			if(strlen(line)==10)
+			if(strlen(line)==9)
+				return(g_strdup_printf("  %s", line));
+			else if(strlen(line)==10)
 				return(g_strdup_printf(" %s", line));
 			else
 				return(line);
@@ -202,15 +204,26 @@ GList *selcat(int repo)
 			if((index(line, '-')==NULL) && strcmp(line, "core"))
 			{
 				catlist = g_list_append(catlist, strdup(line));
-				catlist = g_list_append(catlist, categorysize(line));
-				catlist = g_list_append(catlist, strdup("Off"));
+				catlist = g_list_append(catlist,
+					categorysize(line));
+				catlist = g_list_append(catlist, strdup("On"));
 			}
 		}
 		else
 		{
 			if((index(line, '-')!=NULL) &&
 				(strstr(line, "-extra")!=NULL))
+			{
 				catlist = g_list_append(catlist, strdup(line));
+				catlist = g_list_append(catlist,
+					categorysize(line));
+				if(strcmp(line, "locale-extra"))
+					catlist = g_list_append(catlist,
+						strdup("Off"));
+				else
+					catlist = g_list_append(catlist,
+						strdup("On"));
+			}
 		}
 	}
 	FREE(line);
@@ -236,7 +249,7 @@ int run(GList **config)
 	dialog_vars.backtitle=gen_backtitle(_("Selecting packages"));
 	chdir(TARGETDIR);
 	//dialog_msgbox("bash", pkgdesc("bash"), 0, 0, 1);
-	list = selcat(0);
+	list = selcat(1);
 	fw_end_dialog(); ///
 	for (i=0; i<g_list_length(list); i++)
 		printf("new item: %s\n", (char*)g_list_nth_data(list, i));
