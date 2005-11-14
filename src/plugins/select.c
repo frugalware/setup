@@ -104,14 +104,14 @@ char* pkgdir(char *pkg, char *repo)
 			*ptr = '\0';
 		if(!strcmp(name, pkg))
 			gotit=1;
-		//FREE(name);
+		FREE(name);
 	}
 	closedir(dir);
-	//FREE(targetdir);
+	FREE(targetdir);
 	if(gotit)
 	{
 		ptr = g_strdup_printf("var/lib/pacman/%s/%s", repo, dirname);
-		//FREE(dirname);
+		FREE(dirname);
 		return(ptr);
 	}
 	else
