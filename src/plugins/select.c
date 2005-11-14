@@ -123,7 +123,8 @@ int pkgsize(char *pkg)
 	char line[256];
 	int ret;
 
-	if ((fp = fopen(g_strdup_printf("%s/desc", pkgdir(pkg, PACCONF)), "r"))== NULL)
+	if ((fp = fopen(g_strdup_printf("%s/desc", pkgdir(pkg, PACCONF)), "r"))
+		== NULL)
 	{
 		perror(_("Could not open output file for writing"));
 		return(0);
@@ -134,6 +135,34 @@ int pkgsize(char *pkg)
 			break;
 		if(!strcmp(line, "%CSIZE%\n"))
 			fscanf(fp, "%d", &ret);
+	}
+	fclose(fp);
+	return(ret);
+}
+
+char* pkgdesc(char *pkg)
+{
+	FILE *fp;
+	char line[256];
+	char *ret=NULL, *ptr;
+
+	if ((fp = fopen(g_strdup_printf("%s/desc", pkgdir(pkg, PACCONF)), "r"))
+		== NULL)
+	{
+		perror(_("Could not open output file for writing"));
+		return(0);
+	}
+	while(!feof(fp))
+	{
+		if(fgets(line, 256, fp) == NULL)
+			break;
+		if(!strcmp(line, "%DESC%\n"))
+		{
+			fgets(line, 256, fp);
+			ptr = strchr(line, '\n');
+			*ptr = '\0';
+			ret = strdup(line);
+		}
 	}
 	fclose(fp);
 	return(ret);
