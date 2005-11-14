@@ -52,7 +52,7 @@ char* categorysize(char *category)
 	if ((pp = popen(g_strdup_printf("echo -e 'y\nn'|pacman -Syd %s -r ./", category), "r"))== NULL)
 	{
 		perror("Could not open pipe for reading");
-		return(1);
+		return(NULL);
 	}
 	MALLOC(line, 255);
 	while(!feof(pp))
@@ -79,8 +79,7 @@ char* pkgdir(char *pkg, char *repo)
 {
 	DIR *dir;
 	struct dirent *ent;
-	struct stat sbuf;
-	char *targetdir, *dirname, *name, *ptr;
+	char *targetdir, *dirname=NULL, *name, *ptr;
 	int gotit=0;
 
 	targetdir = g_strdup_printf("var/lib/pacman/%s", repo);
@@ -116,6 +115,28 @@ char* pkgdir(char *pkg, char *repo)
 	}
 	else
 		return(NULL);
+}
+
+int pkgsize(char *pkg)
+{
+	FILE *fp;
+	char line[256];
+	int ret;
+
+	if ((fp = fopen(g_strdup_printf("%s/desc", pkgdir(pkg, PACCONF)), "r"))== NULL)
+	{
+		perror(_("Could not open output file for writing"));
+		return(0);
+	}
+	while(!feof(fp))
+	{
+		if(fgets(line, 256, fp) == NULL)
+			break;
+		if(!strcmp(line, "%CSIZE%\n"))
+			fscanf(fp, "%d", &ret);
+	}
+	fclose(fp);
+	return(ret);
 }
 
 int run(GList **config)
