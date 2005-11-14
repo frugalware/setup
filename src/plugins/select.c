@@ -230,7 +230,16 @@ GList *selcat(int repo)
 
 int run(GList **config)
 {
+	int i;
+	GList *list;
+
+	dialog_vars.backtitle=gen_backtitle(_("Selecting packages"));
 	chdir(TARGETDIR);
-	dialog_msgbox("bash", pkgdir("bash", "frugalware-current"), 0, 0, 1);
+	//dialog_msgbox("bash", pkgdesc("bash"), 0, 0, 1);
+	list = selcat(0);
+	fw_end_dialog(); ///
+	for (i=0; i<g_list_length(list); i++)
+		printf("new item: %s\n", (char*)g_list_nth_data(list, i));
+	fw_init_dialog(); ///
 	return(0);
 }
