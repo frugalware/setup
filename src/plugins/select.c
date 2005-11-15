@@ -180,6 +180,27 @@ GList *selpkg(char *category)
 	return(NULL);
 }
 
+int selpkg_confirm(void)
+{
+	int ret;
+	dialog_vars.defaultno=1;
+	ret = dialog_yesno(_("Use expert menus?"),
+		_("If you like, you may select your packages from expert menus."
+		"Where the normal menu shows a choice like 'C compiler system',"
+		"the expert menus show you 'C libs', 'C compiler', 'C include"
+		"files', etc - each individual package. Obviously, you should"
+		"know what you're doing if you use the expert menus since it's"
+		"possible to skip packages that are crucial to the functioning"
+		"of a subsystem. Choose 'no' for using normal menus that select"
+		"groups of packages, or choose 'yes' for using expert menus"
+		"with a switch for each package."), 0, 0);
+	dialog_vars.defaultno=0;
+	if(ret==DLG_EXIT_OK)
+		return(1);
+	else
+		return(0);
+}
+
 // 0: frugalware; 1: extra
 GList *selcat(int repo)
 {
@@ -250,16 +271,18 @@ GList *selcat(int repo)
 
 int run(GList **config)
 {
-	int i;
+	int i, selpkg;
 	GList *list;
 
 	dialog_vars.backtitle=gen_backtitle(_("Selecting packages"));
 	chdir(TARGETDIR);
-	//dialog_msgbox("bash", pkgdesc("bash"), 0, 0, 1);
-	list = selcat(1);
+	selpkg = selpkg_confirm();
+	list = selcat(0);
 	fw_end_dialog(); ///
 	for (i=0; i<g_list_length(list); i++)
 		printf("new item: %s\n", (char*)g_list_nth_data(list, i));
+	if (selpkg)
+		printf("expert mode\n");
 	fw_init_dialog(); ///
 	return(0);
 }
