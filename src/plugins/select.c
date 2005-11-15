@@ -184,6 +184,7 @@ int selpkg_confirm(void)
 {
 	int ret;
 	dialog_vars.defaultno=1;
+	dlg_put_backtitle();
 	ret = dialog_yesno(_("Use expert menus?"),
 		_("If you like, you may select your packages from expert menus."
 		"Where the normal menu shows a choice like 'C compiler system',"
@@ -272,7 +273,7 @@ GList *selcat(int repo)
 int run(GList **config)
 {
 	int i, selpkg;
-	GList *list;
+	GList *list=NULL;
 
 	dialog_vars.backtitle=gen_backtitle(_("Selecting packages"));
 	chdir(TARGETDIR);
