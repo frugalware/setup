@@ -173,6 +173,44 @@ char* pkgdesc(char *pkg)
 	return(ret);
 }
 
+GList* group2pkgs(char *group)
+{
+	FILE *pp;
+	char line[256], *ptr, *ptr2;
+	GList *list=NULL;
+
+	if ((pp = popen(g_strdup_printf("pacman -Sg %s -r ./", group), "r"))
+		== NULL)
+	{
+		perror("Could not open pipe for reading");
+		return(NULL);
+	}
+	while(!feof(pp))
+	{
+		if(fgets(line, 255, pp) == NULL)
+			break;
+		// this line has data for us
+		if(strstr(line, "   ")==line)
+		{
+			ptr = strchr(line, '\n');
+			*ptr = '\0';
+			ptr = line;
+			// skip leading whitespace
+			while(strchr(ptr, ' ')==ptr)
+				ptr++;
+			while(strchr(ptr, ' ')!=NULL)
+			{
+				ptr2 = ptr;
+				ptr = strchr(ptr, ' ');
+				*ptr = '\0';
+				ptr++;
+				list = g_list_append(list, strdup(ptr2));
+			}
+		}
+	}
+	pclose(pp);
+	return(list);
+}
 GList *selpkg(char *category)
 {
 	// XXX
