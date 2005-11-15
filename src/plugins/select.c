@@ -205,6 +205,9 @@ GList* group2pkgs(char *group)
 				*ptr = '\0';
 				ptr++;
 				list = g_list_append(list, strdup(ptr2));
+				// TODO: pkgsize()
+				list = g_list_append(list, pkgdesc(ptr2));
+				list = g_list_append(list, strdup("On"));
 			}
 		}
 	}
@@ -213,9 +216,20 @@ GList* group2pkgs(char *group)
 }
 GList *selpkg(char *category)
 {
-	// XXX
-	dialog_msgbox("TODO", category, 0, 0, 1);
-	return(NULL);
+	char **arraychk;
+	GList *pkglist;
+	GList *ret;
+
+	pkglist = group2pkgs(category);
+	arraychk = glist2dialog(pkglist);
+
+	dlg_put_backtitle();
+	dlg_clear();
+	ret = fw_checklist(_("Selecting packages"),
+		g_strdup_printf(("Please select which categories to install from the %s section:"), category),
+		0, 0, 0, g_list_length(pkglist)/3, arraychk,
+		FLAG_CHECK);
+	return(ret);
 }
 
 int selpkg_confirm(void)
@@ -310,7 +324,7 @@ GList *selcat(int repo)
 
 int run(GList **config)
 {
-	int i, selpkg;
+	int i, selpkgc;
 	GList *list=NULL;
 
 	dialog_vars.backtitle=gen_backtitle(_("Selecting packages"));
