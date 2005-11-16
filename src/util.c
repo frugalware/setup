@@ -348,7 +348,7 @@ GList* fw_checklist(const char *title, const char *cprompt, int height,
 			*ptrn='\0';
 			ptrn += 3;
 		}
-		list = g_list_append(list, ptr);
+		list = g_list_append(list, strdup(ptr));
 		ptr=ptrn;
 	}
 	ptrn=ptr+strlen(ptr)-1;
