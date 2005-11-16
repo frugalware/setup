@@ -224,6 +224,25 @@ int fw_system(char* cmd)
 #endif
 }
 
+char *g_list_display(GList *list, char *sep)
+{
+	int i, len=0;
+	char *ret;
+
+	for (i=0; i<g_list_length(list); i++)
+	{
+		len += strlen((char*)g_list_nth_data(list, i));
+		len += strlen(sep);
+	}
+	MALLOC(ret, len);
+	for (i=0; i<g_list_length(list); i++)
+	{
+		strcat(ret, (char*)g_list_nth_data(list, i));
+		strcat(ret, sep);
+	}
+	return(ret);
+}
+
 #ifdef DIALOG
 int fw_menu(const char *title, const char *cprompt, int height, int width,
 	int menu_height, int item_no, char **items)
