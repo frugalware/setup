@@ -173,7 +173,8 @@ char* pkgdesc(char *pkg)
 	return(ret);
 }
 
-GList* group2pkgs(char *group)
+// 1: add pkgdesc and On for dialog; 0: don't add
+GList* group2pkgs(char *group, int dialog)
 {
 	FILE *pp;
 	char line[256], *ptr, *ptr2;
@@ -205,9 +206,14 @@ GList* group2pkgs(char *group)
 				*ptr = '\0';
 				ptr++;
 				list = g_list_append(list, strdup(ptr2));
-				// TODO: pkgsize()
-				list = g_list_append(list, pkgdesc(ptr2));
-				list = g_list_append(list, strdup("On"));
+				if(dialog)
+				{
+					// TODO: pkgsize()
+					list = g_list_append(list,
+						pkgdesc(ptr2));
+					list = g_list_append(list,
+						strdup("On"));
+				}
 			}
 		}
 	}
@@ -220,7 +226,7 @@ GList *selpkg(char *category)
 	GList *pkglist;
 	GList *ret;
 
-	pkglist = group2pkgs(category);
+	pkglist = group2pkgs(category, 1);
 	arraychk = glist2dialog(pkglist);
 
 	dlg_put_backtitle();
@@ -237,6 +243,7 @@ int selpkg_confirm(void)
 	int ret;
 	dialog_vars.defaultno=1;
 	dlg_put_backtitle();
+	dlg_clear();
 	ret = dialog_yesno(_("Use expert menus?"),
 		_("If you like, you may select your packages from expert menus."
 		"Where the normal menu shows a choice like 'C compiler system',"
@@ -329,13 +336,15 @@ int run(GList **config)
 
 	dialog_vars.backtitle=gen_backtitle(_("Selecting packages"));
 	chdir(TARGETDIR);
-	selpkg = selpkg_confirm();
+	selpkgc = selpkg_confirm();
 	list = selcat(0);
-	fw_end_dialog(); ///
 	for (i=0; i<g_list_length(list); i++)
-		printf("new item: %s\n", (char*)g_list_nth_data(list, i));
-	if (selpkg)
-		printf("expert mode\n");
-	fw_init_dialog(); ///
+	{
+		// TODO: we drop the result here
+		if(selpkgc)
+			selpkg(strdup((char*)g_list_nth_data(list, i)));
+		else
+			group2pkgs((char*)g_list_nth_data(list, i), 0);
+	}
 	return(0);
 }
