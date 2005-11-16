@@ -347,11 +347,11 @@ int run(GList **config)
 	for (i=0; i<g_list_length(cats); i++)
 	{
 		GList *pkgs=NULL;
-		pkgs = g_list_append(pkgs, (char*)g_list_nth_data(cats, i));
+		pkgs = g_list_append(pkgs, strdup((char*)g_list_nth_data(cats, i)));
 		if(selpkgc)
 			pkgs = g_list_concat(pkgs, selpkg(strdup((char*)g_list_nth_data(cats, i))));
 		else
-			pkgs = g_list_concat(pkgs, group2pkgs((char*)g_list_nth_data(cats, i), 0));
+			pkgs = g_list_concat(pkgs, group2pkgs(strdup((char*)g_list_nth_data(cats, i)), 0));
 		allpkgs = g_list_append(allpkgs, pkgs);
 	}
 	data_put(config, "packages", allpkgs);
