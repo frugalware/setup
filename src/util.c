@@ -301,6 +301,8 @@ int fw_end_dialog(void)
 	printf("\033[H\033[2J");
 	dlg_clear();
 	end_dialog();
+	// TODO: sure, there must be a system call for this
+	system("clear");
 	return(0);
 }
 
