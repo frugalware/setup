@@ -337,19 +337,23 @@ GList *selcat(int repo)
 int run(GList **config)
 {
 	int i, selpkgc;
-	GList *list=NULL;
+	GList *cats=NULL;
+	GList *allpkgs=NULL;
 
 	dialog_vars.backtitle=gen_backtitle(_("Selecting packages"));
 	chdir(TARGETDIR);
 	selpkgc = selpkg_confirm();
-	list = selcat(0);
-	for (i=0; i<g_list_length(list); i++)
+	cats = selcat(0);
+	for (i=0; i<g_list_length(cats); i++)
 	{
-		// TODO: we drop the result here
+		GList *pkgs=NULL;
+		pkgs = g_list_append(pkgs, (char*)g_list_nth_data(cats, i));
 		if(selpkgc)
-			selpkg(strdup((char*)g_list_nth_data(list, i)));
+			pkgs = g_list_concat(pkgs, selpkg(strdup((char*)g_list_nth_data(cats, i))));
 		else
-			group2pkgs((char*)g_list_nth_data(list, i), 0);
+			pkgs = g_list_concat(pkgs, group2pkgs((char*)g_list_nth_data(cats, i), 0));
+		allpkgs = g_list_append(allpkgs, pkgs);
 	}
+	data_put(config, "packages", allpkgs);
 	return(0);
 }
