@@ -37,7 +37,7 @@ CFLAGS += $(shell pkg-config --cflags glib-2.0)
 LDFLAGS += $(shell pkg-config --libs glib-2.0)
 
 PLUGINS=asklang dolangsh greet layout hotplug loadsource configsource partdisk \
-	formatdisk select restart
+	formatdisk select install restart
 
 all: $(addsuffix .so,$(PLUGINS))
 
