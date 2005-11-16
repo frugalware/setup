@@ -292,8 +292,13 @@ GList *selcat(int repo)
 			if((index(line, '-')==NULL) && strcmp(line, "core"))
 			{
 				catlist = g_list_append(catlist, strdup(line));
+#ifdef FINAL
 				catlist = g_list_append(catlist,
 					categorysize(line));
+#else
+				catlist = g_list_append(catlist,
+					"   ");
+#endif
 				catlist = g_list_append(catlist, strdup("On"));
 			}
 		}
