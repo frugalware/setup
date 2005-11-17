@@ -122,13 +122,18 @@ char* pkgdir(char *pkg, char *repo)
 		return(NULL);
 }
 
-int pkgsize(char *pkg)
+int pkgsize(char *pkg, int extra)
 {
 	FILE *fp;
-	char line[256];
+	char line[256], *fn;
 	int ret;
 
-	if ((fp = fopen(g_strdup_printf("%s/desc", pkgdir(pkg, PACCONF)), "r"))
+	if(!extra)
+		fn = g_strdup_printf("%s/desc", pkgdir(pkg, PACCONF));
+	else
+		fn = g_strdup_printf("%s/desc", pkgdir(pkg, PACEXCONF));
+
+	if ((fp = fopen(fn, "r"))
 		== NULL)
 	{
 		perror(_("Could not open output file for writing"));
@@ -145,13 +150,18 @@ int pkgsize(char *pkg)
 	return(ret);
 }
 
-char* pkgdesc(char *pkg)
+char* pkgdesc(char *pkg, int extra)
 {
 	FILE *fp;
 	char line[256];
-	char *ret=NULL, *ptr;
+	char *ret=NULL, *fn, *ptr;
 
-	if ((fp = fopen(g_strdup_printf("%s/desc", pkgdir(pkg, PACCONF)), "r"))
+	if(!extra)
+		fn = g_strdup_printf("%s/desc", pkgdir(pkg, PACCONF));
+	else
+		fn = g_strdup_printf("%s/desc", pkgdir(pkg, PACEXCONF));
+
+	if ((fp = fopen(fn, "r"))
 		== NULL)
 	{
 		perror(_("Could not open output file for writing"));
@@ -177,8 +187,17 @@ char* pkgdesc(char *pkg)
 GList* group2pkgs(char *group, int dialog)
 {
 	FILE *pp;
-	char line[256], *ptr, *ptr2;
+	char line[256], *lang, *ptr, *ptr2;
 	GList *list=NULL;
+	int extra=0;
+
+	// get language suffix
+	/*lang = getenv("LANG");
+	ptr = rindex(lang, '_');
+	*ptr = '\0';*/
+
+	if(strlen(group) >= strlen(EXGRPSUFFIX) && !strcmp(group + strlen(group) - strlen(EXGRPSUFFIX), EXGRPSUFFIX))
+		extra=1;
 
 	if ((pp = popen(g_strdup_printf("pacman -Sg %s -r ./", group), "r"))
 		== NULL)
@@ -210,9 +229,13 @@ GList* group2pkgs(char *group, int dialog)
 				{
 					// TODO: pkgsize()
 					list = g_list_append(list,
-						pkgdesc(ptr2));
+						pkgdesc(ptr2, extra));
+					if(!extra)
 					list = g_list_append(list,
 						strdup("On"));
+					else
+					list = g_list_append(list,
+						strdup("Off"));
 				}
 			}
 		}

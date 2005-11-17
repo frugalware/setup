@@ -60,6 +60,8 @@
 #define PACEXCONF "extra"
 #endif
 
+#define EXGRPSUFFIX "-extra"
+
 #define SHARED_LIB_EXT ".so"
 
 typedef struct
