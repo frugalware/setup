@@ -43,7 +43,7 @@ plugin_t *info()
 int installpkgs(GList *cats)
 {
 	int i;
-	char *section;
+	char *section, *ptr;
 
 	// TODO: handle cd changing
 	for (i=0; i<g_list_length(cats); i++)
@@ -51,7 +51,11 @@ int installpkgs(GList *cats)
 		section = (char*)g_list_nth_data((GList*)g_list_nth_data(cats, i), 0);
 		fw_end_dialog();
 		// TODO: handle errors
-		system(g_strdup_printf("echo pacman -S %s", g_list_display((GList*)g_list_nth_data(cats, i), " ")));
+		ptr = g_list_display((GList*)g_list_nth_data(cats, i), " ");
+		if(ptr!=NULL)
+			system(g_strdup_printf("echo pacman -S %s", ptr));
+		else
+			printf("skipping section %s\n", section);
 		fw_init_dialog();
 		sleep(3);
 	}

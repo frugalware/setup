@@ -190,7 +190,7 @@ GList* group2pkgs(char *group, int dialog)
 	FILE *pp;
 	char line[256], *lang, *ptr, *ptr2;
 	GList *list=NULL;
-	int extra=0;
+	int extra=0, addpkg=1;
 
 	// get language suffix
 	lang = strdup(getenv("LANG"));
@@ -225,20 +225,23 @@ GList* group2pkgs(char *group, int dialog)
 				ptr = strchr(ptr, ' ');
 				*ptr = '\0';
 				ptr++;
-				list = g_list_append(list, strdup(ptr2));
-				if(dialog)
-				{
-					// TODO: pkgsize()
-					list = g_list_append(list,
-						pkgdesc(ptr2, extra));
 					// enable by default the packages in the
 					// frugalware repo + enable the
 					// language-specific parts from
 					// locale-extra
-					if((!strcmp(group, "locale-extra") &&
+				addpkg = ((!strcmp(group, "locale-extra") &&
 					strlen(ptr2) >= strlen(lang) &&
 					!strcmp(ptr2 + strlen(ptr2) -
-					strlen(lang), lang)) || !extra)
+					strlen(lang), lang)) || !extra);
+				if(!dialog && addpkg)
+					list = g_list_append(list, strdup(ptr2));
+				if(dialog)
+				{
+					list = g_list_append(list, strdup(ptr2));
+					// TODO: pkgsize()
+					list = g_list_append(list,
+						pkgdesc(ptr2, extra));
+					if(addpkg)
 						list = g_list_append(list,
 							strdup("On"));
 					else
