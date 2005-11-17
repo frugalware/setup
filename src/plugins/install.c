@@ -40,21 +40,27 @@ plugin_t *info()
 	return &plugin;
 }
 
-int run(GList **config)
+int installpkgs(GList *cats)
 {
-	GList *cats;
 	int i;
 	char *section;
 
 	// TODO: handle cd changing
-	cats = (GList*)data_get(*config, "packages");
 	for (i=0; i<g_list_length(cats); i++)
 	{
 		section = (char*)g_list_nth_data((GList*)g_list_nth_data(cats, i), 0);
 		fw_end_dialog();
+		// TODO: handle errors
 		system(g_strdup_printf("echo pacman -S %s", g_list_display((GList*)g_list_nth_data(cats, i), " ")));
 		fw_init_dialog();
 		sleep(3);
 	}
+	return(0);
+}
+
+int run(GList **config)
+{
+	installpkgs((GList*)data_get(*config, "packages"));
+	installpkgs((GList*)data_get(*config, "expackages"));
 	return(0);
 }
