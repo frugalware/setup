@@ -232,7 +232,7 @@ GList *selpkg(char *category)
 	dlg_put_backtitle();
 	dlg_clear();
 	ret = fw_checklist(_("Selecting packages"),
-		g_strdup_printf(("Please select which categories to install from the %s section:"), category),
+		g_strdup_printf(("Please select packages to install from the %s section:"), category),
 		0, 0, 0, g_list_length(pkglist)/3, arraychk,
 		FLAG_CHECK);
 	return(ret);
@@ -308,8 +308,13 @@ GList *selcat(int repo)
 				(strstr(line, "-extra")!=NULL))
 			{
 				catlist = g_list_append(catlist, strdup(line));
+#ifdef FINAL
 				catlist = g_list_append(catlist,
 					categorysize(line));
+#else
+				catlist = g_list_append(catlist,
+					"   ");
+#endif
 				if(strcmp(line, "locale-extra"))
 					catlist = g_list_append(catlist,
 						strdup("Off"));
@@ -328,7 +333,8 @@ GList *selcat(int repo)
 	dlg_put_backtitle();
 	dlg_clear();
 	ret = fw_checklist(_("Selecting categories"),
-		_("Please select which categories to install:"),
+		repo ? _("Please select which extra categories to install:") :
+		_("Please select which frugalware categories to install:"),
 		0, 0, 0, g_list_length(catlist)/3, arraychk,
 		FLAG_CHECK);
 	return(ret);
@@ -338,9 +344,19 @@ int prepare_pkgdb(char *repo, GList **config)
 {
 	char *pacbindir, *pkgdb;
 	struct stat sbuf;
+	int extra=0;
+#ifdef FINAL
 	FILE *fp;
+#endif
 
-	pacbindir = g_strdup_printf("%s/frugalware-%s", SOURCEDIR, ARCH);
+	if((!strcmp(repo, "extra"))||(!strcmp(repo, "extra-current")))
+		extra=1;
+	if(!extra)
+		pacbindir = g_strdup_printf("%s/frugalware-%s",
+			SOURCEDIR, ARCH);
+	else
+		pacbindir = g_strdup_printf("%s/extra/frugalware-%s",
+			SOURCEDIR, ARCH);
 	pkgdb = g_strdup_printf("%s/var/lib/pacman/%s", TARGETDIR, repo);
 
 	// prepare pkgdb if necessary
@@ -358,7 +374,7 @@ int prepare_pkgdb(char *repo, GList **config)
 				perror(_("Could not open output file for writing"));
 				return(1);
 			}
-			if((!strcmp(repo, "frugalware"))||(!strcmp(repo, "frugalware-current")))
+			if(!extra)
 			{
 				fprintf(fp, "[options]\n");
 				fprintf(fp, "LogFile = %s/var/log/pacman.log\n", TARGETDIR);
@@ -380,18 +396,29 @@ int prepare_pkgdb(char *repo, GList **config)
 	return(0);
 }
 
-int run(GList **config)
+int fw_select(char *repo, GList **config, int selpkgc)
 {
-	int i, selpkgc;
+	int i, extra=0;
 	GList *cats=NULL;
 	GList *allpkgs=NULL;
 
-	chdir(TARGETDIR);
+	if((!strcmp(repo, "extra"))||(!strcmp(repo, "extra-current")))
+		extra=1;
 
-	prepare_pkgdb(PACCONF, config);
-	dialog_vars.backtitle=gen_backtitle(_("Selecting packages"));
-	selpkgc = selpkg_confirm();
-	cats = selcat(0);
+	if(!extra)
+	{
+		prepare_pkgdb(PACCONF, config);
+		prepare_pkgdb(PACEXCONF, config);
+		dialog_vars.backtitle=gen_backtitle(_("Selecting frugalware "
+			"packages"));
+		cats = selcat(0);
+	}
+	else
+	{
+		dialog_vars.backtitle=gen_backtitle(_("Selecting extra "
+			"packages"));
+		cats = selcat(1);
+	}
 	if(!selpkgc)
 	{
 		dlg_put_backtitle();
@@ -408,6 +435,19 @@ int run(GList **config)
 		pkgs = g_list_prepend(pkgs, strdup((char*)g_list_nth_data(cats, i)));
 		allpkgs = g_list_append(allpkgs, pkgs);
 	}
-	data_put(config, "packages", allpkgs);
+	if(!extra)
+		data_put(config, "packages", allpkgs);
+	else
+		data_put(config, "expackages", allpkgs);
+	return(0);
+}
+int run(GList **config)
+{
+	int selpkgc;
+
+	selpkgc = selpkg_confirm();
+	chdir(TARGETDIR);
+	fw_select("frugalware", config, selpkgc);
+	fw_select("extra", config, selpkgc);
 	return(0);
 }
