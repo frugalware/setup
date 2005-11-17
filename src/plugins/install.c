@@ -45,7 +45,7 @@ int installpkgs(GList *cats)
 	int i;
 	char *section, *ptr;
 
-	// TODO: handle cd changing
+	// TODO: handle cd changing and category order
 	for (i=0; i<g_list_length(cats); i++)
 	{
 		section = (char*)g_list_nth_data((GList*)g_list_nth_data(cats, i), 0);
