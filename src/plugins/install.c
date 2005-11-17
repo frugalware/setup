@@ -53,11 +53,14 @@ int installpkgs(GList *cats)
 		// TODO: handle errors
 		ptr = g_list_display((GList*)g_list_nth_data(cats, i), " ");
 		if(ptr!=NULL)
+		{
+			/* is this required?
+			msg(g_strdup_printf(_("Installing packages selected "
+				"from the %s section"), section)); */
 			system(g_strdup_printf("echo pacman -S %s", ptr));
-		else
-			printf("skipping section %s\n", section);
+			sleep(3);
+		}
 		fw_init_dialog();
-		sleep(3);
 	}
 	return(0);
 }
