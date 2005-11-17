@@ -26,6 +26,7 @@
 #include <dirent.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <stdlib.h>
 
 #include <setup.h>
 #include <util.h>
@@ -192,9 +193,9 @@ GList* group2pkgs(char *group, int dialog)
 	int extra=0;
 
 	// get language suffix
-	/*lang = getenv("LANG");
+	lang = strdup(getenv("LANG"));
 	ptr = rindex(lang, '_');
-	*ptr = '\0';*/
+	*ptr = '\0';
 
 	if(strlen(group) >= strlen(EXGRPSUFFIX) && !strcmp(group + strlen(group) - strlen(EXGRPSUFFIX), EXGRPSUFFIX))
 		extra=1;
@@ -230,12 +231,19 @@ GList* group2pkgs(char *group, int dialog)
 					// TODO: pkgsize()
 					list = g_list_append(list,
 						pkgdesc(ptr2, extra));
-					if(!extra)
-					list = g_list_append(list,
-						strdup("On"));
+					// enable by default the packages in the
+					// frugalware repo + enable the
+					// language-specific parts from
+					// locale-extra
+					if((!strcmp(group, "locale-extra") &&
+					strlen(ptr2) >= strlen(lang) &&
+					!strcmp(ptr2 + strlen(ptr2) -
+					strlen(lang), lang)) || !extra)
+						list = g_list_append(list,
+							strdup("On"));
 					else
-					list = g_list_append(list,
-						strdup("Off"));
+						list = g_list_append(list,
+							strdup("Off"));
 				}
 			}
 		}
