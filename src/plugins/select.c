@@ -334,16 +334,70 @@ GList *selcat(int repo)
 	return(ret);
 }
 
+int prepare_pkgdb(char *repo, GList **config)
+{
+	char *pacbindir, *pkgdb;
+	struct stat sbuf;
+	FILE *fp;
+
+	pacbindir = g_strdup_printf("%s/frugalware-%s", SOURCEDIR, ARCH);
+	pkgdb = g_strdup_printf("%s/var/lib/pacman/%s", TARGETDIR, repo);
+
+	// prepare pkgdb if necessary
+	if(stat(pkgdb, &sbuf) || !S_ISDIR(sbuf.st_mode))
+	{
+		makepath(g_strdup_printf("%s/tmp", TARGETDIR));
+		if((char*)data_get(*config, "netinstall")==NULL)
+		{
+			makepath(pkgdb);
+			// TODO: use libarchive for this
+			system(g_strdup_printf("tar xzf %s/%s.fdb -C %s", pacbindir, repo, pkgdb));
+#ifdef FINAL
+			if ((fp = fopen("/etc/pacman.conf", "w")) == NULL)
+			{
+				perror(_("Could not open output file for writing"));
+				return(1);
+			}
+			if((!strcmp(repo, "frugalware"))||(!strcmp(repo, "frugalware-current")))
+			{
+				fprintf(fp, "[options]\n");
+				fprintf(fp, "LogFile = %s/var/log/pacman.log\n", TARGETDIR);
+			}
+			fprintf(fp, "[%s]\n", repo);
+			fprintf(fp, "Server = file://%s", pacbindir);
+			fclose(fp);
+#endif
+		}
+		else
+			fw_system("pacman -Sy -r ./");
+		makepath(g_strdup_printf("%s/var/cache/pacman", TARGETDIR));
+		unlink("var/cache/pacman/pkg");
+		if((char*)data_get(*config, "netinstall")==NULL)
+			symlink(pacbindir, "var/cache/pacman/pkg");
+		// pacman can't log without this
+		makepath(g_strdup_printf("%s/var/log", TARGETDIR));
+	}
+	return(0);
+}
+
 int run(GList **config)
 {
 	int i, selpkgc;
 	GList *cats=NULL;
 	GList *allpkgs=NULL;
 
-	dialog_vars.backtitle=gen_backtitle(_("Selecting packages"));
 	chdir(TARGETDIR);
+
+	prepare_pkgdb(PACCONF, config);
+	dialog_vars.backtitle=gen_backtitle(_("Selecting packages"));
 	selpkgc = selpkg_confirm();
 	cats = selcat(0);
+	if(!selpkgc)
+	{
+		dlg_put_backtitle();
+		dialog_msgbox(_("Please wait"), _("Searching for packages..."),
+		0, 0, 0);
+	}
 	for (i=0; i<g_list_length(cats); i++)
 	{
 		GList *pkgs=NULL;
