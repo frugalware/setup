@@ -246,6 +246,12 @@ char *g_list_display(GList *list, char *sep)
 	return(ret);
 }
 
+int msg(char *str)
+{
+	printf("\e[01;36m::\e[0m \e[01m%s\e[0m\n", str);
+	return(0);
+}
+
 #ifdef DIALOG
 int fw_menu(const char *title, const char *cprompt, int height, int width,
 	int menu_height, int item_no, char **items)

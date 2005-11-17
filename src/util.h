@@ -43,6 +43,7 @@ int fw_system(char* cmd);
 int makepath(char *path);
 int umount_if_needed(char *sourcedir);
 char *g_list_display(GList *list, char *sep);
+int msg(char *str);
 
 #ifdef DIALOG
 int fw_menu(const char *title, const char *cprompt, int height, int width,
