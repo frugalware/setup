@@ -27,6 +27,8 @@
 #include <util.h>
 #include "common.h"
 
+extern GList *plugin_list;
+
 plugin_t plugin =
 {
 	"skel",
@@ -70,7 +72,6 @@ int installpkgs_forreal(GList *cats)
 	int i;
 	char *section, *ptr;
 
-	// TODO: handle cd changing
 	for (i=0; i<g_list_length(cats); i++)
 	{
 		section = (char*)g_list_nth_data((GList*)g_list_nth_data(cats, i), 0);
@@ -93,6 +94,7 @@ int installpkgs_forreal(GList *cats)
 			else
 				fw_init_dialog();
 		}
+		FREE(ptr);
 	}
 	return(0);
 }
@@ -105,6 +107,7 @@ int cat_isin(GList *list, char *cat)
 		if(!strcmp((char*)g_list_nth_data((GList*)g_list_nth_data(list, i), 0), cat))
 			return(i);
 	}
+	return(-1);
 }
 
 GList *mergecats(GList *allowed, GList *all)
@@ -122,11 +125,47 @@ GList *mergecats(GList *allowed, GList *all)
 	return(final);
 }
 
-int installpkgs(GList *cats, int extra)
+int ask_cdchange(void)
 {
+#ifdef DIALOG
+	int ret;
+	ret = dialog_yesno(_("Insert next disc"),
+		_("Please insert the next Frugalware install disc and press "
+		"ENTER to continue installing packages. If you don't "
+		"have more disk, choose NO, and then you can finish up "
+		"the installation. Have you inserted the next disk?"), 0, 0);
+	if(ret==DLG_EXIT_OK)
+		return(1);
+	else
+		return(0);
+#endif
+}
+
+int installpkgs(GList *cats, int extra, GList **config)
+{
+	int i;
+	plugin_t *plugin;
+
 	if(!extra)
 	{
 		installpkgs_forreal(mergecats(genfwcats(1), cats));
+		// do we need to change cds?
+		if(((char*)data_get(*config, "netinstall")==NULL) &&
+			((char*)data_get(*config, "dvd")==NULL))
+		{
+			eject((char*)data_get(*config, "srcdev"));
+			if(ask_cdchange())
+			{
+				for (i=0; i<g_list_length(plugin_list); i++)
+				{
+					plugin = g_list_nth_data(plugin_list, i);
+					if(!strcmp(plugin->name, "loadsource"))
+						plugin->run(config);
+				}
+			}
+			else
+				return(0);
+		}
 		installpkgs_forreal(mergecats(genfwcats(2), cats));
 	}
 	else
@@ -136,7 +175,9 @@ int installpkgs(GList *cats, int extra)
 
 int run(GList **config)
 {
-	installpkgs((GList*)data_get(*config, "packages"), 0);
-	installpkgs((GList*)data_get(*config, "expackages"), 1);
+	installpkgs((GList*)data_get(*config, "packages"), 0, config);
+	if(((char*)data_get(*config, "netinstall")!=NULL) ||
+			((char*)data_get(*config, "dvd")!=NULL))
+		installpkgs((GList*)data_get(*config, "expackages"), 1, config);
 	return(0);
 }

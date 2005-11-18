@@ -36,6 +36,7 @@ char *gen_backtitle(char *section);
 data_t *data_new(void);
 void *data_get(GList *config, char *title);
 void data_put(GList **config, char *name, void *data);
+int eject(char *dev);
 int exit_fail(void);
 int exit_confirm(void);
 int exit_perform(void);

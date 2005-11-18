@@ -110,6 +110,14 @@ void data_put(GList **config, char *name, void *data)
 	(*config) = g_list_append((*config), dp);
 }
 
+int eject(char *dev)
+{
+	dialog_msgbox(_("Setup complete"), _("Ejecting installation media..."),
+			0, 0, 0);
+	return (system(g_strdup_printf("%s/%s %s >%s 2>%s", TARGETDIR, EJECT,
+		dev, LOGDEV, LOGDEV)));
+}
+
 int exit_fail(void)
 {
 #ifdef DIALOG
