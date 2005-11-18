@@ -174,6 +174,7 @@ int run(GList **config)
 		fw_end_dialog();
 		system(NETCONFIGSCRIPT);
 		fw_init_dialog();
+		dlg_put_backtitle();
 		dialog_msgbox(_("Please wait"), _("Configuring network the "
 			"interface..."), 0, 0, 0);
 		fw_system(INTERFACESSCRIPT);

@@ -79,7 +79,11 @@ int installpkgs_forreal(GList *cats)
 		if(ptr!=NULL)
 		{
 			fw_end_dialog();
+#ifdef FINAL
+			if (system(g_strdup_printf("pacman -S -r ./ --noconfirm %s", section, ptr))
+#else
 			if (system(g_strdup_printf("echo %s: pacman -S -r ./ --noconfirm %s && sleep 3", section, ptr))
+#endif
 				!= 0)
 			{
 				printf(_("Errors occured while installing "

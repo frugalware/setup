@@ -290,8 +290,8 @@ int mkfss(char *dev, char *fs, int check)
 	opts = strdup(check ? "-c" : "");
 
 	fw_info(_("Formatting"), g_strdup_printf(check ?
-		_("Creating %s filesystem on %s") :
-		_("Ccreating %s filesystem on %s and checking for bad blocks"),
+		_("Creating %s filesystem on %s and checking for bad blocks") :
+		_("Creating %s filesystem on %s"),
 		fs, dev));
 	// TODO: umount the filesystem if necessary
 	if(!strcmp(fs, "ext2"))
