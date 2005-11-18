@@ -88,6 +88,18 @@ GList *grep_drives(char *file)
 	return(NULL);
 }
 
+int is_dvd(char *path)
+{
+	struct stat statbuf;
+	if(!((!stat(g_strdup_printf("%s/frugalware-%s", path, ARCH), &statbuf)
+		&& S_ISDIR(statbuf.st_mode)) &&
+		(!stat(g_strdup_printf("%s/extra/frugalware-%s", path, ARCH),
+		&statbuf) && S_ISDIR(statbuf.st_mode))))
+		return(1);
+	else
+		return(0);
+}
+
 int is_netinstall(char *path)
 {
 	struct stat statbuf;
@@ -121,6 +133,8 @@ int run(GList **config)
 			data_put(config, "srcdev", (char*)g_list_nth_data(drives, i));
 			dlg_put_backtitle();
 			dialog_msgbox(_("CD/DVD drive found"), g_strdup_printf(_("A Frugalware install disc was found in device /dev/%s."), (char*)g_list_nth_data(drives, i)), 0, 0, 0);
+			if(is_dvd(SOURCEDIR))
+				data_put(config, "dvd", "");
 			if(is_netinstall(SOURCEDIR))
 				data_put(config, "netinstall", "");
 			break;
