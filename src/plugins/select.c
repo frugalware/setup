@@ -192,6 +192,10 @@ GList* group2pkgs(char *group, int dialog)
 	GList *list=NULL;
 	int extra=0, addpkg=1;
 
+	// add the core group to the start of the base list
+	if(!strcmp(group, "base"))
+		list = group2pkgs("core", dialog);
+
 	// get language suffix
 	lang = strdup(getenv("LANG"));
 	ptr = rindex(lang, '_');
