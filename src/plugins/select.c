@@ -419,6 +419,8 @@ int prepare_pkgdb(char *repo, GList **config)
 #endif
 		}
 		else
+			// TODO: handle if pacman returns an error, probably the
+			// network has not been configured properly
 			fw_system("pacman -Sy -r ./");
 		makepath(g_strdup_printf("%s/var/cache/pacman", TARGETDIR));
 		unlink("var/cache/pacman/pkg");
