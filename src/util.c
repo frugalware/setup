@@ -110,6 +110,22 @@ void data_put(GList **config, char *name, void *data)
 	(*config) = g_list_append((*config), dp);
 }
 
+int exit_fail(void)
+{
+#ifdef DIALOG
+	int ret;
+	ret = dialog_yesno(_("Installation error"),
+		_("Errors occured while installing selected packages. It is "
+			"recommended to abort the installation, however you "
+			"may want to ignore this problem. Do you want to leave "
+			"the installer?"), 0, 0);
+	if(ret==DLG_EXIT_OK)
+		return(1);
+	else
+		return(0);
+#endif
+}
+
 int exit_confirm(void)
 {
 #ifdef DIALOG

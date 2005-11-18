@@ -42,25 +42,35 @@ plugin_t *info()
 
 int installpkgs(GList *cats)
 {
-	int i;
+	int i, ret;
 	char *section, *ptr;
 
 	// TODO: handle cd changing and category order
 	for (i=0; i<g_list_length(cats); i++)
 	{
 		section = (char*)g_list_nth_data((GList*)g_list_nth_data(cats, i), 0);
-		fw_end_dialog();
-		// TODO: handle errors
 		ptr = g_list_display((GList*)g_list_nth_data(cats, i), " ");
 		if(ptr!=NULL)
 		{
+			fw_end_dialog();
 			/* is this required?
 			msg(g_strdup_printf(_("Installing packages selected "
 				"from the %s section"), section)); */
-			system(g_strdup_printf("echo pacman -S %s", ptr));
-			sleep(3);
+			if (system(g_strdup_printf("echo pacman -S -r ./ --noconfirm %s && sleep 3", ptr))
+				!= 0)
+			{
+				printf(_("Errors occured while installing "
+				"selected packages from the %s section.\n"
+				"Press ENTER to continue..."), section);
+				fflush(stdout);
+				getchar();
+				fw_init_dialog();
+				if(exit_fail())
+					exit_perform();
+			}
+			else
+				fw_init_dialog();
 		}
-		fw_init_dialog();
 	}
 	return(0);
 }
