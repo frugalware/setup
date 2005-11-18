@@ -40,12 +40,37 @@ plugin_t *info()
 	return &plugin;
 }
 
-int installpkgs(GList *cats)
+GList *genfwcats(int cdnum)
 {
-	int i, ret;
+	GList *list=NULL;
+
+	if(cdnum==1)
+	{
+		list = g_list_append(list, "base");
+		list = g_list_append(list, "apps");
+		list = g_list_append(list, "lib");
+		list = g_list_append(list, "multimedia");
+		list = g_list_append(list, "network");
+		list = g_list_append(list, "devel");
+	}
+	else if(cdnum==2)
+	{
+		list = g_list_append(list, "x11");
+		list = g_list_append(list, "xlib");
+		list = g_list_append(list, "xapps");
+		list = g_list_append(list, "xfce4");
+		list = g_list_append(list, "gnome");
+		list = g_list_append(list, "kde");
+	}
+	return(list);
+}
+
+int installpkgs_forreal(GList *cats)
+{
+	int i;
 	char *section, *ptr;
 
-	// TODO: handle cd changing and category order
+	// TODO: handle cd changing
 	for (i=0; i<g_list_length(cats); i++)
 	{
 		section = (char*)g_list_nth_data((GList*)g_list_nth_data(cats, i), 0);
@@ -53,10 +78,7 @@ int installpkgs(GList *cats)
 		if(ptr!=NULL)
 		{
 			fw_end_dialog();
-			/* is this required?
-			msg(g_strdup_printf(_("Installing packages selected "
-				"from the %s section"), section)); */
-			if (system(g_strdup_printf("echo pacman -S -r ./ --noconfirm %s && sleep 3", ptr))
+			if (system(g_strdup_printf("echo %s: pacman -S -r ./ --noconfirm %s && sleep 3", section, ptr))
 				!= 0)
 			{
 				printf(_("Errors occured while installing "
@@ -75,9 +97,46 @@ int installpkgs(GList *cats)
 	return(0);
 }
 
+int cat_isin(GList *list, char *cat)
+{
+	int i;
+	for (i=0; i<g_list_length(list); i++)
+	{
+		if(!strcmp((char*)g_list_nth_data((GList*)g_list_nth_data(list, i), 0), cat))
+			return(i);
+	}
+}
+
+GList *mergecats(GList *allowed, GList *all)
+{
+	GList *final = NULL;
+	char *section;
+	int i, pos;
+
+	for (i=0; i<g_list_length(allowed); i++)
+	{
+		section = g_list_nth_data(allowed, i);
+		pos = cat_isin(all, section);
+		final = g_list_append(final, (GList*)g_list_nth_data(all, pos));
+	}
+	return(final);
+}
+
+int installpkgs(GList *cats, int extra)
+{
+	if(!extra)
+	{
+		installpkgs_forreal(mergecats(genfwcats(1), cats));
+		installpkgs_forreal(mergecats(genfwcats(2), cats));
+	}
+	else
+		installpkgs_forreal(cats);
+	return(0);
+}
+
 int run(GList **config)
 {
-	installpkgs((GList*)data_get(*config, "packages"));
-	installpkgs((GList*)data_get(*config, "expackages"));
+	installpkgs((GList*)data_get(*config, "packages"), 0);
+	installpkgs((GList*)data_get(*config, "expackages"), 1);
 	return(0);
 }
