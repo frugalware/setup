@@ -118,6 +118,29 @@ int eject(char *dev)
 		dev, LOGDEV, LOGDEV)));
 }
 
+int copyfile(char *src, char *dest)
+{
+	FILE *in, *out;
+	size_t len;
+	char buf[4097];
+
+	in = fopen(src, "r");
+	if(in == NULL)
+		return(1);
+
+	out = fopen(dest, "w");
+	if(out == NULL)
+		return(1);
+
+	while((len = fread(buf, 1, 4096, in)))
+		fwrite(buf, 1, len, out);
+
+	fclose(in);
+	fclose(out);
+	return(0);
+}
+
+
 int exit_fail(void)
 {
 #ifdef DIALOG
