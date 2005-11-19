@@ -430,7 +430,7 @@ int run(GList **config)
 	PedDevice *dev = NULL;
 	PedDisk *disk = NULL;
 	GList *partlist;
-	char **nrdevs, *ptr;
+	char **nrdevs, *ptr, *op, *np;
 	int ret;
 	char my_buffer[MAX_LEN + 1] = "";
 
@@ -465,21 +465,29 @@ int run(GList **config)
 	mountdev(ptr, "/", config);
 
 	// move temporarily stuff to the final location
-	rename((char*)data_get(*config, "fstab"),
-		g_strdup_printf("%s/%s", TARGETDIR, "/etc/fstab"));
-	chmod(g_strdup_printf("%s/%s", TARGETDIR, "/etc/fstab"),
-		S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
-	data_put(config, "fstab", g_strdup_printf("%s/%s", TARGETDIR, "/etc/fstab"));
-	
 	makepath(g_strdup_printf("%s/%s", TARGETDIR, "/etc/profile.d"));
-	rename((char*)data_get(*config, "lang.sh"),
-		g_strdup_printf("%s/%s", TARGETDIR, "/etc/profile.d/lang.sh"));
-	chmod(g_strdup_printf("%s/%s", TARGETDIR, "/etc/profile.d/lang.sh"),
-		S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH);
+	op = (char*)data_get(*config, "fstab");
+	np = g_strdup_printf("%s/%s", TARGETDIR, "/etc/fstab");
+	copyfile(op, np);
+	unlink(op);
+	chmod (np, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+	data_put(config, "fstab", np);
+	FREE(np);
+
+	op = (char*)data_get(*config, "lang.sh");
+	np = g_strdup_printf("%s/%s", TARGETDIR, "/etc/profile.d/lang.sh");
+	copyfile(op, np);
+	unlink(op);
+	chmod(np, S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH);
+	FREE(np);
 	
 	makepath(g_strdup_printf("%s/%s", TARGETDIR, "/etc/sysconfig"));
-	rename((char*)data_get(*config, "keymap"),
-		g_strdup_printf("%s/%s", TARGETDIR, "/etc/sysconfig/keymap"));
+	op = (char*)data_get(*config, "keymap");
+	np = g_strdup_printf("%s/%s", TARGETDIR, "/etc/sysconfig/keymap");
+	copyfile(op, np);
+	unlink(op);
+	chmod (np, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+	FREE(np);
 
 	// non-root partitions
 	dialog_vars.backtitle=gen_backtitle(_("Selecting other partitions"));
