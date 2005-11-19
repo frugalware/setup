@@ -153,7 +153,7 @@ int run(GList **config)
 		system(NETCONFIGSCRIPT);
 		fw_init_dialog();
 		dlg_put_backtitle();
-		dialog_msgbox(_("Please wait"), _("Configuring network the "
+		dialog_msgbox(_("Please wait"), _("Configuring the network "
 			"interface..."), 0, 0, 0);
 		fw_system(INTERFACESSCRIPT);
 		mirrorconf();
