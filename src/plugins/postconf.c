@@ -41,6 +41,8 @@ plugin_t *info()
 
 int run(GList **config)
 {
-	fw_system("chroot ./ /sbin/grubconfig");
+	fw_end_dialog();
+	system("chroot ./ /sbin/grubconfig");
+	fw_init_dialog();
 	return(0);
 }
