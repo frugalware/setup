@@ -1,31 +1,13 @@
 #!/bin/sh
 
-# scsi cards
-
-/sbin/modprobe isa-pnp >/dev/null 2>/dev/null
-if grep -iq SCSI /proc/pci; then
-	echo "searching scsi cards..."
-	MODDIR=`uname -r`
-	for i in `find /lib/modules/$MODDIR/kernel/drivers/scsi/ -name "*.ko" | sed 's/^.*\/// ;  s/.o$//'`;
-	do
-		echo modprobe $i
-		modprobe $i >/dev/null 2>/dev/null
-	done
-fi
-
-pci_mod_search ()
-{
-	while read IGNORE ID IGNORE
-	do
-		VENDOR=`echo $ID | cut -b1-4`
-		DEVICE=`echo $ID | cut -b5-8`
-		DEVENTRY=`echo 0x0000${VENDOR} 0x0000${DEVICE}`
-		cat /lib/modules/`uname -r`/*.pcimap | grep "$DEVENTRY" | cut -d' ' -f1
-	done
-}
-echo "searching pci cards..."
-for MODULE in `pci_mod_search < /proc/bus/pci/devices | sort -u`
+for i in `find /sys/devices/ -name modalias |grep pci`
 do
-	echo modprobe $MODULE
-	modprobe $MODULE >/dev/null 2>/dev/null
+	modlist="$modlist $(modprobe --show-depends `cat $i` 2>/dev/null \
+		|sed 's|.*/\(.*\).ko|\1|')"
+done
+
+for i in $modlist
+do
+	echo modprobe $i
+	modprobe $i
 done
