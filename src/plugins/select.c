@@ -50,7 +50,7 @@ char* categorysize(char *category)
 	FILE *pp;
 	char *line, *ptr;
 
-	if ((pp = popen(g_strdup_printf("echo -e 'y\nn'|pacman -Syd %s -r ./", category), "r"))== NULL)
+	if ((pp = popen(g_strdup_printf("echo -e 'y\nn'|pacman -Sd %s -r ./", category), "r"))== NULL)
 	{
 		perror("Could not open pipe for reading");
 		return(NULL);
