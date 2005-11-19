@@ -309,10 +309,6 @@ GList *selcat(int repo)
 	GList *ret;
 
 	// query the list
-	dlg_put_backtitle();
-	dlg_clear();
-	dialog_msgbox(_("Please wait"), _("Searching for categories..."),
-		0, 0, 0);
 	if ((pp = popen("pacman -Sg -r ./", "r"))== NULL)
 	{
 		perror("Could not open pipe for reading");
@@ -446,19 +442,23 @@ int fw_select(char *repo, GList **config, int selpkgc)
 		extra=1;
 
 	if(!extra)
+		dialog_vars.backtitle=gen_backtitle(_("Selecting frugalware "
+			"packages"));
+	else
+		dialog_vars.backtitle=gen_backtitle(_("Selecting extra "
+			"packages"));
+	dlg_put_backtitle();
+	dlg_clear();
+	dialog_msgbox(_("Please wait"), _("Searching for categories..."),
+		0, 0, 0);
+	if(!extra)
 	{
 		prepare_pkgdb(PACCONF, config);
 		prepare_pkgdb(PACEXCONF, config);
-		dialog_vars.backtitle=gen_backtitle(_("Selecting frugalware "
-			"packages"));
 		cats = selcat(0);
 	}
 	else
-	{
-		dialog_vars.backtitle=gen_backtitle(_("Selecting extra "
-			"packages"));
 		cats = selcat(1);
-	}
 	if(!selpkgc)
 	{
 		dlg_put_backtitle();
