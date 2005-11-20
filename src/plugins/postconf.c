@@ -41,8 +41,15 @@ plugin_t *info()
 
 int run(GList **config)
 {
+	dialog_vars.backtitle=gen_backtitle(_("Post-install configuration"));
 	fw_end_dialog();
 	system("chroot ./ /sbin/grubconfig");
 	fw_init_dialog();
+
+	dlg_put_backtitle();
+	dlg_clear();
+	dialog_msgbox(_("Configuring kernel modules"),
+		_("Updating module dependencies..."), 0, 0, 0);
+	fw_system("chroot ./ /sbin/depmod -a");
 	return(0);
 }
