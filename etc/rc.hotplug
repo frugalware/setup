@@ -3,7 +3,7 @@
 for i in `find /sys/devices/ -name modalias |grep pci`
 do
 	modlist="$modlist $(modprobe --show-depends `cat $i` 2>/dev/null \
-		|sed 's|.*/\(.*\).ko|\1|')"
+		|sed 's|.*/\(.*\).ko\(.gz\|\)|\1|')"
 done
 
 for i in $modlist
