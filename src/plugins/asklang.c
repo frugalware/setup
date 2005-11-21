@@ -61,10 +61,12 @@ plugin_t *info()
 	return &plugin;
 }
 
-int setcharset(char *name)
+int setcharset(char *name, GList **config)
 {
 	//TODO: maybe there is a proper system call for this?
 	system(g_strdup_printf("setfont %s >%s 2>%s", name, LOGDEV, LOGDEV));
+	// save the font for later usage
+	data_put(config, "font", strdup(name));
 	bind_textdomain_codeset("setup", g_ascii_strup(name, strlen(name)-1));
 	return(0);
 }
@@ -97,7 +99,7 @@ int run(GList **config)
 	else if(!strcmp("es_AR", dialog_vars.input_result))
 	{
 		setenv("CHARSET", "iso-8859-1", 1);
-		setcharset("lat1-16.psfu.gz");
+		setcharset("lat1-16.psfu.gz", config);
 	}
 	else if(!strcmp("de_DE", dialog_vars.input_result))
 		setenv("CHARSET", "iso-8859-15", 1);
@@ -106,22 +108,22 @@ int run(GList **config)
 	else if(!strcmp("it_IT", dialog_vars.input_result))
 	{
 		setenv("CHARSET", "iso-8859-1", 1);
-		setcharset("lat9w-16.psfu.gz");
+		setcharset("lat9w-16.psfu.gz", config);
 	}
 	else if(!strcmp("hu_HU", dialog_vars.input_result))
 	{
 		setenv("CHARSET", "iso-8859-2", 1);
-		setcharset("lat2-16.psfu.gz");
+		setcharset("lat2-16.psfu.gz", config);
 	}
 	else if(!strcmp("pl_PL", dialog_vars.input_result))
 	{
 		setenv("CHARSET", "iso-8859-2", 1);
-		setcharset("lat2-16.psfu.gz");
+		setcharset("lat2-16.psfu.gz", config);
 	}
 	else if(!strcmp("sk_SK", dialog_vars.input_result))
 	{
 		setenv("CHARSET", "iso-8859-2", 1);
-		setcharset("lat2-16.psfu.gz");
+		setcharset("lat2-16.psfu.gz", config);
 	}
 #endif
 
