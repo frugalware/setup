@@ -164,6 +164,12 @@ int run(GList **config)
 	system("chroot ./ /sbin/netconfig");
 	system("chroot ./ /sbin/timeconfig");
 	system("chroot ./ /sbin/mouseconfig");
+
+	if(!fw_system("pacman -Q xorg -r ./"))
+	{
+		system("chroot ./ /sbin/xconfig");
+		system("chroot ./ /sbin/xwmconfig --silent");
+	}
 	fw_init_dialog();
 
 	return(0);
