@@ -39,6 +39,84 @@ plugin_t *info()
 	return &plugin;
 }
 
+int has_rootpw(char *fn)
+{
+	FILE *fp;
+	char line[256], *ptr;
+
+	if((fp=fopen(fn, "r"))==NULL)
+	{
+		perror("Could not open output file for reading");
+		return(1);
+	}
+	while(!feof(fp))
+	{
+		if(fgets(line, 255, fp) == NULL)
+			break;
+		if(strstr(line, "root")==line)
+		{
+			ptr = strchr(line, ':');
+			fclose(fp);
+			if(*++ptr==':')
+				return(0);
+			else
+				return(1);
+		}
+	}
+	return(0);
+}
+
+int confirm_rootpw()
+{
+	int ret;
+
+	ret = dialog_yesno(_("No root password detected"),
+		_("There is currently no password set on the system "
+		"administrator account (root). It is recommended that you set "
+		"one now so that it is active the first time the machine is "
+		"rebooted. This is especially important if your machine is on "
+		"an internet connected lan. Would you like to set a root "
+		"password?"), 0, 0);
+	if(ret==DLG_EXIT_OK)
+		return(1);
+	else
+		return(0);
+}
+
+int has_user(char *fn)
+{
+	FILE *fp;
+	char line[256];
+
+	if((fp=fopen(fn, "r"))==NULL)
+	{
+		perror("Could not open output file for reading");
+		return(1);
+	}
+	while(!feof(fp))
+	{
+		if(fgets(line, 255, fp) == NULL)
+			break;
+		if(strstr(line, ":100:")!=NULL)
+				return(1);
+	}
+	return(0);
+}
+
+int confirm_user()
+{
+	int ret;
+
+	ret = dialog_yesno(_("No normal user account detected"),
+		_("There is currently no non-root user account configured. "
+		"It is strongly recommended to create one. Would you like to "
+		"create a normal user now?"), 0, 0);
+	if(ret==DLG_EXIT_OK)
+		return(1);
+	else
+		return(0);
+}
+
 int run(GList **config)
 {
 	dialog_vars.backtitle=gen_backtitle(_("Post-install configuration"));
@@ -51,5 +129,20 @@ int run(GList **config)
 	dialog_msgbox(_("Configuring kernel modules"),
 		_("Updating module dependencies..."), 0, 0, 0);
 	fw_system("chroot ./ /sbin/depmod -a");
+
+	while(!has_rootpw("etc/shadow") && confirm_rootpw())
+	{
+		fw_end_dialog();
+		system("chroot ./ /usr/bin/passwd root");
+		fw_init_dialog();
+	}
+
+	while(!has_user("etc/passwd") && confirm_user())
+	{
+		fw_end_dialog();
+		system("chroot ./ /usr/sbin/adduser");
+		fw_init_dialog();
+	}
+
 	return(0);
 }
