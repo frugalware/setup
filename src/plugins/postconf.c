@@ -117,6 +117,20 @@ int confirm_user()
 		return(0);
 }
 
+int append_font(char *fn, char *font)
+{
+	FILE* fp;
+
+	if((fp=fopen(fn, "a"))==NULL)
+	{
+		perror("Could not open output file for appending");
+		return(1);
+	}
+	fprintf(fp, "font=%s\n", font);
+	fclose(fp);
+	return(0);
+}
+
 int run(GList **config)
 {
 	dialog_vars.backtitle=gen_backtitle(_("Post-install configuration"));
@@ -143,6 +157,8 @@ int run(GList **config)
 		system("chroot ./ /usr/sbin/adduser");
 		fw_init_dialog();
 	}
+
+	append_font("etc/sysconfig/font", (char*)data_get(*config, "font"));
 
 	return(0);
 }
