@@ -160,5 +160,11 @@ int run(GList **config)
 
 	append_font("etc/sysconfig/font", (char*)data_get(*config, "font"));
 
+	fw_end_dialog();
+	system("chroot ./ /sbin/netconfig");
+	system("chroot ./ /sbin/timeconfig");
+	system("chroot ./ /sbin/mouseconfig");
+	fw_init_dialog();
+
 	return(0);
 }
