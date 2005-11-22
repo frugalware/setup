@@ -471,7 +471,7 @@ int run(GList **config)
 	copyfile(op, np);
 	unlink(op);
 	chmod (np, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
-	data_put(config, "fstab", np);
+	data_put(config, "fstab", strdup(np));
 	FREE(np);
 
 	op = (char*)data_get(*config, "lang.sh");
