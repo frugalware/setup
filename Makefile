@@ -110,6 +110,7 @@ merge: $(packages)
 	for i in $(packages); do \
 		cp -a $$i/* $(MDIR)/; \
 	done
+	make -C po mos
 
 misc: merge
 	mkdir $(MDIR)/lib/plugins
