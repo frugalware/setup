@@ -23,9 +23,10 @@
 #include <libintl.h>
 #include <glib.h>
 
-#ifndef _
-#define _(text) gettext(text)
+#ifdef _
+#undef _
 #endif
+#define _(text) gettext(text)
 
 #define LOGDEV "/dev/tty4"
 #define SOURCEDIR "/mnt/source"
