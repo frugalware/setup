@@ -51,6 +51,7 @@ export PATH := /usr/lib/ccache/bin:$(PATH)
 export CCACHE_DIR=/var/cache/ccache/setup
 export CCACHE_NOLINK=1
 export CCACHE_UMASK=002
+GLIBC_LANGS = en_US es_AR de_DE fr_FR it_IT hu_HU pl_PL sk_SK
 CARCH ?= $(shell arch)
 ifeq ($(CARCH),i686)
 	KARCH ?= i386
@@ -253,9 +254,17 @@ glibc:
 	rm -rf $(BDIR)
 	mkdir $(BDIR)
 	rm -rf glibc
-	mkdir -p glibc/lib
+	mkdir -p glibc/{lib,usr/lib/locale}
 	cd $(BDIR) && tar xzf ../$(CDIR)/glibc-$(LIBCVER)-$(CARCH).fpm
 	cp -a $(BDIR)/lib/{ld*,libc*,libm*,libdl*,libnss*,libresolv*} glibc/lib/
+	
+	# generate the necessary locales
+	cd $(BDIR) && rm -rf usr/ && mkdir -p usr/lib/locale/
+	cd $(BDIR); \
+	for i in $(GLIBC_LANGS); do \
+		localedef --prefix=./ -c -i $$i $$i; true; \
+	done
+	cp -a $(BDIR)/usr/lib/locale/locale-archive glibc/usr/lib/locale/
 
 kbd:
 	rm -rf $(BDIR)
