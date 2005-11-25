@@ -488,6 +488,8 @@ int run(GList **config)
 	selpkgc = selpkg_confirm();
 	chdir(TARGETDIR);
 	fw_select("frugalware", config, selpkgc);
-	fw_select("extra", config, selpkgc);
+	if(((char*)data_get(*config, "netinstall")!=NULL) ||
+		((char*)data_get(*config, "dvd")!=NULL))
+		fw_select("extra", config, selpkgc);
 	return(0);
 }
