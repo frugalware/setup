@@ -454,7 +454,9 @@ int fw_select(char *repo, GList **config, int selpkgc)
 	if(!extra)
 	{
 		prepare_pkgdb(PACCONF, config);
-		prepare_pkgdb(PACEXCONF, config);
+		if(((char*)data_get(*config, "netinstall")!=NULL) ||
+			((char*)data_get(*config, "dvd")!=NULL))
+			prepare_pkgdb(PACEXCONF, config);
 		cats = selcat(0);
 	}
 	else
