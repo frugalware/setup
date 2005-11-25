@@ -64,7 +64,9 @@ plugin_t *info()
 int setcharset(char *name, GList **config)
 {
 	//TODO: maybe there is a proper system call for this?
+	fw_end_dialog();
 	system(g_strdup_printf("setfont %s >%s 2>%s", name, LOGDEV, LOGDEV));
+	fw_init_dialog();
 	// save the font for later usage
 	data_put(config, "font", strdup(name));
 	bind_textdomain_codeset("setup", g_ascii_strup(name, strlen(name)-1));
