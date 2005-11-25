@@ -236,7 +236,10 @@ int umount_if_needed(char *sourcedir)
 	FILE *fp;
 	char line[PATH_MAX];
 	char *dev=NULL;
+	char *realdir;
 	int i;
+
+	realdir = g_strdup_printf("%s/%s", TARGETDIR, sourcedir);
 	
 	if ((fp = fopen("/proc/mounts", "r")) == NULL)
 	{
@@ -247,7 +250,7 @@ int umount_if_needed(char *sourcedir)
 	{
 		if(fgets(line, 256, fp) == NULL)
 			break;
-		if(strstr(line, sourcedir))
+		if(strstr(line, realdir))
 		{
 			for(i=0;i<strlen(line);i++)
 				if(line[i]==' ')
