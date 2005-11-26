@@ -114,8 +114,9 @@ int eject(char *dev)
 {
 	dialog_msgbox(_("Setup complete"), _("Ejecting installation media..."),
 			0, 0, 0);
-	return (system(g_strdup_printf("%s/%s %s >%s 2>%s", TARGETDIR, EJECT,
-		dev, LOGDEV, LOGDEV)));
+	fw_system(g_strdup_printf("umount /dev/%s", dev));
+	return (fw_system(g_strdup_printf("%s/usr/bin/eject %s",
+		TARGETDIR, dev)));
 }
 
 int copyfile(char *src, char *dest)
