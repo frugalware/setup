@@ -274,7 +274,7 @@ char *selrootdev()
 	char **array;
 	
 	array = glist2dialog(parts);
-	dialog_vars.backtitle=gen_backtitle(_("Setting up root the partition"));
+	dialog_vars.backtitle=gen_backtitle(_("Setting up the root partition"));
 	dlg_put_backtitle();
 	fw_menu(_("Select the Linux installation partition"),
 		_("Please select a partition from the following list to use "

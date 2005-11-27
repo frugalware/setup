@@ -74,7 +74,7 @@ char *selpartsw()
 	int swnum=2;
 	char *sws[] =
 	{
-		"cfdisk", _("User frendly (curses based) version of fdisk"),
+		"cfdisk", _("User friendly (curses based) version of fdisk"),
 		"fdisk", _("The traditional partitioning program for Linux")
 	};
 	
