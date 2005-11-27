@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-24 00:22+0100\n"
+"POT-Creation-Date: 2005-11-27 14:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: ../src/plugins/formatdisk.c:230 ../src/plugins/formatdisk.c:369
 #: ../src/plugins/layout.c:114 ../src/plugins/loadsource.c:75
 #: ../src/plugins/select.c:140 ../src/plugins/select.c:168
-#: ../src/plugins/select.c:408 ../src/util.c:243
+#: ../src/plugins/select.c:408 ../src/util.c:247
 msgid "Could not open output file for writing"
 msgstr ""
 
@@ -40,7 +40,7 @@ msgid ""
 msgstr ""
 
 #: ../src/plugins/configsource.c:156 ../src/plugins/hotplug.c:53
-#: ../src/plugins/select.c:452 ../src/plugins/select.c:465
+#: ../src/plugins/select.c:452 ../src/plugins/select.c:467
 msgid "Please wait"
 msgstr ""
 
@@ -131,7 +131,7 @@ msgid "Formatting %s as a swap partition and checking for bad blocks"
 msgstr ""
 
 #: ../src/plugins/formatdisk.c:277
-msgid "Setting up root the partition"
+msgid "Setting up the root partition"
 msgstr ""
 
 #: ../src/plugins/formatdisk.c:279
@@ -272,7 +272,7 @@ msgid ""
 msgstr ""
 
 #: ../src/plugins/partdisk.c:77
-msgid "User frendly (curses based) version of fdisk"
+msgid "User friendly (curses based) version of fdisk"
 msgstr ""
 
 #: ../src/plugins/partdisk.c:78
@@ -377,7 +377,7 @@ msgstr ""
 msgid "Searching for categories..."
 msgstr ""
 
-#: ../src/plugins/select.c:465
+#: ../src/plugins/select.c:467
 msgid "Searching for packages..."
 msgstr ""
 
@@ -446,21 +446,21 @@ msgstr ""
 msgid "Ejecting installation media..."
 msgstr ""
 
-#: ../src/util.c:148
+#: ../src/util.c:149
 msgid "Installation error"
 msgstr ""
 
-#: ../src/util.c:149
+#: ../src/util.c:150
 msgid ""
 "Errors occured while installing selected packages. It is recommended to "
 "abort the installation, however you may want to ignore this problem. Do you "
 "want to leave the installer?"
 msgstr ""
 
-#: ../src/util.c:165
+#: ../src/util.c:166
 msgid "Exit from the installer"
 msgstr ""
 
-#: ../src/util.c:166
+#: ../src/util.c:167
 msgid "Are you sure you want to exit from the installer?"
 msgstr ""
