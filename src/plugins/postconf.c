@@ -110,7 +110,7 @@ int confirm_user()
 	ret = dialog_yesno(_("No normal user account detected"),
 		_("There is currently no non-root user account configured. "
 		"It is strongly recommended to create one. Would you like to "
-		"create a normal user now?"), 0, 0);
+		"create a normal user account now?"), 0, 0);
 	if(ret==DLG_EXIT_OK)
 		return(1);
 	else

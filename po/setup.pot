@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-27 14:04+0100\n"
+"POT-Creation-Date: 2005-11-27 14:59+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -419,7 +419,8 @@ msgstr ""
 #: ../src/plugins/postconf.c:111
 msgid ""
 "There is currently no non-root user account configured. It is strongly "
-"recommended to create one. Would you like to create a normal user now?"
+"recommended to create one. Would you like to create a normal user account "
+"now?"
 msgstr ""
 
 #: ../src/plugins/postconf.c:136
