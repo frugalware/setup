@@ -35,7 +35,7 @@
 #include <util.h>
 #include "common.h"
 
-#define LANGSNUM 8
+#define LANGSNUM 9
 char *langs[] =
 {
 	"en_US", "English                         ",
@@ -44,6 +44,7 @@ char *langs[] =
 	"fr_FR", "French / francais               ",
 	"it_IT", "Italian / Italiano              ",
 	"hu_HU", "Hungarian / Magyar              ",
+	"nl_NL", "Dutch / Nederlands              ",
 	"pl_PL", "Polish / Polski                 ",
 	"sk_SK", "Slovak / Slovensky              "
 };
@@ -117,6 +118,8 @@ int run(GList **config)
 		setenv("CHARSET", "iso-8859-2", 1);
 		setcharset("lat2-16.psfu.gz", config);
 	}
+	else if(!strcmp("nl_NL", dialog_vars.input_result))
+		setenv("CHARSET", "iso-8859-1", 1);
 	else if(!strcmp("pl_PL", dialog_vars.input_result))
 	{
 		setenv("CHARSET", "iso-8859-2", 1);
