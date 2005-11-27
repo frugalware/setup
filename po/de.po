@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: setup current\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-24 00:22+0100\n"
+"POT-Creation-Date: 2005-11-27 14:10+0100\n"
 "PO-Revision-Date: 2005-11-25 18:06+0100\n"
 "Last-Translator: Marcus Habermehl <bmh1980de@yahoo.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -22,7 +22,7 @@ msgstr ""
 #: ../src/plugins/formatdisk.c:230 ../src/plugins/formatdisk.c:369
 #: ../src/plugins/layout.c:114 ../src/plugins/loadsource.c:75
 #: ../src/plugins/select.c:140 ../src/plugins/select.c:168
-#: ../src/plugins/select.c:408 ../src/util.c:243
+#: ../src/plugins/select.c:408 ../src/util.c:247
 msgid "Could not open output file for writing"
 msgstr "Konnte Ausgabedatei nicht zum Schreiben öffnen"
 
@@ -40,11 +40,11 @@ msgid ""
 "packages faster. In most cases the default value will be fine."
 msgstr ""
 "Sie können jetzt einen Mirror in Ihrer Nähe auswählen, um die Pakete "
-"schneller herunter zu laden. In den meisten Fällen ist der ausgewähle "
-"Mirror in Ordnung."
+"schneller herunter zu laden. In den meisten Fällen ist der ausgewähle Mirror "
+"in Ordnung."
 
 #: ../src/plugins/configsource.c:156 ../src/plugins/hotplug.c:53
-#: ../src/plugins/select.c:452 ../src/plugins/select.c:465
+#: ../src/plugins/select.c:452 ../src/plugins/select.c:467
 msgid "Please wait"
 msgstr "Bitte warten"
 
@@ -62,7 +62,8 @@ msgstr "Richte Swap Partitionen ein"
 
 #: ../src/plugins/formatdisk.c:145
 msgid "Please select which swap partitions do you want Frugalware to use:"
-msgstr "Bitte wählen Sie die Swap Partition aus, die Frugalware verwenden soll:"
+msgstr ""
+"Bitte wählen Sie die Swap Partition aus, die Frugalware verwenden soll:"
 
 #: ../src/plugins/formatdisk.c:156 ../src/plugins/formatdisk.c:178
 msgid "Quick format with no bad block checking"
@@ -138,7 +139,8 @@ msgid "Formatting %s as a swap partition and checking for bad blocks"
 msgstr "Formatiere %s als Swap Partition und prüfe auf defekte Blöcke"
 
 #: ../src/plugins/formatdisk.c:277
-msgid "Setting up root the partition"
+#, fuzzy
+msgid "Setting up the root partition"
 msgstr "Richte root Partition ein"
 
 #: ../src/plugins/formatdisk.c:279
@@ -209,11 +211,11 @@ msgstr ""
 "über mehrere Partitionen zu verteilen. Im Moment haben Sie nur Ihre / "
 "Partition gemountet. Vielleicht möchten Sie Verzeichnisse wie /boot, /home, "
 "oder /usr/local auf separate Partitionen mounten. Sie sollten nicht "
-"versuchen /usr, /etc, /sbin oder /bin auf eigene Partitionen zum mounten, "
-"da sie Tools enthalten, die für den Bootvorgang benötigt werden. Auch "
-"dürften Sie keine Partition verwenden, die Sie bereits vorher angegeben "
-"haben. Bitte wählen Sie eine Partition aus der Listen, oder wählen Sie "
-"Weiter, wenn Sie fertig sind."
+"versuchen /usr, /etc, /sbin oder /bin auf eigene Partitionen zum mounten, da "
+"sie Tools enthalten, die für den Bootvorgang benötigt werden. Auch dürften "
+"Sie keine Partition verwenden, die Sie bereits vorher angegeben haben. Bitte "
+"wählen Sie eine Partition aus der Listen, oder wählen Sie Weiter, wenn Sie "
+"fertig sind."
 
 #: ../src/plugins/greet.c:53
 #, c-format
@@ -265,9 +267,9 @@ msgid ""
 "of choices."
 msgstr ""
 "Sie können eine der folgenden Tastaturbelegungen auswählen. Die "
-"Voreinstellung ist 'qwerty/us.map.gz' (US Tastaturbelegung). Verwenden "
-"Sie die RAUF/RUNTER Pfeiltasten und die BildRauf/BildRunter Tasten um "
-"durch die Auswahl zu blättern."
+"Voreinstellung ist 'qwerty/us.map.gz' (US Tastaturbelegung). Verwenden Sie "
+"die RAUF/RUNTER Pfeiltasten und die BildRauf/BildRunter Tasten um durch die "
+"Auswahl zu blättern."
 
 #: ../src/plugins/loadsource.c:122
 msgid "Selecting source media"
@@ -305,7 +307,8 @@ msgstr ""
 "Quelle gefunden. Drücken Sie ENTER um neu zu starten."
 
 #: ../src/plugins/partdisk.c:77
-msgid "User frendly (curses based) version of fdisk"
+#, fuzzy
+msgid "User friendly (curses based) version of fdisk"
 msgstr "Benutzerfreundliche (Curses basierende) Version von fdsik"
 
 #: ../src/plugins/partdisk.c:78
@@ -323,8 +326,7 @@ msgstr "Partitionierungsprogramm auswählen"
 #: ../src/plugins/partdisk.c:85
 msgid "Select which program do you want to use for partitioning:"
 msgstr ""
-"Wählen Sie aus, welches Programm Sie zum Partitionieren verwenden "
-"möchten:"
+"Wählen Sie aus, welches Programm Sie zum Partitionieren verwenden möchten:"
 
 #: ../src/plugins/partdisk.c:96
 msgid "Want to create RAID?"
@@ -333,8 +335,7 @@ msgstr "Möchten Sie RAID erstellen?"
 #: ../src/plugins/partdisk.c:97
 msgid "Do you want to create software raid partitions during partitioning?"
 msgstr ""
-"Möchten Sie währen der Partitionierung Software-Raid-Partitionen "
-"erstellen?"
+"Möchten Sie währen der Partitionierung Software-Raid-Partitionen erstellen?"
 
 #: ../src/plugins/partdisk.c:119
 msgid "Disk drive not found"
@@ -344,8 +345,8 @@ msgstr "Laufwerk nicht gefunden"
 msgid ""
 "Sorry, no hard disk drives were found in this box. Press ENTER to reboot."
 msgstr ""
-"Entschulding, es wurden keine Festplatten gefunden. Drücken Sie ENTER um "
-"neu zu starten."
+"Entschulding, es wurden keine Festplatten gefunden. Drücken Sie ENTER um neu "
+"zu starten."
 
 #: ../src/plugins/partdisk.c:134
 msgid "Create RAID"
@@ -400,8 +401,8 @@ msgstr ""
 "das normale Menü Optionen wie 'C compiler system' zeigt, zeigt Ihnen das "
 "erweiterte Menü 'C libs', 'C compiler', 'C include files', etc - jedes "
 "einzelne Paket. Um erweiterte Menüs zu verwenden, sollten Sie wissen, was "
-"Sie tun. Wählen Sie "nein" um normale Menüs zu verwenden, oder "ja" für die "
-"erweiterten Menüs."
+"Sie tun. Wählen Sie 'nein' um normale Menüs zu verwenden, oder 'ja' für "
+"die erweiterten Menüs."
 
 #: ../src/plugins/select.c:369
 msgid "Selecting categories"
@@ -409,8 +410,7 @@ msgstr "Kategorien auswählen"
 
 #: ../src/plugins/select.c:370
 msgid "Please select which extra categories to install:"
-msgstr ""
-"Bitte wählen Sie, welche extra Kategorien installiert werden sollen:"
+msgstr "Bitte wählen Sie, welche extra Kategorien installiert werden sollen:"
 
 #: ../src/plugins/select.c:371
 msgid "Please select which frugalware categories to install:"
@@ -429,7 +429,7 @@ msgstr "Extra Pakete auswählen"
 msgid "Searching for categories..."
 msgstr "Suche nach Kategorien..."
 
-#: ../src/plugins/select.c:465
+#: ../src/plugins/select.c:467
 msgid "Searching for packages..."
 msgstr "Suche nach Paketen..."
 
@@ -439,8 +439,9 @@ msgid ""
 "Errors occured while installing selected packages from the %s section.\n"
 "Press ENTER to continue..."
 msgstr ""
-"Es traten Fehler wärend der Installation Ihrer ausgewählen Pakete aus der "
-"%s Sektion auf.\nDrücken Sie ENTER um fort zu fahren."
+"Es traten Fehler wärend der Installation Ihrer ausgewählen Pakete aus der %s "
+"Sektion auf.\n"
+"Drücken Sie ENTER um fort zu fahren."
 
 #: ../src/plugins/install.c:136
 msgid "Insert next disc"
@@ -454,8 +455,8 @@ msgid ""
 msgstr ""
 "Bitte legen Sie den nächsten Frugalware Installations Datenträger ein und "
 "drücken ENTER um mit der Installation fort zu fahren. Wenn Sie keine "
-"weiteren Datenträger haben, wählen Sie NEIN und beenden Sie die Installation. "
-"Haben Sie den nächsten Datenträger eingelegt?"
+"weiteren Datenträger haben, wählen Sie NEIN und beenden Sie die "
+"Installation. Haben Sie den nächsten Datenträger eingelegt?"
 
 #: ../src/plugins/postconf.c:73
 msgid "No root password detected"
@@ -469,9 +470,9 @@ msgid ""
 "machine is on an internet connected lan. Would you like to set a root "
 "password?"
 msgstr ""
-"Derzeit wurde kein Passwort für den Systemadministrator (root) vergeben. "
-"Es ist zu empfehlen, dass Sie jetzt ein Passwort setzen. Möchten Sie ein "
-"root Passwort vergeben?"
+"Derzeit wurde kein Passwort für den Systemadministrator (root) vergeben. Es "
+"ist zu empfehlen, dass Sie jetzt ein Passwort setzen. Möchten Sie ein root "
+"Passwort vergeben?"
 
 #: ../src/plugins/postconf.c:110
 msgid "No normal user account detected"
@@ -482,9 +483,8 @@ msgid ""
 "There is currently no non-root user account configured. It is strongly "
 "recommended to create one. Would you like to create a normal user now?"
 msgstr ""
-"Es wurde noch kein Benutzerkonto angelegt. Es ist wirklich zu "
-"empfehlen, einen an zu legen. Möchten Sie jetzt einen normalen Benutzer "
-"anlegen?"
+"Es wurde noch kein Benutzerkonto angelegt. Es ist wirklich zu empfehlen, "
+"einen an zu legen. Möchten Sie jetzt einen normalen Benutzer anlegen?"
 
 #: ../src/plugins/postconf.c:136
 msgid "Post-install configuration"
@@ -510,11 +510,11 @@ msgstr "Konnte Datei nicht zum Lesen öffnen"
 msgid "Ejecting installation media..."
 msgstr "Werfe Installations Medium aus..."
 
-#: ../src/util.c:148
+#: ../src/util.c:149
 msgid "Installation error"
 msgstr "Installations Fehler"
 
-#: ../src/util.c:149
+#: ../src/util.c:150
 msgid ""
 "Errors occured while installing selected packages. It is recommended to "
 "abort the installation, however you may want to ignore this problem. Do you "
@@ -523,10 +523,10 @@ msgstr ""
 "Es traten Fehler während der Installation auf. Möchten Sie die Installation "
 "abbrechen?"
 
-#: ../src/util.c:165
+#: ../src/util.c:166
 msgid "Exit from the installer"
 msgstr "Installation beenden"
 
-#: ../src/util.c:166
+#: ../src/util.c:167
 msgid "Are you sure you want to exit from the installer?"
 msgstr "Sind Sie sicher, dass Sie die Installation beenden möchten?"
