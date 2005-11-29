@@ -134,6 +134,11 @@ int append_font(char *fn, char *font)
 int run(GList **config)
 {
 	dialog_vars.backtitle=gen_backtitle(_("Post-install configuration"));
+
+	// TODO: somehow /proc gets mounted sometimes
+	// this is just a workaround, we should find and fix the affected pkgs
+	fw_system(g_strdup_printf("umount %s/proc", TARGETDIR));
+
 	fw_end_dialog();
 	system("chroot ./ /sbin/grubconfig");
 	fw_init_dialog();
