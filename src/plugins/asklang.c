@@ -41,11 +41,12 @@ char *langs[] =
 	"en_US", "English                         ",
 	"es_AR", "Spanish / Espagnole             ",
 	"de_DE", "German / Deutsch                ",
-	"fr_FR", "French / francais               ",
+	"fr_FR", "French / Francais               ",
 	"it_IT", "Italian / Italiano              ",
 	"hu_HU", "Hungarian / Magyar              ",
 	"nl_NL", "Dutch / Nederlands              ",
 	"pl_PL", "Polish / Polski                 ",
+	"pt_PT", "Portuguese / Português          ",
 	"sk_SK", "Slovak / Slovensky              "
 };
 
@@ -124,6 +125,11 @@ int run(GList **config)
 	{
 		setenv("CHARSET", "iso-8859-2", 1);
 		setcharset("lat2-16.psfu.gz", config);
+	}
+	else if(!strcmp("pt_PT", dialog_vars.input_result))
+	{
+		setenv("CHARSET", "iso-8859-1", 1);
+		setcharset("lat1-16.psfu.gz", config);
 	}
 	else if(!strcmp("sk_SK", dialog_vars.input_result))
 	{
