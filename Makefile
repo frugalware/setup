@@ -144,6 +144,9 @@ initrd: devices
 	rmdir i
 	gzip -9 initrd-$(CARCH).img
 
+upload:
+	scp initrd-$(CARCH).img.gz frugalware.org:/home/ftp/pub/frugalware/frugalware-current/boot/
+
 check:
 	@for i in $(sources); do \
 		ls cache/$$i || exit 1; \
