@@ -91,10 +91,10 @@ GList *grep_drives(char *file)
 int is_dvd(char *path)
 {
 	struct stat statbuf;
-	if(!((!stat(g_strdup_printf("%s/frugalware-%s", path, ARCH), &statbuf)
-		&& S_ISDIR(statbuf.st_mode)) ||
+	if((!stat(g_strdup_printf("%s/frugalware-%s", path, ARCH), &statbuf)
+		&& S_ISDIR(statbuf.st_mode)) &&
 		(!stat(g_strdup_printf("%s/extra/frugalware-%s", path, ARCH),
-		&statbuf) && S_ISDIR(statbuf.st_mode))))
+		&statbuf) && S_ISDIR(statbuf.st_mode)))
 		return(1);
 	else
 		return(0);
