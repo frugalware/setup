@@ -380,6 +380,7 @@ int prepare_pkgdb(char *repo, GList **config)
 	struct stat sbuf;
 	int extra=0;
 #ifdef FINAL
+	char *mode;
 	FILE *fp;
 #endif
 
@@ -403,6 +404,10 @@ int prepare_pkgdb(char *repo, GList **config)
 			// TODO: use libarchive for this
 			system(g_strdup_printf("tar xzf %s/%s.fdb -C %s", pacbindir, repo, pkgdb));
 #ifdef FINAL
+			if(!extra)
+				mode = strdup("w");
+			else
+				mode = strdup("a");
 			if ((fp = fopen("/etc/pacman.conf", "w")) == NULL)
 			{
 				perror(_("Could not open output file for writing"));
@@ -416,6 +421,7 @@ int prepare_pkgdb(char *repo, GList **config)
 			fprintf(fp, "[%s]\n", repo);
 			fprintf(fp, "Server = file://%s", pacbindir);
 			fclose(fp);
+			FREE(mode);
 #endif
 		}
 		else
