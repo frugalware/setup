@@ -144,6 +144,13 @@ initrd: devices
 	rmdir i
 	gzip -9 initrd-$(CARCH).img
 
+update:
+	darcs pull -a -v
+	$(MAKE) -C src clean
+	$(MAKE) -C src final
+	sudo rm -rf merge initrd*
+	sudo $(MAKE) initrd
+
 upload:
 	scp initrd-$(CARCH).img.gz frugalware.org:/home/ftp/pub/frugalware/frugalware-current/boot/
 
