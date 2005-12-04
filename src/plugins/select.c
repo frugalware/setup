@@ -419,7 +419,7 @@ int prepare_pkgdb(char *repo, GList **config)
 				fprintf(fp, "LogFile = %s/var/log/pacman.log\n", TARGETDIR);
 			}
 			fprintf(fp, "[%s]\n", repo);
-			fprintf(fp, "Server = file://%s", pacbindir);
+			fprintf(fp, "Server = file://%s\n\n", pacbindir);
 			fclose(fp);
 			FREE(mode);
 #endif
