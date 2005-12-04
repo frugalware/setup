@@ -408,7 +408,7 @@ int prepare_pkgdb(char *repo, GList **config)
 				mode = strdup("w");
 			else
 				mode = strdup("a");
-			if ((fp = fopen("/etc/pacman.conf", "w")) == NULL)
+			if ((fp = fopen("/etc/pacman.conf", mode)) == NULL)
 			{
 				perror(_("Could not open output file for writing"));
 				return(1);
