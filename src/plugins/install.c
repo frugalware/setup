@@ -175,8 +175,11 @@ int installpkgs(GList *cats, int extra, GList **config)
 	else
 	{
 		if((char*)data_get(*config, "netinstall")==NULL)
+		{
+			unlink("var/cache/pacman/pkg");
 			symlink(g_strdup_printf("%s/extra/frugalware-%s",
 				SOURCEDIR, ARCH), "var/cache/pacman/pkg");
+		}
 		installpkgs_forreal(cats);
 	}
 	return(0);
