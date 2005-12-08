@@ -191,5 +191,8 @@ int run(GList **config)
 	if(((char*)data_get(*config, "netinstall")!=NULL) ||
 			((char*)data_get(*config, "dvd")!=NULL))
 		installpkgs((GList*)data_get(*config, "expackages"), 1, config);
+	// if the source media is cd/dvd, we don't need a broken symlink after
+	// the installtion
+	unlink("var/cache/pacman/pkg");
 	return(0);
 }
