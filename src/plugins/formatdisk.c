@@ -236,6 +236,8 @@ int doswap(GList *partlist, GList **config)
 		"none", "/sys", "sysfs", "defaults", "0", "0");
 	fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n",
 		"devpts", "/dev/pts", "devpts", "gid=5,mode=620", "0", "0");
+	fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n",
+		"usbfs", "/proc/bus/usb", "usbfs", "defaults", "0", "0");
 
 	// format the partitions
 	for (i=0; i<g_list_length(partlist); i++)
