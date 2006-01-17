@@ -68,7 +68,7 @@ profile_t *parseprofile(char *fn)
 {
 	FILE *fp;
 	char line[PATH_MAX+1];
-	int i, n=0;
+	int i, j, n=0;
 	char *ptr = NULL;
 	char *var = NULL;
 	char interface[256] = "";
@@ -151,15 +151,33 @@ profile_t *parseprofile(char *fn)
 				trim(ptr);
 				if (!strcmp(var, "DNS"))
 					profile->dnses = g_list_append(profile->dnses, strdup(ptr));
+				if (!strcmp(var, "OPTIONS"))
+					iface->options = g_list_append(iface->options, strdup(ptr));
+				if (!strcmp(var, "PRE_UP"))
+					iface->pre_ups = g_list_append(iface->pre_ups, strdup(ptr));
+				if (!strcmp(var, "POST_UP"))
+					iface->post_ups = g_list_append(iface->post_ups, strdup(ptr));
+				if (!strcmp(var, "PRE_DOWN"))
+					iface->pre_downs = g_list_append(iface->pre_downs, strdup(ptr));
+				if (!strcmp(var, "POST_DOWN"))
+					iface->post_downs = g_list_append(iface->post_downs, strdup(ptr));
+				if(!strcmp(var, "MAC") && !strlen(iface->mac))
+					strncpy(iface->mac, ptr, MAC_MAX_SIZE);
+				if(!strcmp(var, "ESSID") && !strlen(iface->essid))
+					strncpy(iface->essid, ptr, ESSID_MAX_SIZE);
+				if(!strcmp(var, "GATEWAY") && !strlen(iface->gateway))
+					strncpy(iface->gateway, ptr, GW_MAX_SIZE);
 			}
 		}
 		line[0] = '\0';
 	}
 	fclose(fp);
-	/*printf("dnses found:\n");
-	for (i=0; i<g_list_length(profile->dnses); i++)
+	/*printf("interfaces found:\n");
+	for (i=0; i<g_list_length(profile->interfaces); i++)
 	{
-		printf("%s\n", (char*)g_list_nth_data(profile->dnses, i));
+		iface = (interface_t*)g_list_nth_data(profile->interfaces, i);
+		printf("name: %s\n", iface->name);
+		printf("%s\n", iface->mac);
 	}*/
 	return(profile);
 }
