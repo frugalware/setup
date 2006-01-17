@@ -29,7 +29,7 @@ int nco_usage   = 0;
 
 int usage(const char *myname)
 {
-	printf("usage: %s [options]\n", myname);
+	printf("usage: %s [options] [profile]\n", myname);
 	//printf("-v | --verbose <level>   Verbose mode.\n");
 	//printf("-c | --config  <file>    Config file.\n");
 	printf("-h | --help              This help.\n");
@@ -49,6 +49,7 @@ int main(int argc, char **argv)
 		{"dry-run",        no_argument,       0, 1000},
 		{0, 0, 0, 0}
 	};
+	char *profile=NULL;
 	FILE *input = stdin;
 	dialog_state.output = stderr;
 
@@ -71,11 +72,18 @@ int main(int argc, char **argv)
 		usage(argv[0]);
 	}
 
-	if(nco_dryrun)
-		printf("running dry-run\n");
-
-	/*init_dialog(input, dialog_state.output);
-	dialog_msgbox("title", "content", 0, 0, 0);
-	end_dialog();*/
+	if(optind < argc)
+	{
+		if(!strcmp("start", argv[optind]))
+			profile = strdup("default");
+		else
+			profile = argv[optind];
+	}
+	else
+	{
+		init_dialog(input, dialog_state.output);
+		dialog_msgbox("title", "content", 0, 0, 0);
+		end_dialog();
+	}
 	return(0);
 }
