@@ -23,6 +23,9 @@
 #include <dialog.h>
 #include <getopt.h>
 #include <stdlib.h>
+#include <glib.h>
+
+#include "netconfig.h"
 
 int nco_dryrun  = 0;
 int nco_usage   = 0;
@@ -37,6 +40,17 @@ int usage(const char *myname)
 	exit(0);
 }
 
+profile_t *parseprofile(char *fn)
+{
+	FILE *fp;
+
+	fp = fopen(fn, "r");
+	if(fp == NULL)
+		return(NULL);
+	fclose(fp);
+	return(NULL);
+}
+
 int main(int argc, char **argv)
 {
 	int opt;
@@ -49,7 +63,9 @@ int main(int argc, char **argv)
 		{"dry-run",        no_argument,       0, 1000},
 		{0, 0, 0, 0}
 	};
-	char *profile=NULL;
+	char *fn=NULL;
+	profile_t *profile;
+	// dialog
 	FILE *input = stdin;
 	dialog_state.output = stderr;
 
@@ -75,9 +91,10 @@ int main(int argc, char **argv)
 	if(optind < argc)
 	{
 		if(!strcmp("start", argv[optind]))
-			profile = strdup("default");
+			fn = strdup("default");
 		else
-			profile = argv[optind];
+			fn = argv[optind];
+		profile = parseprofile(fn);
 	}
 	else
 	{
