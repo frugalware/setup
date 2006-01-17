@@ -21,13 +21,61 @@
 
 #include <stdio.h>
 #include <dialog.h>
+#include <getopt.h>
+#include <stdlib.h>
 
-int main(void)
+int nco_dryrun  = 0;
+int nco_usage   = 0;
+
+int usage(const char *myname)
 {
+	printf("usage: %s [options]\n", myname);
+	//printf("-v | --verbose <level>   Verbose mode.\n");
+	//printf("-c | --config  <file>    Config file.\n");
+	printf("-h | --help              This help.\n");
+	printf("     --dry-run           Do not actually perform the operation.\n");
+	exit(0);
+}
+
+int main(int argc, char **argv)
+{
+	int opt;
+	int option_index;
+	static struct option opts[] =
+	{
+		/*{"verbose",        required_argument, 0, 'v'},
+		{"config",         required_argument, 0, 'c'},*/
+		{"help",           no_argument,       0, 'h'},
+		{"dry-run",        no_argument,       0, 1000},
+		{0, 0, 0, 0}
+	};
 	FILE *input = stdin;
 	dialog_state.output = stderr;
-	
-	init_dialog(input, dialog_state.output);
+
+	while((opt = getopt_long(argc, argv, "h", opts, &option_index)))
+	{
+		if(opt < 0)
+		{
+			break;
+		}
+		switch(opt)
+		{
+			/*case 'c': strcpy(fwo_conffile, optarg); break;
+			case 'v': fwo_verbose = atoi(optarg); break;*/
+			case 1000: nco_dryrun = 1; break;
+			case 'h':  nco_usage  = 1; break;
+		}
+	}
+	if(nco_usage)
+	{
+		usage(argv[0]);
+	}
+
+	if(nco_dryrun)
+		printf("running dry-run\n");
+
+	/*init_dialog(input, dialog_state.output);
 	dialog_msgbox("title", "content", 0, 0, 0);
-	end_dialog();
+	end_dialog();*/
+	return(0);
 }
