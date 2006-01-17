@@ -40,13 +40,67 @@ int usage(const char *myname)
 	exit(0);
 }
 
+char *strtrim(char *str)
+{
+	char *ptr = str;
+
+	while(isspace(*ptr))
+		ptr++;
+	if(ptr != str)
+		memmove(str, ptr, (strlen(ptr) + 1));
+	ptr = (char *)(str + (strlen(str) - 1));
+	while(isspace(*ptr))
+		ptr--;
+	*++ptr = '\0';
+	return str;
+}
+
 profile_t *parseprofile(char *fn)
 {
 	FILE *fp;
+	char line[PATH_MAX+1];
+	int n=0;
+	char *ptr = NULL;
+	char *var = NULL;
+	char interface[256] = "";
+	profile_t *profile;
 
-	fp = fopen(fn, "r");
-	if(fp == NULL)
+	profile = (profile_t*)malloc(sizeof(profile_t));
+	if(profile==NULL)
 		return(NULL);
+	memset(profile, 0, sizeof(profile_t));
+
+	ptr = g_strdup_printf("/etc/sysconfig/network/%s", fn);
+	fp = fopen(ptr, "r");
+	free(ptr);
+	if(fp == NULL)
+	{
+		printf("No such profile!\n");
+		return(NULL);
+	}
+
+	while(fgets(line, PATH_MAX, fp))
+	{
+		n++;
+		strtrim(line);
+		if(strlen(line) == 0 || line[0] == '#')
+			continue;
+		printf("new line: %s\n", line);
+		if(line[0] == '[' && line[strlen(line)-1] == ']')
+		{
+			// new interface
+			ptr = line;
+			ptr++;
+			strncpy(interface, ptr, min(255, strlen(ptr)-1));
+			interface[min(255, strlen(ptr)-1)] = '\0';
+			if(!strlen(interface))
+			{
+				fprintf(stderr, "profile: line %d: bad interface name\n", n);
+				return(NULL);
+			}
+		}
+		line[0] = '\0';
+	}
 	fclose(fp);
 	return(NULL);
 }
@@ -98,9 +152,10 @@ int main(int argc, char **argv)
 	}
 	else
 	{
-		init_dialog(input, dialog_state.output);
+		printf("no profile to load\n");
+		/*init_dialog(input, dialog_state.output);
 		dialog_msgbox("title", "content", 0, 0, 0);
-		end_dialog();
+		end_dialog();*/
 	}
 	return(0);
 }
