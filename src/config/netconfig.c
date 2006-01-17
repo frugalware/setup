@@ -41,7 +41,7 @@ int usage(const char *myname)
 	exit(0);
 }
 
-char *strtrim(char *str)
+char *trim(char *str)
 {
 	char *ptr = str;
 
@@ -55,6 +55,19 @@ char *strtrim(char *str)
 	*++ptr = '\0';
 	return str;
 }
+
+char *strtoupper(char *str)
+{
+	char *ptr = str;
+
+	while(*ptr)
+	{
+		(*ptr) = toupper(*ptr);
+		ptr++;
+	}
+	return str;
+}
+
 
 profile_t *parseprofile(char *fn)
 {
@@ -84,7 +97,7 @@ profile_t *parseprofile(char *fn)
 	while(fgets(line, PATH_MAX, fp))
 	{
 		n++;
-		strtrim(line);
+		trim(line);
 		if(strlen(line) == 0 || line[0] == '#')
 			continue;
 		printf("new line: %s\n", line);
@@ -111,7 +124,7 @@ profile_t *parseprofile(char *fn)
 				}
 				if(!found)
 				{
-					/* start a new interface record */
+					// start a new interface record
 					iface = (interface_t*)malloc(sizeof(interface_t));
 					if(iface==NULL)
 						return(NULL);
@@ -121,14 +134,37 @@ profile_t *parseprofile(char *fn)
 				}
 			}
 		}
+		else
+		{
+			// directive
+			ptr = line;
+			var = strsep(&ptr, "=");
+			if(var == NULL)
+			{
+				fprintf(stderr, "profile: line %d: syntax error\n", n);
+				return(NULL);
+			}
+			trim(var);
+			var = strtoupper(var);
+			if(!strlen(interface))
+			{
+				fprintf(stderr, "profile: line %d: all directives must belong to a section\n", n);
+				return(NULL);
+			}
+			if(ptr != NULL)
+			{
+				trim(ptr);
+				if (!strcmp(var, "DNS"))
+					profile->dnses = g_list_append(profile->dnses, strdup(ptr));
+			}
+		}
 		line[0] = '\0';
 	}
 	fclose(fp);
-	/*printf("interfaces found:\n");
-	for (i=0; i<g_list_length(profile->interfaces); i++)
+	/*printf("dnses found:\n");
+	for (i=0; i<g_list_length(profile->dnses); i++)
 	{
-		iface = (interface_t*)g_list_nth_data(profile->interfaces, i);
-		printf("%s\n", iface->name);
+		printf("%s\n", (char*)g_list_nth_data(profile->dnses, i));
 	}*/
 	return(profile);
 }
