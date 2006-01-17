@@ -31,6 +31,14 @@
 int nco_dryrun  = 0;
 int nco_usage   = 0;
 
+int nc_system(const char *cmd)
+{
+	if(nco_dryrun)
+		return(printf("%s\n", cmd));
+	else
+		return(system(cmd));
+}
+
 int usage(const char *myname)
 {
 	printf("usage: %s [options] [profile]\n", myname);
@@ -95,7 +103,6 @@ profile_t *parseprofile(char *fn)
 		trim(line);
 		if(strlen(line) == 0 || line[0] == '#')
 			continue;
-		printf("new line: %s\n", line);
 		if(line[0] == '[' && line[strlen(line)-1] == ']')
 		{
 			// new interface
@@ -194,8 +201,10 @@ int main(int argc, char **argv)
 		{"dry-run",        no_argument,       0, 1000},
 		{0, 0, 0, 0}
 	};
-	char *fn=NULL;
+	char *fn=NULL, *ptr;
+	int i;
 	profile_t *profile;
+	interface_t *iface;
 	// dialog
 	FILE *input = stdin;
 	dialog_state.output = stderr;
@@ -226,6 +235,15 @@ int main(int argc, char **argv)
 		else
 			fn = argv[optind];
 		profile = parseprofile(fn);
+		if(profile==NULL)
+			return(1);
+		// step 1: shut down the interfaces
+		for (i=0; i<g_list_length(profile->interfaces); i++)
+		{
+			ptr = g_strdup_printf("ifconfig %s down", (char*)g_list_nth_data(profile->interfaces, i));
+			nc_system(ptr);
+			free(ptr);
+		}
 	}
 	else
 	{
