@@ -24,9 +24,9 @@ global options
 # multiple usage ok
 dns    = <ip>
 
-# if defined more than once, the last will be used
+# if defined more than once, the first will be used
 domain = <domain>
-# if defined more than once, the last will be used
+# if defined more than once, the first will be used
 desc   = <description>
 
 interface options
@@ -45,14 +45,14 @@ post_up   = cmd
 pre_down  = cmd
 # multiple usage ok
 post_down = cmd
-# if defined more than once, the last will be used
+# if defined more than once, the first will be used
 mac       = <mac addr>
-# if defined more than once, the last will be used
+# if defined more than once, the first will be used
 essid     = <essid>
-# if defined more than once, the last will be used
+# if defined more than once, the first will be used
 gateway   = <ip>
 
-# if defined more than once, the last will be used
+# if defined more than once, the first will be used
 key       = <key>
-# if defined more than once, the last will be used
+# if defined more than once, the first will be used
 dhcp_host = <hostname>
