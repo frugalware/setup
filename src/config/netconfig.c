@@ -24,6 +24,7 @@
 #include <getopt.h>
 #include <stdlib.h>
 #include <glib.h>
+#include <net/if.h>
 
 #include "netconfig.h"
 
@@ -59,11 +60,12 @@ profile_t *parseprofile(char *fn)
 {
 	FILE *fp;
 	char line[PATH_MAX+1];
-	int n=0;
+	int i, n=0;
 	char *ptr = NULL;
 	char *var = NULL;
 	char interface[256] = "";
 	profile_t *profile;
+	interface_t *iface;
 
 	profile = (profile_t*)malloc(sizeof(profile_t));
 	if(profile==NULL)
@@ -98,11 +100,37 @@ profile_t *parseprofile(char *fn)
 				fprintf(stderr, "profile: line %d: bad interface name\n", n);
 				return(NULL);
 			}
+			if(strcmp(interface, "options"))
+			{
+				int found = 0;
+				for (i=0; !found && i<g_list_length(profile->interfaces); i++)
+				{
+					iface = (interface_t*)g_list_nth_data(profile->interfaces, i);
+					if(!strcmp(iface->name, interface))
+						found=1;
+				}
+				if(!found)
+				{
+					/* start a new interface record */
+					iface = (interface_t*)malloc(sizeof(interface_t));
+					if(iface==NULL)
+						return(NULL);
+					memset(iface, 0, sizeof(interface_t));
+					strncpy(iface->name, interface, IF_NAMESIZE);
+					profile->interfaces = g_list_append(profile->interfaces, iface);
+				}
+			}
 		}
 		line[0] = '\0';
 	}
 	fclose(fp);
-	return(NULL);
+	/*printf("interfaces found:\n");
+	for (i=0; i<g_list_length(profile->interfaces); i++)
+	{
+		iface = (interface_t*)g_list_nth_data(profile->interfaces, i);
+		printf("%s\n", iface->name);
+	}*/
+	return(profile);
 }
 
 int main(int argc, char **argv)
