@@ -45,14 +45,12 @@ char *trim(char *str)
 {
 	char *ptr = str;
 
-	while(isspace(*ptr))
-		ptr++;
-	if(ptr != str)
-		memmove(str, ptr, (strlen(ptr) + 1));
+	while(isspace(*ptr++))
+		if(ptr != str)
+			memmove(str, ptr, (strlen(ptr) + 1));
 	ptr = (char *)(str + (strlen(str) - 1));
-	while(isspace(*ptr))
-		ptr--;
-	*++ptr = '\0';
+	while(isspace(*ptr--))
+		*++ptr = '\0';
 	return str;
 }
 
@@ -61,10 +59,7 @@ char *strtoupper(char *str)
 	char *ptr = str;
 
 	while(*ptr)
-	{
-		(*ptr) = toupper(*ptr);
-		ptr++;
-	}
+		*ptr++ = toupper(*ptr);
 	return str;
 }
 
