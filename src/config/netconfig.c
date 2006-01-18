@@ -317,6 +317,13 @@ int main(int argc, char **argv)
 					free(ptr);
 				}
 			}
+			// step3: setup the gateway
+			if(!dhcp && strlen(iface->gateway))
+			{
+				ptr = g_strdup_printf("route add %s", iface->gateway);
+				nc_system(ptr);
+				free(ptr);
+			}
 		}
 	}
 	else
