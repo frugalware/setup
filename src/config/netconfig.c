@@ -41,7 +41,8 @@ int nc_system(const char *cmd)
 
 int usage(const char *myname)
 {
-	printf("usage: %s [options] [profile]\n", myname);
+	printf("usage: %s [options] start|stop|restart\n", myname);
+	printf("       %s [options] [profile]\n", myname);
 	//printf("-v | --verbose <level>   Verbose mode.\n");
 	//printf("-c | --config  <file>    Config file.\n");
 	printf("-h | --help              This help.\n");
@@ -90,12 +91,12 @@ profile_t *parseprofile(char *fn)
 
 	ptr = g_strdup_printf("/etc/sysconfig/network/%s", fn);
 	fp = fopen(ptr, "r");
-	free(ptr);
 	if(fp == NULL)
 	{
-		printf("No such profile!\n");
+		printf("%s: No such profile!\n", fn);
 		return(NULL);
 	}
+	free(ptr);
 
 	while(fgets(line, PATH_MAX, fp))
 	{
@@ -321,6 +322,36 @@ int setdns(profile_t* profile)
 	return(0);
 }
 
+char *lastprofile(void)
+{
+	FILE *fp;
+	char line[PATH_MAX+1];
+
+	fp = fopen(NC_LOCK, "r");
+	if(fp==NULL)
+		return(NULL);
+	fgets(line, PATH_MAX, fp);
+	fclose(fp);
+	trim(line);
+	return(strdup(line));
+}
+
+int setlastprofile(char* str)
+{
+	FILE *fp;
+
+	// sanility check
+	if(!str)
+		return(1);
+
+	fp = fopen(NC_LOCK, "w");
+	if(fp==NULL)
+		return(1);
+	fprintf(fp, str);
+	fclose(fp);
+	return(0);
+}
+
 int main(int argc, char **argv)
 {
 	int opt;
@@ -336,7 +367,6 @@ int main(int argc, char **argv)
 	char *fn=NULL;
 	int i;
 	profile_t *profile;
-	interface_t *iface;
 	// dialog
 	FILE *input = stdin;
 	dialog_state.output = stderr;
@@ -362,20 +392,38 @@ int main(int argc, char **argv)
 
 	if(optind < argc)
 	{
-		if(!strcmp("start", argv[optind]))
+		if((fn=lastprofile()) || !strcmp("stop", argv[optind]))
+		{
+			if(!strcmp("stop", argv[optind]) && !fn)
+				return(127);
+			profile = parseprofile(fn);
+			if(profile!=NULL)
+			{
+				// unload the old profile
+				for (i=0; i<g_list_length(profile->interfaces); i++)
+				{
+					ifdown((interface_t*)g_list_nth_data(profile->interfaces, i));
+				}
+			}
+			if(!strcmp("stop", argv[optind]))
+				return(0);
+		}
+		// load the default for 'start' and for 'restart' if not yet started
+		if(!strcmp("start", argv[optind]) || (!strcmp("restart", argv[optind]) && !fn))
 			fn = strdup("default");
-		else
+		// load the target profile if != 'restart'
+		else if (strcmp("restart", argv[optind]))
 			fn = argv[optind];
+		// load the new profile
 		profile = parseprofile(fn);
 		if(profile==NULL)
 			return(1);
 		for (i=0; i<g_list_length(profile->interfaces); i++)
 		{
-			iface = (interface_t*)g_list_nth_data(profile->interfaces, i);
-			ifdown(iface);
-			ifup(iface);
+			ifup((interface_t*)g_list_nth_data(profile->interfaces, i));
 		}
 		setdns(profile);
+		setlastprofile(fn);
 	}
 	else
 	{
