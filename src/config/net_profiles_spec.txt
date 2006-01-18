@@ -23,7 +23,6 @@ global options
 
 # multiple usage ok
 dns    = <ip>
-
 # if defined more than once, the first will be used
 domain = <domain>
 # if defined more than once, the first will be used

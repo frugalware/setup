@@ -161,6 +161,8 @@ profile_t *parseprofile(char *fn)
 					profile->dnses = g_list_append(profile->dnses, strdup(ptr));
 				if (!strcmp(var, "DOMAIN") && !strlen(profile->domain))
 					strncpy(profile->domain, ptr, PATH_MAX);
+				if (!strcmp(var, "DESC") && !strlen(profile->desc))
+					strncpy(profile->desc, ptr, PATH_MAX);
 				if (!strcmp(var, "OPTIONS"))
 					iface->options = g_list_append(iface->options, strdup(ptr));
 				if (!strcmp(var, "PRE_UP"))

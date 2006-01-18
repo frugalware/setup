@@ -41,6 +41,7 @@ typedef struct __interface_t {
 
 typedef struct __profile_t {
 	GList *dnses;
+	char desc[PATH_MAX+1];
 	char domain[PATH_MAX+1];
 	GList *interfaces; // GList of interface_t*
 } profile_t;
