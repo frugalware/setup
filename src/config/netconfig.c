@@ -267,6 +267,13 @@ int main(int argc, char **argv)
 			}
 			else
 			{
+				if(g_list_length(iface->options)>1)
+					for (j=0; j<g_list_length(iface->options); j++)
+					{
+						ptr = g_strdup_printf("ifconfig %s 0.0.0.0", iface->name);
+						nc_system(ptr);
+						free(ptr);
+					}
 				ptr = g_strdup_printf("ifconfig %s down", iface->name);
 				nc_system(ptr);
 				free(ptr);
