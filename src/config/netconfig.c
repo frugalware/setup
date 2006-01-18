@@ -177,6 +177,8 @@ profile_t *parseprofile(char *fn)
 					strncpy(iface->mac, ptr, MAC_MAX_SIZE);
 				if(!strcmp(var, "ESSID") && !strlen(iface->essid))
 					strncpy(iface->essid, ptr, ESSID_MAX_SIZE);
+				if(!strcmp(var, "KEY") && !strlen(iface->key))
+					strncpy(iface->key, ptr, ENCODING_TOKEN_MAX);
 				if(!strcmp(var, "GATEWAY") && !strlen(iface->gateway))
 					strncpy(iface->gateway, ptr, GW_MAX_SIZE);
 			}
@@ -265,6 +267,13 @@ int ifup(interface_t *iface)
 	if(strlen(iface->essid))
 	{
 		ptr = g_strdup_printf("iwconfig %s essid %s", iface->name, iface->essid);
+		nc_system(ptr);
+		free(ptr);
+	}
+
+	if(strlen(iface->key))
+	{
+		ptr = g_strdup_printf("iwconfig %s key %s", iface->name, iface->key);
 		nc_system(ptr);
 		free(ptr);
 	}

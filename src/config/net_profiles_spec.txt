@@ -51,8 +51,8 @@ essid     = <essid>
 # if defined more than once, the first will be used,
 # ignored if using dhcp
 gateway   = [default gw] <ip>
-
 # if defined more than once, the first will be used
 key       = <key>
+
 # if defined more than once, the first will be used
 dhcp_host = <hostname>

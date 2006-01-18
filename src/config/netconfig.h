@@ -21,6 +21,7 @@
 
 #define MAC_MAX_SIZE 17
 #define ESSID_MAX_SIZE 32
+#define ENCODING_TOKEN_MAX   32
 #define GW_MAX_SIZE 26
 
 #define NC_LOCK "/var/run/netconfig"
@@ -36,6 +37,7 @@ typedef struct __interface_t {
 	GList *post_downs;
 	char mac[MAC_MAX_SIZE+1];
 	char essid[ESSID_MAX_SIZE+1];
+	char key[ENCODING_TOKEN_MAX+1];
 	char gateway[GW_MAX_SIZE+1];
 } interface_t;
 
