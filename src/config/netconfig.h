@@ -24,6 +24,7 @@
 #define ENCODING_TOKEN_MAX   32
 #define GW_MAX_SIZE 26
 
+#define NC_PATH "/etc/sysconfig/network"
 #define NC_LOCK "/var/run/netconfig"
 
 #define min(p, q)  ((p) < (q) ? (p) : (q))

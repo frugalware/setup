@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <glib.h>
 #include <net/if.h>
+#include <dirent.h>
 
 #include "netconfig.h"
 
@@ -41,7 +42,7 @@ int nc_system(const char *cmd)
 
 int usage(const char *myname)
 {
-	printf("usage: %s [options] start|stop|restart|status\n", myname);
+	printf("usage: %s [options] start|stop|restart|status|list\n", myname);
 	printf("       %s [options] [profile]\n", myname);
 	//printf("-v | --verbose <level>   Verbose mode.\n");
 	//printf("-c | --config  <file>    Config file.\n");
@@ -72,6 +73,19 @@ char *strtoupper(char *str)
 	return str;
 }
 
+int listprofiles(void)
+{
+	struct dirent *ent=NULL;
+	DIR *dir;
+
+	dir = opendir(NC_PATH);
+	while((ent = readdir(dir)))
+	{
+		if(strcmp(ent->d_name, ".") && strcmp(ent->d_name, ".."))
+			printf("%s\n", ent->d_name);
+	}
+	exit(0);
+}
 
 profile_t *parseprofile(char *fn)
 {
@@ -89,7 +103,7 @@ profile_t *parseprofile(char *fn)
 		return(NULL);
 	memset(profile, 0, sizeof(profile_t));
 
-	ptr = g_strdup_printf("/etc/sysconfig/network/%s", fn);
+	ptr = g_strdup_printf(NC_PATH "/%s", fn);
 	fp = fopen(ptr, "r");
 	if(fp == NULL)
 	{
@@ -437,6 +451,8 @@ int main(int argc, char **argv)
 
 	if(optind < argc)
 	{
+		if(!strcmp("list", argv[optind]))
+			listprofiles();
 		if((fn=lastprofile()) || !strcmp("stop", argv[optind]) || !strcmp("status", argv[optind]))
 		{
 			if((!strcmp("stop", argv[optind])) && !fn)
