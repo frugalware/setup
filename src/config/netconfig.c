@@ -202,7 +202,7 @@ int main(int argc, char **argv)
 		{0, 0, 0, 0}
 	};
 	char *fn=NULL, *ptr;
-	int i;
+	int i, j;
 	profile_t *profile;
 	interface_t *iface;
 	// dialog
@@ -237,12 +237,79 @@ int main(int argc, char **argv)
 		profile = parseprofile(fn);
 		if(profile==NULL)
 			return(1);
-		// step 1: shut down the interfaces
 		for (i=0; i<g_list_length(profile->interfaces); i++)
 		{
-			ptr = g_strdup_printf("ifconfig %s down", (char*)g_list_nth_data(profile->interfaces, i));
-			nc_system(ptr);
-			free(ptr);
+			// step 1: shut down the interfaces
+			int dhcp=0;
+			iface = (interface_t*)g_list_nth_data(profile->interfaces, i);
+			for (j=0; j<g_list_length(iface->options); j++)
+			{
+				if(!strcmp((char*)g_list_nth_data(iface->options, j), "dhcp"))
+					dhcp=1;
+			}
+			if(dhcp)
+			{
+				FILE *fp;
+				char line[7];
+				ptr = g_strdup_printf("/etc/dhcpc/dhcpcd-%s.pid", iface->name);
+				fp = fopen(ptr, "r");
+				free(ptr);
+				if(fp != NULL)
+				{
+					fgets(line, 6, fp);
+					fclose(fp);
+					j = atoi(line);
+					if(j>0 && !nco_dryrun)
+						kill(j, 15);
+					else if (j>0)
+						printf("kill(%d, 15);\n", j);
+				}
+			}
+			else
+			{
+				ptr = g_strdup_printf("ifconfig %s down", iface->name);
+				nc_system(ptr);
+				free(ptr);
+			}
+			// step2: bring up the interfaces
+			if(strlen(iface->mac))
+			{
+				ptr = g_strdup_printf("ifconfig %s hw ether %s", iface->name, iface->mac);
+				nc_system(ptr);
+				free(ptr);
+			}
+			if(strlen(iface->essid))
+			{
+				ptr = g_strdup_printf("iwconfig %s essid %s", iface->name, iface->essid);
+				nc_system(ptr);
+				free(ptr);
+			}
+			if(dhcp)
+			{
+				ptr = g_strdup_printf("dhcpcd -t 10 %s", iface->name);
+				nc_system(ptr);
+				free(ptr);
+			}
+			else if(g_list_length(iface->options)==1)
+			{
+				ptr = g_strdup_printf("ifconfig %s %s",
+					iface->name, (char*)g_list_nth_data(iface->options, 0));
+				nc_system(ptr);
+				free(ptr);
+			}
+			else
+			{
+				ptr = g_strdup_printf("ifconfig %s 0.0.0.0", iface->name);
+				nc_system(ptr);
+				free(ptr);
+				for (j=0; j<g_list_length(iface->options); j++)
+				{
+					ptr = g_strdup_printf("ifconfig %s:%d %s",
+						iface->name, j+1, (char*)g_list_nth_data(iface->options, j));
+					nc_system(ptr);
+					free(ptr);
+				}
+			}
 		}
 	}
 	else
