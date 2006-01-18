@@ -159,6 +159,8 @@ profile_t *parseprofile(char *fn)
 				trim(ptr);
 				if (!strcmp(var, "DNS"))
 					profile->dnses = g_list_append(profile->dnses, strdup(ptr));
+				if (!strcmp(var, "DOMAIN") && !strlen(profile->domain))
+					strncpy(profile->domain, ptr, PATH_MAX);
 				if (!strcmp(var, "OPTIONS"))
 					iface->options = g_list_append(iface->options, strdup(ptr));
 				if (!strcmp(var, "PRE_UP"))
@@ -312,17 +314,25 @@ int setdns(profile_t* profile)
 	int i;
 	FILE *fp=NULL;
 
-	if(g_list_length(profile->dnses))
+	if(g_list_length(profile->dnses) || strlen(profile->domain))
 	{
 		if(!nco_dryrun)
 			fp = fopen("/etc/resolv.conf", "w");
 		if(nco_dryrun || (fp != NULL))
 		{
-			for (i=0; i<g_list_length(profile->dnses); i++)
+			if(strlen(profile->domain))
+			{
 				if(nco_dryrun)
-					printf("nameserver %s\n", (char*)g_list_nth_data(profile->dnses, i));
+					printf("search %s\n", profile->domain);
 				else
-					fprintf(fp, "nameserver %s\n", (char*)g_list_nth_data(profile->dnses, i));
+					fprintf(fp, "search %s\n", profile->domain);
+			}
+			if(g_list_length(profile->dnses))
+				for (i=0; i<g_list_length(profile->dnses); i++)
+					if(nco_dryrun)
+						printf("nameserver %s\n", (char*)g_list_nth_data(profile->dnses, i));
+					else
+						fprintf(fp, "nameserver %s\n", (char*)g_list_nth_data(profile->dnses, i));
 			if(!nco_dryrun)
 				fclose(fp);
 		}
