@@ -194,9 +194,13 @@ int is_dhcp(interface_t *iface)
 
 int ifdown(interface_t *iface)
 {
-	int dhcp, i;
+	int dhcp, ret=0, i;
 	char *ptr;
 	FILE *fp;
+
+	if(g_list_length(iface->pre_downs))
+		for (i=0; i<g_list_length(iface->pre_downs); i++)
+			nc_system((char*)g_list_nth_data(iface->pre_downs, i));
 
 	dhcp = is_dhcp(iface);
 	if(dhcp)
@@ -211,9 +215,9 @@ int ifdown(interface_t *iface)
 			fclose(fp);
 			i = atoi(line);
 			if(i>0 && !nco_dryrun)
-				return(kill(i, 15));
+				ret = kill(i, 15);
 			else if (i>0)
-				return(printf("kill(%d, 15);\n", i));
+				printf("kill(%d, 15);\n", i);
 		}
 	}
 	else
@@ -228,15 +232,23 @@ int ifdown(interface_t *iface)
 		ptr = g_strdup_printf("ifconfig %s down", iface->name);
 		nc_system(ptr);
 		free(ptr);
-		return(0);
 	}
-	return(1);
+
+	if(g_list_length(iface->post_downs))
+		for (i=0; i<g_list_length(iface->post_downs); i++)
+			nc_system((char*)g_list_nth_data(iface->post_downs, i));
+
+	return(ret);
 }
 
 int ifup(interface_t *iface)
 {
 	int dhcp, i;
 	char *ptr;
+
+	if(g_list_length(iface->pre_ups))
+		for (i=0; i<g_list_length(iface->pre_ups); i++)
+			nc_system((char*)g_list_nth_data(iface->pre_ups, i));
 
 	dhcp = is_dhcp(iface);
 	// initialize the device
@@ -288,6 +300,10 @@ int ifup(interface_t *iface)
 		nc_system(ptr);
 		free(ptr);
 	}
+	if(g_list_length(iface->post_ups))
+		for (i=0; i<g_list_length(iface->post_ups); i++)
+			nc_system((char*)g_list_nth_data(iface->post_ups, i));
+
 	return(0);
 }
 
