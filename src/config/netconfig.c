@@ -361,6 +361,20 @@ int setlastprofile(char* str)
 	return(0);
 }
 
+int loup(void)
+{
+	int ret=0;
+
+	ret += nc_system("ifconfig lo 127.0.0.1");
+	ret += nc_system("route add -net 127.0.0.0 netmask 255.0.0.0 lo");
+	return(ret);
+}
+
+int lodown(void)
+{
+	return(nc_system("ifconfig lo down"));
+}
+
 int main(int argc, char **argv)
 {
 	int opt;
@@ -407,11 +421,17 @@ int main(int argc, char **argv)
 				for (i=0; i<g_list_length(profile->interfaces); i++)
 					ifdown((interface_t*)g_list_nth_data(profile->interfaces, i));
 			if(!strcmp("stop", argv[optind]))
+			{
+				lodown();
 				return(0);
+			}
 		}
 		// load the default for 'start' and for 'restart' if not yet started
 		if(!strcmp("start", argv[optind]) || (!strcmp("restart", argv[optind]) && !fn))
+		{
+			loup();
 			fn = strdup("default");
+		}
 		// load the target profile if != 'restart'
 		else if (strcmp("restart", argv[optind]))
 			fn = argv[optind];
@@ -423,6 +443,7 @@ int main(int argc, char **argv)
 			ifup((interface_t*)g_list_nth_data(profile->interfaces, i));
 		setdns(profile);
 		setlastprofile(fn);
+		free(fn);
 	}
 	else
 	{
