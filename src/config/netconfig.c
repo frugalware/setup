@@ -179,12 +179,10 @@ profile_t *parseprofile(char *fn)
 		line[0] = '\0';
 	}
 	fclose(fp);
-	/*printf("interfaces found:\n");
-	for (i=0; i<g_list_length(profile->interfaces); i++)
+	/*printf("dnses found:\n");
+	for (i=0; i<g_list_length(profile->dnses); i++)
 	{
-		iface = (interface_t*)g_list_nth_data(profile->interfaces, i);
-		printf("name: %s\n", iface->name);
-		printf("%s\n", iface->mac);
+		printf("addr: %s\n", (char*)g_list_nth_data(profile->dnses, i));
 	}*/
 	return(profile);
 }
@@ -206,7 +204,7 @@ int main(int argc, char **argv)
 	profile_t *profile;
 	interface_t *iface;
 	// dialog
-	FILE *input = stdin;
+	FILE *fp=NULL, *input = stdin;
 	dialog_state.output = stderr;
 
 	while((opt = getopt_long(argc, argv, "h", opts, &option_index)))
@@ -249,7 +247,6 @@ int main(int argc, char **argv)
 			}
 			if(dhcp)
 			{
-				FILE *fp;
 				char line[7];
 				ptr = g_strdup_printf("/etc/dhcpc/dhcpcd-%s.pid", iface->name);
 				fp = fopen(ptr, "r");
@@ -323,6 +320,22 @@ int main(int argc, char **argv)
 				ptr = g_strdup_printf("route add %s", iface->gateway);
 				nc_system(ptr);
 				free(ptr);
+			}
+		}
+		// step4: set dns
+		if(g_list_length(profile->dnses))
+		{
+			if(!nco_dryrun)
+				fp = fopen("/etc/resolv.conf", "w");
+			if(nco_dryrun || (fp != NULL))
+			{
+				for (i=0; i<g_list_length(profile->dnses); i++)
+					if(nco_dryrun)
+						printf("nameserver %s\n", (char*)g_list_nth_data(profile->dnses, i));
+					else
+						fprintf(fp, "nameserver %s\n", (char*)g_list_nth_data(profile->dnses, i));
+				if(!nco_dryrun)
+					fclose(fp);
 			}
 		}
 	}
