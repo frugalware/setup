@@ -180,11 +180,6 @@ profile_t *parseprofile(char *fn)
 		line[0] = '\0';
 	}
 	fclose(fp);
-	/*printf("dnses found:\n");
-	for (i=0; i<g_list_length(profile->dnses); i++)
-	{
-		printf("addr: %s\n", (char*)g_list_nth_data(profile->dnses, i));
-	}*/
 	return(profile);
 }
 
@@ -192,10 +187,8 @@ int is_dhcp(interface_t *iface)
 {
 	int i, dhcp=0;
 	for (i=0; i<g_list_length(iface->options); i++)
-	{
 		if(!strcmp((char*)g_list_nth_data(iface->options, i), "dhcp"))
 			dhcp=1;
-	}
 	return(dhcp);
 }
 
@@ -374,9 +367,7 @@ int main(int argc, char **argv)
 	while((opt = getopt_long(argc, argv, "h", opts, &option_index)))
 	{
 		if(opt < 0)
-		{
 			break;
-		}
 		switch(opt)
 		{
 			/*case 'c': strcpy(fwo_conffile, optarg); break;
@@ -386,9 +377,7 @@ int main(int argc, char **argv)
 		}
 	}
 	if(nco_usage)
-	{
 		usage(argv[0]);
-	}
 
 	if(optind < argc)
 	{
@@ -398,13 +387,9 @@ int main(int argc, char **argv)
 				return(127);
 			profile = parseprofile(fn);
 			if(profile!=NULL)
-			{
 				// unload the old profile
 				for (i=0; i<g_list_length(profile->interfaces); i++)
-				{
 					ifdown((interface_t*)g_list_nth_data(profile->interfaces, i));
-				}
-			}
 			if(!strcmp("stop", argv[optind]))
 				return(0);
 		}
@@ -419,9 +404,7 @@ int main(int argc, char **argv)
 		if(profile==NULL)
 			return(1);
 		for (i=0; i<g_list_length(profile->interfaces); i++)
-		{
 			ifup((interface_t*)g_list_nth_data(profile->interfaces, i));
-		}
 		setdns(profile);
 		setlastprofile(fn);
 	}
