@@ -41,7 +41,7 @@ int nc_system(const char *cmd)
 
 int usage(const char *myname)
 {
-	printf("usage: %s [options] start|stop|restart\n", myname);
+	printf("usage: %s [options] start|stop|restart|status\n", myname);
 	printf("       %s [options] [profile]\n", myname);
 	//printf("-v | --verbose <level>   Verbose mode.\n");
 	//printf("-c | --config  <file>    Config file.\n");
@@ -437,10 +437,20 @@ int main(int argc, char **argv)
 
 	if(optind < argc)
 	{
-		if((fn=lastprofile()) || !strcmp("stop", argv[optind]))
+		if((fn=lastprofile()) || !strcmp("stop", argv[optind]) || !strcmp("status", argv[optind]))
 		{
-			if(!strcmp("stop", argv[optind]) && !fn)
+			if((!strcmp("stop", argv[optind])) && !fn)
 				return(127);
+			if((!strcmp("status", argv[optind])) && !fn)
+			{
+				printf("No profile loaded.\n");
+				return(1);
+			}
+			else
+			{
+				printf("Current profile: %s\n", fn);
+				return(0);
+			}
 			profile = parseprofile(fn);
 			if(profile!=NULL)
 				// unload the old profile
