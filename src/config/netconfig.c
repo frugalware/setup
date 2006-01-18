@@ -175,6 +175,8 @@ profile_t *parseprofile(char *fn)
 					iface->post_downs = g_list_append(iface->post_downs, strdup(ptr));
 				if(!strcmp(var, "MAC") && !strlen(iface->mac))
 					strncpy(iface->mac, ptr, MAC_MAX_SIZE);
+				if(!strcmp(var, "DHCP_OPTS") && !strlen(iface->dhcp_opts))
+					strncpy(iface->dhcp_opts, ptr, PATH_MAX);
 				if(!strcmp(var, "ESSID") && !strlen(iface->essid))
 					strncpy(iface->essid, ptr, ESSID_MAX_SIZE);
 				if(!strcmp(var, "KEY") && !strlen(iface->key))
@@ -281,7 +283,10 @@ int ifup(interface_t *iface)
 	// set up the interface
 	if(dhcp)
 	{
-		ptr = g_strdup_printf("dhcpcd -t 10 %s", iface->name);
+		if(strlen(iface->dhcp_opts))
+			ptr = g_strdup_printf("dhcpcd %s %s", iface->dhcp_opts, iface->name);
+		else
+			ptr = g_strdup_printf("dhcpcd -t 10 %s", iface->name);
 		nc_system(ptr);
 		free(ptr);
 	}

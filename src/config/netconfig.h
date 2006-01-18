@@ -36,6 +36,7 @@ typedef struct __interface_t {
 	GList *pre_downs;
 	GList *post_downs;
 	char mac[MAC_MAX_SIZE+1];
+	char dhcp_opts[PATH_MAX+1];
 	char essid[ESSID_MAX_SIZE+1];
 	char key[ENCODING_TOKEN_MAX+1];
 	char gateway[GW_MAX_SIZE+1];
