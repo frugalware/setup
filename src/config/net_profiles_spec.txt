@@ -51,7 +51,7 @@ mac       = <mac addr>
 essid     = <essid>
 # if defined more than once, the first will be used,
 # ignored if using dhcp
-gateway   = <ip>
+gateway   = [default gw] <ip>
 
 # if defined more than once, the first will be used
 key       = <key>
