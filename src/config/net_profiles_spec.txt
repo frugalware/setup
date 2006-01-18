@@ -49,7 +49,8 @@ post_down = cmd
 mac       = <mac addr>
 # if defined more than once, the first will be used
 essid     = <essid>
-# if defined more than once, the first will be used
+# if defined more than once, the first will be used,
+# ignored if using dhcp
 gateway   = <ip>
 
 # if defined more than once, the first will be used
