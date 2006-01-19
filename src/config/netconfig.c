@@ -26,6 +26,9 @@
 #include <glib.h>
 #include <net/if.h>
 #include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include "netconfig.h"
 
@@ -488,6 +491,16 @@ char *dialog_mymenu(const char *title, const char *cprompt, int height, int widt
 	return(strdup(dialog_vars.input_result));
 }
 
+int dialog_myyesno(char *title, char *desc)
+{
+	int ret;
+	ret = dialog_yesno(title, desc, 0, 0);
+	if(ret==DLG_EXIT_OK)
+		return(1);
+	else
+		return(0);
+}
+
 char *selnettype()
 {
 	int typenum=4;
@@ -508,10 +521,29 @@ char *selnettype()
 		0, 0, 0, typenum, types));
 }
 
+int dsl_hook(void)
+{
+	struct stat buf;
+
+	// do we have adslconfig?
+	if(stat("/usr/sbin/adslconfig", &buf))
+		return(0);
+	if(dialog_myyesno("DSL configuration", "Do you want to configure a DSL connetion now?"))
+		return(nc_system("adslconfig"));
+	return(0);
+}
+
+void writeconfig(void)
+{
+	// currently just a fake function yet
+}
+
 int dialog_config()
 {
 	FILE *input = stdin;
-	char *host=NULL, *nettype=NULL, *dhcphost=NULL;
+	char *host, *nettype;
+	char *dhcphost=NULL;
+	char *ipaddr, *netmask, *gateway, *dns;
 
 	dialog_state.output = stderr;
 	init_dialog(input, dialog_state.output);
@@ -529,6 +561,26 @@ int dialog_config()
 			"set in order to connect. If so, they'll have assigned a hostname to your machine. If you were"
 			"assigned a DHCP hostname, please enter it below. If you do not have a DHCP hostname, just"
 			"hit enter.", NULL);
+	else if(!strcmp(nettype, "static"))
+	{
+		ipaddr = dialog_ask("Enter ip address", "Enter your IP address for the local machine.", NULL);
+		netmask = dialog_ask("Enter netmask for local network",
+			"Enter your netmask. This will generally look something like this: 255.255.255.0\n"
+			"If unsure, just hit enter.", "255.255.255.0");
+		gateway = dialog_ask("Enter gateway address", "Enter the address for the gateway on your network."
+			"If you don't have a gateway on your network just hit enter, without entering any ip address.",
+			NULL);
+		dns = dialog_ask("Select nameserver", "Please give the IP address of the name server to use. You can"
+			"add more Domain Name Servers later by editing /etc/sysconfig/network/default.\n"
+			"If you don't have a name server on your network just hit enter, without entering any ip address.",
+			NULL);
+	}
+	if(!strcmp(nettype, "static") || !strcmp(nettype, "dsl"))
+		dsl_hook();
+
+	if(dialog_myyesno("Adjust configuration files", "Accept these settings and adjust configuration files?")
+		&& !nco_dryrun)
+		writeconfig();
 
 	end_dialog();
 	return(0);
