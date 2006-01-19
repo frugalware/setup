@@ -458,6 +458,8 @@ char *dialog_ask(char *title, char *desc, char *init)
 	char my_buffer[MAX_LEN + 1] = "";
 	int ret;
 
+	dlg_put_backtitle();
+	dlg_clear();
 	while(1)
 	{
 		dialog_vars.input_result = my_buffer;
@@ -494,6 +496,9 @@ char *dialog_mymenu(const char *title, const char *cprompt, int height, int widt
 int dialog_myyesno(char *title, char *desc)
 {
 	int ret;
+
+	dlg_put_backtitle();
+	dlg_clear();
 	ret = dialog_yesno(title, desc, 0, 0);
 	if(ret==DLG_EXIT_OK)
 		return(1);
@@ -533,9 +538,39 @@ int dsl_hook(void)
 	return(0);
 }
 
-void writeconfig(void)
+void writeconfig(char *host, char *nettype, char *dhcphost, char *ipaddr, char *netmask, char *gateway, char *dns)
 {
-	// currently just a fake function yet
+	// TODO: here the profile name ('default') and eth0 is hardwired
+	FILE *fp;
+
+	fp = fopen(NC_PATH "/default", "w");
+	if(fp==NULL)
+		return;
+	if(dns != NULL && strlen(dns))
+	{
+		fprintf(fp, "[options]\n");
+		fprintf(fp, "dns = %s\n", dns);
+	}
+	if(strcmp(nettype, "lo"))
+		fprintf(fp, "[eth0]\n");
+	if(!strcmp(nettype, "dhcp"))
+	{
+		fprintf(fp, "options = dhcp\n");
+		if(strlen(dhcphost))
+			fprintf(fp, "dhcp_opts = -t 10 -h %s\n", dhcphost);
+	}
+	else if (!strcmp(nettype, "static"))
+	{
+		if(strlen(ipaddr) && strlen(netmask))
+			fprintf(fp, "options = %s netmask %s\n", ipaddr, netmask);
+		if(strlen(ipaddr) && !strlen(netmask))
+			fprintf(fp, "options = %s\n", ipaddr);
+		if(strlen(gateway))
+			fprintf(fp, "gateway = default gw %s\n", gateway);
+	}
+	fclose(fp);
+
+	// FIXME: /etc/hosts, /etc/networks
 }
 
 int dialog_config()
@@ -543,7 +578,7 @@ int dialog_config()
 	FILE *input = stdin;
 	char *host, *nettype;
 	char *dhcphost=NULL;
-	char *ipaddr, *netmask, *gateway, *dns;
+	char *ipaddr=NULL, *netmask=NULL, *gateway=NULL, *dns=NULL;
 
 	dialog_state.output = stderr;
 	init_dialog(input, dialog_state.output);
@@ -556,6 +591,7 @@ int dialog_config()
 		"frugalware.example.net\n\n"
 		"Enter full hostname:", "frugalware.example.net");
 	nettype = selnettype();
+	// FIXME: if !lo and wireless, then ask for essid and key
 	if(!strcmp(nettype, "dhcp"))
 		dhcphost = dialog_ask("Set DHCP hostname", "Some network providers require that the DHCP hostname be"
 			"set in order to connect. If so, they'll have assigned a hostname to your machine. If you were"
@@ -580,7 +616,7 @@ int dialog_config()
 
 	if(dialog_myyesno("Adjust configuration files", "Accept these settings and adjust configuration files?")
 		&& !nco_dryrun)
-		writeconfig();
+		writeconfig(host, nettype, dhcphost, ipaddr, netmask, gateway, dns);
 
 	end_dialog();
 	return(0);
