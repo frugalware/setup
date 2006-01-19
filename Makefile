@@ -246,7 +246,8 @@ net-tools:
 	mkdir $(BDIR)
 	rm -rf net-tools
 	mkdir -p net-tools/{etc/rc.d/,etc/sysconfig/,sbin/} \
-		net-tools/var/lib/frugalware/{messages,system}
+		net-tools/var/lib/frugalware/{messages,system} \
+		net-tools/bin
 	cd $(BDIR) && tar xjf ../$(CDIR)/net-tools-$(NETVER)-$(CARCH).fpm; \
 	cp -a var/lib/frugalware/messages/* \
 		../net-tools/var/lib/frugalware/messages/; \
@@ -257,6 +258,7 @@ net-tools:
 	sed -i 's|/bin/sh|/bin/bash|' etc/rc.d/rc.interfaces; \
 	sed -i 's/grep -w/grep/;s/grep -vw/grep -v/' etc/rc.d/rc.interfaces; \
 	cp -a etc/rc.d/rc.interfaces ../net-tools/etc/rc.d/; \
+	cp -a bin/ipmask ../net-tools/bin/; \
 	cp -a sbin/netconfig ../net-tools/sbin/
 	sed -i 's|adslconfig$$|adslconfig --fast\nmkdir /var/run\nmount -t devpts none /dev/pts\npppoe-connect >/dev/tty4 2>/dev/tty4 \&|' net-tools/var/lib/frugalware/system/netconfig
 
