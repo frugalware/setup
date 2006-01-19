@@ -90,6 +90,10 @@ int listprofiles(void)
 	return(0);
 }
 
+/*
+ * based on pacman's config parser, which is
+ * Copyright (c) 2002-2006 by Judd Vinet <jvinet@zeroflux.org>
+ */
 profile_t *parseprofile(char *fn)
 {
 	FILE *fp;
@@ -547,15 +551,56 @@ char *hostname(char *ptr)
 	return(str);
 }
 
-void writeconfig(char *host, char *nettype, char *dhcphost, char *ipaddr, char *netmask, char *gateway, char *dns)
+/* Copyright 1994 by David Niemi.  Written in about 30 minutes on 13 Aug.
+ * The author places no restrictions on the use of this program, provided
+ * that this copyright is preserved in any derived source code.
+ */
+char *netaddr(char *ip, char *nm)
+{
+	unsigned long netmask, ipaddr, netaddr;
+	int in[4], i;
+	unsigned char na[4];
+
+	// sanility checks for netmask
+	if (4 != sscanf(ip,"%d.%d.%d.%d", &in[0],&in[1],&in[2],&in[3]))
+		// invalid netmask
+		return(NULL);
+	for (i=0; i<4; ++i)
+		if (in[i]<0 || in[i]>255)
+			// invalid octet in netmask
+			return(NULL);
+	netmask = in[3] + 256 * (in[2] + 256 * (in[1] + 256 * in[0]));
+
+	// sanility check for ip
+	if (4 != sscanf(nm,"%d.%d.%d.%d", &in[0],&in[1],&in[2],&in[3]))
+		// invalid ip
+		return(NULL);
+	for (i=0; i<4; ++i)
+		if (in[i]<0 || in[i]>255)
+			// invalied octet in ip
+			return(NULL);
+
+	ipaddr = in[3] + 256 * (in[2] + 256 * (in[1] + 256 * in[0]));
+
+	netaddr = ipaddr & netmask;
+	na[0] = netaddr / 256 / 256 / 256;
+	na[1] = (netaddr / 256 / 256) % 256;
+	na[2] = (netaddr / 256) % 256;
+	na[3] = netaddr % 256;
+
+	return(g_strdup_printf("%d.%d.%d.%d", na[0], na[1], na[2], na[3]));
+}
+
+int writeconfig(char *host, char *nettype, char *dhcphost, char *ipaddr, char *netmask, char *gateway, char *dns)
 {
 	// TODO: here the profile name ('default') and eth0 is hardwired
 	FILE *fp;
+	char *network=NULL;
 	int fakeip=0;
 
 	fp = fopen(NC_PATH "/default", "w");
 	if(fp==NULL)
-		return;
+		return(1);
 	if(dns != NULL && strlen(dns))
 	{
 		fprintf(fp, "[options]\n");
@@ -580,9 +625,18 @@ void writeconfig(char *host, char *nettype, char *dhcphost, char *ipaddr, char *
 	}
 	fclose(fp);
 
+	if(strcmp(nettype, "static"))
+	{
+		fakeip=1;
+		ipaddr=strdup("127.0.0.1");
+		network=strdup("127.0.0.0");
+	}
+	else
+		network=netaddr(ipaddr, netmask);
+
 	fp = fopen("/etc/hosts", "w");
 	if(fp==NULL)
-		return;
+		return(1);
 	fprintf(fp, "#\n"
 		"# hosts         This file describes a number of hostname-to-address\n"
 		"#               mappings for the TCP/IP subsystem.  It is mostly\n"
@@ -593,22 +647,30 @@ void writeconfig(char *host, char *nettype, char *dhcphost, char *ipaddr, char *
 		"#\n\n"
 		"# For loopbacking.\n"
 		"127.0.0.1               localhost\n");
-	if(strcmp(nettype, "static"))
-	{
-		fakeip=1;
-		ipaddr=strdup("127.0.0.1");
-	}
 	fprintf(fp, "%s\t%s %s\n", ipaddr, host, hostname(host));
 	fprintf(fp, "\n# End of hosts.\n");
 	fclose(fp);
 
-	// FIXME: /etc/networks
+	fp = fopen("/etc/networks", "w");
+	if(fp==NULL)
+		return(1);
+	fprintf(fp, "#\n"
+		"# networks      This file describes a number of netname-to-address\n"
+		"#               mappings for the TCP/IP subsystem.  It is mostly\n"
+		"#               used at boot time, when no name servers are running.\n"
+		"#\n\n"
+		"loopback        127.0.0.0\n");
+	fprintf(fp, "localnet        %s\n", network);
+	fprintf(fp, "\n# End of networks.\n");
+	fclose(fp);
 
 	if(fakeip)
 	{
 		free(ipaddr);
 		ipaddr=NULL;
 	}
+	free(network);
+	return(0);
 }
 
 int dialog_config()
@@ -629,7 +691,7 @@ int dialog_config()
 		"frugalware.example.net\n\n"
 		"Enter full hostname:", "frugalware.example.net");
 	nettype = selnettype();
-	// FIXME: if !lo and wireless, then ask for essid and key
+	// TODO: if !lo and wireless, then ask for essid and key
 	if(!strcmp(nettype, "dhcp"))
 		dhcphost = dialog_ask("Set DHCP hostname", "Some network providers require that the DHCP hostname be"
 			"set in order to connect. If so, they'll have assigned a hostname to your machine. If you were"
