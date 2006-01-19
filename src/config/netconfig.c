@@ -415,6 +415,125 @@ int lodown(void)
 	return(nc_system("ifconfig lo down"));
 }
 
+void dialog_backtitle(char *title)
+{
+	FILE *fp;
+	char line[128];
+
+	if ((fp = fopen(VERSIONFILE, "r")) == NULL)
+		return;
+	fgets(line, 127, fp);
+	line[strlen(line)-1]='\0';
+	fclose(fp);
+	if(dialog_vars.backtitle)
+		free(dialog_vars.backtitle);
+	dialog_vars.backtitle=g_strdup_printf("%s - %s %s", title, line, "Setup");
+	dlg_put_backtitle();
+	dlg_clear();
+}
+
+int dialog_confirm(void)
+{
+	int ret;
+	dialog_vars.defaultno=1;
+	ret = dialog_yesno("Exit", "Are you sure you want to exit?", 0, 0);
+	dialog_vars.defaultno=0;
+	if(ret==DLG_EXIT_OK)
+		return(1);
+	else
+		return(0);
+}
+
+void dialog_exit(void)
+{
+	end_dialog();
+	exit(0);
+}
+
+char *dialog_ask(char *title, char *desc, char *init)
+{
+	char my_buffer[MAX_LEN + 1] = "";
+	int ret;
+
+	while(1)
+	{
+		dialog_vars.input_result = my_buffer;
+		ret = dialog_inputbox(title, desc, 0, 0, init, 0);
+		if (ret != DLG_EXIT_CANCEL)
+			break;
+		if(dialog_confirm())
+			dialog_exit();
+	}
+	return(strdup(my_buffer));
+}
+
+char *dialog_mymenu(const char *title, const char *cprompt, int height, int width,
+	int menu_height, int item_no, char **items)
+{
+	int ret;
+	char my_buffer[MAX_LEN + 1] = "";
+
+	while(1)
+	{
+		dialog_vars.input_result = my_buffer;
+		dlg_put_backtitle();
+		dlg_clear();
+		ret = dialog_menu(title, cprompt, height, width, menu_height,
+			item_no, items);
+		if (ret != DLG_EXIT_CANCEL)
+			break;
+		if(dialog_confirm())
+			dialog_exit();
+	}
+	return(strdup(dialog_vars.input_result));
+}
+
+char *selnettype()
+{
+	int typenum=4;
+	char *types[] =
+	{
+		"dhcp", "Use a DHCP server",
+		"static", "Use a static IP address",
+		"dsl", "DSL connection",
+		"lo", "No network - loopback connection only"
+	};
+	return(dialog_mymenu("Select network connection type",
+		"Now we need to know how your machine connects to the network.\n"
+		"If you have an internal network card and an assigned IP address, gateway, and DNS, use 'static'"
+		"to enter these values. Also may use this if you have a DSL connection.\n"
+		"If your IP address is assigned by a DHCP server (commonly used by cable modem services), select 'dhcp'. \n"
+		"If you just have a network card to connect directly to a DSL modem, then select 'dsl'. \n"
+		"Finally, if you do not have a network card, select the 'lo' choice. \n",
+		0, 0, 0, typenum, types));
+}
+
+int dialog_config()
+{
+	FILE *input = stdin;
+	char *host=NULL, *nettype=NULL, *dhcphost=NULL;
+
+	dialog_state.output = stderr;
+	init_dialog(input, dialog_state.output);
+	dialog_backtitle("Network configuration");
+
+	/*ret = dialog_ask("title", "desc", NULL);
+	dialog_msgbox("title", ret, 0, 0, 1);*/
+	host = dialog_ask("Enter hostname", "We'll need the name you'd like to give your host.\n"
+		"The full hostname is needed, such as:\n\n"
+		"frugalware.example.net\n\n"
+		"Enter full hostname:", "frugalware.example.net");
+	nettype = selnettype();
+	if(!strcmp(nettype, "dhcp"))
+		dhcphost = dialog_ask("Set DHCP hostname", "Some network providers require that the DHCP hostname be"
+			"set in order to connect. If so, they'll have assigned a hostname to your machine. If you were"
+			"assigned a DHCP hostname, please enter it below. If you do not have a DHCP hostname, just"
+			"hit enter.", NULL);
+
+	end_dialog();
+	return(0);
+}
+
 int main(int argc, char **argv)
 {
 	int opt;
@@ -430,9 +549,6 @@ int main(int argc, char **argv)
 	char *fn=NULL;
 	int i;
 	profile_t *profile;
-	// dialog
-	FILE *input = stdin;
-	dialog_state.output = stderr;
 
 	while((opt = getopt_long(argc, argv, "h", opts, &option_index)))
 	{
@@ -462,7 +578,7 @@ int main(int argc, char **argv)
 				printf("No profile loaded.\n");
 				return(1);
 			}
-			else
+			else if ((!strcmp("status", argv[optind])) && fn)
 			{
 				printf("Current profile: %s\n", fn);
 				return(0);
@@ -498,11 +614,6 @@ int main(int argc, char **argv)
 		free(fn);
 	}
 	else
-	{
-		printf("no profile to load\n");
-		/*init_dialog(input, dialog_state.output);
-		dialog_msgbox("title", "content", 0, 0, 0);
-		end_dialog();*/
-	}
+		dialog_config();
 	return(0);
 }

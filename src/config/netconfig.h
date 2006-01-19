@@ -24,6 +24,7 @@
 #define ENCODING_TOKEN_MAX   32
 #define GW_MAX_SIZE 26
 
+#define VERSIONFILE "/etc/frugalware-release"
 #define NC_PATH "/etc/sysconfig/network"
 #define NC_LOCK "/var/run/netconfig"
 
