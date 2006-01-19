@@ -1,7 +1,1 @@
 currently these config tools are just stored here, not builded/installed automatically
-
-netconfig status:
-+ netconfig works properly when called from the new rc.interfaces
-+ the new rc.interfaces is ready
-+ the converter script (to upgrade from the old format) is ready
-- the old netconfig script is not rewritten yet for the new format
