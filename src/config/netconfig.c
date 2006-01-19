@@ -422,6 +422,27 @@ int lodown(void)
 	return(nc_system("ifconfig lo down"));
 }
 
+int is_wireless_device(char *dev)
+{
+	FILE *pp;
+	char *ptr;
+	char line[256];
+
+	ptr = g_strdup_printf("iwconfig %s 2>&1", dev);
+	pp = popen(ptr, "r");
+	FREE(ptr);
+	if(pp==NULL)
+		return(0);
+	while(fgets(line, 255, pp))
+		if(strstr(line, "no wireless extensions"))
+		{
+			pclose(pp);
+			return(0);
+		}
+	pclose(pp);
+	return(1);
+}
+
 void dialog_backtitle(char *title)
 {
 	FILE *fp;
@@ -591,7 +612,8 @@ char *netaddr(char *ip, char *nm)
 	return(g_strdup_printf("%d.%d.%d.%d", na[0], na[1], na[2], na[3]));
 }
 
-int writeconfig(char *host, char *nettype, char *dhcphost, char *ipaddr, char *netmask, char *gateway, char *dns)
+int writeconfig(char *host, char *nettype, char *dhcphost, char *ipaddr, char *netmask, char *gateway, char *dns,
+	char *essid, char *key)
 {
 	// TODO: here the profile name ('default') and eth0 is hardwired
 	FILE *fp;
@@ -608,6 +630,10 @@ int writeconfig(char *host, char *nettype, char *dhcphost, char *ipaddr, char *n
 	}
 	if(strcmp(nettype, "lo"))
 		fprintf(fp, "[eth0]\n");
+	if(essid != NULL && strlen(essid))
+		fprintf(fp, "essid = %s\n", essid);
+	if(key != NULL && strlen(key))
+		fprintf(fp, "key = %s\n", key);
 	if(!strcmp(nettype, "dhcp"))
 	{
 		fprintf(fp, "options = dhcp\n");
@@ -678,7 +704,7 @@ int dialog_config()
 	FILE *input = stdin;
 	char *host, *nettype;
 	char *dhcphost=NULL;
-	char *ipaddr=NULL, *netmask=NULL, *gateway=NULL, *dns=NULL;
+	char *ipaddr=NULL, *netmask=NULL, *gateway=NULL, *dns=NULL, *essid=NULL, *key=NULL;
 
 	dialog_state.output = stderr;
 	init_dialog(input, dialog_state.output);
@@ -691,7 +717,13 @@ int dialog_config()
 		"frugalware.example.net\n\n"
 		"Enter full hostname:", "frugalware.example.net");
 	nettype = selnettype();
-	// TODO: if !lo and wireless, then ask for essid and key
+	if(strcmp(nettype, "lo") && is_wireless_device("eth0"))
+	{
+		essid = dialog_ask("Extended network name", "It seems that this network card has a wireless extension."
+			"In order to use it, you must set your extended netwok name (ESSID). Enter your ESSID:", NULL);
+		key = dialog_ask("Encryption key", "If you have an encryption key, then please enter it below.\n"
+			"Examples: 4567-89AB-CD or  s:password", NULL);
+	}
 	if(!strcmp(nettype, "dhcp"))
 		dhcphost = dialog_ask("Set DHCP hostname", "Some network providers require that the DHCP hostname be"
 			"set in order to connect. If so, they'll have assigned a hostname to your machine. If you were"
@@ -716,7 +748,7 @@ int dialog_config()
 
 	if(dialog_myyesno("Adjust configuration files", "Accept these settings and adjust configuration files?")
 		&& !nco_dryrun)
-		writeconfig(host, nettype, dhcphost, ipaddr, netmask, gateway, dns);
+		writeconfig(host, nettype, dhcphost, ipaddr, netmask, gateway, dns, essid, key);
 
 	FREE(host);
 	FREE(nettype);
@@ -725,6 +757,8 @@ int dialog_config()
 	FREE(netmask);
 	FREE(gateway);
 	FREE(dns);
+	FREE(essid);
+	FREE(key);
 	end_dialog();
 	return(0);
 }
