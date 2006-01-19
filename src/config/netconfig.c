@@ -51,7 +51,7 @@ int usage(const char *myname)
 	//printf("-c | --config  <file>    Config file.\n");
 	printf("-h | --help              This help.\n");
 	printf("     --dry-run           Do not actually perform the operation.\n");
-	exit(0);
+	return(0);
 }
 
 char *trim(char *str)
@@ -87,7 +87,7 @@ int listprofiles(void)
 		if(strcmp(ent->d_name, ".") && strcmp(ent->d_name, ".."))
 			printf("%s\n", ent->d_name);
 	}
-	exit(0);
+	return(0);
 }
 
 profile_t *parseprofile(char *fn)
@@ -615,12 +615,18 @@ int main(int argc, char **argv)
 		}
 	}
 	if(nco_usage)
+	{
 		usage(argv[0]);
+		return(0);
+	}
 
 	if(optind < argc)
 	{
 		if(!strcmp("list", argv[optind]))
+		{
 			listprofiles();
+			return(0);
+		}
 		if((fn=lastprofile()) || !strcmp("stop", argv[optind]) || !strcmp("status", argv[optind]))
 		{
 			if((!strcmp("stop", argv[optind])) && !fn)
