@@ -1,5 +1,5 @@
 /*
- *  netconfig.c for Frugalware setup
+ *  netconfig.c for Frugalware
  * 
  *  Copyright (c) 2006 by Miklos Vajna <vmiklos@frugalware.org>
  * 
@@ -117,7 +117,7 @@ profile_t *parseprofile(char *fn)
 		printf("%s: No such profile!\n", fn);
 		return(NULL);
 	}
-	free(ptr);
+	FREE(ptr);
 
 	while(fgets(line, PATH_MAX, fp))
 	{
@@ -237,7 +237,7 @@ int ifdown(interface_t *iface)
 		char line[7];
 		ptr = g_strdup_printf("/etc/dhcpc/dhcpcd-%s.pid", iface->name);
 		fp = fopen(ptr, "r");
-		free(ptr);
+		FREE(ptr);
 		if(fp != NULL)
 		{
 			fgets(line, 6, fp);
@@ -256,11 +256,11 @@ int ifdown(interface_t *iface)
 			{
 				ptr = g_strdup_printf("ifconfig %s 0.0.0.0", iface->name);
 				nc_system(ptr);
-				free(ptr);
+				FREE(ptr);
 			}
 		ptr = g_strdup_printf("ifconfig %s down", iface->name);
 		nc_system(ptr);
-		free(ptr);
+		FREE(ptr);
 	}
 
 	if(g_list_length(iface->post_downs))
@@ -285,20 +285,20 @@ int ifup(interface_t *iface)
 	{
 		ptr = g_strdup_printf("ifconfig %s hw ether %s", iface->name, iface->mac);
 		nc_system(ptr);
-		free(ptr);
+		FREE(ptr);
 	}
 	if(strlen(iface->essid))
 	{
 		ptr = g_strdup_printf("iwconfig %s essid %s", iface->name, iface->essid);
 		nc_system(ptr);
-		free(ptr);
+		FREE(ptr);
 	}
 
 	if(strlen(iface->key))
 	{
 		ptr = g_strdup_printf("iwconfig %s key %s", iface->name, iface->key);
 		nc_system(ptr);
-		free(ptr);
+		FREE(ptr);
 	}
 
 	// set up the interface
@@ -309,26 +309,26 @@ int ifup(interface_t *iface)
 		else
 			ptr = g_strdup_printf("dhcpcd -t 10 %s", iface->name);
 		nc_system(ptr);
-		free(ptr);
+		FREE(ptr);
 	}
 	else if(g_list_length(iface->options)==1)
 	{
 		ptr = g_strdup_printf("ifconfig %s %s",
 			iface->name, (char*)g_list_nth_data(iface->options, 0));
 		nc_system(ptr);
-		free(ptr);
+		FREE(ptr);
 	}
 	else
 	{
 		ptr = g_strdup_printf("ifconfig %s 0.0.0.0", iface->name);
 		nc_system(ptr);
-		free(ptr);
+		FREE(ptr);
 		for (i=0; i<g_list_length(iface->options); i++)
 		{
 			ptr = g_strdup_printf("ifconfig %s:%d %s",
 				iface->name, i+1, (char*)g_list_nth_data(iface->options, i));
 			nc_system(ptr);
-			free(ptr);
+			FREE(ptr);
 		}
 	}
 
@@ -337,7 +337,7 @@ int ifup(interface_t *iface)
 	{
 		ptr = g_strdup_printf("route add %s", iface->gateway);
 		nc_system(ptr);
-		free(ptr);
+		FREE(ptr);
 	}
 	if(g_list_length(iface->post_ups))
 		for (i=0; i<g_list_length(iface->post_ups); i++)
@@ -433,7 +433,7 @@ void dialog_backtitle(char *title)
 	line[strlen(line)-1]='\0';
 	fclose(fp);
 	if(dialog_vars.backtitle)
-		free(dialog_vars.backtitle);
+		FREE(dialog_vars.backtitle);
 	dialog_vars.backtitle=g_strdup_printf("%s - %s %s", title, line, "Setup");
 	dlg_put_backtitle();
 	dlg_clear();
@@ -666,10 +666,10 @@ int writeconfig(char *host, char *nettype, char *dhcphost, char *ipaddr, char *n
 
 	if(fakeip)
 	{
-		free(ipaddr);
+		FREE(ipaddr);
 		ipaddr=NULL;
 	}
-	free(network);
+	FREE(network);
 	return(0);
 }
 
@@ -718,6 +718,13 @@ int dialog_config()
 		&& !nco_dryrun)
 		writeconfig(host, nettype, dhcphost, ipaddr, netmask, gateway, dns);
 
+	FREE(host);
+	FREE(nettype);
+	FREE(dhcphost);
+	FREE(ipaddr);
+	FREE(netmask);
+	FREE(gateway);
+	FREE(dns);
 	end_dialog();
 	return(0);
 }
@@ -805,7 +812,7 @@ int main(int argc, char **argv)
 			ifup((interface_t*)g_list_nth_data(profile->interfaces, i));
 		setdns(profile);
 		setlastprofile(fn);
-		free(fn);
+		FREE(fn);
 	}
 	else
 		dialog_config();
