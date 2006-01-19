@@ -538,10 +538,20 @@ int dsl_hook(void)
 	return(0);
 }
 
+char *hostname(char *ptr)
+{
+	char *str=ptr;
+
+	while(*ptr++!='.');
+	*--ptr='\0';
+	return(str);
+}
+
 void writeconfig(char *host, char *nettype, char *dhcphost, char *ipaddr, char *netmask, char *gateway, char *dns)
 {
 	// TODO: here the profile name ('default') and eth0 is hardwired
 	FILE *fp;
+	int fakeip=0;
 
 	fp = fopen(NC_PATH "/default", "w");
 	if(fp==NULL)
@@ -570,7 +580,35 @@ void writeconfig(char *host, char *nettype, char *dhcphost, char *ipaddr, char *
 	}
 	fclose(fp);
 
-	// FIXME: /etc/hosts, /etc/networks
+	fp = fopen("/etc/hosts", "w");
+	if(fp==NULL)
+		return;
+	fprintf(fp, "#\n"
+		"# hosts         This file describes a number of hostname-to-address\n"
+		"#               mappings for the TCP/IP subsystem.  It is mostly\n"
+		"#               used at boot time, when no name servers are running.\n"
+		"#               On small systems, this file can be used instead of a\n"
+		"#               'named' name server.  Just add the names, addresses\n"
+		"#               and any aliases to this file...\n"
+		"#\n\n"
+		"# For loopbacking.\n"
+		"127.0.0.1               localhost\n");
+	if(strcmp(nettype, "static"))
+	{
+		fakeip=1;
+		ipaddr=strdup("127.0.0.1");
+	}
+	fprintf(fp, "%s\t%s %s\n", ipaddr, host, hostname(host));
+	fprintf(fp, "\n# End of hosts.\n");
+	fclose(fp);
+
+	// FIXME: /etc/networks
+
+	if(fakeip)
+	{
+		free(ipaddr);
+		ipaddr=NULL;
+	}
 }
 
 int dialog_config()
