@@ -28,6 +28,11 @@
 #define NC_PATH "/etc/sysconfig/network"
 #define NC_LOCK "/var/run/netconfig"
 
+#ifdef _
+#undef _
+#endif
+#define _(text) gettext(text)
+
 #define FREE(p) do { if (p) { free(p); (p) = NULL; }} while(0)
 #define min(p, q)  ((p) < (q) ? (p) : (q))
 

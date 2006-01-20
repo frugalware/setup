@@ -1,0 +1,253 @@
+# Hungarian translations for netconfig package.
+# Copyright (C) 2006 THE netconfig'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the netconfig package.
+#  <vmiklos@frugalware.org>, 2006.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: netconfig 0.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-01-20 01:33+0100\n"
+"PO-Revision-Date: 2006-01-20 00:49+0100\n"
+"Last-Translator:  <vmiklos@frugalware.org>\n"
+"Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../netconfig.c:49
+#, c-format
+msgid "usage: %s [options] start|stop|restart|status|list\n"
+msgstr "használat: %s [opciók] start|stop|restart|status|list\n"
+
+#: ../netconfig.c:50
+#, c-format
+msgid "       %s [options] [profile]\n"
+msgstr "       %s [opciók] [profil]\n"
+
+#: ../netconfig.c:51
+#, c-format
+msgid "-h | --help              This help.\n"
+msgstr "-h | --help              Ez a segítség.\n"
+
+#: ../netconfig.c:52
+#, c-format
+msgid "     --dry-run           Do not actually perform the operation.\n"
+msgstr ""
+"     --dry-run           Próba futtatás, ténylegesen netörténjen semmi.\n"
+
+#: ../netconfig.c:131
+#, c-format
+msgid "%s: No such profile!\n"
+msgstr "%s: Nincs ilyen profil!\n"
+
+#: ../netconfig.c:151
+#, c-format
+msgid "profile: line %d: bad interface name\n"
+msgstr "profil: %d. sor: helytelen interfész név\n"
+
+#: ../netconfig.c:182
+#, c-format
+msgid "profile: line %d: syntax error\n"
+msgstr "profile: %d. sor: szintaktikai hiba\n"
+
+#: ../netconfig.c:189
+#, c-format
+msgid "profile: line %d: all directives must belong to a section\n"
+msgstr "profile: %d. sor: minden direktívának egy szekcióhoz kell tartoznia\n"
+
+#: ../netconfig.c:472
+msgid "Setup"
+msgstr "Telepítõ"
+
+#: ../netconfig.c:481
+msgid "Exit"
+msgstr "Kilépés"
+
+#: ../netconfig.c:481
+msgid "Are you sure you want to exit?"
+msgstr "Biztos benne hogy ki szeretne lépni?"
+
+#: ../netconfig.c:553
+msgid "Use a DHCP server"
+msgstr "DHCP szerver használata"
+
+#: ../netconfig.c:554
+msgid "Use a static IP address"
+msgstr "Statikus ip-cím használata"
+
+#: ../netconfig.c:555
+msgid "DSL connection"
+msgstr "DSL kapcsolat"
+
+#: ../netconfig.c:556
+msgid "No network - loopback connection only"
+msgstr "Nincs hálózat - csak visszacsatoló adapter"
+
+#: ../netconfig.c:558
+msgid "Select network connection type"
+msgstr "A hálózati kapcsolat típusának kiválasztása"
+
+#: ../netconfig.c:559
+msgid ""
+"Now we need to know how your machine connects to the network.\n"
+"If you have an internal network card and an assigned IP address, gateway, "
+"and DNS, use 'static' to enter these values. Also may use this if you have a "
+"DSL connection.\n"
+"If your IP address is assigned by a DHCP server (commonly used by cable "
+"modem services), select 'dhcp'. \n"
+"If you just have a network card to connect directly to a DSL modem, then "
+"select 'dsl'. \n"
+"Finally, if you do not have a network card, select the 'lo' choice. \n"
+msgstr ""
+"Tudnunk kell, hogy a számítógépe hogyan csatlakozik a hálózathoz.\n"
+"Ha van hálózati kártyája és ahhoz rendelt ip-címe, gateway-e és DNSe, "
+"válassza a 'static'-ot, hogy megadja ezeket az értékeket. Szintén "
+"választhatja ezt, ha DSL kapcsolattal rendelkezik.\n"
+"Ha az ip-címet egy DHCP szerver adja meg (a kábelmodem-szolgáltatók szokták "
+"használni), válassza a 'dhcp'-t. \n"
+"Ha csak azért van hálózati kártyája, hogy egy DSL modemhez kapcsolódjon, "
+"válassza a 'dsl'-t. \n"
+"Végül, ha nincs hálózati kártyája, válassza az 'lo'-t. \n"
+
+#: ../netconfig.c:575
+msgid "DSL configuration"
+msgstr "DSL beállítása"
+
+#: ../netconfig.c:575
+msgid "Do you want to configure a DSL connetion now?"
+msgstr "Kíván beállítani DSL kapcsolatot most?"
+
+#: ../netconfig.c:725
+msgid "Network configuration"
+msgstr "Hálózat beállítása"
+
+#: ../netconfig.c:727
+msgid "Enter hostname"
+msgstr "A gépnév beállítása"
+
+#: ../netconfig.c:727
+msgid ""
+"We'll need the name you'd like to give your host.\n"
+"The full hostname is needed, such as:\n"
+"\n"
+"frugalware.example.net\n"
+"\n"
+"Enter full hostname:"
+msgstr ""
+"Szükségünk van arra a névre, amelyet a gépének szeretne adni.\n"
+"A teljes gépnévre van szükség, például:\n"
+"\n"
+"frugalware.example.net\n"
+"\n"
+"Adja meg a teljes gépnevet:"
+
+#: ../netconfig.c:734
+msgid "Extended network name"
+msgstr "Kiterjesztett hálózati név"
+
+#: ../netconfig.c:734
+msgid ""
+"It seems that this network card has a wireless extension. In order to use "
+"it, you must set your extended netwok name (ESSID). Enter your ESSID:"
+msgstr ""
+"Úgytûnik, hogy ez a kártya vezetéknélküli kiterjesztéssel rendelkezik. Ha "
+"használni szeretné azt, akkor be kell állítania a kiterjesztett hálózati "
+"nevét (ESSID). Adja meg az ESSID-jét:"
+
+#: ../netconfig.c:737
+msgid "Encryption key"
+msgstr "Titkosítási kulcs"
+
+#: ../netconfig.c:737
+msgid ""
+"If you have an encryption key, then please enter it below.\n"
+"Examples: 4567-89AB-CD or  s:password"
+msgstr ""
+"Ha rendelkezik titkosítási kulccsal, akkor azt adja meg itt.\n"
+"Példák: 4567-89AB-CD vagy s:jelszó"
+
+#: ../netconfig.c:741
+msgid "Set DHCP hostname"
+msgstr "A DHCP gépnév beállítása"
+
+#: ../netconfig.c:741
+msgid ""
+"Some network providers require that the DHCP hostname beset in order to "
+"connect. If so, they'll have assigned a hostname to your machine. If you "
+"wereassigned a DHCP hostname, please enter it below. If you do not have a "
+"DHCP hostname, justhit enter."
+msgstr ""
+"Némely hálózati szolgáltató a csatlakozáshoz megköveteli, hogy a DHCPgépnév "
+"be legyen állítva. Ebben az esetben egy gépnevet rendeltek aszámítógépéhez. "
+"Ha kapott ilyen DHCP gépnevet, kérem alább adja meg.Ha nem kapott DHCP "
+"gépnevet, csak üssön entert."
+
+#: ../netconfig.c:747
+msgid "Enter ip address"
+msgstr "Az ip-cím beállítása"
+
+#: ../netconfig.c:747
+msgid "Enter your IP address for the local machine."
+msgstr "Adja meg a helyi gép ip-címét."
+
+#: ../netconfig.c:748
+msgid "Enter netmask for local network"
+msgstr "Adja meg a helyi hálózat netmaskját"
+
+#: ../netconfig.c:749
+msgid ""
+"Enter your netmask. This will generally look something like this: "
+"255.255.255.0\n"
+"If unsure, just hit enter."
+msgstr ""
+"Adja meg a netmaskját. Ez általában ehhez hasonlóa néz ki: 255.255.255.0\n"
+"Ha nem biztos benne, csak üssön entert."
+
+#: ../netconfig.c:751
+msgid "Enter gateway address"
+msgstr "A gateway-cím beállítása"
+
+#: ../netconfig.c:751
+msgid ""
+"Enter the address for the gateway on your network. If you don't have a "
+"gateway on your network just hit enter, without entering any ip address."
+msgstr ""
+"Adja meg a hálózatának gateway-címét. Ha nincs gateway a hálózatában, "
+"csaküssön entert, anélkül, hogy bármilyen ip-címet megadna."
+
+#: ../netconfig.c:754
+msgid "Select nameserver"
+msgstr "A névszerver-kiválasztása"
+
+#: ../netconfig.c:754
+msgid ""
+"Please give the IP address of the name server to use. You canadd more Domain "
+"Name Servers later by editing /etc/sysconfig/network/default.\n"
+"If you don't have a name server on your network just hit enter, without "
+"entering any ip address."
+msgstr ""
+"Kérem adja meg a használni kívánt névszerver ip-címét. Több névszervert "
+"ismegadhat a késõbbiekben a /etc/resolv.conf szerkesztésével.\n"
+"Ha nincs névszerver a hálózatában, csak üssön entert, anélkül, hogybármilyen "
+"ip-címet megadna."
+
+#: ../netconfig.c:762
+msgid "Adjust configuration files"
+msgstr "A konfigurációs fájlok módosítása"
+
+#: ../netconfig.c:762
+msgid "Accept these settings and adjust configuration files?"
+msgstr ""
+"Elfogadja ezeket a beállításokat és módosítja a konfigurációs fájlokat?"
+
+#: ../netconfig.c:823
+#, c-format
+msgid "No profile loaded.\n"
+msgstr "Nincs betöltött profil.\n"
+
+#: ../netconfig.c:828
+#, c-format
+msgid "Current profile: %s\n"
+msgstr "Jelenlegi profil: %s\n"

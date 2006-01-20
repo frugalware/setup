@@ -29,6 +29,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <unistd.h>
+#include <libintl.h>
 
 #include "netconfig.h"
 
@@ -45,13 +46,26 @@ int nc_system(const char *cmd)
 
 int usage(const char *myname)
 {
-	printf("usage: %s [options] start|stop|restart|status|list\n", myname);
-	printf("       %s [options] [profile]\n", myname);
-	//printf("-v | --verbose <level>   Verbose mode.\n");
-	//printf("-c | --config  <file>    Config file.\n");
-	printf("-h | --help              This help.\n");
-	printf("     --dry-run           Do not actually perform the operation.\n");
+	printf(_("usage: %s [options] start|stop|restart|status|list\n"), myname);
+	printf(_("       %s [options] [profile]\n"), myname);
+	printf(_("-h | --help              This help.\n"));
+	printf(_("     --dry-run           Do not actually perform the operation.\n"));
 	return(0);
+}
+
+void i18ninit(void)
+{
+	char *lang=NULL;
+
+	lang=getenv("LC_ALL");
+	if(lang==NULL || lang[0]=='\0')
+		lang=getenv("LC_MESSAGES");
+	if (lang==NULL || lang[0]=='\0')
+		lang=getenv("LANG");
+
+	setlocale(LC_ALL, lang);
+	bindtextdomain("netconfig", "/usr/share/locale");
+	textdomain("netconfig");
 }
 
 char *trim(char *str)
@@ -114,7 +128,7 @@ profile_t *parseprofile(char *fn)
 	fp = fopen(ptr, "r");
 	if(fp == NULL)
 	{
-		printf("%s: No such profile!\n", fn);
+		printf(_("%s: No such profile!\n"), fn);
 		return(NULL);
 	}
 	FREE(ptr);
@@ -134,7 +148,7 @@ profile_t *parseprofile(char *fn)
 			interface[min(255, strlen(ptr)-1)] = '\0';
 			if(!strlen(interface))
 			{
-				fprintf(stderr, "profile: line %d: bad interface name\n", n);
+				fprintf(stderr, _("profile: line %d: bad interface name\n"), n);
 				return(NULL);
 			}
 			if(strcmp(interface, "options"))
@@ -165,14 +179,14 @@ profile_t *parseprofile(char *fn)
 			var = strsep(&ptr, "=");
 			if(var == NULL)
 			{
-				fprintf(stderr, "profile: line %d: syntax error\n", n);
+				fprintf(stderr, _("profile: line %d: syntax error\n"), n);
 				return(NULL);
 			}
 			trim(var);
 			var = strtoupper(var);
 			if(!strlen(interface))
 			{
-				fprintf(stderr, "profile: line %d: all directives must belong to a section\n", n);
+				fprintf(stderr, _("profile: line %d: all directives must belong to a section\n"), n);
 				return(NULL);
 			}
 			if(ptr != NULL)
@@ -455,7 +469,7 @@ void dialog_backtitle(char *title)
 	fclose(fp);
 	if(dialog_vars.backtitle)
 		FREE(dialog_vars.backtitle);
-	dialog_vars.backtitle=g_strdup_printf("%s - %s %s", title, line, "Setup");
+	dialog_vars.backtitle=g_strdup_printf("%s - %s %s", title, line, _("Setup"));
 	dlg_put_backtitle();
 	dlg_clear();
 }
@@ -464,7 +478,7 @@ int dialog_confirm(void)
 {
 	int ret;
 	dialog_vars.defaultno=1;
-	ret = dialog_yesno("Exit", "Are you sure you want to exit?", 0, 0);
+	ret = dialog_yesno(_("Exit"), _("Are you sure you want to exit?"), 0, 0);
 	dialog_vars.defaultno=0;
 	if(ret==DLG_EXIT_OK)
 		return(1);
@@ -536,18 +550,18 @@ char *selnettype()
 	int typenum=4;
 	char *types[] =
 	{
-		"dhcp", "Use a DHCP server",
-		"static", "Use a static IP address",
-		"dsl", "DSL connection",
-		"lo", "No network - loopback connection only"
+		"dhcp", _("Use a DHCP server"),
+		"static", _("Use a static IP address"),
+		"dsl", _("DSL connection"),
+		"lo", _("No network - loopback connection only")
 	};
-	return(dialog_mymenu("Select network connection type",
-		"Now we need to know how your machine connects to the network.\n"
-		"If you have an internal network card and an assigned IP address, gateway, and DNS, use 'static'"
+	return(dialog_mymenu(_("Select network connection type"),
+		_("Now we need to know how your machine connects to the network.\n"
+		"If you have an internal network card and an assigned IP address, gateway, and DNS, use 'static' "
 		"to enter these values. Also may use this if you have a DSL connection.\n"
 		"If your IP address is assigned by a DHCP server (commonly used by cable modem services), select 'dhcp'. \n"
 		"If you just have a network card to connect directly to a DSL modem, then select 'dsl'. \n"
-		"Finally, if you do not have a network card, select the 'lo' choice. \n",
+		"Finally, if you do not have a network card, select the 'lo' choice. \n"),
 		0, 0, 0, typenum, types));
 }
 
@@ -558,7 +572,7 @@ int dsl_hook(void)
 	// do we have adslconfig?
 	if(stat("/usr/sbin/adslconfig", &buf))
 		return(0);
-	if(dialog_myyesno("DSL configuration", "Do you want to configure a DSL connetion now?"))
+	if(dialog_myyesno(_("DSL configuration"), _("Do you want to configure a DSL connetion now?")))
 		return(nc_system("adslconfig"));
 	return(0);
 }
@@ -708,45 +722,44 @@ int dialog_config()
 
 	dialog_state.output = stderr;
 	init_dialog(input, dialog_state.output);
-	dialog_backtitle("Network configuration");
+	dialog_backtitle(_("Network configuration"));
 
-	/*ret = dialog_ask("title", "desc", NULL);
-	dialog_msgbox("title", ret, 0, 0, 1);*/
-	host = dialog_ask("Enter hostname", "We'll need the name you'd like to give your host.\n"
+	host = dialog_ask(_("Enter hostname"), _("We'll need the name you'd like to give your host.\n"
 		"The full hostname is needed, such as:\n\n"
 		"frugalware.example.net\n\n"
-		"Enter full hostname:", "frugalware.example.net");
+		"Enter full hostname:"), "frugalware.example.net");
 	nettype = selnettype();
 	if(strcmp(nettype, "lo") && is_wireless_device("eth0"))
 	{
-		essid = dialog_ask("Extended network name", "It seems that this network card has a wireless extension."
-			"In order to use it, you must set your extended netwok name (ESSID). Enter your ESSID:", NULL);
-		key = dialog_ask("Encryption key", "If you have an encryption key, then please enter it below.\n"
-			"Examples: 4567-89AB-CD or  s:password", NULL);
+		essid = dialog_ask(_("Extended network name"), _("It seems that this network card has a wireless "
+			"extension. In order to use it, you must set your extended netwok name (ESSID). Enter your ESSID:"),
+			NULL);
+		key = dialog_ask(_("Encryption key"), _("If you have an encryption key, then please enter it below.\n"
+			"Examples: 4567-89AB-CD or  s:password"), NULL);
 	}
 	if(!strcmp(nettype, "dhcp"))
-		dhcphost = dialog_ask("Set DHCP hostname", "Some network providers require that the DHCP hostname be"
+		dhcphost = dialog_ask(_("Set DHCP hostname"), _("Some network providers require that the DHCP hostname be"
 			"set in order to connect. If so, they'll have assigned a hostname to your machine. If you were"
 			"assigned a DHCP hostname, please enter it below. If you do not have a DHCP hostname, just"
-			"hit enter.", NULL);
+			"hit enter."), NULL);
 	else if(!strcmp(nettype, "static"))
 	{
-		ipaddr = dialog_ask("Enter ip address", "Enter your IP address for the local machine.", NULL);
-		netmask = dialog_ask("Enter netmask for local network",
-			"Enter your netmask. This will generally look something like this: 255.255.255.0\n"
-			"If unsure, just hit enter.", "255.255.255.0");
-		gateway = dialog_ask("Enter gateway address", "Enter the address for the gateway on your network."
-			"If you don't have a gateway on your network just hit enter, without entering any ip address.",
+		ipaddr = dialog_ask(_("Enter ip address"), _("Enter your IP address for the local machine."), NULL);
+		netmask = dialog_ask(_("Enter netmask for local network"),
+			_("Enter your netmask. This will generally look something like this: 255.255.255.0\n"
+			"If unsure, just hit enter."), "255.255.255.0");
+		gateway = dialog_ask(_("Enter gateway address"), _("Enter the address for the gateway on your network. "
+			"If you don't have a gateway on your network just hit enter, without entering any ip address."),
 			NULL);
-		dns = dialog_ask("Select nameserver", "Please give the IP address of the name server to use. You can"
+		dns = dialog_ask(_("Select nameserver"), _("Please give the IP address of the name server to use. You can"
 			"add more Domain Name Servers later by editing /etc/sysconfig/network/default.\n"
-			"If you don't have a name server on your network just hit enter, without entering any ip address.",
+			"If you don't have a name server on your network just hit enter, without entering any ip address."),
 			NULL);
 	}
 	if(!strcmp(nettype, "static") || !strcmp(nettype, "dsl"))
 		dsl_hook();
 
-	if(dialog_myyesno("Adjust configuration files", "Accept these settings and adjust configuration files?")
+	if(dialog_myyesno(_("Adjust configuration files"), _("Accept these settings and adjust configuration files?"))
 		&& !nco_dryrun)
 		writeconfig(host, nettype, dhcphost, ipaddr, netmask, gateway, dns, essid, key);
 
@@ -769,8 +782,6 @@ int main(int argc, char **argv)
 	int option_index;
 	static struct option opts[] =
 	{
-		/*{"verbose",        required_argument, 0, 'v'},
-		{"config",         required_argument, 0, 'c'},*/
 		{"help",           no_argument,       0, 'h'},
 		{"dry-run",        no_argument,       0, 1000},
 		{0, 0, 0, 0}
@@ -785,12 +796,11 @@ int main(int argc, char **argv)
 			break;
 		switch(opt)
 		{
-			/*case 'c': strcpy(fwo_conffile, optarg); break;
-			case 'v': fwo_verbose = atoi(optarg); break;*/
 			case 1000: nco_dryrun = 1; break;
 			case 'h':  nco_usage  = 1; break;
 		}
 	}
+	i18ninit();
 	if(nco_usage)
 	{
 		usage(argv[0]);
@@ -810,12 +820,12 @@ int main(int argc, char **argv)
 				return(127);
 			if((!strcmp("status", argv[optind])) && !fn)
 			{
-				printf("No profile loaded.\n");
+				printf(_("No profile loaded.\n"));
 				return(1);
 			}
 			else if ((!strcmp("status", argv[optind])) && fn)
 			{
-				printf("Current profile: %s\n", fn);
+				printf(_("Current profile: %s\n"), fn);
 				return(0);
 			}
 			profile = parseprofile(fn);
