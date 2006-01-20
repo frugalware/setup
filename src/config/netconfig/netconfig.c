@@ -665,6 +665,12 @@ int writeconfig(char *host, char *nettype, char *dhcphost, char *ipaddr, char *n
 	}
 	fclose(fp);
 
+	fp = fopen("/etc/HOSTNAME", "w");
+	if(fp==NULL)
+		return(1);
+	fprintf(fp, "%s\n", host);
+	fclose(fp);
+
 	if(strcmp(nettype, "static"))
 	{
 		fakeip=1;
