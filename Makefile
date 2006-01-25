@@ -37,7 +37,7 @@ MODULEVER = 3.2.2-2
 NCVER = 5.5-1
 PACVER = 2.9.99.12-1
 EJECTVER = 2.1.0-1
-UDEVVER = 082
+UDEVVER = 082-1
 UTILVER = 2.12-22
 NETKITVER = 0.17-3
 MDVER = 2.2-1
@@ -88,7 +88,7 @@ sources = $(kpatches) bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYVER).tar.gz \
 	  module-init-tools-$(MODULEVER)-$(CARCH).fpm \
 	  ncurses-$(NCVER)-$(CARCH).fpm netkit-base-$(NETKITVER)-$(CARCH).fpm \
 	  net-tools-$(NETVER)-$(CARCH).fpm pacman-$(PACVER)-$(CARCH).fpm \
-	  reiserfsprogs-$(REISERVER)-$(CARCH).fpm udev-$(UDEVVER).tar.gz \
+	  reiserfsprogs-$(REISERVER)-$(CARCH).fpm udev-$(UDEVVER)-$(CARCH).fpm \
 	  util-linux-$(UTILVER)-$(CARCH).fpm
 
 compile: check ccache setup $(packages) misc
@@ -120,8 +120,6 @@ misc: merge
 	cp etc/inittab $(MDIR)/etc/
 	cp etc/rc.S $(MDIR)/etc/rc.d/
 	chmod +x $(MDIR)/etc/rc.d/rc.S
-	cp etc/rc.hotplug $(MDIR)/etc/rc.d/
-	chmod +x $(MDIR)/etc/rc.d/rc.hotplug
 	@echo "All done. Start 'make initrd' now."
 
 devices: compile
@@ -341,19 +339,11 @@ udev:
 	rm -rf $(BDIR)
 	mkdir $(BDIR)
 	rm -rf udev
-	mkdir -p udev
-	cd $(BDIR) && tar xzf ../$(CDIR)/udev-$(UDEVVER).tar.gz; \
-	cd udev-$(UDEVVER); \
-	sed -i 's|udevdir =\t$${prefix}/udev|udevdir =\t$${prefix}/dev|' Makefile; \
-	make; \
-	make DESTDIR=$(CWD)/../../udev install
-	cp $(BDIR)/udev-$(UDEVVER)/{udev,udevsend,udevstart} udev/sbin/
-	mkdir udev/etc/rc.d/
-	cat $(BDIR)/udev-$(UDEVVER)/extras/start_udev |sed 's/echo "/#echo "/' \
-		>udev/etc/rc.d/rc.udev
-	chmod 755 udev/etc/rc.d/rc.udev
-	mkdir udev/{proc,sys}
-	ln -s udevsend udev/sbin/hotplug
+	mkdir -p udev/{proc,sys,dev}
+	cd $(BDIR) && tar xjf ../$(CDIR)/udev-$(UDEVVER)-$(CARCH).fpm
+	cp -a $(BDIR)/{etc,lib,sbin} udev/
+	sed -i 's/^source/#source/;s/msg /#msg /;s/ok /#ok /;s/rc_exec/rc_start/;s/ko/ko.gz/' udev/etc/rc.d/rc.hotplug
+	sed -i 's|^mount /|#mount /|;s/mount none/#mount none/;s|! \[ `pidof -o .*` \]|true|' udev/etc/rc.d/rc.udev
 
 eject:
 	rm -rf $(BDIR)
