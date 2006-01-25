@@ -20,31 +20,31 @@
 
 VERSION = 0.6.3
 STABLE = false
-BASHVER = 3.0-6
+BASHVER = 3.1-1
 BUSYVER = 1.00
 DIALOGVER = 1.0_20051030-1
-E2VER = 1.38-1
+E2VER = 1.38-2
 REISERVER = 3.6.19-2
 LYNXVER = 2.8.5-3
 DHCPVER = 1.3.22pl4-3
-FWVER = 0.3-4
-NETVER = 1.60-12
-LIBCVER = 2.3.5-3
-KBDVER = 1.12-15
-KERNELVER = 2.6.14
+FWVER = 0.4pre1-1
+NETVER = 1.60-16
+LIBCVER = 2.3.6-1
+KBDVER = 1.12-16
+KERNELVER = 2.6.15
 KERNELREL = 2
-MODULEVER = 3.1-6
+MODULEVER = 3.2.2-2
 NCVER = 5.5-1
-PACVER = 2.9.7-17
+PACVER = 2.9.99.12-1
 EJECTVER = 2.1.0-1
-UDEVVER = 071
-UTILVER = 2.12-20
+UDEVVER = 082
+UTILVER = 2.12-22
 NETKITVER = 0.17-3
-MDVER = 2.1-2
-XFSVER = 2.7.3-1
+MDVER = 2.2-1
+XFSVER = 2.7.11-1
 PPPVER = 2.4.3-5
-PPPOEVER = 3.6-3
-GLIBVER = 2.8.3-1
+PPPOEVER = 3.7-2
+GLIBVER = 2.8.5-1
 PEDVER = 1.6.25.1-1
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
@@ -164,7 +164,7 @@ bash:
 	mkdir $(BDIR)
 	rm -rf bash
 	mkdir -p bash/{bin,etc}
-	cd $(BDIR) && tar xzf ../$(CDIR)/bash-$(BASHVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/bash-$(BASHVER)-$(CARCH).fpm
 	cp -a $(BDIR)/bin/bash bash/bin/
 	echo "root:x:0:0::/root:/bin/sh" >bash/etc/passwd
 
@@ -196,7 +196,7 @@ e2fsprogs:
 	mkdir $(BDIR)
 	rm -rf e2fsprogs
 	mkdir -p e2fsprogs/{sbin,lib}
-	cd $(BDIR) && tar xzf ../$(CDIR)/e2fsprogs-$(E2VER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/e2fsprogs-$(E2VER)-$(CARCH).fpm
 	cp -a $(BDIR)/sbin/{mke2fs,e2fsck} e2fsprogs/sbin/
 	cp -a $(BDIR)/lib/{libblkid*,libcom_err*,libe2p*,libext2fs*,libuuid*} e2fsprogs/lib/
 	mkdir e2fsprogs/etc/
@@ -245,29 +245,16 @@ net-tools:
 	rm -rf $(BDIR)
 	mkdir $(BDIR)
 	rm -rf net-tools
-	mkdir -p net-tools/{etc/rc.d/,etc/sysconfig/,sbin/} \
-		net-tools/var/lib/frugalware/{messages,system} \
-		net-tools/bin
+	mkdir -p net-tools/sbin
 	cd $(BDIR) && tar xjf ../$(CDIR)/net-tools-$(NETVER)-$(CARCH).fpm; \
-	cp -a var/lib/frugalware/messages/* \
-		../net-tools/var/lib/frugalware/messages/; \
-	sed -i 's/^\(gethostname .*\)/# \1\nhname=frugalware\ndname=example.net/;s/--default-item lo/--default-item dhcp/' \
-		var/lib/frugalware/system/netconfig; \
-	cp -a var/lib/frugalware/system/* \
-		../net-tools/var/lib/frugalware/system/; \
-	sed -i 's|/bin/sh|/bin/bash|' etc/rc.d/rc.interfaces; \
-	sed -i 's/grep -w/grep/;s/grep -vw/grep -v/' etc/rc.d/rc.interfaces; \
-	cp -a etc/rc.d/rc.interfaces ../net-tools/etc/rc.d/; \
-	cp -a bin/ipmask ../net-tools/bin/; \
 	cp -a sbin/netconfig ../net-tools/sbin/
-	sed -i 's|adslconfig$$|adslconfig --fast\nmkdir /var/run\nmount -t devpts none /dev/pts\npppoe-connect >/dev/tty4 2>/dev/tty4 \&|' net-tools/var/lib/frugalware/system/netconfig
 
 glibc:
 	rm -rf $(BDIR)
 	mkdir $(BDIR)
 	rm -rf glibc
 	mkdir -p glibc/{lib,usr/lib/locale}
-	cd $(BDIR) && tar xzf ../$(CDIR)/glibc-$(LIBCVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/glibc-$(LIBCVER)-$(CARCH).fpm
 	cp -a $(BDIR)/lib/{ld*,libc*,libm*,libdl*,libnss*,libresolv*} glibc/lib/
 	
 	# generate the necessary locales
@@ -318,7 +305,7 @@ module-init-tools:
 	mkdir $(BDIR)
 	rm -rf module-init-tools
 	mkdir -p module-init-tools/{bin,sbin}
-	cd $(BDIR) && tar xzf ../$(CDIR)/module-init-tools-$(MODULEVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/module-init-tools-$(MODULEVER)-$(CARCH).fpm
 	cp -a $(BDIR)/sbin/* module-init-tools/sbin/
 
 ncurses:
@@ -360,6 +347,7 @@ udev:
 	sed -i 's|udevdir =\t$${prefix}/udev|udevdir =\t$${prefix}/dev|' Makefile; \
 	make; \
 	make DESTDIR=$(CWD)/../../udev install
+	cp $(BDIR)/udev-$(UDEVVER)/{udev,udevsend,udevstart} udev/sbin/
 	mkdir udev/etc/rc.d/
 	cat $(BDIR)/udev-$(UDEVVER)/extras/start_udev |sed 's/echo "/#echo "/' \
 		>udev/etc/rc.d/rc.udev
