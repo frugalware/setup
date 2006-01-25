@@ -35,6 +35,7 @@
 
 int nco_dryrun  = 0;
 int nco_usage   = 0;
+int nco_fast   = 0;
 
 int nc_system(const char *cmd)
 {
@@ -49,6 +50,7 @@ int usage(const char *myname)
 	printf(_("usage: %s [options] start|stop|restart|status|list\n"), myname);
 	printf(_("       %s [options] [profile]\n"), myname);
 	printf(_("-h | --help              This help.\n"));
+	printf(_("-f | --fast              Fast mode, used by the setup.\n"));
 	printf(_("     --dry-run           Do not actually perform the operation.\n"));
 	return(0);
 }
@@ -568,12 +570,24 @@ char *selnettype()
 int dsl_hook(void)
 {
 	struct stat buf;
+	int ret;
 
 	// do we have adslconfig?
 	if(stat("/usr/sbin/adslconfig", &buf))
 		return(0);
 	if(dialog_myyesno(_("DSL configuration"), _("Do you want to configure a DSL connetion now?")))
-		return(nc_system("adslconfig"));
+	{
+		if(!nco_fast)
+			return(nc_system("adslconfig"));
+		else
+		{
+			ret = nc_system("adslconfig --fast");
+			nc_system("mkdir /var/run");
+			nc_system("mount -t devpts none /dev/pts");
+			nc_system("pppoe-connect >/dev/tty4 2>/dev/tty4 &");
+			return(ret);
+		}
+	}
 	return(0);
 }
 
@@ -730,10 +744,13 @@ int dialog_config()
 	init_dialog(input, dialog_state.output);
 	dialog_backtitle(_("Network configuration"));
 
-	host = dialog_ask(_("Enter hostname"), _("We'll need the name you'd like to give your host.\n"
+	if(!nco_fast)
+		host = dialog_ask(_("Enter hostname"), _("We'll need the name you'd like to give your host.\n"
 		"The full hostname is needed, such as:\n\n"
 		"frugalware.example.net\n\n"
 		"Enter full hostname:"), "frugalware.example.net");
+	else
+		host = strdup("frugalware.example.net");
 	nettype = selnettype();
 	if(strcmp(nettype, "lo") && is_wireless_device("eth0"))
 	{
@@ -789,6 +806,7 @@ int main(int argc, char **argv)
 	static struct option opts[] =
 	{
 		{"help",           no_argument,       0, 'h'},
+		{"fast",           no_argument,       0, 'f'},
 		{"dry-run",        no_argument,       0, 1000},
 		{0, 0, 0, 0}
 	};
@@ -796,7 +814,7 @@ int main(int argc, char **argv)
 	int i;
 	profile_t *profile;
 
-	while((opt = getopt_long(argc, argv, "h", opts, &option_index)))
+	while((opt = getopt_long(argc, argv, "hf", opts, &option_index)))
 	{
 		if(opt < 0)
 			break;
@@ -804,6 +822,7 @@ int main(int argc, char **argv)
 		{
 			case 1000: nco_dryrun = 1; break;
 			case 'h':  nco_usage  = 1; break;
+			case 'f':  nco_fast   = 1; break;
 		}
 	}
 	i18ninit();
