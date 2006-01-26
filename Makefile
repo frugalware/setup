@@ -243,9 +243,10 @@ net-tools:
 	rm -rf $(BDIR)
 	mkdir $(BDIR)
 	rm -rf net-tools
-	mkdir -p net-tools/sbin
+	mkdir -p net-tools/{etc/sysconfig/network,usr/share,sbin}
 	cd $(BDIR) && tar xjf ../$(CDIR)/net-tools-$(NETVER)-$(CARCH).fpm; \
-	cp -a sbin/netconfig ../net-tools/sbin/
+	cp -a sbin/netconfig ../net-tools/sbin/; \
+	cp -a usr/share/locale ../net-tools/usr/share/
 
 glibc:
 	rm -rf $(BDIR)
