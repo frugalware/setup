@@ -170,7 +170,7 @@ int run(GList **config)
 	system("chroot ./ /sbin/timeconfig");
 	system("chroot ./ /sbin/mouseconfig");
 
-	if(!fw_system("pacman -Q xorg -r ./"))
+	if(!fw_system("pacman -Q xorg-server -r ./"))
 	{
 		system("chroot ./ /sbin/xconfig");
 		system("chroot ./ /sbin/xwmconfig --silent");
