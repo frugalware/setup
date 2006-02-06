@@ -5,7 +5,7 @@ http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/dhcp
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/dialog-1.0_20051030-1-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/e2fsprogs-1.38-2-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/eject-2.1.0-1-i686.fpm
-http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/frugalware-0.4pre1-1-i686.fpm
+http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/frugalware-0.4pre2-3-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/glibc-2.3.6-1-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/kbd-1.12-16-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/source/base/kernel/linux-2.6.15.tar.bz2
@@ -14,11 +14,11 @@ http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/modu
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/ncurses-5.5-1-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/netkit-base-0.17-3-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/net-tools-1.60-16-i686.fpm
-http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/pacman-2.9.99.13-1-i686.fpm
+http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/pacman-2.9.99.16-1-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/reiserfsprogs-3.6.19-2-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/udev-082-1-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/util-linux-2.12-22-i686.fpm
-http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/mdadm-2.2-1-i686.fpm
+http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/mdadm-2.3-1-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/xfsprogs-2.7.11-1-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/ppp-2.4.3-5-i686.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-i686/rp-pppoe-3.7-2-i686.fpm
