@@ -307,11 +307,12 @@ int selpkg_confirm(void)
 		return(0);
 }
 
-int prepare_pkgdb(char *repo, GList **config)
+int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 {
 	char *pacbindir, *pkgdb;
 	struct stat sbuf;
 	int extra=0;
+	PM_DB *i;
 #ifdef FINAL
 	char *mode;
 	FILE *fp;
@@ -371,6 +372,32 @@ int prepare_pkgdb(char *repo, GList **config)
 		// pacman can't log without this
 		makepath(g_strdup_printf("%s/var/log", TARGETDIR));
 	}
+
+	// register the database
+	if(!extra)
+	{
+		i = alpm_db_register(PACCONF);
+		if(i==NULL)
+		{
+			fprintf(stderr, "could not register '%s' database (%s)\n",
+				PACCONF, alpm_strerror(pm_errno));
+			return(1);
+		}
+		else
+			*syncs = g_list_append(*syncs, i);
+	}
+	else
+	{
+		i = alpm_db_register(PACEXCONF);
+		if(i==NULL)
+		{
+			fprintf(stderr, "could not register '%s' database (%s)\n",
+				PACEXCONF, alpm_strerror(pm_errno));
+			return(1);
+		}
+		else
+			*syncs = g_list_append(*syncs, i);
+	}
 	return(0);
 }
 
@@ -395,10 +422,10 @@ int fw_select(char *repo, GList **config, int selpkgc, GList *syncs)
 		0, 0, 0);
 	if(!extra)
 	{
-		prepare_pkgdb(PACCONF, config);
+		prepare_pkgdb(PACCONF, config, &syncs);
 		if(((char*)data_get(*config, "netinstall")!=NULL) ||
 			((char*)data_get(*config, "dvd")!=NULL))
-			prepare_pkgdb(PACEXCONF, config);
+			prepare_pkgdb(PACEXCONF, config, &syncs);
 		cats = selcat(g_list_nth_data(syncs, 1), syncs);
 	}
 	else
@@ -448,24 +475,6 @@ int run(GList **config)
 	{
 		fprintf(stderr, "could not register 'local' database (%s)\n",
 			alpm_strerror(pm_errno));
-		return(1);
-	}
-	else
-		syncs = g_list_append(syncs, i);
-	i = alpm_db_register(PACCONF);
-	if(i==NULL)
-	{
-		fprintf(stderr, "could not register '%s' database (%s)\n",
-			PACCONF, alpm_strerror(pm_errno));
-		return(1);
-	}
-	else
-		syncs = g_list_append(syncs, i);
-	i = alpm_db_register(PACEXCONF);
-	if(i==NULL)
-	{
-		fprintf(stderr, "could not register '%s' database (%s)\n",
-			PACEXCONF, alpm_strerror(pm_errno));
 		return(1);
 	}
 	else
