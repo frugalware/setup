@@ -327,7 +327,7 @@ pacman:
 	mkdir -p pacman/bin pacman/etc/pacman.d/ pacman/usr/lib
 	cd $(BDIR) && tar xjf ../$(CDIR)/pacman-$(PACVER)-$(CARCH).fpm
 	cp -a $(BDIR)/usr/bin/pacman pacman/bin/pacman
-	cp -a $(BDIR)/usr/lib/libalpm.so* ../pacman/usr/lib/
+	cp -a $(BDIR)/usr/lib/libalpm.so* pacman/usr/lib/
 	cp -a $(BDIR)/usr/bin/vercmp pacman/bin/
 	cp -a $(BDIR)/etc/pacman.d/* pacman/etc/pacman.d/
 	echo "[options]" >>pacman/etc/pacman.conf
@@ -456,5 +456,5 @@ zlib:
 	mkdir $(BDIR)
 	rm -rf zlib
 	mkdir -p zlib/usr/lib
-	cd $(BDIR) && tar xjf ../$(CDIR)/zlib-$(ZVER)-$(CARCH).fpm; \
+	cd $(BDIR) && tar xzf ../$(CDIR)/zlib-$(ZVER)-$(CARCH).fpm; \
 	cp -a usr/lib/libz.so* ../zlib/usr/lib/
