@@ -46,6 +46,9 @@ PPPVER = 2.4.3-5
 PPPOEVER = 3.7-2
 GLIBVER = 2.8.6-1
 PEDVER = 1.6.25.1-1
+BZVER = 1.0.3-3
+ARCHIVEVER = 1.2.37-3
+ZVER = 1.2.3-1
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
 export CCACHE_DIR=/var/cache/ccache/setup
@@ -71,7 +74,8 @@ CWD=`pwd`
 
 packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 	   net-tools glibc kbd kernel module-init-tools ncurses pacman eject \
-	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted
+	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted \
+	   bzip2 libarchive zlib
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 kpatches = bootsplash-3.1.6-$(KERNELVER).diff
 ifeq ($(CARCH),x86_64)
@@ -429,3 +433,27 @@ parted:
 	cp -a usr/lib/{libparted.so,libparted-*} ../parted/usr/lib/; \
 	cp -a usr/sbin/* ../parted/usr/sbin/; \
 	cp -a usr/share/locale/* ../parted/usr/share/locale/
+
+bzip2:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf bzip2
+	mkdir -p bzip2/lib
+	cd $(BDIR) && tar xjf ../$(CDIR)/bzip2-$(BZVER)-$(CARCH).fpm; \
+	cp -a lib/libbz2.so* ../bzip2/lib/
+
+libarchive:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf libarchive
+	mkdir -p libarchive/usr/lib
+	cd $(BDIR) && tar xjf ../$(CDIR)/libarchive-$(ARCHIVEVER)-$(CARCH).fpm; \
+	cp -a usr/lib/libarchive.so* ../libarchive/usr/lib/
+
+zlib:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf zlib
+	mkdir -p zlib/usr/lib
+	cd $(BDIR) && tar xjf ../$(CDIR)/zlib-$(ZVER)-$(CARCH).fpm; \
+	cp -a usr/lib/libz.so* ../zlib/usr/lib/
