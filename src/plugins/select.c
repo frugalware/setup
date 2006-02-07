@@ -126,7 +126,7 @@ GList* group2pkgs(GList *syncs, char *group, int dialog)
 					strlen(lang), lang)) || !extra);
 				if(!dialog && addpkg && !g_list_is_strin(pkgname, list))
 					list = g_list_append(list, strdup(pkgname));
-				if(dialog)
+				if(dialog && !g_list_is_strin(pkgname, list))
 				{
 					list = g_list_append(list, strdup(pkgname));
 					// TODO: PM_PKG_SIZE
