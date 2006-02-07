@@ -27,6 +27,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdlib.h>
+#include <alpm.h>
 
 #include <setup.h>
 #include <util.h>
@@ -45,156 +46,29 @@ plugin_t *info()
 	return &plugin;
 }
 
-char* categorysize(char *category)
+int g_list_is_strin(char *needle, GList *haystack)
 {
-	FILE *pp;
-	char *line, *ptr;
+	int i;
 
-	if ((pp = popen(g_strdup_printf("echo -e 'y\nn'|pacman -Sd %s -r ./", category), "r"))== NULL)
-	{
-		perror("Could not open pipe for reading");
-		return(NULL);
-	}
-	MALLOC(line, 255);
-	while(!feof(pp))
-	{
-		if(fgets(line, 255, pp) == NULL)
-			break;
-		if(strstr(line, "Total")==line)
-		{
-			line = strstr(line, ":");
-			line++;
-			ptr = strstr(line, "MB");
-			ptr+=2;
-			*ptr = '\0';
-			pclose(pp);
-			if(strlen(line)==9)
-				return(g_strdup_printf("  %s", line));
-			else if(strlen(line)==10)
-				return(g_strdup_printf(" %s", line));
-			else
-				return(line);
-		}
-	}
-	FREE(line);
-	pclose(pp);
-	return(NULL);
-}
-
-char* pkgdir(char *pkg, char *repo)
-{
-	DIR *dir;
-	struct dirent *ent;
-	char *targetdir, *dirname=NULL, *name, *ptr;
-	int gotit=0;
-
-	targetdir = g_strdup_printf("var/lib/pacman/%s", repo);
-	
-	dir = opendir(targetdir);
-	if (!dir)
-	{
-		perror(targetdir);
-		return(NULL);
-	}
-
-	while(!gotit && ((ent = readdir(dir)) != NULL))
-	{
-		if(!strcmp(ent->d_name, ".") || !strcmp(ent->d_name, ".."))
-			continue;
-		name = strdup(ent->d_name);
-		dirname = strdup(ent->d_name);
-		if((ptr = rindex(name, '-')))
-			*ptr = '\0';
-		if((ptr = rindex(name, '-')))
-			*ptr = '\0';
-		if(!strcmp(name, pkg))
-			gotit=1;
-		FREE(name);
-	}
-	closedir(dir);
-	FREE(targetdir);
-	if(gotit)
-	{
-		ptr = g_strdup_printf("var/lib/pacman/%s/%s", repo, dirname);
-		FREE(dirname);
-		return(ptr);
-	}
-	else
-		return(NULL);
-}
-
-int pkgsize(char *pkg, int extra)
-{
-	FILE *fp;
-	char line[256], *fn;
-	int ret;
-
-	if(!extra)
-		fn = g_strdup_printf("%s/desc", pkgdir(pkg, PACCONF));
-	else
-		fn = g_strdup_printf("%s/desc", pkgdir(pkg, PACEXCONF));
-
-	if ((fp = fopen(fn, "r"))
-		== NULL)
-	{
-		perror(_("Could not open output file for writing"));
-		return(0);
-	}
-	while(!feof(fp))
-	{
-		if(fgets(line, 256, fp) == NULL)
-			break;
-		if(!strcmp(line, "%CSIZE%\n"))
-			fscanf(fp, "%d", &ret);
-	}
-	fclose(fp);
-	return(ret);
-}
-
-char* pkgdesc(char *pkg, int extra)
-{
-	FILE *fp;
-	char line[256];
-	char *ret=NULL, *fn, *ptr;
-
-	if(!extra)
-		fn = g_strdup_printf("%s/desc", pkgdir(pkg, PACCONF));
-	else
-		fn = g_strdup_printf("%s/desc", pkgdir(pkg, PACEXCONF));
-
-	if ((fp = fopen(fn, "r"))
-		== NULL)
-	{
-		perror(_("Could not open output file for writing"));
-		return(0);
-	}
-	while(!feof(fp))
-	{
-		if(fgets(line, 256, fp) == NULL)
-			break;
-		if(!strcmp(line, "%DESC%\n"))
-		{
-			fgets(line, 256, fp);
-			ptr = strchr(line, '\n');
-			*ptr = '\0';
-			ret = strdup(line);
-		}
-	}
-	fclose(fp);
-	return(ret);
+	for(i=0; i<g_list_length(haystack); i++)
+		if(g_list_nth_data(haystack, i) && !strcmp(g_list_nth_data(haystack, i), needle))
+			return(1);
+	return(0);
 }
 
 // 1: add pkgdesc and On for dialog; 0: don't add
-GList* group2pkgs(char *group, int dialog)
+GList* group2pkgs(GList *syncs, char *group, int dialog)
 {
-	FILE *pp;
-	char line[256], *lang, *ptr, *ptr2;
+	PM_GRP *grp;
+	PM_LIST *pmpkgs, *lp, *junk;
+	GList *pkgs=NULL;
 	GList *list=NULL;
-	int extra=0, addpkg=1;
+	int i, extra=0, addpkg=1;
+	char *ptr, *pkgname, *lang;
 
 	// add the core group to the start of the base list
 	if(!strcmp(group, "base"))
-		list = group2pkgs("core", dialog);
+		list = group2pkgs(syncs, "core", dialog);
 
 	// get language suffix
 	lang = strdup(getenv("LANG"));
@@ -204,47 +78,60 @@ GList* group2pkgs(char *group, int dialog)
 	if(strlen(group) >= strlen(EXGRPSUFFIX) && !strcmp(group + strlen(group) - strlen(EXGRPSUFFIX), EXGRPSUFFIX))
 		extra=1;
 
-	if ((pp = popen(g_strdup_printf("pacman -Sg %s -r ./", group), "r"))
-		== NULL)
+	for (i=0; i<g_list_length(syncs); i++)
 	{
-		perror("Could not open pipe for reading");
+		grp = alpm_db_readgrp(g_list_nth_data(syncs, i), group);
+		if(grp)
+		{
+			pmpkgs = alpm_grp_getinfo(grp, PM_GRP_PKGNAMES);
+			for(lp = alpm_list_first(pmpkgs); lp; lp = alpm_list_next(lp))
+				pkgs = g_list_append(pkgs, alpm_list_getdata(lp));
+			break;
+		}
+	}
+	if(alpm_trans_init(PM_TRANS_TYPE_SYNC, PM_TRANS_FLAG_NODEPS, NULL, NULL, NULL) == -1)
+	{
+		fprintf(stderr, "failed to init transaction (%s)\n",
+			alpm_strerror(pm_errno));
 		return(NULL);
 	}
-	while(!feof(pp))
-	{
-		if(fgets(line, 255, pp) == NULL)
-			break;
-		// this line has data for us
-		if(strstr(line, "   ")==line)
+	for (i=0; i<g_list_length(pkgs); i++)
+		if(alpm_trans_addtarget(g_list_nth_data(pkgs, i)))
 		{
-			ptr = strchr(line, '\n');
-			*ptr = '\0';
-			ptr = line;
-			// skip leading whitespace
-			while(strchr(ptr, ' ')==ptr)
-				ptr++;
-			while(strchr(ptr, ' ')!=NULL)
-			{
-				ptr2 = ptr;
-				ptr = strchr(ptr, ' ');
-				*ptr = '\0';
-				ptr++;
+			fprintf(stderr, "failed to add target '%s' (%s)\n",
+				(char*)g_list_nth_data(pkgs, i), alpm_strerror(pm_errno));
+			return(NULL);
+		}
+
+	if(alpm_trans_prepare(&junk) == -1)
+	{
+		fprintf(stderr, "failed to prepare transaction (%s)\n",
+			alpm_strerror(pm_errno));
+		return(NULL);
+	}
+	pmpkgs = alpm_trans_getinfo(PM_TRANS_PACKAGES);
+	for(lp = alpm_list_first(pmpkgs); lp; lp = alpm_list_next(lp))
+	{
+		PM_SYNCPKG *sync = alpm_list_getdata(lp);
+		PM_PKG *pkg = alpm_sync_getinfo(sync, PM_SYNC_PKG);
+		//printf("%s\n", alpm_pkg_getinfo(pkg, PM_PKG_NAME));
+		pkgname = alpm_pkg_getinfo(pkg, PM_PKG_NAME);
 					// enable by default the packages in the
 					// frugalware repo + enable the
 					// language-specific parts from
 					// locale-extra
 				addpkg = ((!strcmp(group, "locale-extra") &&
-					strlen(ptr2) >= strlen(lang) &&
-					!strcmp(ptr2 + strlen(ptr2) -
+					strlen(pkgname) >= strlen(lang) &&
+					!strcmp(pkgname + strlen(pkgname) -
 					strlen(lang), lang)) || !extra);
-				if(!dialog && addpkg)
-					list = g_list_append(list, strdup(ptr2));
+				if(!dialog && addpkg && !g_list_is_strin(pkgname, list))
+					list = g_list_append(list, strdup(pkgname));
 				if(dialog)
 				{
-					list = g_list_append(list, strdup(ptr2));
-					// TODO: pkgsize()
+					list = g_list_append(list, strdup(pkgname));
+					// TODO: PM_PKG_SIZE
 					list = g_list_append(list,
-						pkgdesc(ptr2, extra));
+						strdup(alpm_pkg_getinfo(pkg, PM_PKG_DESC)));
 					if(addpkg)
 						list = g_list_append(list,
 							strdup("On"));
@@ -252,19 +139,140 @@ GList* group2pkgs(char *group, int dialog)
 						list = g_list_append(list,
 							strdup("Off"));
 				}
+	}
+	alpm_trans_release();
+	return(list);
+}
+
+char* categorysize(GList *syncs, char *category)
+{
+	int i;
+	double size=0;
+	PM_GRP *grp;
+	PM_LIST *pmpkgs, *lp, *junk;
+	GList *pkgs=NULL;
+
+	for (i=0; i<g_list_length(syncs); i++)
+	{
+		grp = alpm_db_readgrp(g_list_nth_data(syncs, i), category);
+		if(grp)
+		{
+			pmpkgs = alpm_grp_getinfo(grp, PM_GRP_PKGNAMES);
+			for(lp = alpm_list_first(pmpkgs); lp; lp = alpm_list_next(lp))
+				pkgs = g_list_append(pkgs, alpm_list_getdata(lp));
+			break;
+		}
+	}
+	if(alpm_trans_init(PM_TRANS_TYPE_SYNC, PM_TRANS_FLAG_NODEPS, NULL, NULL, NULL) == -1)
+	{
+		fprintf(stderr, "failed to init transaction (%s)\n",
+			alpm_strerror(pm_errno));
+		return(NULL);
+	}
+	for (i=0; i<g_list_length(pkgs); i++)
+		if(alpm_trans_addtarget(g_list_nth_data(pkgs, i)))
+		{
+			fprintf(stderr, "failed to add target '%s' (%s)\n",
+				(char*)g_list_nth_data(pkgs, i), alpm_strerror(pm_errno));
+			return(NULL);
+		}
+
+	if(alpm_trans_prepare(&junk) == -1)
+	{
+		fprintf(stderr, "failed to prepare transaction (%s)\n",
+			alpm_strerror(pm_errno));
+		return(NULL);
+	}
+	pmpkgs = alpm_trans_getinfo(PM_TRANS_PACKAGES);
+	for(lp = alpm_list_first(pmpkgs); lp; lp = alpm_list_next(lp))
+	{
+		PM_SYNCPKG *sync = alpm_list_getdata(lp);
+		PM_PKG *pkg = alpm_sync_getinfo(sync, PM_SYNC_PKG);
+		size += (int)alpm_pkg_getinfo(pkg, PM_PKG_SIZE);
+	}
+	alpm_trans_release();
+
+	size = (double)(size/1048576.0);
+	if(size < 0.1)
+		size=0.1;
+	return(g_strdup_printf("    %.1f MB", size));
+}
+
+GList *selcat(PM_DB *db, GList *syncs)
+{
+	char *name, *ptr;
+	GList *catlist=NULL;
+	char **arraychk;
+	GList *ret;
+	PM_LIST *lp;
+
+	name = alpm_db_getinfo(db, PM_DB_TREENAME);
+
+	for(lp = alpm_db_getgrpcache(db); lp; lp = alpm_list_next(lp))
+	{
+		PM_GRP *grp = alpm_list_getdata(lp);
+
+		ptr = (char *)alpm_grp_getinfo(grp, PM_GRP_NAME);
+
+		if(!strcmp(name, "frugalware-current") || !strcmp(name, "frugalware"))
+		{
+			if((index(ptr, '-')==NULL) && strcmp(ptr, "core"))
+			{
+				catlist = g_list_append(catlist, strdup(ptr));
+#ifdef FINAL
+				catlist = g_list_append(catlist,
+					categorysize(syncs, ptr));
+#else
+				catlist = g_list_append(catlist,
+					"   ");
+#endif
+				catlist = g_list_append(catlist, strdup("On"));
+			}
+		}
+		else
+		{
+			if((index(ptr, '-')!=NULL) &&
+				(strstr(ptr, "-extra")!=NULL))
+			{
+				catlist = g_list_append(catlist, strdup(ptr));
+#ifdef FINAL
+				catlist = g_list_append(catlist,
+					categorysize(syncs, ptr));
+#else
+				catlist = g_list_append(catlist,
+					"   ");
+#endif
+				if(strcmp(ptr, "locale-extra"))
+					catlist = g_list_append(catlist,
+						strdup("Off"));
+				else
+					catlist = g_list_append(catlist,
+						strdup("On"));
 			}
 		}
 	}
-	pclose(pp);
-	return(list);
+
+	// now display the list
+	arraychk = glist2dialog(catlist);
+
+	dlg_put_backtitle();
+	dlg_clear();
+	ret = fw_checklist(_("Selecting categories"),
+		(!strcmp(name, "frugalware-current") || !strcmp(name, "frugalware")) ?
+		_("Please select which extra categories to install:") :
+		_("Please select which frugalware categories to install:"),
+		0, 0, 0, g_list_length(catlist)/3, arraychk,
+		FLAG_CHECK);
+	return(ret);
 }
-GList *selpkg(char *category)
+
+GList *selpkg(char *category, GList *syncs)
 {
 	char **arraychk;
 	GList *pkglist;
 	GList *ret;
 
-	pkglist = group2pkgs(category, 1);
+	pkglist = group2pkgs(syncs, category, 1);
 	arraychk = glist2dialog(pkglist);
 
 	dlg_put_backtitle();
@@ -297,81 +305,6 @@ int selpkg_confirm(void)
 		return(1);
 	else
 		return(0);
-}
-
-// 0: frugalware; 1: extra
-GList *selcat(int repo)
-{
-	FILE *pp;
-	char *line, *ptr;
-	GList *catlist=NULL;
-	char **arraychk;
-	GList *ret;
-
-	// query the list
-	if ((pp = popen("pacman -Sg -r ./", "r"))== NULL)
-	{
-		perror("Could not open pipe for reading");
-		return(NULL);
-	}
-	MALLOC(line, 255);
-	while(!feof(pp))
-	{
-		if(fgets(line, 255, pp) == NULL)
-			break;
-		ptr = strchr(line, '\n');
-		*ptr = '\0';
-		if(!repo)
-		{
-			if((index(line, '-')==NULL) && strcmp(line, "core"))
-			{
-				catlist = g_list_append(catlist, strdup(line));
-#ifdef FINAL
-				catlist = g_list_append(catlist,
-					categorysize(line));
-#else
-				catlist = g_list_append(catlist,
-					"   ");
-#endif
-				catlist = g_list_append(catlist, strdup("On"));
-			}
-		}
-		else
-		{
-			if((index(line, '-')!=NULL) &&
-				(strstr(line, "-extra")!=NULL))
-			{
-				catlist = g_list_append(catlist, strdup(line));
-#ifdef FINAL
-				catlist = g_list_append(catlist,
-					categorysize(line));
-#else
-				catlist = g_list_append(catlist,
-					"   ");
-#endif
-				if(strcmp(line, "locale-extra"))
-					catlist = g_list_append(catlist,
-						strdup("Off"));
-				else
-					catlist = g_list_append(catlist,
-						strdup("On"));
-			}
-		}
-	}
-	FREE(line);
-	pclose(pp);
-
-	// now display the list
-	arraychk = glist2dialog(catlist);
-
-	dlg_put_backtitle();
-	dlg_clear();
-	ret = fw_checklist(_("Selecting categories"),
-		repo ? _("Please select which extra categories to install:") :
-		_("Please select which frugalware categories to install:"),
-		0, 0, 0, g_list_length(catlist)/3, arraychk,
-		FLAG_CHECK);
-	return(ret);
 }
 
 int prepare_pkgdb(char *repo, GList **config)
@@ -441,7 +374,7 @@ int prepare_pkgdb(char *repo, GList **config)
 	return(0);
 }
 
-int fw_select(char *repo, GList **config, int selpkgc)
+int fw_select(char *repo, GList **config, int selpkgc, GList *syncs)
 {
 	int i, extra=0;
 	GList *cats=NULL;
@@ -466,10 +399,10 @@ int fw_select(char *repo, GList **config, int selpkgc)
 		if(((char*)data_get(*config, "netinstall")!=NULL) ||
 			((char*)data_get(*config, "dvd")!=NULL))
 			prepare_pkgdb(PACEXCONF, config);
-		cats = selcat(0);
+		cats = selcat(g_list_nth_data(syncs, 1), syncs);
 	}
 	else
-		cats = selcat(1);
+		cats = selcat(g_list_nth_data(syncs, 2), syncs);
 	if(!selpkgc)
 	{
 		dlg_put_backtitle();
@@ -480,9 +413,9 @@ int fw_select(char *repo, GList **config, int selpkgc)
 	{
 		GList *pkgs=NULL;
 		if(selpkgc)
-			pkgs = selpkg(strdup((char*)g_list_nth_data(cats, i)));
+			pkgs = selpkg(strdup((char*)g_list_nth_data(cats, i)), syncs);
 		else
-			pkgs = group2pkgs(strdup((char*)g_list_nth_data(cats, i)), 0);
+			pkgs = group2pkgs(syncs, strdup((char*)g_list_nth_data(cats, i)), 0);
 		pkgs = g_list_prepend(pkgs, strdup((char*)g_list_nth_data(cats, i)));
 		allpkgs = g_list_append(allpkgs, pkgs);
 	}
@@ -495,12 +428,55 @@ int fw_select(char *repo, GList **config, int selpkgc)
 int run(GList **config)
 {
 	int selpkgc;
+	PM_DB *i;
+	GList *syncs=NULL;
+
+	if(alpm_initialize("/mnt/target") == -1)
+	{
+		fprintf(stderr, "failed to initilize alpm library (%s)\n",
+			alpm_strerror(pm_errno));
+		return(1);
+	}
+	if(alpm_set_option(PM_OPT_DBPATH, (long)PM_DBPATH) == -1)
+	{
+		fprintf(stderr, "failed to set option DBPATH (%s)\n",
+				alpm_strerror(pm_errno));
+		return(1);
+	}
+	i = alpm_db_register("local");
+	if(i==NULL)
+	{
+		fprintf(stderr, "could not register 'local' database (%s)\n",
+			alpm_strerror(pm_errno));
+		return(1);
+	}
+	else
+		syncs = g_list_append(syncs, i);
+	i = alpm_db_register(PACCONF);
+	if(i==NULL)
+	{
+		fprintf(stderr, "could not register '%s' database (%s)\n",
+			PACCONF, alpm_strerror(pm_errno));
+		return(1);
+	}
+	else
+		syncs = g_list_append(syncs, i);
+	i = alpm_db_register(PACEXCONF);
+	if(i==NULL)
+	{
+		fprintf(stderr, "could not register '%s' database (%s)\n",
+			PACEXCONF, alpm_strerror(pm_errno));
+		return(1);
+	}
+	else
+		syncs = g_list_append(syncs, i);
 
 	selpkgc = selpkg_confirm();
 	chdir(TARGETDIR);
-	fw_select("frugalware", config, selpkgc);
+	fw_select("frugalware", config, selpkgc, syncs);
 	if(((char*)data_get(*config, "netinstall")!=NULL) ||
 		((char*)data_get(*config, "dvd")!=NULL))
-		fw_select("extra", config, selpkgc);
+		fw_select("extra", config, selpkgc, syncs);
+	alpm_release();
 	return(0);
 }
