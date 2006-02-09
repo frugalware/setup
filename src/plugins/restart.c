@@ -54,7 +54,7 @@ int run(GList **config)
 	dlg_clear();
 	dialog_msgbox(_("Setup complete"), g_strdup_printf(_("System "
 		"installation and configuration is successfully completed. We "
-		"hope that %s will take you content. Please remove "
+		"hope that %s will make you content. Please remove "
 		"the media from your drive and press ENTER to reboot."),
 		version), 0, 0, 1);
 	exit_perform();
