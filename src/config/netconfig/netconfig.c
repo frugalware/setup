@@ -42,7 +42,7 @@ int nc_system(const char *cmd)
 	if(nco_dryrun)
 		return(printf("%s\n", cmd));
 	else
-		return(system(cmd));
+		return(system(cmd) ? 1 : 0);
 }
 
 int usage(const char *myname)
