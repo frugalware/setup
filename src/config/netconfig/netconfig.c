@@ -288,32 +288,32 @@ int ifdown(interface_t *iface)
 
 int ifup(interface_t *iface)
 {
-	int dhcp, i;
+	int dhcp, ret=0, i;
 	char *ptr;
 
 	if(g_list_length(iface->pre_ups))
 		for (i=0; i<g_list_length(iface->pre_ups); i++)
-			nc_system((char*)g_list_nth_data(iface->pre_ups, i));
+			ret += nc_system((char*)g_list_nth_data(iface->pre_ups, i));
 
 	dhcp = is_dhcp(iface);
 	// initialize the device
 	if(strlen(iface->mac))
 	{
 		ptr = g_strdup_printf("ifconfig %s hw ether %s", iface->name, iface->mac);
-		nc_system(ptr);
+		ret += nc_system(ptr);
 		FREE(ptr);
 	}
 	if(strlen(iface->essid))
 	{
 		ptr = g_strdup_printf("iwconfig %s essid %s", iface->name, iface->essid);
-		nc_system(ptr);
+		ret += nc_system(ptr);
 		FREE(ptr);
 	}
 
 	if(strlen(iface->key))
 	{
 		ptr = g_strdup_printf("iwconfig %s key %s", iface->name, iface->key);
-		nc_system(ptr);
+		ret += nc_system(ptr);
 		FREE(ptr);
 	}
 
@@ -324,26 +324,26 @@ int ifup(interface_t *iface)
 			ptr = g_strdup_printf("dhcpcd %s %s", iface->dhcp_opts, iface->name);
 		else
 			ptr = g_strdup_printf("dhcpcd -t 10 %s", iface->name);
-		nc_system(ptr);
+		ret += nc_system(ptr);
 		FREE(ptr);
 	}
 	else if(g_list_length(iface->options)==1)
 	{
 		ptr = g_strdup_printf("ifconfig %s %s",
 			iface->name, (char*)g_list_nth_data(iface->options, 0));
-		nc_system(ptr);
+		ret += nc_system(ptr);
 		FREE(ptr);
 	}
 	else
 	{
 		ptr = g_strdup_printf("ifconfig %s 0.0.0.0", iface->name);
-		nc_system(ptr);
+		ret += nc_system(ptr);
 		FREE(ptr);
 		for (i=0; i<g_list_length(iface->options); i++)
 		{
 			ptr = g_strdup_printf("ifconfig %s:%d %s",
 				iface->name, i+1, (char*)g_list_nth_data(iface->options, i));
-			nc_system(ptr);
+			ret += nc_system(ptr);
 			FREE(ptr);
 		}
 	}
@@ -352,14 +352,14 @@ int ifup(interface_t *iface)
 	if(!dhcp && strlen(iface->gateway))
 	{
 		ptr = g_strdup_printf("route add %s", iface->gateway);
-		nc_system(ptr);
+		ret += nc_system(ptr);
 		FREE(ptr);
 	}
 	if(g_list_length(iface->post_ups))
 		for (i=0; i<g_list_length(iface->post_ups); i++)
-			nc_system((char*)g_list_nth_data(iface->post_ups, i));
+			ret += nc_system((char*)g_list_nth_data(iface->post_ups, i));
 
-	return(0);
+	return(ret);
 }
 
 int setdns(profile_t* profile)
@@ -811,7 +811,7 @@ int main(int argc, char **argv)
 		{0, 0, 0, 0}
 	};
 	char *fn=NULL;
-	int i;
+	int ret=0, i;
 	profile_t *profile;
 
 	while((opt = getopt_long(argc, argv, "hf", opts, &option_index)))
@@ -878,12 +878,12 @@ int main(int argc, char **argv)
 		if(profile==NULL)
 			return(1);
 		for (i=0; i<g_list_length(profile->interfaces); i++)
-			ifup((interface_t*)g_list_nth_data(profile->interfaces, i));
+			ret += ifup((interface_t*)g_list_nth_data(profile->interfaces, i));
 		setdns(profile);
 		setlastprofile(fn);
 		FREE(fn);
 	}
 	else
 		dialog_config();
-	return(0);
+	return(ret);
 }
