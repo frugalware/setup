@@ -133,6 +133,8 @@ int append_font(char *fn, char *font)
 
 int run(GList **config)
 {
+	char *ptr;
+
 	dialog_vars.backtitle=gen_backtitle(_("Post-install configuration"));
 
 	// TODO: somehow /proc gets mounted sometimes
@@ -163,7 +165,8 @@ int run(GList **config)
 		fw_init_dialog();
 	}
 
-	append_font("etc/sysconfig/font", (char*)data_get(*config, "font"));
+	if((ptr = (char*)data_get(*config, "font")))
+		append_font("etc/sysconfig/font", ptr);
 
 	fw_end_dialog();
 	system("chroot ./ /sbin/netconfig");
