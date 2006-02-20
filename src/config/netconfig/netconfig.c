@@ -443,6 +443,13 @@ int is_wireless_device(char *dev)
 	FILE *pp;
 	char *ptr;
 	char line[256];
+	struct stat buf;
+
+	if(stat("/usr/sbin/iwconfig", &buf))
+	{
+		/* no iwconfig found */
+		return(0);
+	}
 
 	ptr = g_strdup_printf("iwconfig %s 2>&1", dev);
 	pp = popen(ptr, "r");
