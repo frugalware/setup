@@ -108,7 +108,7 @@ sources = $(kpatches) bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYVER).tar.gz \
 compile: check ccache setup $(packages) misc
 
 clean:
-	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img.gz
+	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img.gz dl.lst
 
 distclean: clean
 	rm -rf $(packages) vmlinuz-$(KERNELVER)-fw$(KERNELREL)-$(CARCH)
@@ -170,7 +170,10 @@ update:
 upload:
 	scp initrd-$(CARCH).img.gz frugalware.org:/home/ftp/pub/frugalware/frugalware-current/boot/
 
-check:
+%.lst: %.lst.in
+	sed "s/@CARCH@/$(CARCH)/g" $< > $@
+
+check: dl.lst
 	@for i in $(sources); do \
 		ls cache/$$i || exit 1; \
 	done
