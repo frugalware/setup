@@ -98,11 +98,15 @@ sources = $(kpatches) bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYVER).tar.gz \
 compile: check ccache setup $(packages) misc
 
 clean:
-	rm -rf $(BDIR) $(MDIR) $(packages)
+	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img.gz
 
 distclean: clean
-	rm -rf $(CDIR)/* vmlinuz-$(KERNELVER)-fw$(KERNELREL)-$(CARCH) \
-		initrd-$(CARCH).img.gz
+	rm -rf $(packages) vmlinuz-$(KERNELVER)-fw$(KERNELREL)-$(CARCH)
+
+cleancache: distclean
+	rm -rf $(CDIR)/*
+	darcs rev -a $(CDIR)
+
 ccache:
 	install -d -m 2775 /var/cache/ccache/setup
 
