@@ -176,7 +176,7 @@ upload:
 check: dl.lst
 	cd $(CDIR) && wget -c -i ../dl.lst
 	@for i in $(sources); do \
-		ls cache/$$i || exit 1; \
+		ls $(CDIR)/$$i >/dev/null || exit 1; \
 	done
 
 bash:
