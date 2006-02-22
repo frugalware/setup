@@ -109,6 +109,7 @@ compile: check ccache setup $(packages) misc
 
 clean:
 	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img.gz dl.lst
+	$(MAKE) -C src clean
 
 distclean: clean
 	rm -rf $(packages) vmlinuz-$(KERNELVER)-fw$(KERNELREL)-$(CARCH)
