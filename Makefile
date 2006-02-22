@@ -93,7 +93,17 @@ sources = $(kpatches) bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYVER).tar.gz \
 	  ncurses-$(NCVER)-$(CARCH).fpm netkit-base-$(NETKITVER)-$(CARCH).fpm \
 	  net-tools-$(NETVER)-$(CARCH).fpm pacman-$(PACVER)-$(CARCH).fpm \
 	  reiserfsprogs-$(REISERVER)-$(CARCH).fpm udev-$(UDEVVER)-$(CARCH).fpm \
-	  util-linux-$(UTILVER)-$(CARCH).fpm
+	  util-linux-$(UTILVER)-$(CARCH).fpm \
+	  netkit-base-$(NETKITVER)-$(CARCH).fpm \
+	  mdadm-$(MDVER)-$(CARCH).fpm \
+	  xfsprogs-$(XFSVER)-$(CARCH).fpm \
+	  ppp-$(PPPVER)-$(CARCH).fpm \
+	  pppoe-$(PPPOEVER)-$(CARCH).fpm \
+	  glib2-$(GLIBVER)-$(CARCH).fpm \
+	  parted-$(PEDVER)-$(CARCH).fpm \
+	  bzip2-$(BZVER)-$(CARCH).fpm \
+	  libarchive-$(ARCHIVEVER)-$(CARCH).fpm \
+	  zlib-$(ZVER)-$(CARCH).fpm
 
 compile: check ccache setup $(packages) misc
 
