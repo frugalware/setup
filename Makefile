@@ -18,7 +18,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #
 
-VERSION = 0.6.3
+VERSION = 0.6.4
 STABLE = false
 BASHVER = 3.1-1
 BUSYVER = 1.00
@@ -27,7 +27,7 @@ E2VER = 1.38-2
 REISERVER = 3.6.19-2
 LYNXVER = 2.8.5-3
 DHCPVER = 1.3.22pl4-3
-FWVER = 0.4pre2-3
+FWVER = 0.4pre2-4
 NETVER = 1.60-16
 LIBCVER = 2.3.6-1
 KBDVER = 1.12-16
@@ -35,19 +35,19 @@ KERNELVER = 2.6.15
 KERNELREL = 1
 MODULEVER = 3.2.2-2
 NCVER = 5.5-1
-PACVER = 2.9.99.16-1
+PACVER = 2.9.99.18-1
 EJECTVER = 2.1.0-1
-UDEVVER = 082-1
+UDEVVER = 085-1
 UTILVER = 2.12-22
 NETKITVER = 0.17-3
-MDVER = 2.3-1
+MDVER = 2.3.1-1
 XFSVER = 2.7.11-1
 PPPVER = 2.4.3-5
 PPPOEVER = 3.7-2
 GLIBVER = 2.8.6-1
 PEDVER = 1.6.25.1-1
 BZVER = 1.0.3-3
-ARCHIVEVER = 1.2.37-3
+ARCHIVEVER = 1.2.38-1
 ZVER = 1.2.3-1
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
@@ -98,7 +98,7 @@ sources = $(kpatches) bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYVER).tar.gz \
 	  mdadm-$(MDVER)-$(CARCH).fpm \
 	  xfsprogs-$(XFSVER)-$(CARCH).fpm \
 	  ppp-$(PPPVER)-$(CARCH).fpm \
-	  pppoe-$(PPPOEVER)-$(CARCH).fpm \
+	  rp-pppoe-$(PPPOEVER)-$(CARCH).fpm \
 	  glib2-$(GLIBVER)-$(CARCH).fpm \
 	  parted-$(PEDVER)-$(CARCH).fpm \
 	  bzip2-$(BZVER)-$(CARCH).fpm \
