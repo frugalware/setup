@@ -174,6 +174,7 @@ upload:
 	sed "s/@CARCH@/$(CARCH)/g" $< > $@
 
 check: dl.lst
+	cd $(CDIR) && wget -c -i ../dl.lst
 	@for i in $(sources); do \
 		ls cache/$$i || exit 1; \
 	done
