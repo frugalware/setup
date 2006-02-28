@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-30 19:43+0100\n"
+"POT-Creation-Date: 2006-02-28 23:33+0100\n"
 "PO-Revision-Date: 2005-11-30 03:44+0100\n"
 "Last-Translator: Rúben Gonçalves <rubenmagalhaes@gmail.com>\n"
 "Language-Team: \n"
@@ -14,10 +14,9 @@ msgstr ""
 
 #: ../src/plugins/configsource.c:57 ../src/plugins/configsource.c:89
 #: ../src/plugins/configsource.c:94 ../src/plugins/dolangsh.c:52
-#: ../src/plugins/formatdisk.c:230 ../src/plugins/formatdisk.c:369
+#: ../src/plugins/formatdisk.c:230 ../src/plugins/formatdisk.c:373
 #: ../src/plugins/layout.c:114 ../src/plugins/loadsource.c:75
-#: ../src/plugins/select.c:140 ../src/plugins/select.c:168
-#: ../src/plugins/select.c:408 ../src/util.c:247
+#: ../src/plugins/select.c:347 ../src/util.c:247
 msgid "Could not open output file for writing"
 msgstr "O ficheiro de saída não pode ser aberto para escrita"
 
@@ -38,12 +37,12 @@ msgstr ""
 "pacotes seja mais rápido. Na maioria dos casos o mirror seleccionado por "
 "omissão servirá."
 
-#: ../src/plugins/configsource.c:156 ../src/plugins/hotplug.c:53
-#: ../src/plugins/select.c:452 ../src/plugins/select.c:467
+#: ../src/plugins/configsource.c:158 ../src/plugins/hotplug.c:53
+#: ../src/plugins/select.c:421 ../src/plugins/select.c:436
 msgid "Please wait"
 msgstr "Aguarde por favor"
 
-#: ../src/plugins/configsource.c:156
+#: ../src/plugins/configsource.c:158
 msgid "Configuring the network interface..."
 msgstr "A configurar a interface de rede..."
 
@@ -118,29 +117,29 @@ msgstr "A seleccionar o sistema de ficheiros para %s"
 msgid "Please select the type of filesystem to use for %s."
 msgstr "Por favor seleccione o sistema de ficheiros a usar em %s."
 
-#: ../src/plugins/formatdisk.c:248 ../src/plugins/formatdisk.c:255
+#: ../src/plugins/formatdisk.c:252 ../src/plugins/formatdisk.c:259
 msgid "Formatting swap partition"
 msgstr "A formatar a partição swap"
 
-#: ../src/plugins/formatdisk.c:249
+#: ../src/plugins/formatdisk.c:253
 #, c-format
 msgid "Formatting %s as a swap partition"
 msgstr "A formatar %s como partição swap"
 
-#: ../src/plugins/formatdisk.c:256
+#: ../src/plugins/formatdisk.c:260
 #, c-format
 msgid "Formatting %s as a swap partition and checking for bad blocks"
 msgstr "A formatar %s como partição swap e a verificar por blocos danificados"
 
-#: ../src/plugins/formatdisk.c:277
+#: ../src/plugins/formatdisk.c:281
 msgid "Setting up the root partition"
 msgstr "A configurar a partição de root"
 
-#: ../src/plugins/formatdisk.c:279
+#: ../src/plugins/formatdisk.c:283
 msgid "Select the Linux installation partition"
 msgstr "Seleccione a partição onde o Linux foi instalado"
 
-#: ../src/plugins/formatdisk.c:280
+#: ../src/plugins/formatdisk.c:284
 msgid ""
 "Please select a partition from the following list to use for your root (/) "
 "partition. The following ones are available:"
@@ -148,49 +147,49 @@ msgstr ""
 "Por favor seleccione uma das seguintes partições para usar como partição de "
 "root (/). Estão disponíveis as seguintes partições:"
 
-#: ../src/plugins/formatdisk.c:292
+#: ../src/plugins/formatdisk.c:296
 msgid "Formatting"
 msgstr "A formatar"
 
-#: ../src/plugins/formatdisk.c:293
+#: ../src/plugins/formatdisk.c:297
 #, c-format
 msgid "Creating %s filesystem on %s and checking for bad blocks"
 msgstr ""
 "A criar o sistema de ficheiros %s em %s e a verificar por blocos danificados"
 
-#: ../src/plugins/formatdisk.c:294
+#: ../src/plugins/formatdisk.c:298
 #, c-format
 msgid "Creating %s filesystem on %s"
 msgstr "A criar o sistema de ficheiros %s em %s"
 
-#: ../src/plugins/formatdisk.c:389
+#: ../src/plugins/formatdisk.c:393
 #, c-format
 msgid "Select mount point for %s"
 msgstr "Seleccione o ponto de montagem para %s"
 
-#: ../src/plugins/formatdisk.c:409 ../src/plugins/formatdisk.c:520
+#: ../src/plugins/formatdisk.c:413 ../src/plugins/formatdisk.c:524
 msgid "(in use)"
 msgstr "(em uso)"
 
-#: ../src/plugins/formatdisk.c:417
+#: ../src/plugins/formatdisk.c:421
 #, c-format
 msgid "%s on %s\t%s"
 msgstr "%s em %s\t%s"
 
 #. non-root partitions
-#: ../src/plugins/formatdisk.c:493
+#: ../src/plugins/formatdisk.c:497
 msgid "Selecting other partitions"
 msgstr "A seleccionar outras partições"
 
-#: ../src/plugins/formatdisk.c:500 ../src/plugins/partdisk.c:139
+#: ../src/plugins/formatdisk.c:504 ../src/plugins/partdisk.c:139
 msgid "Continue"
 msgstr "Continuar"
 
-#: ../src/plugins/formatdisk.c:504
+#: ../src/plugins/formatdisk.c:508
 msgid "Select other Linux partitions for /etc/fstab"
 msgstr "Seleccione outras partições Linux para o /etc/fstab"
 
-#: ../src/plugins/formatdisk.c:505
+#: ../src/plugins/formatdisk.c:509
 msgid ""
 "You may use your other partitions to distribute your Linux system across "
 "more than one partition. Currently, you have only mounted your / partition. "
@@ -358,25 +357,37 @@ msgid "Setup complete"
 msgstr "Configuração completa"
 
 #: ../src/plugins/restart.c:55
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "System installation and configuration is successfully completed. We hope "
-"that %s will take you content. Please remove the media from your drive and "
+"that %s will make you content. Please remove the media from your drive and "
 "press ENTER to reboot."
 msgstr ""
 "A instalação e configuração do sistema foram completadas com sucesso. "
 "Esperamos que o %s o satisfaça. Por favor retire o disco da sua drive e "
 "prima ENTER para reiniciar o computador."
 
-#: ../src/plugins/select.c:272
+#: ../src/plugins/select.c:260
+msgid "Selecting categories"
+msgstr "A seleccionar as categorias"
+
+#: ../src/plugins/select.c:262
+msgid "Please select which extra categories to install:"
+msgstr "Por favor seleccione quais as categorias extra que pretende instalar:"
+
+#: ../src/plugins/select.c:263
+msgid "Please select which frugalware categories to install:"
+msgstr "Por favor seleccione que categorias do frugalware pretende instalar:"
+
+#: ../src/plugins/select.c:280
 msgid "Selecting packages"
 msgstr "A seleccionar os pacotes"
 
-#: ../src/plugins/select.c:285
+#: ../src/plugins/select.c:293
 msgid "Use expert menus?"
 msgstr "Usar menus de modo perito?"
 
-#: ../src/plugins/select.c:286
+#: ../src/plugins/select.c:294
 msgid ""
 "If you like, you may select your packages from expert menus. Where the "
 "normal menu shows a choice like 'C compiler system', the expert menus show "
@@ -396,31 +407,19 @@ msgstr ""
 "normais onde selecciona grupos de pacotes, ou escolha 'sim' para usar menus "
 "em modo perito onde pode escolher cada pacote individualmente."
 
-#: ../src/plugins/select.c:369
-msgid "Selecting categories"
-msgstr "A seleccionar as categorias"
-
-#: ../src/plugins/select.c:370
-msgid "Please select which extra categories to install:"
-msgstr "Por favor seleccione quais as categorias extra que pretende instalar:"
-
-#: ../src/plugins/select.c:371
-msgid "Please select which frugalware categories to install:"
-msgstr "Por favor seleccione que categorias do frugalware pretende instalar:"
-
-#: ../src/plugins/select.c:445
+#: ../src/plugins/select.c:414
 msgid "Selecting frugalware packages"
 msgstr "A seleccionar os pacotes do frugalware"
 
-#: ../src/plugins/select.c:448
+#: ../src/plugins/select.c:417
 msgid "Selecting extra packages"
 msgstr "A seleccionar pacotes extra"
 
-#: ../src/plugins/select.c:452
+#: ../src/plugins/select.c:421
 msgid "Searching for categories..."
 msgstr "A procurar categorias..."
 
-#: ../src/plugins/select.c:467
+#: ../src/plugins/select.c:436
 msgid "Searching for packages..."
 msgstr "A procurar pacotes..."
 
@@ -479,15 +478,15 @@ msgstr ""
 "altamente recomendado que crie uma. Deseja criar uma conta de utilizador "
 "normal?"
 
-#: ../src/plugins/postconf.c:136
+#: ../src/plugins/postconf.c:138
 msgid "Post-install configuration"
 msgstr "Configuração pós instalação"
 
-#: ../src/plugins/postconf.c:148
+#: ../src/plugins/postconf.c:150
 msgid "Configuring kernel modules"
 msgstr "A configurar os módulos de kernel"
 
-#: ../src/plugins/postconf.c:149
+#: ../src/plugins/postconf.c:151
 msgid "Updating module dependencies..."
 msgstr "A actualizar as dependências dos módulos..."
 
