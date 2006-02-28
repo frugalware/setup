@@ -5,7 +5,7 @@ http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/d
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/dialog-1.0_20051030-1-@CARCH@.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/e2fsprogs-1.38-2-@CARCH@.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/eject-2.1.0-1-@CARCH@.fpm
-http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/frugalware-0.4pre2-4-@CARCH@.fpm
+http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/frugalware-0.4rc1-1-@CARCH@.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/glibc-2.3.6-1-@CARCH@.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/kbd-1.12-16-@CARCH@.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/source/base/kernel/linux-2.6.15.tar.bz2
@@ -13,7 +13,7 @@ http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/l
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/module-init-tools-3.2.2-2-@CARCH@.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/ncurses-5.5-1-@CARCH@.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/netkit-base-0.17-3-@CARCH@.fpm
-http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/net-tools-1.60-16-@CARCH@.fpm
+http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/net-tools-1.60-17-@CARCH@.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/pacman-2.9.99.18-1-@CARCH@.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/reiserfsprogs-3.6.19-2-@CARCH@.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/udev-085-1-@CARCH@.fpm
