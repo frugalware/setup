@@ -84,7 +84,7 @@ int find(char *dirname)
 int run(GList **config)
 {
 	char **array;
-	char *fn;
+	char *fn, *ptr;
 	FILE* fp;
 	
 	find("/usr/share/kbd/keymaps/i386");
@@ -99,13 +99,14 @@ int run(GList **config)
 		"keyboard map) is the default. Use the UP/DOWN arrow keys and "
 		"PageUp/PageDown to scroll through the whole list of choices."),
 		0, 0, 0, g_list_length(layoutl), array);
+	ptr=strdup(dialog_vars.input_result);
 
 	FREE(array);
 	// drop .map.gz
-	dialog_vars.input_result[strlen(dialog_vars.input_result)-7]='\0';
+	ptr[strlen(ptr)-7]='\0';
 	
 	//TODO: maybe there is a proper system call for this?
-	system(g_strdup_printf("loadkeys /usr/share/kbd/keymaps/i386/%s.map.gz >%s 2>%s", dialog_vars.input_result, LOGDEV, LOGDEV));
+	system(g_strdup_printf("loadkeys /usr/share/kbd/keymaps/i386/%s.map.gz >%s 2>%s", ptr, LOGDEV, LOGDEV));
 	
 	fn = strdup("/tmp/setup_XXXXXX");
 	mkstemp(fn);
@@ -117,7 +118,8 @@ int run(GList **config)
 	fprintf(fp, "# /etc/sysconfig/keymap\n\n"
 		"# sepecify the keyboard map, maps are in "
 		"/usr/share/kbd/keymaps\n\n");
-	fprintf(fp, "keymap=%s\n", strstr(dialog_vars.input_result, "/")+1);
+	fprintf(fp, "keymap=%s\n", strstr(ptr, "/")+1);
+	FREE(ptr);
 	fclose(fp);
 
 	data_put(config, "keymap", fn);
