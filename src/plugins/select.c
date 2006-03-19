@@ -89,7 +89,7 @@ GList* group2pkgs(GList *syncs, char *group, int dialog)
 			break;
 		}
 	}
-	if(alpm_trans_init(PM_TRANS_TYPE_SYNC, PM_TRANS_FLAG_NODEPS, NULL, NULL, NULL) == -1)
+	if(alpm_trans_init(PM_TRANS_TYPE_SYNC, PM_TRANS_FLAG_NODEPS|PM_TRANS_FLAG_NOCONFLICTS, NULL, NULL, NULL) == -1)
 	{
 		fprintf(stderr, "failed to init transaction (%s)\n",
 			alpm_strerror(pm_errno));
@@ -163,7 +163,7 @@ char* categorysize(GList *syncs, char *category)
 			break;
 		}
 	}
-	if(alpm_trans_init(PM_TRANS_TYPE_SYNC, PM_TRANS_FLAG_NODEPS, NULL, NULL, NULL) == -1)
+	if(alpm_trans_init(PM_TRANS_TYPE_SYNC, PM_TRANS_FLAG_NODEPS|PM_TRANS_FLAG_NOCONFLICTS, NULL, NULL, NULL) == -1)
 	{
 		fprintf(stderr, "failed to init transaction (%s)\n",
 			alpm_strerror(pm_errno));
