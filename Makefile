@@ -122,7 +122,11 @@ ccache:
 	install -d -m 2775 /var/cache/ccache/setup
 
 setup:
+ifeq ($(STABLE),false)
 	$(MAKE) -C src final
+else
+	$(MAKE) -C src stable
+endif
 
 merge: $(packages)
 	rm -rf $(MDIR)

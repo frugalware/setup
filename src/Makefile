@@ -18,7 +18,7 @@
 
 UI ?= dialog
 CFLAGS ?= -g -Wall -O2 -pipe
-CFLAGS += $(FINAL) -DARCH="\"$(shell arch)\""
+CFLAGS += $(FINAL) $(STABLE) -DARCH="\"$(shell arch)\""
 LDFLAGS += -ldl -rdynamic
 CFLAGS += $(shell pkg-config --cflags glib-2.0)
 LDFLAGS += $(shell pkg-config --libs glib-2.0)
@@ -50,6 +50,9 @@ setup: $(objs)
 
 final:
 	$(MAKE) FINAL="-DFINAL" UI="$(UI)"
+
+stable:
+	$(MAKE) FINAL="-DFINAL" STABLE="-DSTABLE" UI="$(UI)"
 
 clean:
 	rm -f setup *.o
