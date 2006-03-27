@@ -127,7 +127,8 @@ int main(int argc, char *argv[])
 	{
 		plugin = g_list_nth_data(plugin_list, i);
 		plugin->run(&config);
-		dialog_vars.input_result[0]='\0';
+		if(dialog_vars.input_result)
+			dialog_vars.input_result[0]='\0';
 	}
 
 	fw_end_dialog();
