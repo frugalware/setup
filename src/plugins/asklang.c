@@ -47,6 +47,7 @@ char *langs[] =
 	"nl_NL", "Dutch / Nederlands              ",
 	"pl_PL", "Polish / Polski                 ",
 	"pt_PT", "Portuguese / Português          ",
+	"pt_BR", "Portuguese (Brazillian) / Português (Brazillian) ",
 	"sk_SK", "Slovak / Slovensky              "
 };
 

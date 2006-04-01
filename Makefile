@@ -54,7 +54,7 @@ export PATH := /usr/lib/ccache/bin:$(PATH)
 export CCACHE_DIR=/var/cache/ccache/setup
 export CCACHE_NOLINK=1
 export CCACHE_UMASK=002
-GLIBC_LANGS = en_US es_AR de_DE fr_FR it_IT hu_HU nl_NL pl_PL pt_PT sk_SK
+GLIBC_LANGS = en_US es_AR de_DE fr_FR it_IT hu_HU nl_NL pl_PL pt_PT sk_SK pt_BR
 CARCH ?= $(shell arch)
 ifeq ($(CARCH),i686)
 	KARCH ?= i386
