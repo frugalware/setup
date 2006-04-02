@@ -39,7 +39,7 @@ msgid ""
 "packages faster. In most cases the default value will be fine."
 msgstr ""
 "Sie können jetzt einen Mirror in Ihrer Nähe auswählen, um die Pakete "
-"schneller herunter zu laden. In den meisten Fällen ist der ausgewähle Mirror "
+"schneller herunter zu laden. In den meisten Fällen ist der ausgewählte Mirror "
 "in Ordnung."
 
 #: ../src/plugins/configsource.c:158 ../src/plugins/hotplug.c:53
@@ -144,14 +144,14 @@ msgstr "Richte root Partition ein"
 
 #: ../src/plugins/formatdisk.c:283
 msgid "Select the Linux installation partition"
-msgstr "Linux Installations Partition auswählen"
+msgstr "Linux Installations-Partition auswählen"
 
 #: ../src/plugins/formatdisk.c:284
 msgid ""
 "Please select a partition from the following list to use for your root (/) "
 "partition. The following ones are available:"
 msgstr ""
-"Bitte wählen Sie eine Partition aus der Liste für Ihre root (/) partition "
+"Bitte wählen Sie eine Partition aus der Liste für Ihre root (/) Partition "
 "aus. Folgende Partitionen sind verfügbar:"
 
 #: ../src/plugins/formatdisk.c:296
@@ -236,7 +236,7 @@ msgid ""
 msgstr ""
 "Willkommen unter den Benutzern von Frugalware!\n"
 "\n"
-"Beim Erstelen von Frugalware war es unser Ziel, dass Sie Ihre Arbeit "
+"Beim Erstellen von Frugalware war es unser Ziel, dass Sie Ihre Arbeit "
 "schneller und einfacher erledigen können. Wir hoffen, dass Ihnen unser "
 "Produkt gefällt.\n"
 "\n"
@@ -281,7 +281,7 @@ msgstr "Untersuche"
 #: ../src/plugins/loadsource.c:125
 msgid "Scanning for a CD/DVD drive containing a Frugalware install disc..."
 msgstr ""
-"Suche nach einem CD/DVD Laufwerk, dass eine Frugalware Installations Quelle "
+"Suche nach einem CD/DVD Laufwerk, dass eine Frugalware Installations-Quelle "
 "enthält..."
 
 #: ../src/plugins/loadsource.c:135
@@ -291,7 +291,7 @@ msgstr "CD/DVD Laufwerk gefunden"
 #: ../src/plugins/loadsource.c:135
 #, c-format
 msgid "A Frugalware install disc was found in device /dev/%s."
-msgstr "Eine Frugalware Installations Quelle wurde in /dev/%s gefunden."
+msgstr "Eine Frugalware Installations-Quelle wurde in /dev/%s gefunden."
 
 #: ../src/plugins/loadsource.c:145
 msgid "CD/DVD drive not found"
@@ -302,13 +302,13 @@ msgid ""
 "Sorry, no Frugalware install disc was found in your drives. Press ENTER to "
 "reboot."
 msgstr ""
-"Entschuldigung, es wurde in Ihren Laufwerken keine Frugalware Installations "
-"Quelle gefunden. Drücken Sie ENTER um neu zu starten."
+"Entschuldigung, es wurde in Ihren Laufwerken keine Frugalware "
+"Installations-Quelle gefunden. Drücken Sie ENTER um neu zu starten."
 
 #: ../src/plugins/partdisk.c:77
 #, fuzzy
 msgid "User friendly (curses based) version of fdisk"
-msgstr "Benutzerfreundliche (Curses basierende) Version von fdsik"
+msgstr "Benutzerfreundliche (Curses basierende) Version von fdisk"
 
 #: ../src/plugins/partdisk.c:78
 msgid "The traditional partitioning program for Linux"
@@ -344,7 +344,7 @@ msgstr "Laufwerk nicht gefunden"
 msgid ""
 "Sorry, no hard disk drives were found in this box. Press ENTER to reboot."
 msgstr ""
-"Entschulding, es wurden keine Festplatten gefunden. Drücken Sie ENTER um neu "
+"Entschuldigung, es wurden keine Festplatten gefunden. Drücken Sie ENTER um neu "
 "zu starten."
 
 #: ../src/plugins/partdisk.c:134
@@ -374,7 +374,7 @@ msgid ""
 "press ENTER to reboot."
 msgstr ""
 "Systeminstallation und Konfiguration wurde erfolgreich beendet. Wir hoffen, "
-"dass %s Sie zu frieden stellt. Bitte entfernen Sie alle Datenträger aus "
+"dass %s Sie zufrieden stellt. Bitte entfernen Sie alle Datenträger aus "
 "Ihren Laufwerken und drücken ENTER um neu zu starten."
 
 #: ../src/plugins/select.c:260
@@ -438,7 +438,7 @@ msgid ""
 "Errors occured while installing selected packages from the %s section.\n"
 "Press ENTER to continue..."
 msgstr ""
-"Es traten Fehler wärend der Installation Ihrer ausgewählen Pakete aus der %s "
+"Es traten Fehler während der Installation Ihrer ausgewählten Pakete aus der %s "
 "Sektion auf.\n"
 "Drücken Sie ENTER um fort zu fahren."
 
@@ -452,7 +452,7 @@ msgid ""
 "installing packages. If you don't have more disk, choose NO, and then you "
 "can finish up the installation. Have you inserted the next disk?"
 msgstr ""
-"Bitte legen Sie den nächsten Frugalware Installations Datenträger ein und "
+"Bitte legen Sie den nächsten Frugalware Installations-Datenträger ein und "
 "drücken ENTER um mit der Installation fort zu fahren. Wenn Sie keine "
 "weiteren Datenträger haben, wählen Sie NEIN und beenden Sie die "
 "Installation. Haben Sie den nächsten Datenträger eingelegt?"
@@ -497,7 +497,7 @@ msgstr "Konfiguriere Kernel Module"
 
 #: ../src/plugins/postconf.c:151
 msgid "Updating module dependencies..."
-msgstr "Aktuallisiere Modul-Abhängigkeiten..."
+msgstr "Aktualisiere Modul-Abhängigkeiten..."
 
 #: ../src/util.c:44
 msgid "Setup"
@@ -509,11 +509,11 @@ msgstr "Konnte Datei nicht zum Lesen öffnen"
 
 #: ../src/util.c:115
 msgid "Ejecting installation media..."
-msgstr "Werfe Installations Medium aus..."
+msgstr "Werfe Installations-Medium aus..."
 
 #: ../src/util.c:149
 msgid "Installation error"
-msgstr "Installations Fehler"
+msgstr "Installations-Fehler"
 
 #: ../src/util.c:150
 msgid ""
