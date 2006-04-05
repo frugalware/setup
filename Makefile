@@ -21,7 +21,7 @@
 VERSION = 0.6.4
 STABLE = false
 BASHVER = 3.1-2
-BUSYVER = 1.00
+BUSYVER = 1.1.1-1
 DIALOGVER = 1.0_20051030-1
 E2VER = 1.38-2
 REISERVER = 3.6.19-2
@@ -81,8 +81,7 @@ kpatches = bootsplash-3.1.6-$(KERNELVER).diff
 ifeq ($(CARCH),x86_64)
 	kpatches += linux-2.6.11-x86_64_config.patch
 endif
-sources = $(kpatches) bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYVER).tar.gz \
-	  busybox-$(BUSYVER)-gcc4.patch \
+sources = $(kpatches) bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYVER)-$(CARCH).fpm \
 	  dhcpcd-$(DHCPVER)-$(CARCH).fpm dialog-$(DIALOGVER)-$(CARCH).fpm \
 	  e2fsprogs-$(E2VER)-$(CARCH).fpm eject-$(EJECTVER)-$(CARCH).fpm \
 	  frugalware-$(FWVER)-$(CARCH).fpm \
@@ -197,16 +196,10 @@ busybox:
 	rm -rf $(BDIR)
 	mkdir $(BDIR)
 	rm -rf busybox
+	cd $(BDIR) && tar xjf ../$(CDIR)/busybox-$(BUSYVER)-$(CARCH).fpm
+	cp -a $(BDIR)/usr/share/busybox busybox
 	mkdir -p busybox/mnt/{source,target}
 	mkdir -p busybox/tmp
-	cd $(BDIR) && tar xzf ../$(CDIR)/busybox-$(BUSYVER).tar.gz
-	cd $(BDIR)/busybox-$(BUSYVER) && \
-		patch -p1 < ../../$(CDIR)/busybox-$(BUSYVER)-gcc4.patch
-	cp $(CONFDIR)/busybox.config $(BDIR)/busybox-$(BUSYVER)/.config
-	cd $(BDIR)/busybox-$(BUSYVER); \
-	sed -i "s/-march=i686/$(CFLAGS)/" .config; \
-	make; \
-	make PREFIX=$(CWD)/../../busybox install
 
 dialog:
 	rm -rf $(BDIR)

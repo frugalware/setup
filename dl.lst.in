@@ -1,6 +1,6 @@
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/source/base/kernel/bootsplash-3.1.6-2.6.16.diff
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/bash-3.1-2-@CARCH@.fpm
-http://www.busybox.net/downloads/busybox-1.00.tar.gz
+http://ftp.frugalware.org/pub/frugalware/frugalware-current/extra/frugalware-@CARCH@/busybox-1.1.1-1-@CARCH@.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/dhcpcd-1.3.22pl4-3-@CARCH@.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/dialog-1.0_20051030-1-@CARCH@.fpm
 http://ftp.frugalware.org/pub/frugalware/frugalware-current/frugalware-@CARCH@/e2fsprogs-1.38-2-@CARCH@.fpm
