@@ -82,7 +82,7 @@ sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYVER)-$(CARCH).fpm \
 	  e2fsprogs-$(E2VER)-$(CARCH).fpm eject-$(EJECTVER)-$(CARCH).fpm \
 	  frugalware-$(FWVER)-$(CARCH).fpm \
 	  glibc-$(LIBCVER)-$(CARCH).fpm kbd-$(KBDVER)-$(CARCH).fpm \
-	  linux-$(KERNELVER).tar.bz2 \
+	  kernel-$(KERNELVER)-$(KERNELREL)-$(CARCH).fpm \
 	  lynx-$(LYNXVER)-$(CARCH).fpm \
 	  module-init-tools-$(MODULEVER)-$(CARCH).fpm \
 	  ncurses-$(NCVER)-$(CARCH).fpm netkit-base-$(NETKITVER)-$(CARCH).fpm \
