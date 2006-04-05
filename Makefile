@@ -47,7 +47,7 @@ PPPOEVER = 3.8-1
 GLIBVER = 2.10.1-1
 PEDVER = 1.6.25.1-1
 BZVER = 1.0.3-3
-ARCHIVEVER = 1.2.51-1
+ARCHIVEVER = 1.2.53-2
 ZVER = 1.2.3-1
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
