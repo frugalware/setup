@@ -32,7 +32,7 @@ NETVER = 1.60-17
 LIBCVER = 2.3.6-1
 KBDVER = 1.12-17
 KERNELVER = 2.6.16
-KERNELREL = 1
+KERNELREL = 2
 MODULEVER = 3.2.2-3
 NCVER = 5.5-1
 PACVER = 2.9.99.24-1
@@ -77,11 +77,7 @@ packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted \
 	   bzip2 libarchive zlib
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
-kpatches = bootsplash-3.1.6-$(KERNELVER).diff
-ifeq ($(CARCH),x86_64)
-	kpatches += linux-2.6.11-x86_64_config.patch
-endif
-sources = $(kpatches) bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYVER)-$(CARCH).fpm \
+sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYVER)-$(CARCH).fpm \
 	  dhcpcd-$(DHCPVER)-$(CARCH).fpm dialog-$(DIALOGVER)-$(CARCH).fpm \
 	  e2fsprogs-$(E2VER)-$(CARCH).fpm eject-$(EJECTVER)-$(CARCH).fpm \
 	  frugalware-$(FWVER)-$(CARCH).fpm \
@@ -302,20 +298,10 @@ kernel:
 	rm -rf $(BDIR)
 	mkdir $(BDIR)
 	rm -rf kernel
-	mkdir -p kernel
-	cd $(BDIR) && tar xjf ../$(CDIR)/linux-$(KERNELVER).tar.bz2; \
-	cd linux-$(KERNELVER); \
-	sed "s/486/`echo $(MARCH)|sed 's/^i//'`/" \
-		../../$(CONFDIR)/kernel.config >.config; \
-	for i in $(kpatches); do \
-		patch -p1 < ../../$(CDIR)/$$i; \
-	done; \
-	sed -i "s/EXTRAVERSION =.*/EXTRAVERSION = -fw$(KERNELREL)/" Makefile; \
-	yes "" | make config >/dev/null; \
-	make; \
-	mkdir -p $(CWD)/../../kernel/lib; \
-	make INSTALL_MOD_PATH=$(CWD)/../../kernel/ modules_install; \
-	cp arch/$(KARCH)/boot/bzImage \
+	mkdir -p kernel/lib
+	cd $(BDIR) && tar xjf ../$(CDIR)/kernel-$(KERNELVER)-$(KERNELREL)-$(CARCH).fpm
+	cp -a $(BDIR)/lib/modules kernel/lib/
+	cp $(BDIR)/boot/boot/vmlinuz-$(KERNELVER)-fw$(KERNELREL) \
 		$(CWD)/../../vmlinuz-$(KERNELVER)-fw$(KERNELREL)-$(CARCH)
 	cd kernel/ && find . -name *ko|xargs gzip
 
