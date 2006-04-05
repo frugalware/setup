@@ -301,8 +301,8 @@ kernel:
 	mkdir -p kernel/lib
 	cd $(BDIR) && tar xjf ../$(CDIR)/kernel-$(KERNELVER)-$(KERNELREL)-$(CARCH).fpm
 	cp -a $(BDIR)/lib/modules kernel/lib/
-	cp $(BDIR)/boot/boot/vmlinuz-$(KERNELVER)-fw$(KERNELREL) \
-		$(CWD)/../../vmlinuz-$(KERNELVER)-fw$(KERNELREL)-$(CARCH)
+	cp $(BDIR)/boot/vmlinuz-$(KERNELVER)-fw$(KERNELREL) \
+		$(CWD)/vmlinuz-$(KERNELVER)-fw$(KERNELREL)-$(CARCH)
 	cd kernel/ && find . -name *ko|xargs gzip
 
 module-init-tools:
