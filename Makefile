@@ -111,7 +111,6 @@ distclean: clean
 
 cleancache: distclean
 	rm -rf $(CDIR)/*
-	darcs rev -a $(CDIR)
 
 ccache:
 	install -d -m 2775 /var/cache/ccache/setup
