@@ -138,6 +138,11 @@ update:
 upload:
 	scp initrd-$(CARCH).img.gz frugalware.org:/home/ftp/pub/frugalware/frugalware-current/boot/
 
+config:
+	chmod +x configure
+	./configure
+	chmod -x configure
+
 check: dl.lst
 	cd $(CDIR) && sh ../bin/download ../dl.lst
 	@for i in $(sources); do \
