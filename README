@@ -1,15 +1,25 @@
 This is the source of the Frugalware Linux installer.
 
-If you don't care about building as root, you can simply 'sudo make initrd',
-and hopefully you'll get a vmlinuz* file and az initrd.img.gz.
+Building
+--------
 
-If you want to run the commands as root only those are really necessary, first
-use 'make' and then 'sudo make initrd'
+1) run 'make config'
+2) 'sudo make initrd' (you need to be root to be able to mount the initrd
+   image file)
+3) hopefully you'll get the vmlinuz* and initrd*.img.gz files
 
-Adding new translations:
+Adding new translations
+-----------------------
 1) first push the po file to the po/ dir
 2) list the newly added language in src/plugins/asklang.c
 3) modify the glibc buildscript to include support for the given locale
+
+Adding new packages
+-------------------
+
+1) add the package to configure
+2) add a target for it to Makefile
+2) add the package to the source and packages list
 
 Greetings,
 VMiklos
