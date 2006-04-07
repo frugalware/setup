@@ -74,6 +74,8 @@ sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
 	  libarchive-$(LIBARCHIVEVER)-$(CARCH).fpm \
 	  zlib-$(ZLIBVER)-$(CARCH).fpm
 
+all: initrd
+
 compile: check ccache setup $(packages) misc
 
 clean:
@@ -106,7 +108,6 @@ misc: merge
 	cp etc/inittab $(MDIR)/etc/
 	cp etc/rc.S $(MDIR)/etc/rc.d/
 	chmod +x $(MDIR)/etc/rc.d/rc.S
-	@echo "All done. Start 'make initrd' now."
 
 devices: compile
 	mknod -m 700 $(MDIR)/dev/console c 5 1
