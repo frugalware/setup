@@ -104,13 +104,8 @@ compile: check ccache setup $(packages) misc
 
 clean:
 	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img.gz dl.lst
+	rm -rf $(packages) vmlinuz-$(KERNELVER)-fw$(KERNELREL)-$(CARCH) $(CDIR)/*
 	$(MAKE) -C src clean
-
-distclean: clean
-	rm -rf $(packages) vmlinuz-$(KERNELVER)-fw$(KERNELREL)-$(CARCH)
-
-cleancache: distclean
-	rm -rf $(CDIR)/*
 
 ccache:
 	install -d -m 2775 /var/cache/ccache/setup
