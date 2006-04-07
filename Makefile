@@ -77,7 +77,7 @@ sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
 compile: check ccache setup $(packages) misc
 
 clean:
-	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img.gz dl.lst
+	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img.gz dl.lst config.mak
 	rm -rf $(packages) vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(CDIR)/*
 	$(MAKE) -C src clean
 
