@@ -1,0 +1,46 @@
+#!/bin/bash
+# 
+#   configure for the Frugalware Setup
+#  
+#   Copyright (c) 2006 by Miklos Vajna <vmiklos@frugalware.org>
+#  
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+# 
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#  
+#   You should have received a copy of the GNU General Public License
+#   along with this program; if not, write to the Free Software
+#   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+#   USA.
+#
+
+packages=('bash' 'kernel' 'busybox' 'dhcpcd' 'dialog' 'e2fsprogs' 'eject' \
+	  'frugalware' 'glibc' 'kbd' 'lynx' 'module-init-tools' 'ncurses' \
+	  'netkit-base' 'net-tools' 'pacman' 'reiserfsprogs' 'udev' \
+	  'util-linux' 'mdadm' 'xfsprogs' 'ppp' 'rp-pppoe' 'glib2' 'parted' \
+	  'bzip2' 'libarchive' 'zlib')
+
+_configure_mirror="http://ftp.frugalware.org/pub/frugalware/frugalware-current"
+arch=`uname -m`
+
+rm -f config.mak dl.lst
+
+for i in ${packages[@]}
+do
+	echo -n "checking for $i... "
+	if [ "$i" = "busybox" ]; then
+		expath="extra/"
+	else
+		unset expath
+	fi
+	ver=`pacman -Si $i|grep ^Version|sed 's/.*: //'`
+	echo "$mirror/${expath}frugalware-$arch/$i-$ver-$arch.fpm" >>dl.lst
+	echo "`echo $i|tr [a-z] [A-Z]`VER = $ver" >>config.mak
+	echo "done."
+done

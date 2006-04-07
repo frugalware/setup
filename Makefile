@@ -138,9 +138,6 @@ update:
 upload:
 	scp initrd-$(CARCH).img.gz frugalware.org:/home/ftp/pub/frugalware/frugalware-current/boot/
 
-%.lst: %.lst.in
-	sed "s/@CARCH@/$(CARCH)/g" $< > $@
-
 check: dl.lst
 	cd $(CDIR) && sh ../bin/download ../dl.lst
 	@for i in $(sources); do \
