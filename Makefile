@@ -173,7 +173,7 @@ upload:
 	sed "s/@CARCH@/$(CARCH)/g" $< > $@
 
 check: dl.lst
-	cd $(CDIR) && wget -c -i ../dl.lst
+	cd $(CDIR) && sh ../bin/download ../dl.lst
 	@for i in $(sources); do \
 		ls $(CDIR)/$$i >/dev/null || exit 1; \
 	done
