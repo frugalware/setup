@@ -40,7 +40,7 @@ do
 		unset expath
 	fi
 	ver=`pacman -Si $i|grep ^Version|sed 's/.*: //'`
-	echo "$mirror/${expath}frugalware-$arch/$i-$ver-$arch.fpm" >>dl.lst
+	echo "$_configure_mirror/${expath}frugalware-$arch/$i-$ver-$arch.fpm" >>dl.lst
 	echo "`echo $i|tr [a-z] [A-Z]`VER = $ver" >>config.mak
 	echo "done."
 done
