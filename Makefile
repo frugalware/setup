@@ -18,36 +18,38 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 #
 
-STABLE = false
 BASHVER = 3.1-3
-BUSYVER = 1.1.1-1
+KERNELVER=2.6.16-2
+BUSYBOXVER = 1.1.1-1
+DHCPCDVER = 1.3.22pl4-3
 DIALOGVER = 1.0_20051030-1
-E2VER = 1.38-2
-REISERVER = 3.6.19-2
-LYNXVER = 2.8.5-3
-DHCPVER = 1.3.22pl4-3
-FWVER = 0.4-1
-NETVER = 1.60-17
-LIBCVER = 2.3.6-1
-KBDVER = 1.12-17
-KERNELVER = 2.6.16
-KERNELREL = 2
-MODULEVER = 3.2.2-3
-NCVER = 5.5-1
-PACVER = 2.9.99.25-1
+E2FSPROGSVER = 1.38-2
 EJECTVER = 2.1.0-1
+FRUGALWAREVER = 0.4-1
+GLIBCVER = 2.3.6-1
+KBDVER = 1.12-17
+LYNXVER = 2.8.5-3
+MODULE-INIT-TOOLSVER = 3.2.2-3
+NCURSESVER = 5.5-1
+NETKIT-BASEVER = 0.17-3
+NET-TOOLSVER = 1.60-17
+PACMANVER = 2.9.99.25-1
+REISERFSPROGSVER = 3.6.19-2
 UDEVVER = 089-1
-UTILVER = 2.12-22
-NETKITVER = 0.17-3
-MDVER = 2.4-1
-XFSVER = 2.7.11-1
+UTIL-LINUXVER = 2.12-22
+MDADMVER = 2.4-1
+XFSPROGSVER = 2.7.11-1
 PPPVER = 2.4.3-5
-PPPOEVER = 3.8-1
-GLIBVER = 2.10.1-1
-PEDVER = 1.6.25.1-1
-BZVER = 1.0.3-3
-ARCHIVEVER = 1.2.53-2
-ZVER = 1.2.3-1
+RP-PPPOEVER = 3.8-1
+GLIB2VER = 2.10.1-1
+PARTEDVER = 1.6.25.1-1
+BZIP2VER = 1.0.3-3
+LIBARCHIVEVER = 1.2.53-2
+ZLIBVER = 1.2.3-1
+
+STABLE = false
+KERNELV = $(shell echo $(KERNELVER)|sed 's/-.*//')
+KERNELREL = $(shell echo $(KERNELVER)|sed 's/.*-//')
 
 export PATH := /usr/lib/ccache/bin:$(PATH)
 export CCACHE_DIR=/var/cache/ccache/setup
@@ -76,34 +78,34 @@ packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted \
 	   bzip2 libarchive zlib
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
-sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYVER)-$(CARCH).fpm \
-	  dhcpcd-$(DHCPVER)-$(CARCH).fpm dialog-$(DIALOGVER)-$(CARCH).fpm \
-	  e2fsprogs-$(E2VER)-$(CARCH).fpm eject-$(EJECTVER)-$(CARCH).fpm \
-	  frugalware-$(FWVER)-$(CARCH).fpm \
-	  glibc-$(LIBCVER)-$(CARCH).fpm kbd-$(KBDVER)-$(CARCH).fpm \
-	  kernel-$(KERNELVER)-$(KERNELREL)-$(CARCH).fpm \
+sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
+	  dhcpcd-$(DHCPCDVER)-$(CARCH).fpm dialog-$(DIALOGVER)-$(CARCH).fpm \
+	  e2fsprogs-$(E2FSPROGSVER)-$(CARCH).fpm eject-$(EJECTVER)-$(CARCH).fpm \
+	  frugalware-$(FRUGALWAREVER)-$(CARCH).fpm \
+	  glibc-$(GLIBCVER)-$(CARCH).fpm kbd-$(KBDVER)-$(CARCH).fpm \
+	  kernel-$(KERNELV)-$(KERNELREL)-$(CARCH).fpm \
 	  lynx-$(LYNXVER)-$(CARCH).fpm \
-	  module-init-tools-$(MODULEVER)-$(CARCH).fpm \
-	  ncurses-$(NCVER)-$(CARCH).fpm netkit-base-$(NETKITVER)-$(CARCH).fpm \
-	  net-tools-$(NETVER)-$(CARCH).fpm pacman-$(PACVER)-$(CARCH).fpm \
-	  reiserfsprogs-$(REISERVER)-$(CARCH).fpm udev-$(UDEVVER)-$(CARCH).fpm \
-	  util-linux-$(UTILVER)-$(CARCH).fpm \
-	  netkit-base-$(NETKITVER)-$(CARCH).fpm \
-	  mdadm-$(MDVER)-$(CARCH).fpm \
-	  xfsprogs-$(XFSVER)-$(CARCH).fpm \
+	  module-init-tools-$(MODULE-INIT-TOOLSVER)-$(CARCH).fpm \
+	  ncurses-$(NCURSESVER)-$(CARCH).fpm netkit-base-$(NETKIT-BASEVER)-$(CARCH).fpm \
+	  net-tools-$(NET-TOOLSVER)-$(CARCH).fpm pacman-$(PACMANVER)-$(CARCH).fpm \
+	  reiserfsprogs-$(REISERFSPROGSVER)-$(CARCH).fpm udev-$(UDEVVER)-$(CARCH).fpm \
+	  util-linux-$(UTIL-LINUXVER)-$(CARCH).fpm \
+	  netkit-base-$(NETKIT-BASEVER)-$(CARCH).fpm \
+	  mdadm-$(MDADMVER)-$(CARCH).fpm \
+	  xfsprogs-$(XFSPROGSVER)-$(CARCH).fpm \
 	  ppp-$(PPPVER)-$(CARCH).fpm \
-	  rp-pppoe-$(PPPOEVER)-$(CARCH).fpm \
-	  glib2-$(GLIBVER)-$(CARCH).fpm \
-	  parted-$(PEDVER)-$(CARCH).fpm \
-	  bzip2-$(BZVER)-$(CARCH).fpm \
-	  libarchive-$(ARCHIVEVER)-$(CARCH).fpm \
-	  zlib-$(ZVER)-$(CARCH).fpm
+	  rp-pppoe-$(RP-PPPOEVER)-$(CARCH).fpm \
+	  glib2-$(GLIB2VER)-$(CARCH).fpm \
+	  parted-$(PARTEDVER)-$(CARCH).fpm \
+	  bzip2-$(BZIP2VER)-$(CARCH).fpm \
+	  libarchive-$(LIBARCHIVEVER)-$(CARCH).fpm \
+	  zlib-$(ZLIBVER)-$(CARCH).fpm
 
 compile: check ccache setup $(packages) misc
 
 clean:
 	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img.gz dl.lst
-	rm -rf $(packages) vmlinuz-$(KERNELVER)-fw$(KERNELREL)-$(CARCH) $(CDIR)/*
+	rm -rf $(packages) vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(CDIR)/*
 	$(MAKE) -C src clean
 
 ccache:
@@ -185,7 +187,7 @@ busybox:
 	rm -rf $(BDIR)
 	mkdir $(BDIR)
 	rm -rf busybox
-	cd $(BDIR) && tar xjf ../$(CDIR)/busybox-$(BUSYVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/busybox-$(BUSYBOXVER)-$(CARCH).fpm
 	cp -a $(BDIR)/usr/share/busybox busybox
 	mkdir -p busybox/mnt/{source,target}
 	mkdir -p busybox/tmp
@@ -203,7 +205,7 @@ e2fsprogs:
 	mkdir $(BDIR)
 	rm -rf e2fsprogs
 	mkdir -p e2fsprogs/{sbin,lib}
-	cd $(BDIR) && tar xjf ../$(CDIR)/e2fsprogs-$(E2VER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/e2fsprogs-$(E2FSPROGSVER)-$(CARCH).fpm
 	cp -a $(BDIR)/sbin/{mke2fs,e2fsck} e2fsprogs/sbin/
 	cp -a $(BDIR)/lib/{libblkid*,libcom_err*,libe2p*,libext2fs*,libuuid*} e2fsprogs/lib/
 	mkdir e2fsprogs/etc/
@@ -214,7 +216,7 @@ reiserfsprogs:
 	mkdir $(BDIR)
 	rm -rf reiserfsprog
 	mkdir -p reiserfsprogs/sbin
-	cd $(BDIR) && tar xzf ../$(CDIR)/reiserfsprogs-$(REISERVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xzf ../$(CDIR)/reiserfsprogs-$(REISERFSPROGSVER)-$(CARCH).fpm
 	cp -a $(BDIR)/sbin/{mkreiserfs,reiserfsck} reiserfsprogs/sbin/
 	mkdir reiserfsprogs/etc/
 	touch reiserfsprogs/etc/fstab
@@ -232,7 +234,7 @@ dhcpcd:
 	mkdir $(BDIR)
 	rm -rf dhcpcd
 	mkdir -p dhcpcd/sbin
-	cd $(BDIR) && tar xjf ../$(CDIR)/dhcpcd-$(DHCPVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/dhcpcd-$(DHCPCDVER)-$(CARCH).fpm
 	cp -a $(BDIR)/sbin/dhcpcd dhcpcd/sbin/
 
 frugalware:
@@ -240,7 +242,7 @@ frugalware:
 	mkdir $(BDIR)
 	rm -rf frugalware
 	mkdir -p frugalware/{var/lib/frugalware/messages/,etc}
-	cd $(BDIR) && tar xjf ../$(CDIR)/frugalware-$(FWVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/frugalware-$(FRUGALWAREVER)-$(CARCH).fpm
 	cp -a $(BDIR)/var/lib/frugalware/messages/rc.messages \
 	        frugalware/var/lib/frugalware/messages/
 	cp $(BDIR)/etc/frugalware-release frugalware/etc/
@@ -253,7 +255,7 @@ net-tools:
 	mkdir $(BDIR)
 	rm -rf net-tools
 	mkdir -p net-tools/{etc/sysconfig/network,usr/share,sbin}
-	cd $(BDIR) && tar xjf ../$(CDIR)/net-tools-$(NETVER)-$(CARCH).fpm; \
+	cd $(BDIR) && tar xjf ../$(CDIR)/net-tools-$(NET-TOOLSVER)-$(CARCH).fpm; \
 	cp -a sbin/netconfig ../net-tools/sbin/; \
 	cp -a usr/share/locale ../net-tools/usr/share/
 
@@ -262,7 +264,7 @@ glibc:
 	mkdir $(BDIR)
 	rm -rf glibc
 	mkdir -p glibc/{lib,usr/lib/locale}
-	cd $(BDIR) && tar xjf ../$(CDIR)/glibc-$(LIBCVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/glibc-$(GLIBCVER)-$(CARCH).fpm
 	cp -a $(BDIR)/lib/{ld*,libc*,libm*,libdl*,libnss*,libresolv*} glibc/lib/
 	
 	# generate the necessary locales
@@ -292,10 +294,10 @@ kernel:
 	mkdir $(BDIR)
 	rm -rf kernel
 	mkdir -p kernel/lib
-	cd $(BDIR) && tar xjf ../$(CDIR)/kernel-$(KERNELVER)-$(KERNELREL)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/kernel-$(KERNELV)-$(KERNELREL)-$(CARCH).fpm
 	cp -a $(BDIR)/lib/modules kernel/lib/
-	cp $(BDIR)/boot/vmlinuz-$(KERNELVER)-fw$(KERNELREL) \
-		$(CWD)/vmlinuz-$(KERNELVER)-fw$(KERNELREL)-$(CARCH)
+	cp $(BDIR)/boot/vmlinuz-$(KERNELV)-fw$(KERNELREL) \
+		$(CWD)/vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	cd kernel/ && find . -name *ko|xargs gzip
 
 module-init-tools:
@@ -303,7 +305,7 @@ module-init-tools:
 	mkdir $(BDIR)
 	rm -rf module-init-tools
 	mkdir -p module-init-tools/{bin,sbin}
-	cd $(BDIR) && tar xjf ../$(CDIR)/module-init-tools-$(MODULEVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/module-init-tools-$(MODULE-INIT-TOOLSVER)-$(CARCH).fpm
 	cp -a $(BDIR)/sbin/* module-init-tools/sbin/
 
 ncurses:
@@ -311,7 +313,7 @@ ncurses:
 	mkdir $(BDIR)
 	rm -rf ncurses
 	mkdir -p ncurses/{lib,usr/share/terminfo/l}
-	cd $(BDIR) && tar xjf ../$(CDIR)/ncurses-$(NCVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/ncurses-$(NCURSESVER)-$(CARCH).fpm
 	cp -a $(BDIR)/lib/libncurses* ncurses/lib/
 	cp -a $(BDIR)/usr/share/terminfo/l/linux ncurses/usr/share/terminfo/l/
 
@@ -320,7 +322,7 @@ pacman:
 	mkdir $(BDIR)
 	rm -rf pacman
 	mkdir -p pacman/bin pacman/etc/pacman.d/ pacman/usr/lib
-	cd $(BDIR) && tar xjf ../$(CDIR)/pacman-$(PACVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/pacman-$(PACMANVER)-$(CARCH).fpm
 	cp -a $(BDIR)/usr/bin/pacman pacman/bin/pacman
 	cp -a $(BDIR)/usr/lib/libalpm.so* pacman/usr/lib/
 	cp -a $(BDIR)/usr/bin/vercmp pacman/bin/
@@ -359,7 +361,7 @@ util-linux:
 	mkdir $(BDIR)
 	rm -rf util-linux
 	mkdir -p util-linux/{sbin,usr/bin}
-	cd $(BDIR) && tar xjf ../$(CDIR)/util-linux-$(UTILVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/util-linux-$(UTIL-LINUXVER)-$(CARCH).fpm
 	cp -a $(BDIR)/sbin/{cfdisk,fdisk} util-linux/sbin/
 	cp -a $(BDIR)/usr/bin/setterm util-linux/usr/bin/
 
@@ -368,7 +370,7 @@ netkit-base:
 	mkdir $(BDIR)
 	rm -rf netkit-base
 	mkdir -p netkit-base/etc
-	cd $(BDIR) && tar xzf ../$(CDIR)/netkit-base-$(NETKITVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xzf ../$(CDIR)/netkit-base-$(NETKIT-BASEVER)-$(CARCH).fpm
 	cp -a $(BDIR)/etc/services netkit-base/etc/
 
 mdadm:
@@ -376,7 +378,7 @@ mdadm:
 	mkdir $(BDIR)
 	rm -rf mdadm
 	mkdir -p mdadm/sbin mdadm/var/lib/frugalware/{messages,system}
-	cd $(BDIR) && tar xjf ../$(CDIR)/mdadm-$(MDVER)-$(CARCH).fpm; \
+	cd $(BDIR) && tar xjf ../$(CDIR)/mdadm-$(MDADMVER)-$(CARCH).fpm; \
 	cp -a sbin/mdadm ../mdadm/sbin/; \
 	cp -a var/lib/frugalware/messages/* \
 		../mdadm/var/lib/frugalware/messages/; \
@@ -389,7 +391,7 @@ xfsprogs:
 	mkdir $(BDIR)
 	rm -rf xfsprogs
 	mkdir -p xfsprogs/sbin
-	cd $(BDIR) && tar xjf ../$(CDIR)/xfsprogs-$(XFSVER)-$(CARCH).fpm; \
+	cd $(BDIR) && tar xjf ../$(CDIR)/xfsprogs-$(XFSPROGSVER)-$(CARCH).fpm; \
 	cp -a sbin/mkfs.xfs ../xfsprogs/sbin/
 
 ppp:
@@ -406,7 +408,7 @@ pppoe:
 	mkdir $(BDIR)
 	rm -rf pppoe
 	mkdir -p pppoe/usr/share
-	cd $(BDIR) && tar xjf ../$(CDIR)/rp-pppoe-$(PPPOEVER)-$(CARCH).fpm; \
+	cd $(BDIR) && tar xjf ../$(CDIR)/rp-pppoe-$(RP-PPPOEVER)-$(CARCH).fpm; \
 	cp -a etc ../pppoe/; \
 	cp -a usr/sbin ../pppoe/usr/; \
 	cp -a usr/share/locale ../pppoe/usr/share/
@@ -417,7 +419,7 @@ glib2:
 	mkdir $(BDIR)
 	rm -rf glib2
 	mkdir -p glib2/usr/lib
-	cd $(BDIR) && tar xjf ../$(CDIR)/glib2-$(GLIBVER)-$(CARCH).fpm; \
+	cd $(BDIR) && tar xjf ../$(CDIR)/glib2-$(GLIB2VER)-$(CARCH).fpm; \
 	cp -a usr/lib/libglib-2.0.so* ../glib2/usr/lib/
 
 parted:
@@ -425,7 +427,7 @@ parted:
 	mkdir $(BDIR)
 	rm -rf parted
 	mkdir -p parted/usr/{lib,sbin,share/locale}
-	cd $(BDIR) && tar xjf ../$(CDIR)/parted-$(PEDVER)-$(CARCH).fpm; \
+	cd $(BDIR) && tar xjf ../$(CDIR)/parted-$(PARTEDVER)-$(CARCH).fpm; \
 	cp -a usr/lib/{libparted.so,libparted-*} ../parted/usr/lib/; \
 	cp -a usr/sbin/* ../parted/usr/sbin/; \
 	cp -a usr/share/locale/* ../parted/usr/share/locale/
@@ -435,7 +437,7 @@ bzip2:
 	mkdir $(BDIR)
 	rm -rf bzip2
 	mkdir -p bzip2/lib
-	cd $(BDIR) && tar xjf ../$(CDIR)/bzip2-$(BZVER)-$(CARCH).fpm; \
+	cd $(BDIR) && tar xjf ../$(CDIR)/bzip2-$(BZIP2VER)-$(CARCH).fpm; \
 	cp -a lib/libbz2.so* ../bzip2/lib/
 
 libarchive:
@@ -443,7 +445,7 @@ libarchive:
 	mkdir $(BDIR)
 	rm -rf libarchive
 	mkdir -p libarchive/usr/lib
-	cd $(BDIR) && tar xjf ../$(CDIR)/libarchive-$(ARCHIVEVER)-$(CARCH).fpm; \
+	cd $(BDIR) && tar xjf ../$(CDIR)/libarchive-$(LIBARCHIVEVER)-$(CARCH).fpm; \
 	cp -a usr/lib/libarchive.so* ../libarchive/usr/lib/
 
 zlib:
@@ -451,5 +453,5 @@ zlib:
 	mkdir $(BDIR)
 	rm -rf zlib
 	mkdir -p zlib/usr/lib
-	cd $(BDIR) && tar xzf ../$(CDIR)/zlib-$(ZVER)-$(CARCH).fpm; \
+	cd $(BDIR) && tar xzf ../$(CDIR)/zlib-$(ZLIBVER)-$(CARCH).fpm; \
 	cp -a usr/lib/libz.so* ../zlib/usr/lib/
