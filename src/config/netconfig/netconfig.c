@@ -879,7 +879,7 @@ int main(int argc, char **argv)
 		}
 		// load the target profile if != 'restart'
 		else if (strcmp("restart", argv[optind]))
-			fn = argv[optind];
+			fn = strdup(argv[optind]);
 		// load the new profile
 		profile = parseprofile(fn);
 		if(profile==NULL)
