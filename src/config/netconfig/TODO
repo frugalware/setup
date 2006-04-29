@@ -1,4 +1,0 @@
-- use a profile_t struct for writeconfig
-- support for configuring != eth0
-- rc.interfaces: let it more verbose when loading a profile
-- move the dialog specific functions to a separate lib
