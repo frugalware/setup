@@ -60,6 +60,7 @@ GList *genfwcats(int cdnum)
 		list = g_list_append(list, "x11");
 		list = g_list_append(list, "xlib");
 		list = g_list_append(list, "xapps");
+		list = g_list_append(list, "xmultimedia");
 		list = g_list_append(list, "xfce4");
 		list = g_list_append(list, "gnome");
 		list = g_list_append(list, "kde");
