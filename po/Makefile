@@ -2,7 +2,7 @@ LANGS=id hu de nl pt
 
 mos:
 	for i in $(LANGS); do \
-		msgfmt -o ../merge/usr/share/locale/`basename $$i .po`/LC_MESSAGES/setup.mo $$i; \
+		msgfmt -c --statistics -o ../merge/usr/share/locale/`basename $$i .po`/LC_MESSAGES/setup.mo $$i; \
 	done
 
 pot:
