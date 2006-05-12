@@ -137,7 +137,7 @@ msgstr "A configurar a partição de root"
 
 #: ../src/plugins/formatdisk.c:283
 msgid "Select the Linux installation partition"
-msgstr "Seleccione a partição onde o Linux foi instalado"
+msgstr "Seleccione a partição de instalação do Linux"
 
 #: ../src/plugins/formatdisk.c:284
 msgid ""
@@ -201,7 +201,7 @@ msgid ""
 "if you're done, hit Continue."
 msgstr ""
 "Pode usar outras partições para distribuir o seu sistema Linux através de "
-"mais do que uma partição. Currentemente apenas montou a sua partição /. Pode "
+"mais do que uma partição. Correntemente apenas montou a sua partição /. Pode "
 "desejar montar directórios como /boot, /home ou /usr/local em partições "
 "separadas. Não deve tentar montar /usr, /etc, /sbin, ou /bin em partições "
 "separadas pois estes directórios contêm utilitários necessários para iniciar "
@@ -212,7 +212,7 @@ msgstr ""
 #: ../src/plugins/greet.c:53
 #, c-format
 msgid "Welcome to %s"
-msgstr "Benvindo a %s"
+msgstr "Bem-vindo a %s"
 
 #: ../src/plugins/greet.c:55
 msgid "Welcome"
@@ -442,7 +442,7 @@ msgid ""
 "installing packages. If you don't have more disk, choose NO, and then you "
 "can finish up the installation. Have you inserted the next disk?"
 msgstr ""
-"Por favor insira o disco de instalação seuinte do Frugalware e prima ENTER "
+"Por favor insira o disco de instalação seguinte do Frugalware e prima ENTER "
 "para continuar a instalar os pacotes. Se não possui mais discos escolha NO, "
 "e poderá terminar a instalação. Inseriu o disco seguinte?"
 
@@ -458,7 +458,7 @@ msgid ""
 "machine is on an internet connected lan. Would you like to set a root "
 "password?"
 msgstr ""
-"Currentemente não existe uma palavra passe associada à conta do "
+"Correntemente não existe uma palavra passe associada à conta do "
 "administrador de sistema (root). É recomendável que escolha uma agora para "
 "que esteja activa na primeira vez que reinicie o computador. Isto é "
 "especialmente importante se o seu computador estiver conectado a uma lan. "
