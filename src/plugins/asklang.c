@@ -42,6 +42,7 @@ char *langs[] =
 	"es_AR", "Spanish / Espagnole             ",
 	"de_DE", "German / Deutsch                ",
 	"fr_FR", "French / Francais               ",
+        "id_ID", "Indonesia / Indonesian          ",
 	"it_IT", "Italian / Italiano              ",
 	"hu_HU", "Hungarian / Magyar              ",
 	"nl_NL", "Dutch / Nederlands              ",
@@ -110,6 +111,8 @@ int run(GList **config)
 		setenv("CHARSET", "iso-8859-15", 1);
 	else if(!strcmp("fr_FR", dialog_vars.input_result))
 		setenv("CHARSET", "iso-8859-15", 1);
+        else if(!strcmp("id_ID", dialog_vars.input_result))
+		setenv("CHARSET", "iso-8859-1", 1);
 	else if(!strcmp("it_IT", dialog_vars.input_result))
 	{
 		setenv("CHARSET", "iso-8859-1", 1);

@@ -1,0 +1,514 @@
+# translation of id.po to Indonesia
+# Indonesian translations for setup package.
+# Copyright (C) 2006 The Frugalware Development Team
+# This file is distributed under the same license as the setup package.
+#
+# Edo Hikmahtiar <firesand@gmail.com>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: id\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-02-28 23:33+0100\n"
+"PO-Revision-Date: 2006-05-12 19:24+0700\n"
+"Last-Translator: Edo Hikmahtiar <firesand@gmail.com>\n"
+"Language-Team: Indonesia <en@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.1\n"
+
+#: ../src/plugins/configsource.c:57 ../src/plugins/configsource.c:89
+#: ../src/plugins/configsource.c:94 ../src/plugins/dolangsh.c:52
+#: ../src/plugins/formatdisk.c:230 ../src/plugins/formatdisk.c:373
+#: ../src/plugins/layout.c:114 ../src/plugins/loadsource.c:75
+#: ../src/plugins/select.c:347 ../src/util.c:247
+msgid "Could not open output file for writing"
+msgstr "Tidak bisa membuka berkas hasil untuk ditulis"
+
+#: ../src/plugins/configsource.c:127
+msgid "Selecting a mirror"
+msgstr "Memilih sebuah jalur mirror "
+
+#: ../src/plugins/configsource.c:133
+msgid "Please select a mirror"
+msgstr "Pilihlah sebuah jalur mirror"
+
+#: ../src/plugins/configsource.c:133
+msgid ""
+"You may now specify the mirror closest to you in order to download the "
+"packages faster. In most cases the default value will be fine."
+msgstr "" 
+"Sekarang tentukan mirror terdekat untuk mengunduh paket secara cepat."
+"Secara umum pilihan awal dapat digunakan."
+
+#: ../src/plugins/configsource.c:158 ../src/plugins/hotplug.c:53
+#: ../src/plugins/select.c:421 ../src/plugins/select.c:436
+msgid "Please wait"
+msgstr "Silahkan tunggu"
+
+#: ../src/plugins/configsource.c:158
+msgid "Configuring the network interface..."
+msgstr "Mengatur tampilan jaringan..."
+
+#: ../src/plugins/formatdisk.c:141
+msgid "Setting up swap space"
+msgstr "Menyusun tempat swap"
+
+#: ../src/plugins/formatdisk.c:144
+msgid "Setting up swap partitions"
+msgstr "Menyusun partisi swap"
+
+#: ../src/plugins/formatdisk.c:145
+msgid "Please select which swap partitions do you want Frugalware to use:"
+msgstr "Pilihlah partisi swap mana yang akan digunakan oleh Frugalware:"
+
+#: ../src/plugins/formatdisk.c:156 ../src/plugins/formatdisk.c:178
+msgid "Quick format with no bad block checking"
+msgstr "Format cepat tanpa mengecheck bagian yang rusak"
+
+#: ../src/plugins/formatdisk.c:157 ../src/plugins/formatdisk.c:179
+msgid "Slow format that checks for bad blocks"
+msgstr "Format pelan yang akan memeriksa bagian yang rusak"
+
+#: ../src/plugins/formatdisk.c:160 ../src/plugins/formatdisk.c:183
+#: ../src/plugins/formatdisk.c:207
+msgid "Formatting partitions"
+msgstr "Memformat partisi"
+
+#: ../src/plugins/formatdisk.c:163 ../src/plugins/formatdisk.c:186
+#, c-format
+msgid "Format %s"
+msgstr "Format %s"
+
+#: ../src/plugins/formatdisk.c:164 ../src/plugins/formatdisk.c:187
+#, c-format
+msgid ""
+"If %s has not been formatted, you should format it.\n"
+"NOTE: This will erase all data on %s. Would you like to format this "
+"partition?"
+msgstr ""
+"Jika %s belum diformat, anda harus memformatnya.\n"
+"CATATAN: Hal ini akan menghapus semua data pada %s. Apakah anda akan "
+"memformat partisi ini?"
+
+#: ../src/plugins/formatdisk.c:180
+msgid "Do not format, just mount the partition"
+msgstr "Jangan format, hanya mount partisinya saja"
+
+#: ../src/plugins/formatdisk.c:201
+msgid "Standard Linux ext2fs filesystem"
+msgstr "Sistem berkas Linux ext2fs standar"
+
+#: ../src/plugins/formatdisk.c:202
+msgid "Journaling version of the ext2fs filesystem"
+msgstr "Menjurnal versi sistem berkas ext2fs"
+
+#: ../src/plugins/formatdisk.c:203
+msgid "Hans Reiser's journaling filesystem"
+msgstr "Sistem berkas menjurnal Hans Reiser"
+
+#: ../src/plugins/formatdisk.c:204
+msgid "SGI's journaling filesystem"
+msgstr "Sistem berkas menjurnal SGI"
+
+#: ../src/plugins/formatdisk.c:211
+#, c-format
+msgid "Selecting filesystem for %s"
+msgstr "Memilih sistem berkas untuk %s"
+
+#: ../src/plugins/formatdisk.c:212
+#, c-format
+msgid "Please select the type of filesystem to use for %s."
+msgstr "Pilihlah tipe sistem berkas untuk digunakan pada %s"
+
+#: ../src/plugins/formatdisk.c:252 ../src/plugins/formatdisk.c:259
+msgid "Formatting swap partition"
+msgstr "Memformat partisi swap"
+
+#: ../src/plugins/formatdisk.c:253
+#, c-format
+msgid "Formatting %s as a swap partition"
+msgstr "Memformat %s sebagai partisi swap"
+
+#: ../src/plugins/formatdisk.c:260
+#, c-format
+msgid "Formatting %s as a swap partition and checking for bad blocks"
+msgstr "Memformat %s sebagai partisi swap dan memeriksa bagian yang rusak"
+
+#: ../src/plugins/formatdisk.c:281
+msgid "Setting up the root partition"
+msgstr "Megatur partisi root"
+
+#: ../src/plugins/formatdisk.c:283
+msgid "Select the Linux installation partition"
+msgstr "Pilih partisi Linux untuk pemasangan"
+
+#: ../src/plugins/formatdisk.c:284
+msgid ""
+"Please select a partition from the following list to use for your root (/) "
+"partition. The following ones are available:"
+msgstr ""
+"Pilihlah sebuah partisi dari daftar berikut ini sebagai partisi root (/) "
+"Yaitu sebagai berikut:"
+
+#: ../src/plugins/formatdisk.c:296
+msgid "Formatting"
+msgstr "Memformat"
+
+#: ../src/plugins/formatdisk.c:297
+#, c-format
+msgid "Creating %s filesystem on %s and checking for bad blocks"
+msgstr "Membuat %s sistem berkas pada %s dan memeriksa bagian rusak"
+
+#: ../src/plugins/formatdisk.c:298
+#, c-format
+msgid "Creating %s filesystem on %s"
+msgstr "Membuat %s sistem berkas pada %s"
+
+#: ../src/plugins/formatdisk.c:393
+#, c-format
+msgid "Select mount point for %s"
+msgstr "Pilih titik mount untuk %s"
+
+#: ../src/plugins/formatdisk.c:413 ../src/plugins/formatdisk.c:524
+msgid "(in use)"
+msgstr "(terpakai)"
+
+#: ../src/plugins/formatdisk.c:421
+#, c-format
+msgid "%s on %s\t%s"
+msgstr "%s pada %s\t%s"
+
+#. non-root partitions
+#: ../src/plugins/formatdisk.c:497
+msgid "Selecting other partitions"
+msgstr "Memilih partisi lain"
+
+#: ../src/plugins/formatdisk.c:504 ../src/plugins/partdisk.c:139
+msgid "Continue"
+msgstr "Lanjutkan"
+
+#: ../src/plugins/formatdisk.c:508
+msgid "Select other Linux partitions for /etc/fstab"
+msgstr "Pilih partisi Linux lainnya untuk /etc/fstab"
+
+#: ../src/plugins/formatdisk.c:509
+msgid ""
+"You may use your other partitions to distribute your Linux system across "
+"more than one partition. Currently, you have only mounted your / partition. "
+"You might want to mount directories such as /boot, /home or /usr/local on "
+"separate partitions. You should not try to mount /usr, /etc, /sbin, or /bin "
+"on their own partitions since they contain utilities needed to bring the "
+"system up and mount partitions. Also, do not reuse a partition that you've "
+"already entered before. Please select one of the partitions listed below, or "
+"if you're done, hit Continue."
+msgstr ""
+"Anda bisa menggunakan partisi lain untuk menyalurkan sistem linux anda lebih "
+"dari satu partisi. Saat ini anda hanya memount partisi /. Anda mungkin ingin "
+"memount direktori seperti /boot, /home atau /usr/local pada partisi lain. Anda "
+"sebaiknya jangan mencoba untuk memount /usr, /etc, /sbin atau /bin pada partisi "
+"tersendiri karena berisi mereka berisi utilitas penting untuk menjalankan sistem "
+"dan memount partisi. Dan juga jangan menggunakan lagi partisi yang sudah dimasuki "
+"sebelumnya. Pilihlah salah satu partisi yang ada berikut ini, atau jika anda "
+"telah selesai, tekan Lanjut."
+
+#: ../src/plugins/greet.c:53
+#, c-format
+msgid "Welcome to %s"
+msgstr "Selamat Datang di %s"
+
+#: ../src/plugins/greet.c:55
+msgid "Welcome"
+msgstr "Selamat Datang"
+
+#: ../src/plugins/greet.c:58
+msgid ""
+"Welcome among the users of Frugalware!\n"
+"\n"
+"The aim of creating Frugalware was to help you make your work faster and "
+"simpler. We hope that you will like our product.\n"
+"\n"
+"The Frugalware Developer Team"
+msgstr ""
+"Selamat Datang diantara pengguna Frugalware!\n"
+"\n"
+"Tujuan menciptakan Frugalware adalah untuk membantu pekerjaanmu agar lebih "
+"cepat dan sederhana. Kami harap anda menyukai produk kami.\n"
+"\n"
+"Tim Pengembang Frugalware"
+
+#: ../src/plugins/hotplug.c:50
+msgid "Detecting hardware"
+msgstr "Memeriksa perangkat keras"
+
+#: ../src/plugins/hotplug.c:53
+msgid "Scanning for SCSI and PCI cards"
+msgstr "Mencari kartu SCSI dan PCI"
+
+#: ../src/plugins/layout.c:93
+msgid "Configuring the keyboard"
+msgstr "Mengatur papan tuts"
+
+#: ../src/plugins/layout.c:96
+msgid "Keyboard map selection"
+msgstr "Pilihan untuk tampilan papan tuts"
+
+#: ../src/plugins/layout.c:97
+msgid ""
+"You may select one of the following keyboard maps. If you do not select a "
+"keyboard map, 'qwerty/us.map.gz' (the US keyboard map) is the default. Use "
+"the UP/DOWN arrow keys and PageUp/PageDown to scroll through the whole list "
+"of choices."
+msgstr ""
+
+#: ../src/plugins/loadsource.c:122
+msgid "Selecting source media"
+msgstr "Memilih media sumber"
+
+#: ../src/plugins/loadsource.c:125
+msgid "Scanning"
+msgstr "Mencari"
+
+#: ../src/plugins/loadsource.c:125
+msgid "Scanning for a CD/DVD drive containing a Frugalware install disc..."
+msgstr "Mencari penggerak CD/DVD yang berisi keping cakram Frugalware..."
+
+#: ../src/plugins/loadsource.c:135
+msgid "CD/DVD drive found"
+msgstr "Penggerak CD/DVD ditemukan"
+
+#: ../src/plugins/loadsource.c:135
+#, c-format
+msgid "A Frugalware install disc was found in device /dev/%s."
+msgstr "Keping cakram pemasangan Frugalware ditemukan pada device /dev/%s."
+
+#: ../src/plugins/loadsource.c:145
+msgid "CD/DVD drive not found"
+msgstr "Penggerak CD/DVD tidak ditemukan"
+
+#: ../src/plugins/loadsource.c:145
+msgid ""
+"Sorry, no Frugalware install disc was found in your drives. Press ENTER to "
+"reboot."
+msgstr ""
+"Maaf, tidak ada keping cakram Frugalware pada penggerak. Tekan ENTER untuk "
+"reboot."
+
+#: ../src/plugins/partdisk.c:77
+msgid "User friendly (curses based) version of fdisk"
+msgstr "Versi mudah fdisk (berdasarkan curses)"
+
+#: ../src/plugins/partdisk.c:78
+msgid "The traditional partitioning program for Linux"
+msgstr "Program partisi Linux tradisional"
+
+#: ../src/plugins/partdisk.c:81 ../src/plugins/partdisk.c:125
+msgid "Creating partitions"
+msgstr "Membuat partisi-partisi"
+
+#: ../src/plugins/partdisk.c:84
+msgid "Select partitioning program"
+msgstr "Pilih program partisi"
+
+#: ../src/plugins/partdisk.c:85
+msgid "Select which program do you want to use for partitioning:"
+msgstr "Pilih program mana yang ingin digunakan untuk mempartisi:"
+
+#: ../src/plugins/partdisk.c:96
+msgid "Want to create RAID?"
+msgstr "Ingin membuat sebuah RAID?"
+
+#: ../src/plugins/partdisk.c:97
+msgid "Do you want to create software raid partitions during partitioning?"
+msgstr "Apakah anda ingin membuat perangkat lunak raid pada proses partisi?"
+
+#: ../src/plugins/partdisk.c:119
+msgid "Disk drive not found"
+msgstr "Penggerak cakram tidak ditemukan"
+
+#: ../src/plugins/partdisk.c:119
+msgid "Sorry, no hard disk drives were found in this box. Press ENTER to reboot."
+msgstr "Maaf, tidak ditemukan penggerak cakram keras. Tekan ENTER untuk reboot."
+
+#: ../src/plugins/partdisk.c:134
+msgid "Create RAID"
+msgstr "Membuat RAID"
+
+#: ../src/plugins/partdisk.c:142
+msgid "Select a hard disk to partition"
+msgstr "Pilih sebuah partisi cakram keras"
+
+#: ../src/plugins/partdisk.c:143
+msgid "Please select a hard disk to partition. The following one are available:"
+msgstr "Pilihlah partisi dari sebuah cakram keras. Sebagai berikut:"
+
+#: ../src/plugins/restart.c:55 ../src/util.c:115
+msgid "Setup complete"
+msgstr "Aturan selesai"
+
+#: ../src/plugins/restart.c:55
+#, c-format
+msgid ""
+"System installation and configuration is successfully completed. We hope "
+"that %s will make you content. Please remove the media from your drive and "
+"press ENTER to reboot."
+msgstr ""
+"Pemasangan dan pengaturan sistem telah selesai. Kami harap %s dapat membuat "
+"anda betah. Silahkan keluarkan media dari penggerak anda dan tekan ENTER "
+"untuk reboot."
+
+#: ../src/plugins/select.c:260
+msgid "Selecting categories"
+msgstr "Memilih kategori"
+
+#: ../src/plugins/select.c:262
+msgid "Please select which extra categories to install:"
+msgstr "Pilihlah kategori tambahan mana yang akan dipasang:"
+
+#: ../src/plugins/select.c:263
+msgid "Please select which frugalware categories to install:"
+msgstr "Pilihlah kategori frugalware mana yang akan dipasang:"
+
+#: ../src/plugins/select.c:280
+msgid "Selecting packages"
+msgstr "Memilih paket-paket"
+
+#: ../src/plugins/select.c:293
+msgid "Use expert menus?"
+msgstr "Menggunakan mode daftar terampil?"
+
+#: ../src/plugins/select.c:294
+msgid ""
+"If you like, you may select your packages from expert menus. Where the "
+"normal menu shows a choice like 'C compiler system', the expert menus show "
+"you 'C libs', 'C compiler', 'C include files', etc - each individual "
+"package. Obviously, you should know what you're doing if you use the expert "
+"menus since it's possible to skip packages that are crucial to the "
+"functioning of a subsystem. Choose 'no' for using normal menus that select "
+"groups of packages, or choose 'yes' for using expert menus with a switch for "
+"each package."
+msgstr ""
+"Jika anda suka, anda bisa memilih paket-paket dari mode terampil. Dimana "
+"pada mode daftar biasa pilihannya adalah 'C compiler system', mode terampil "
+"menunjukkan 'C libs', 'C compiler', 'C include files', dll setiap paket. Tentunya "
+"anda harus tahu apa yang anda lakukan saat menggunakan mode terampil karena bisa "
+"terjadi anda terlewatkan paket yang sangat penting terhadap berfungsinya sistem."
+"Pilih 'tidak' untuk menggunakan mode biasa yang memilih 'kelompok paket-paket',"
+"atau pilih 'ya' untuk mode terampil yang akan memilih satu persatu paket."
+
+#: ../src/plugins/select.c:414
+msgid "Selecting frugalware packages"
+msgstr "Memilih paket-paket Frugalware"
+
+#: ../src/plugins/select.c:417
+msgid "Selecting extra packages"
+msgstr "Memilih paket-paket tambahan"
+
+#: ../src/plugins/select.c:421
+msgid "Searching for categories..."
+msgstr "Mencari kategori..."
+
+#: ../src/plugins/select.c:436
+msgid "Searching for packages..."
+msgstr "Mencari paket-paket..."
+
+#: ../src/plugins/install.c:89
+#, c-format
+msgid ""
+"Errors occured while installing selected packages from the %s section.\n"
+"Press ENTER to continue..."
+msgstr ""
+"Kesalahan terjadi saat memasang paket-paket terpilih dari bagian %s.\n"
+"Tekan ENTER untuk melanjutkan..."
+
+#: ../src/plugins/install.c:136
+msgid "Insert next disc"
+msgstr "Masukkan keping cakram selanjutnya"
+
+#: ../src/plugins/install.c:137
+msgid ""
+"Please insert the next Frugalware install disc and press ENTER to continue "
+"installing packages. If you don't have more disk, choose NO, and then you "
+"can finish up the installation. Have you inserted the next disk?"
+msgstr ""
+"Silahkan masukan keping cakram Frugalware selanjutnya dan tekan ENTER untuk "
+"melanjutkan memasang paket-paket. Jika tidak ada keping cakram lain, pilih "
+"TIDAK, dan anda dapat selesai. Sudahkan anda memasukkannya?"
+
+#: ../src/plugins/postconf.c:73
+msgid "No root password detected"
+msgstr "Tidak terdeteksi katakunci untuk root"
+
+#: ../src/plugins/postconf.c:74
+msgid ""
+"There is currently no password set on the system administrator account "
+"(root). It is recommended that you set one now so that it is active the "
+"first time the machine is rebooted. This is especially important if your "
+"machine is on an internet connected lan. Would you like to set a root "
+"password?"
+msgstr ""
+"Saat ini tidak ada katakunci untuk catatan pada sistem admin (root)"
+"Sangat dianjurkan untuk membuat sekarang sehingga nanti akan aktif saat "
+"pertama kali reboot. Hal ini sangat penting bagi yang terhubung pada koneksi "
+"internet lan. Apakah anda akan membuat sebuah katakunci untuk root?"
+
+#: ../src/plugins/postconf.c:110
+msgid "No normal user account detected"
+msgstr "Tidak terdeteksi catatan pengguna biasa"
+
+#: ../src/plugins/postconf.c:111
+msgid ""
+"There is currently no non-root user account configured. It is strongly "
+"recommended to create one. Would you like to create a normal user account "
+"now?"
+msgstr ""
+"Saat ini tidak ada catatan pengguna selain root. Sangat dianjurkan "
+"untuk membuatnya. Apakah anda akan membuat catatan pengguna biasa "
+"sekarang?"
+
+#: ../src/plugins/postconf.c:138
+msgid "Post-install configuration"
+msgstr "Pengaturan tahap terakhir pemasangan"
+
+#: ../src/plugins/postconf.c:150
+msgid "Configuring kernel modules"
+msgstr "Mengatur modul-modul kernel"
+
+#: ../src/plugins/postconf.c:151
+msgid "Updating module dependencies..."
+msgstr "Memperbaharui ketergantungan modul-modul..."
+
+#: ../src/util.c:44
+msgid "Setup"
+msgstr "Aturan"
+
+#: ../src/util.c:57
+msgid "Could not open file for reading"
+msgstr "Tidak dapat membuka berkas untuk dibaca"
+
+#: ../src/util.c:115
+msgid "Ejecting installation media..."
+msgstr "Mengeluarkan media pemasangan"
+
+#: ../src/util.c:149
+msgid "Installation error"
+msgstr "Proses pemasangan gagal"
+
+#: ../src/util.c:150
+msgid ""
+"Errors occured while installing selected packages. It is recommended to "
+"abort the installation, however you may want to ignore this problem. Do you "
+"want to leave the installer?"
+msgstr ""
+"Kesalahan terjadi saat memasang paket-paket terpilih. Dianjurkan untuk "
+"membatalkan proses pemasangan, Tetapi anda bisa juga menghiraukan ini."
+"Apakah anda ingin meninggalkan proses pemasangan?"
+
+#: ../src/util.c:166
+msgid "Exit from the installer"
+msgstr "Keluar dari proses pemasangan"
+
+#: ../src/util.c:167
+msgid "Are you sure you want to exit from the installer?"
+msgstr "Apakah anda yakin untuk keluar dari proses pemasangan?"
+
