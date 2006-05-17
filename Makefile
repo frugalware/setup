@@ -289,11 +289,12 @@ pacman:
 	rm -rf $(BDIR)
 	mkdir $(BDIR)
 	rm -rf pacman
-	mkdir -p pacman/bin pacman/etc/pacman.d/ pacman/usr/lib
+	mkdir -p pacman/bin pacman/etc/pacman.d/ pacman/usr/{lib,share}
 	cd $(BDIR) && tar xjf ../$(CDIR)/pacman-$(PACMANVER)-$(CARCH).fpm
 	cp -a $(BDIR)/usr/bin/pacman pacman/bin/pacman
 	cp -a $(BDIR)/usr/lib/libalpm.so* pacman/usr/lib/
 	cp -a $(BDIR)/usr/bin/vercmp pacman/bin/
+	cp -a $(BDIR)/usr/share/locale pacman/usr/share/
 	cp -a $(BDIR)/etc/pacman.d/* pacman/etc/pacman.d/
 	echo "[options]" >>pacman/etc/pacman.conf
 	echo "LogFile     = /mnt/target/var/log/pacman.log" >> pacman/etc/pacman.conf
