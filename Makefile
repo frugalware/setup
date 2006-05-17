@@ -47,7 +47,7 @@ MDIR = merge
 CWD=`pwd`
 
 packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
-	   net-tools glibc kbd kernel module-init-tools ncurses pacman eject \
+	   glibc kbd kernel module-init-tools ncurses pacman eject \
 	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted \
 	   bzip2 libarchive zlib frugalwareutils
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
@@ -60,7 +60,7 @@ sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
 	  lynx-$(LYNXVER)-$(CARCH).fpm \
 	  module-init-tools-$(MODULE-INIT-TOOLSVER)-$(CARCH).fpm \
 	  ncurses-$(NCURSESVER)-$(CARCH).fpm netkit-base-$(NETKIT-BASEVER)-$(CARCH).fpm \
-	  net-tools-$(NET-TOOLSVER)-$(CARCH).fpm pacman-$(PACMANVER)-$(CARCH).fpm \
+	  pacman-$(PACMANVER)-$(CARCH).fpm \
 	  reiserfsprogs-$(REISERFSPROGSVER)-$(CARCH).fpm udev-$(UDEVVER)-$(CARCH).fpm \
 	  util-linux-$(UTIL-LINUXVER)-$(CARCH).fpm \
 	  netkit-base-$(NETKIT-BASEVER)-$(CARCH).fpm \
@@ -226,15 +226,6 @@ frugalware:
 ifeq ($(CARCH),x86_64)
 	cp -a $(BDIR)/lib64 frugalware/lib64
 endif
-
-net-tools:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf net-tools
-	mkdir -p net-tools/{etc/sysconfig/network,usr/share,sbin}
-	cd $(BDIR) && tar xjf ../$(CDIR)/net-tools-$(NET-TOOLSVER)-$(CARCH).fpm; \
-	cp -a sbin/netconfig ../net-tools/sbin/; \
-	cp -a usr/share/locale ../net-tools/usr/share/
 
 glibc:
 	rm -rf $(BDIR)
