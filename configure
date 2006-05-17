@@ -29,6 +29,8 @@ packages=('bash' 'kernel' 'busybox' 'dhcpcd' 'dialog' 'e2fsprogs' 'eject' \
 _configure_mirror="http://ftp.frugalware.org/pub/frugalware/frugalware-current"
 arch=`uname -m`
 
+unset LANG LC_ALL
+
 rm -f config.mak dl.lst
 
 for i in ${packages[@]}
