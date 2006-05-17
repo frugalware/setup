@@ -49,7 +49,7 @@ CWD=`pwd`
 packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 	   net-tools glibc kbd kernel module-init-tools ncurses pacman eject \
 	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted \
-	   bzip2 libarchive zlib
+	   bzip2 libarchive zlib frugalwareutils
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
 	  dhcpcd-$(DHCPCDVER)-$(CARCH).fpm dialog-$(DIALOGVER)-$(CARCH).fpm \
@@ -72,7 +72,8 @@ sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
 	  parted-$(PARTEDVER)-$(CARCH).fpm \
 	  bzip2-$(BZIP2VER)-$(CARCH).fpm \
 	  libarchive-$(LIBARCHIVEVER)-$(CARCH).fpm \
-	  zlib-$(ZLIBVER)-$(CARCH).fpm
+	  zlib-$(ZLIBVER)-$(CARCH).fpm \
+	  frugalwareutils-$(FRUGALWAREUTILSVER)-$(CARCH).fpm
 
 all: initrd
 
@@ -431,3 +432,12 @@ zlib:
 	mkdir -p zlib/usr/lib
 	cd $(BDIR) && tar xzf ../$(CDIR)/zlib-$(ZLIBVER)-$(CARCH).fpm; \
 	cp -a usr/lib/libz.so* ../zlib/usr/lib/
+
+frugalwareutils:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf frugalwareutils
+	mkdir -p frugalwareutils/{etc/sysconfig/network,usr/share}
+	cd $(BDIR) && tar xjf ../$(CDIR)/frugalwareutils-$(FRUGALWAREUTILSVER)-$(CARCH).fpm; \
+	cp -a lib sbin ../frugalwareutils/; \
+	cp -a usr/share/locale ../frugalwareutils/usr/share/
