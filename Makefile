@@ -123,7 +123,7 @@ initrd: devices
 	/sbin/mke2fs -F initrd-$(CARCH).img
 	mkdir i
 	grep -q loop /proc/modules || /sbin/modprobe loop
-	mount -o loop initrd-$(CARCH).img i
+	mount -o loop -t ext2 initrd-$(CARCH).img i
 	cp -a $(MDIR)/* i/
 	chown -R root.root i/
 	umount initrd-$(CARCH).img
