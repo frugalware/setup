@@ -48,7 +48,7 @@ int run(GList **config)
 {
 	char *version = get_version();
 
-	eject((char*)data_get(*config, "srcdev"));
+	eject((char*)data_get(*config, "srcdev"), SOURCEDIR);
 
 	dlg_put_backtitle();
 	dlg_clear();

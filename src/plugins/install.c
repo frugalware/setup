@@ -158,7 +158,7 @@ int installpkgs(GList *cats, int extra, GList **config)
 		if(((char*)data_get(*config, "netinstall")==NULL) &&
 			((char*)data_get(*config, "dvd")==NULL))
 		{
-			eject((char*)data_get(*config, "srcdev"));
+			eject((char*)data_get(*config, "srcdev"), SOURCEDIR);
 			if(ask_cdchange())
 			{
 				for (i=0; i<g_list_length(plugin_list); i++)

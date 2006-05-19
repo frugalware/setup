@@ -23,6 +23,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <sys/stat.h>
+#include <sys/mount.h>
+#include <linux/cdrom.h>
+#include <sys/types.h>
+#include <sys/fcntl.h>
 #ifdef DIALOG
 #include <dialog.h>
 #endif
@@ -110,13 +114,21 @@ void data_put(GList **config, char *name, void *data)
 	(*config) = g_list_append((*config), dp);
 }
 
-int eject(char *dev)
+int eject(char *dev, char *target)
 {
+	int fd;
+
 	dialog_msgbox(_("Setup complete"), _("Ejecting installation media..."),
 			0, 0, 0);
-	fw_system(g_strdup_printf("umount /dev/%s", dev));
-	return (fw_system(g_strdup_printf("%s/usr/bin/eject %s",
-		TARGETDIR, dev)));
+
+	umount(target);
+
+	if((fd = open(dev, O_RDONLY|O_NONBLOCK))==-1)
+		return(1);
+	if((ioctl(fd, CDROMEJECT)) == -1)
+		return(1);
+	close(fd);
+	return(0);
 }
 
 int copyfile(char *src, char *dest)
