@@ -3,10 +3,10 @@ This is the source of the Frugalware Linux installer.
 Building
 --------
 
-1) run 'make config'
-2) 'sudo make initrd' (you need to be root to be able to mount the initrd
-   image file)
-3) hopefully you'll get the vmlinuz* and initrd*.img.gz files
+Run 'sudo make initrd'. You need to be root as the downloaded packages are
+saved to pacman's cache and you need to be able to mount the initrd image file.
+
+Hopefully you'll get the vmlinuz* and initrd*.img.gz files after make ends.
 
 Adding new translations
 -----------------------
