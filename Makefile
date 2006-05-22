@@ -118,7 +118,7 @@ devices: compile
 	mknod -m 700 $(MDIR)/dev/tty2 c 4 2
 	mknod -m 700 $(MDIR)/dev/tty3 c 4 3
 
-initrd: devices
+initrd: config.mak devices
 	dd if=/dev/zero of=initrd-$(CARCH).img bs=1k count=$$(echo "$$(`which du` -s $(MDIR)|sed 's/^\(.*\)\t.*$$/\1/')+500"|bc)
 	/sbin/mke2fs -F initrd-$(CARCH).img
 	mkdir i
@@ -140,10 +140,8 @@ update:
 upload:
 	scp initrd-$(CARCH).img.gz frugalware.org:/home/ftp/pub/frugalware/frugalware-current/boot/
 
-config:
-	chmod +x configure
-	./configure
-	chmod -x configure
+config.mak:
+	sh configure
 
 check: dl.lst
 	cd $(CDIR) && sh ../bin/download ../dl.lst
