@@ -82,7 +82,7 @@ char *selpartsw()
 	dlg_put_backtitle();
 	dlg_clear();
 	fw_menu(_("Select partitioning program"),
-		_("Select which program do you want to use for partitioning:"),
+		_("Select the program you want to use for partitioning:"),
 		0, 0, 0, swnum, sws);
 
 	return(dialog_vars.input_result);
@@ -140,7 +140,7 @@ int run(GList **config)
 		dialog_vars.input_result = my_buffer;
 		dialog_vars.input_result[0]='\0';
 		ret = dialog_menu(_("Select a hard disk to partition"),
-		_("Please select a hard disk to partition. The following one "
+		_("Please select a hard disk to partition. The following ones "
 		"are available:"), 0, 0, 0, g_list_length(lp)/2, array);
 		dialog_vars.cancel_label = '\0';
 		if(wantraid)
