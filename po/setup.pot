@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-28 23:33+0100\n"
+"POT-Creation-Date: 2006-05-25 22:07+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,8 +19,8 @@ msgstr ""
 #: ../src/plugins/configsource.c:57 ../src/plugins/configsource.c:89
 #: ../src/plugins/configsource.c:94 ../src/plugins/dolangsh.c:52
 #: ../src/plugins/formatdisk.c:230 ../src/plugins/formatdisk.c:373
-#: ../src/plugins/layout.c:114 ../src/plugins/loadsource.c:75
-#: ../src/plugins/select.c:347 ../src/util.c:247
+#: ../src/plugins/layout.c:115 ../src/plugins/loadsource.c:75
+#: ../src/plugins/select.c:347 ../src/util.c:259
 msgid "Could not open output file for writing"
 msgstr ""
 
@@ -102,7 +102,7 @@ msgid "Hans Reiser's journalising filesystem"
 msgstr ""
 
 #: ../src/plugins/formatdisk.c:204
-msgid "SGI's journaling filesystem"
+msgid "SGI's journalising filesystem"
 msgstr ""
 
 #: ../src/plugins/formatdisk.c:211
@@ -287,7 +287,7 @@ msgid "Select partitioning program"
 msgstr ""
 
 #: ../src/plugins/partdisk.c:85
-msgid "Select which program do you want to use for partitioning:"
+msgid "Select the program you want to use for partitioning:"
 msgstr ""
 
 #: ../src/plugins/partdisk.c:96
@@ -317,10 +317,10 @@ msgstr ""
 
 #: ../src/plugins/partdisk.c:143
 msgid ""
-"Please select a hard disk to partition. The following one are available:"
+"Please select a hard disk to partition. The following ones are available:"
 msgstr ""
 
-#: ../src/plugins/restart.c:55 ../src/util.c:115
+#: ../src/plugins/restart.c:55 ../src/util.c:121
 msgid "Setup complete"
 msgstr ""
 
@@ -380,18 +380,18 @@ msgstr ""
 msgid "Searching for packages..."
 msgstr ""
 
-#: ../src/plugins/install.c:89
+#: ../src/plugins/install.c:90
 #, c-format
 msgid ""
 "Errors occured while installing selected packages from the %s section.\n"
 "Press ENTER to continue..."
 msgstr ""
 
-#: ../src/plugins/install.c:136
+#: ../src/plugins/install.c:137
 msgid "Insert next disc"
 msgstr ""
 
-#: ../src/plugins/install.c:137
+#: ../src/plugins/install.c:138
 msgid ""
 "Please insert the next Frugalware install disc and press ENTER to continue "
 "installing packages. If you don't have more disk, choose NO, and then you "
@@ -434,33 +434,33 @@ msgstr ""
 msgid "Updating module dependencies..."
 msgstr ""
 
-#: ../src/util.c:44
+#: ../src/util.c:48
 msgid "Setup"
 msgstr ""
 
-#: ../src/util.c:57
+#: ../src/util.c:61
 msgid "Could not open file for reading"
 msgstr ""
 
-#: ../src/util.c:115
+#: ../src/util.c:121
 msgid "Ejecting installation media..."
 msgstr ""
 
-#: ../src/util.c:149
+#: ../src/util.c:161
 msgid "Installation error"
 msgstr ""
 
-#: ../src/util.c:150
+#: ../src/util.c:162
 msgid ""
 "Errors occured while installing selected packages. It is recommended to "
 "abort the installation, however you may want to ignore this problem. Do you "
 "want to leave the installer?"
 msgstr ""
 
-#: ../src/util.c:166
+#: ../src/util.c:178
 msgid "Exit from the installer"
 msgstr ""
 
-#: ../src/util.c:167
+#: ../src/util.c:179
 msgid "Are you sure you want to exit from the installer?"
 msgstr ""
