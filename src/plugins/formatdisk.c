@@ -199,9 +199,9 @@ char *selfs(char *dev)
 	char *fss[] =
 	{
 		"ext2", _("Standard Linux ext2fs filesystem"),
-		"ext3", _("Journaling version of the ext2fs filesystem"),
-		"reiserfs", _("Hans Reiser's journaling filesystem"),
-		"xfs", _("SGI's journaling filesystem")
+		"ext3", _("Journalising version of the ext2fs filesystem"),
+		"reiserfs", _("Hans Reiser's journalising filesystem"),
+		"xfs", _("SGI's journalising filesystem")
 	};
 	
 	dialog_vars.backtitle=gen_backtitle(_("Formatting partitions"));
