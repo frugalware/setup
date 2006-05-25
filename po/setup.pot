@@ -94,11 +94,11 @@ msgid "Standard Linux ext2fs filesystem"
 msgstr ""
 
 #: ../src/plugins/formatdisk.c:202
-msgid "Journaling version of the ext2fs filesystem"
+msgid "Journalising version of the ext2fs filesystem"
 msgstr ""
 
 #: ../src/plugins/formatdisk.c:203
-msgid "Hans Reiser's journaling filesystem"
+msgid "Hans Reiser's journalising filesystem"
 msgstr ""
 
 #: ../src/plugins/formatdisk.c:204
