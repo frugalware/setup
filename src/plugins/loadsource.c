@@ -23,6 +23,7 @@
 #include <limits.h>
 #include <string.h>
 #include <stdlib.h>
+#include <dirent.h>
 #include <ctype.h>
 #ifdef DIALOG
     #include <dialog.h>
@@ -116,7 +117,6 @@ int disable_cache(char *path)
 {
 	DIR *dir;
 	struct dirent *ent;
-	struct stat buf;
 	char *filename;
 	char *targetname;
 
