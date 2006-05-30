@@ -48,6 +48,7 @@ int rmrf(char *path);
 int umount_if_needed(char *sourcedir);
 char *g_list_display(GList *list, char *sep);
 int msg(char *str);
+int disable_cache(char *path);
 
 #ifdef DIALOG
 int fw_menu(const char *title, const char *cprompt, int height, int width,

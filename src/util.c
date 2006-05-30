@@ -362,6 +362,30 @@ int msg(char *str)
 	return(0);
 }
 
+int disable_cache(char *path)
+{
+	DIR *dir;
+	struct dirent *ent;
+	char *filename;
+	char *targetname;
+
+	dir = opendir(path);
+	if (!dir)
+		return(1);
+	while ((ent = readdir(dir)) != NULL)
+	{
+		if(!strcmp(ent->d_name, ".") || !strcmp(ent->d_name, ".."))
+			continue;
+		filename = g_strdup_printf("%s/%s", path, ent->d_name);
+		targetname = g_strdup_printf("var/cache/pacman/pkg/%s", ent->d_name);
+		symlink(filename, targetname);
+		FREE(filename);
+		FREE(targetname);
+	}
+	closedir(dir);
+	return(0);
+}
+
 #ifdef DIALOG
 int fw_menu(const char *title, const char *cprompt, int height, int width,
 	int menu_height, int item_no, char **items)

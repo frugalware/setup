@@ -113,30 +113,6 @@ int is_netinstall(char *path)
 		return(0);
 }
 
-int disable_cache(char *path)
-{
-	DIR *dir;
-	struct dirent *ent;
-	char *filename;
-	char *targetname;
-
-	dir = opendir(path);
-	if (!dir)
-		return(1);
-	while ((ent = readdir(dir)) != NULL)
-	{
-		if(!strcmp(ent->d_name, ".") || !strcmp(ent->d_name, ".."))
-			continue;
-		filename = g_strdup_printf("%s/%s", path, ent->d_name);
-		targetname = g_strdup_printf("var/cache/pacman/pkg/%s", ent->d_name);
-		symlink(filename, targetname);
-		FREE(filename);
-		FREE(targetname);
-	}
-	closedir(dir);
-	return(0);
-}
-
 int run(GList **config)
 {
 	GList *drives=NULL;

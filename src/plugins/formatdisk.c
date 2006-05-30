@@ -469,6 +469,7 @@ int run(GList **config)
 	mountdev(ptr, "/", config);
 
 	// move temporarily stuff to the final location
+	chdir(TARGETDIR);
 	makepath(g_strdup_printf("%s/%s", TARGETDIR, "/etc/profile.d"));
 	op = (char*)data_get(*config, "fstab");
 	np = g_strdup_printf("%s/%s", TARGETDIR, "/etc/fstab");
@@ -492,6 +493,20 @@ int run(GList **config)
 	unlink(op);
 	chmod (np, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
 	FREE(np);
+
+	// disable caching for cd/dvd
+	// this is needed here since when the cd/dvd is loaded we had no
+	// formatted root partition
+	if((char*)data_get(*config, "netinstall")==NULL)
+	{
+		char *pacbindir = g_strdup_printf("%s/frugalware-%s", SOURCEDIR, ARCH);
+		char *pacexbindir = g_strdup_printf("%s/extra/frugalware-%s", SOURCEDIR, ARCH);
+		makepath("var/cache/pacman/pkg");
+		disable_cache(pacbindir);
+		disable_cache(pacexbindir);
+		FREE(pacbindir);
+		FREE(pacexbindir);
+	}
 
 	// non-root partitions
 	dialog_vars.backtitle=gen_backtitle(_("Selecting other partitions"));
