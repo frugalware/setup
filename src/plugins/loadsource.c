@@ -112,6 +112,31 @@ int is_netinstall(char *path)
 		return(0);
 }
 
+int disable_cache(char *path)
+{
+	DIR *dir;
+	struct dirent *ent;
+	struct stat buf;
+	char *filename;
+	char *targetname;
+
+	dir = opendir(path);
+	if (!dir)
+		return(1);
+	while ((ent = readdir(dir)) != NULL)
+	{
+		if(!strcmp(ent->d_name, ".") || !strcmp(ent->d_name, ".."))
+			continue;
+		filename = g_strdup_printf("%s/%s", path, ent->d_name);
+		targetname = g_strdup_printf("var/cache/pacman/pkg/%s", ent->d_name);
+		symlink(filename, targetname);
+		FREE(filename);
+		FREE(targetname);
+	}
+	closedir(dir);
+	return(0);
+}
+
 int run(GList **config)
 {
 	GList *drives=NULL;
@@ -139,6 +164,16 @@ int run(GList **config)
 				data_put(config, "netinstall", "");
 			break;
 		}
+	}
+	// disable caching for cd/dvd
+	if((char*)data_get(*config, "netinstall")==NULL)
+	{
+		char *pacbindir = g_strdup_printf("%s/frugalware-%s", SOURCEDIR, ARCH);
+		char *pacexbindir = g_strdup_printf("%s/extra/frugalware-%s", SOURCEDIR, ARCH);
+		disable_cache(pacbindir);
+		disable_cache(pacexbindir);
+		FREE(pacbindir);
+		FREE(pacexbindir);
 	}
 	if(data_get(*config, "srcdev")==NULL)
 	{

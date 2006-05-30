@@ -171,33 +171,7 @@ int installpkgs(GList *cats, int extra, GList **config)
 		installpkgs_forreal(mergecats(genfwcats(2), cats));
 	}
 	else
-	{
-		if((char*)data_get(*config, "netinstall")==NULL)
-		{
-			DIR *dir;
-			struct dirent *ent;
-			char *pacexbindir = g_strdup_printf("%s/extra/frugalware-%s", SOURCEDIR, ARCH);
-			char *filename;
-			char *targetname;
-
-			dir = opendir(pacexbindir);
-			if (!dir)
-				return(1);
-			while ((ent = readdir(dir)) != NULL)
-			{
-				if(!strcmp(ent->d_name, ".") || !strcmp(ent->d_name, ".."))
-					continue;
-				filename = g_strdup_printf("%s/%s", pacexbindir, ent->d_name);
-				targetname = g_strdup_printf("var/cache/pacman/pkg/%s", ent->d_name);
-				symlink(filename, targetname);
-				FREE(filename);
-				FREE(targetname);
-			}
-			closedir(dir);
-			FREE(pacexbindir);
-		}
 		installpkgs_forreal(cats);
-	}
 	return(0);
 }
 

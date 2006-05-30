@@ -362,29 +362,6 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			// TODO: handle if pacman returns an error, probably the
 			// network has not been configured properly
 			fw_system("pacman -Sy -r ./");
-		if(((char*)data_get(*config, "netinstall")==NULL) && !extra)
-		{
-			DIR *dir;
-			struct dirent *ent;
-			char *filename;
-			char *targetname;
-
-			makepath("var/cache/pacman/pkg");
-			dir = opendir(pacbindir);
-			if (!dir)
-				return(1);
-			while ((ent = readdir(dir)) != NULL)
-			{
-				if(!strcmp(ent->d_name, ".") || !strcmp(ent->d_name, ".."))
-					continue;
-				filename = g_strdup_printf("%s/%s", pacbindir, ent->d_name);
-				targetname = g_strdup_printf("var/cache/pacman/pkg/%s", ent->d_name);
-				symlink(filename, targetname);
-				FREE(filename);
-				FREE(targetname);
-			}
-			closedir(dir);
-		}
 		// pacman can't log without this
 		makepath(g_strdup_printf("%s/var/log", TARGETDIR));
 	}
