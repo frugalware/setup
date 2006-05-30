@@ -352,6 +352,7 @@ char *g_list_display(GList *list, char *sep)
 
 	for (i=1; i<g_list_length(list); i++)
 	{
+		drop_version((char*)g_list_nth_data(list, i));
 		len += strlen((char*)g_list_nth_data(list, i));
 		len += strlen(sep)+1;
 	}
