@@ -399,7 +399,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 
 int fw_select(char *repo, GList **config, int selpkgc, GList *syncs)
 {
-	int i, extra=0;
+	int i, j, extra=0;
 	GList *cats=NULL;
 	GList *allpkgs=NULL;
 
@@ -439,8 +439,8 @@ int fw_select(char *repo, GList **config, int selpkgc, GList *syncs)
 			pkgs = selpkg(strdup((char*)g_list_nth_data(cats, i)), syncs);
 		else
 			pkgs = group2pkgs(syncs, strdup((char*)g_list_nth_data(cats, i)), 0);
-		pkgs = g_list_prepend(pkgs, strdup((char*)g_list_nth_data(cats, i)));
-		allpkgs = g_list_append(allpkgs, pkgs);
+		for(j=0;j<g_list_length(pkgs);j++)
+			allpkgs = g_list_append(allpkgs, g_list_nth_data(pkgs, j));
 	}
 	if(!extra)
 		data_put(config, "packages", allpkgs);
