@@ -337,7 +337,7 @@ netkit-base:
 	mkdir $(BDIR)
 	rm -rf netkit-base
 	mkdir -p netkit-base/etc
-	cd $(BDIR) && tar xzf ../$(CDIR)/netkit-base-$(NETKIT-BASEVER)-$(CARCH).fpm
+	cd $(BDIR) && tar xjf ../$(CDIR)/netkit-base-$(NETKIT-BASEVER)-$(CARCH).fpm
 	cp -a $(BDIR)/etc/services netkit-base/etc/
 
 mdadm:
