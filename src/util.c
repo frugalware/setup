@@ -334,6 +334,17 @@ int fw_system(char* cmd)
 #endif
 }
 
+char *drop_version(char *str)
+{
+	char *ptr;
+	int i;
+
+	for(i=0;i<2;i++)
+		if((ptr = strrchr(str, '-')))
+			*ptr = '\0';
+	return(str);
+}
+
 char *g_list_display(GList *list, char *sep)
 {
 	int i, len=0;
