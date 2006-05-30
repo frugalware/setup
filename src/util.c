@@ -377,7 +377,7 @@ int disable_cache(char *path)
 		if(!strcmp(ent->d_name, ".") || !strcmp(ent->d_name, ".."))
 			continue;
 		filename = g_strdup_printf("%s/%s", path, ent->d_name);
-		targetname = g_strdup_printf("var/cache/pacman/pkg/%s", ent->d_name);
+		targetname = g_strdup_printf("%s/var/cache/pacman/pkg/%s", TARGETDIR, ent->d_name);
 		symlink(filename, targetname);
 		FREE(filename);
 		FREE(targetname);

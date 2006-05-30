@@ -501,7 +501,11 @@ int run(GList **config)
 	{
 		char *pacbindir = g_strdup_printf("%s/frugalware-%s", SOURCEDIR, ARCH);
 		char *pacexbindir = g_strdup_printf("%s/extra/frugalware-%s", SOURCEDIR, ARCH);
-		makepath("var/cache/pacman/pkg");
+		char *ptr;
+
+		ptr = g_strdup_printf("%s/var/cache/pacman/pkg", TARGETDIR);
+		makepath(ptr);
+		FREE(ptr);
 		disable_cache(pacbindir);
 		disable_cache(pacexbindir);
 		FREE(pacbindir);
