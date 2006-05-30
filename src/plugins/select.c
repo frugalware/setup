@@ -64,7 +64,7 @@ GList* group2pkgs(GList *syncs, char *group, int dialog)
 	GList *pkgs=NULL;
 	GList *list=NULL;
 	int i, extra=0, addpkg=1;
-	char *ptr, *pkgname, *lang;
+	char *ptr, *pkgname, *pkgfullname, *lang;
 
 	// add the core group to the start of the base list
 	if(!strcmp(group, "base"))
@@ -116,6 +116,8 @@ GList* group2pkgs(GList *syncs, char *group, int dialog)
 		PM_PKG *pkg = alpm_sync_getinfo(sync, PM_SYNC_PKG);
 		//printf("%s\n", alpm_pkg_getinfo(pkg, PM_PKG_NAME));
 		pkgname = alpm_pkg_getinfo(pkg, PM_PKG_NAME);
+		pkgfullname = g_strdup_printf("%s-%s", alpm_pkg_getinfo(pkg, PM_PKG_NAME),
+			alpm_pkg_getinfo(pkg, PM_PKG_VERSION));
 					// enable by default the packages in the
 					// frugalware repo + enable the
 					// language-specific parts from
@@ -124,11 +126,11 @@ GList* group2pkgs(GList *syncs, char *group, int dialog)
 					strlen(pkgname) >= strlen(lang) &&
 					!strcmp(pkgname + strlen(pkgname) -
 					strlen(lang), lang)) || !extra);
-				if(!dialog && addpkg && !g_list_is_strin(pkgname, list))
-					list = g_list_append(list, strdup(pkgname));
-				if(dialog && !g_list_is_strin(pkgname, list))
+				if(!dialog && addpkg && !g_list_is_strin(pkgfullname, list))
+					list = g_list_append(list, strdup(pkgfullname));
+				if(dialog && !g_list_is_strin(pkgfullname, list))
 				{
-					list = g_list_append(list, strdup(pkgname));
+					list = g_list_append(list, strdup(pkgfullname));
 					// TODO: PM_PKG_SIZE
 					list = g_list_append(list,
 						strdup(alpm_pkg_getinfo(pkg, PM_PKG_DESC)));
@@ -139,6 +141,7 @@ GList* group2pkgs(GList *syncs, char *group, int dialog)
 						list = g_list_append(list,
 							strdup("Off"));
 				}
+		FREE(pkgfullname);
 	}
 	alpm_trans_release();
 	return(list);
