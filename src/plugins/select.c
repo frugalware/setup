@@ -116,8 +116,8 @@ GList* group2pkgs(GList *syncs, char *group, int dialog)
 		PM_PKG *pkg = alpm_sync_getinfo(sync, PM_SYNC_PKG);
 		//printf("%s\n", alpm_pkg_getinfo(pkg, PM_PKG_NAME));
 		pkgname = alpm_pkg_getinfo(pkg, PM_PKG_NAME);
-		pkgfullname = g_strdup_printf("%s-%s", alpm_pkg_getinfo(pkg, PM_PKG_NAME),
-			alpm_pkg_getinfo(pkg, PM_PKG_VERSION));
+		pkgfullname = g_strdup_printf("%s-%s", (char*)alpm_pkg_getinfo(pkg, PM_PKG_NAME),
+			(char*)alpm_pkg_getinfo(pkg, PM_PKG_VERSION));
 		// enable by default the packages in the
 		// frugalware repo + enable the
 		// language-specific parts from
