@@ -368,6 +368,16 @@ char *g_list_display(GList *list, char *sep)
 	return(ret);
 }
 
+GList *g_list_strremove(GList *list, char *str)
+{
+	int i;
+
+	for(i=0;i<g_list_length(list);i++)
+		if(!strcmp(g_list_nth_data(list, i), str))
+			return(g_list_remove(list, g_list_nth_data(list, i)));
+}
+
+
 int msg(char *str)
 {
 	printf("\e[01;36m::\e[0m \e[01m%s\e[0m\n", str);

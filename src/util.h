@@ -48,6 +48,7 @@ int rmrf(char *path);
 int umount_if_needed(char *sourcedir);
 char *drop_version(char *str);
 char *g_list_display(GList *list, char *sep);
+GList *g_list_strremove(GList *list, char *str);
 int msg(char *str);
 int disable_cache(char *path);
 
