@@ -118,29 +118,29 @@ GList* group2pkgs(GList *syncs, char *group, int dialog)
 		pkgname = alpm_pkg_getinfo(pkg, PM_PKG_NAME);
 		pkgfullname = g_strdup_printf("%s-%s", alpm_pkg_getinfo(pkg, PM_PKG_NAME),
 			alpm_pkg_getinfo(pkg, PM_PKG_VERSION));
-					// enable by default the packages in the
-					// frugalware repo + enable the
-					// language-specific parts from
-					// locale-extra
-				addpkg = ((!strcmp(group, "locale-extra") &&
-					strlen(pkgname) >= strlen(lang) &&
-					!strcmp(pkgname + strlen(pkgname) -
-					strlen(lang), lang)) || !extra);
-				if(!dialog && addpkg && !g_list_is_strin(pkgfullname, list))
-					list = g_list_append(list, strdup(pkgfullname));
-				if(dialog && !g_list_is_strin(pkgfullname, list))
-				{
-					list = g_list_append(list, strdup(pkgfullname));
-					// TODO: PM_PKG_SIZE
-					list = g_list_append(list,
-						strdup(alpm_pkg_getinfo(pkg, PM_PKG_DESC)));
-					if(addpkg)
-						list = g_list_append(list,
-							strdup("On"));
-					else
-						list = g_list_append(list,
-							strdup("Off"));
-				}
+		// enable by default the packages in the
+		// frugalware repo + enable the
+		// language-specific parts from
+		// locale-extra
+		addpkg = ((!strcmp(group, "locale-extra") &&
+			strlen(pkgname) >= strlen(lang) &&
+			!strcmp(pkgname + strlen(pkgname) -
+			strlen(lang), lang)) || !extra);
+		if(!dialog && addpkg && !g_list_is_strin(pkgfullname, list))
+			list = g_list_append(list, strdup(pkgfullname));
+		if(dialog && !g_list_is_strin(pkgfullname, list))
+		{
+			list = g_list_append(list, strdup(pkgfullname));
+			// TODO: PM_PKG_SIZE
+			list = g_list_append(list,
+				strdup(alpm_pkg_getinfo(pkg, PM_PKG_DESC)));
+			if(addpkg)
+				list = g_list_append(list,
+					strdup("On"));
+			else
+				list = g_list_append(list,
+					strdup("Off"));
+		}
 		FREE(pkgfullname);
 	}
 	alpm_trans_release();
