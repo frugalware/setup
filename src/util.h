@@ -44,6 +44,7 @@ int exit_perform(void);
 char **glist4dialog(GList *list, char *blank);
 int fw_system(char* cmd);
 int makepath(char *path);
+int rmrf(char *path);
 int umount_if_needed(char *sourcedir);
 char *g_list_display(GList *list, char *sep);
 int msg(char *str);
