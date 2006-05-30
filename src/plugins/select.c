@@ -364,8 +364,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			fw_system("pacman -Sy -r ./");
 		if(((char*)data_get(*config, "netinstall")==NULL) && !extra)
 		{
-			makepath(g_strdup_printf("%s/var/cache/pacman",
-				TARGETDIR));
+			makepath("var/cache/pacman");
 			unlink("var/cache/pacman/pkg");
 			symlink(pacbindir, "var/cache/pacman/pkg");
 		}
