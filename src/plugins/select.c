@@ -460,6 +460,9 @@ int fw_select(char *repo, GList **config, int selpkgc, GList *syncs)
 		}
 		g_list_free(allpkgs);
 		allpkgs=NULL;
+		dlg_put_backtitle();
+		dialog_msgbox(_("Please wait"), _("Searching for missing dependencies..."),
+		0, 0, 0);
 		if(alpm_trans_prepare(&junk) == -1)
 			return(1);
 		sorted = alpm_trans_getinfo(PM_TRANS_PACKAGES);
