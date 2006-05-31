@@ -23,6 +23,9 @@
 #include <dialog.h>
 #include <unistd.h>
 #include <dirent.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
 
 #include <setup.h>
 #include <util.h>
@@ -43,88 +46,31 @@ plugin_t *info()
 	return &plugin;
 }
 
-GList *genfwcats(int cdnum)
+int installpkgs_forreal(GList *pkgs)
 {
-	GList *list=NULL;
+	char *ptr;
 
-	if(cdnum==1)
+	ptr = g_list_display(pkgs, " ");
+	if(ptr!=NULL)
 	{
-		list = g_list_append(list, "base");
-		list = g_list_append(list, "apps");
-		list = g_list_append(list, "lib");
-		list = g_list_append(list, "multimedia");
-		list = g_list_append(list, "network");
-		list = g_list_append(list, "devel");
-	}
-	else if(cdnum==2)
-	{
-		list = g_list_append(list, "x11");
-		list = g_list_append(list, "xlib");
-		list = g_list_append(list, "xapps");
-		list = g_list_append(list, "xmultimedia");
-		list = g_list_append(list, "xfce4");
-		list = g_list_append(list, "gnome");
-		list = g_list_append(list, "kde");
-	}
-	return(list);
-}
-
-int installpkgs_forreal(GList *cats)
-{
-	int i;
-	char *section, *ptr;
-
-	for (i=0; i<g_list_length(cats); i++)
-	{
-		section = (char*)g_list_nth_data((GList*)g_list_nth_data(cats, i), 0);
-		ptr = g_list_display((GList*)g_list_nth_data(cats, i), " ");
-		if(ptr!=NULL)
+		fw_end_dialog();
+		if (system(g_strdup_printf("pacman -S -r ./ --noconfirm %s", ptr))
+			!= 0)
 		{
-			fw_end_dialog();
-			if (system(g_strdup_printf("pacman -S -r ./ --noconfirm %s", ptr))
-				!= 0)
-			{
-				printf(_("Errors occured while installing "
-				"selected packages from the %s section.\n"
-				"Press ENTER to continue..."), section);
-				fflush(stdout);
-				getchar();
-				fw_init_dialog();
-				if(exit_fail())
-					exit_perform();
-			}
-			else
-				fw_init_dialog();
+			printf(_("Errors occured while installing "
+			"selected packages.\n"
+			"Press ENTER to continue..."));
+			fflush(stdout);
+			getchar();
+			fw_init_dialog();
+			if(exit_fail())
+				exit_perform();
 		}
-		FREE(ptr);
+		else
+			fw_init_dialog();
 	}
+	FREE(ptr);
 	return(0);
-}
-
-int cat_isin(GList *list, char *cat)
-{
-	int i;
-	for (i=0; i<g_list_length(list); i++)
-	{
-		if(!strcmp((char*)g_list_nth_data((GList*)g_list_nth_data(list, i), 0), cat))
-			return(i);
-	}
-	return(-1);
-}
-
-GList *mergecats(GList *allowed, GList *all)
-{
-	GList *final = NULL;
-	char *section;
-	int i, pos;
-
-	for (i=0; i<g_list_length(allowed); i++)
-	{
-		section = g_list_nth_data(allowed, i);
-		pos = cat_isin(all, section);
-		final = g_list_append(final, (GList*)g_list_nth_data(all, pos));
-	}
-	return(final);
 }
 
 int ask_cdchange(void)
@@ -143,18 +89,23 @@ int ask_cdchange(void)
 #endif
 }
 
-int installpkgs(GList *cats, int extra, GList **config)
+int installpkgs(GList *pkgs, int extra, GList **config)
 {
-	int i;
-	plugin_t *plugin;
+	int i, first=1;
 
-	if(!extra)
+	while(pkgs)
 	{
-		installpkgs_forreal(mergecats(genfwcats(1), cats));
-		// do we need to change cds?
-		if(((char*)data_get(*config, "netinstall")==NULL) &&
-			((char*)data_get(*config, "dvd")==NULL))
+		GList *list=NULL;
+		struct stat buf;
+		char *ptr;
+
+		if(first)
+			// for the first time the volume is already loaded
+			first=0;
+		else
 		{
+			plugin_t *plugin;
+
 			eject((char*)data_get(*config, "srcdev"), SOURCEDIR);
 			if(ask_cdchange())
 			{
@@ -168,10 +119,25 @@ int installpkgs(GList *cats, int extra, GList **config)
 			else
 				return(0);
 		}
-		installpkgs_forreal(mergecats(genfwcats(2), cats));
+		// see what packages can be usefull from this volume
+		for(i=0;i<g_list_length(pkgs);i++)
+		{
+			if(!extra)
+				ptr = g_strdup_printf("%s/frugalware-%s/%s-%s.fpm", SOURCEDIR, ARCH,
+					(char*)g_list_nth_data(pkgs, i), ARCH);
+			else
+				ptr = g_strdup_printf("%s/extra/frugalware-%s/%s-%s.fpm", SOURCEDIR, ARCH,
+					(char*)g_list_nth_data(pkgs, i), ARCH);
+			if(!stat(ptr, &buf))
+				list = g_list_append(list, strdup((char*)g_list_nth_data(pkgs, i)));
+			FREE(ptr);
+		}
+		// remove them from the full list
+		for(i=0;i<g_list_length(list);i++)
+			pkgs=g_list_strremove(pkgs, (char*)g_list_nth_data(list, i));
+		// install them
+		installpkgs_forreal(list);
 	}
-	else
-		installpkgs_forreal(cats);
 	return(0);
 }
 
