@@ -93,6 +93,7 @@ int installpkgs(GList *pkgs, int extra, GList **config)
 {
 	int i, first=1;
 
+	if((char*)data_get(*config, "netinstall")==NULL)
 	while(pkgs)
 	{
 		GList *list=NULL;
@@ -138,6 +139,8 @@ int installpkgs(GList *pkgs, int extra, GList **config)
 		// install them
 		installpkgs_forreal(list);
 	}
+	else
+		installpkgs_forreal(pkgs);
 	return(0);
 }
 
