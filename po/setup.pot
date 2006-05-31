@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-25 22:07+0530\n"
+"POT-Creation-Date: 2006-05-31 21:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,8 +19,8 @@ msgstr ""
 #: ../src/plugins/configsource.c:57 ../src/plugins/configsource.c:89
 #: ../src/plugins/configsource.c:94 ../src/plugins/dolangsh.c:52
 #: ../src/plugins/formatdisk.c:230 ../src/plugins/formatdisk.c:373
-#: ../src/plugins/layout.c:115 ../src/plugins/loadsource.c:75
-#: ../src/plugins/select.c:347 ../src/util.c:259
+#: ../src/plugins/layout.c:115 ../src/plugins/loadsource.c:76
+#: ../src/plugins/select.c:350 ../src/util.c:306
 msgid "Could not open output file for writing"
 msgstr ""
 
@@ -39,7 +39,8 @@ msgid ""
 msgstr ""
 
 #: ../src/plugins/configsource.c:158 ../src/plugins/hotplug.c:53
-#: ../src/plugins/select.c:421 ../src/plugins/select.c:436
+#: ../src/plugins/select.c:417 ../src/plugins/select.c:432
+#: ../src/plugins/select.c:464
 msgid "Please wait"
 msgstr ""
 
@@ -162,7 +163,7 @@ msgstr ""
 msgid "Select mount point for %s"
 msgstr ""
 
-#: ../src/plugins/formatdisk.c:413 ../src/plugins/formatdisk.c:524
+#: ../src/plugins/formatdisk.c:413 ../src/plugins/formatdisk.c:543
 msgid "(in use)"
 msgstr ""
 
@@ -172,19 +173,19 @@ msgid "%s on %s\t%s"
 msgstr ""
 
 #. non-root partitions
-#: ../src/plugins/formatdisk.c:497
+#: ../src/plugins/formatdisk.c:516
 msgid "Selecting other partitions"
 msgstr ""
 
-#: ../src/plugins/formatdisk.c:504 ../src/plugins/partdisk.c:139
+#: ../src/plugins/formatdisk.c:523 ../src/plugins/partdisk.c:139
 msgid "Continue"
 msgstr ""
 
-#: ../src/plugins/formatdisk.c:508
+#: ../src/plugins/formatdisk.c:527
 msgid "Select other Linux partitions for /etc/fstab"
 msgstr ""
 
-#: ../src/plugins/formatdisk.c:509
+#: ../src/plugins/formatdisk.c:528
 msgid ""
 "You may use your other partitions to distribute your Linux system across "
 "more than one partition. Currently, you have only mounted your / partition. "
@@ -239,32 +240,32 @@ msgid ""
 "of choices."
 msgstr ""
 
-#: ../src/plugins/loadsource.c:122
+#: ../src/plugins/loadsource.c:123
 msgid "Selecting source media"
 msgstr ""
 
-#: ../src/plugins/loadsource.c:125
+#: ../src/plugins/loadsource.c:126
 msgid "Scanning"
 msgstr ""
 
-#: ../src/plugins/loadsource.c:125
+#: ../src/plugins/loadsource.c:126
 msgid "Scanning for a CD/DVD drive containing a Frugalware install disc..."
 msgstr ""
 
-#: ../src/plugins/loadsource.c:135
+#: ../src/plugins/loadsource.c:136
 msgid "CD/DVD drive found"
 msgstr ""
 
-#: ../src/plugins/loadsource.c:135
+#: ../src/plugins/loadsource.c:136
 #, c-format
 msgid "A Frugalware install disc was found in device /dev/%s."
 msgstr ""
 
-#: ../src/plugins/loadsource.c:145
+#: ../src/plugins/loadsource.c:156
 msgid "CD/DVD drive not found"
 msgstr ""
 
-#: ../src/plugins/loadsource.c:145
+#: ../src/plugins/loadsource.c:156
 msgid ""
 "Sorry, no Frugalware install disc was found in your drives. Press ENTER to "
 "reboot."
@@ -320,7 +321,7 @@ msgid ""
 "Please select a hard disk to partition. The following ones are available:"
 msgstr ""
 
-#: ../src/plugins/restart.c:55 ../src/util.c:121
+#: ../src/plugins/restart.c:55 ../src/util.c:123
 msgid "Setup complete"
 msgstr ""
 
@@ -332,27 +333,27 @@ msgid ""
 "press ENTER to reboot."
 msgstr ""
 
-#: ../src/plugins/select.c:260
+#: ../src/plugins/select.c:263
 msgid "Selecting categories"
 msgstr ""
 
-#: ../src/plugins/select.c:262
+#: ../src/plugins/select.c:265
 msgid "Please select which extra categories to install:"
 msgstr ""
 
-#: ../src/plugins/select.c:263
+#: ../src/plugins/select.c:266
 msgid "Please select which frugalware categories to install:"
 msgstr ""
 
-#: ../src/plugins/select.c:280
+#: ../src/plugins/select.c:283
 msgid "Selecting packages"
 msgstr ""
 
-#: ../src/plugins/select.c:293
+#: ../src/plugins/select.c:296
 msgid "Use expert menus?"
 msgstr ""
 
-#: ../src/plugins/select.c:294
+#: ../src/plugins/select.c:297
 msgid ""
 "If you like, you may select your packages from expert menus. Where the "
 "normal menu shows a choice like 'C compiler system', the expert menus show "
@@ -364,34 +365,38 @@ msgid ""
 "each package."
 msgstr ""
 
-#: ../src/plugins/select.c:414
+#: ../src/plugins/select.c:410
 msgid "Selecting frugalware packages"
 msgstr ""
 
-#: ../src/plugins/select.c:417
+#: ../src/plugins/select.c:413
 msgid "Selecting extra packages"
 msgstr ""
 
-#: ../src/plugins/select.c:421
+#: ../src/plugins/select.c:417
 msgid "Searching for categories..."
 msgstr ""
 
-#: ../src/plugins/select.c:436
+#: ../src/plugins/select.c:432
 msgid "Searching for packages..."
 msgstr ""
 
-#: ../src/plugins/install.c:90
+#: ../src/plugins/select.c:464
+msgid "Searching for missing dependencies..."
+msgstr ""
+
+#: ../src/plugins/install.c:60
 #, c-format
 msgid ""
-"Errors occured while installing selected packages from the %s section.\n"
+"Errors occured while installing selected packages.\n"
 "Press ENTER to continue..."
 msgstr ""
 
-#: ../src/plugins/install.c:137
+#: ../src/plugins/install.c:80
 msgid "Insert next disc"
 msgstr ""
 
-#: ../src/plugins/install.c:138
+#: ../src/plugins/install.c:81
 msgid ""
 "Please insert the next Frugalware install disc and press ENTER to continue "
 "installing packages. If you don't have more disk, choose NO, and then you "
@@ -434,33 +439,33 @@ msgstr ""
 msgid "Updating module dependencies..."
 msgstr ""
 
-#: ../src/util.c:48
+#: ../src/util.c:50
 msgid "Setup"
 msgstr ""
 
-#: ../src/util.c:61
+#: ../src/util.c:63
 msgid "Could not open file for reading"
 msgstr ""
 
-#: ../src/util.c:121
+#: ../src/util.c:123
 msgid "Ejecting installation media..."
 msgstr ""
 
-#: ../src/util.c:161
+#: ../src/util.c:163
 msgid "Installation error"
 msgstr ""
 
-#: ../src/util.c:162
+#: ../src/util.c:164
 msgid ""
 "Errors occured while installing selected packages. It is recommended to "
 "abort the installation, however you may want to ignore this problem. Do you "
 "want to leave the installer?"
 msgstr ""
 
-#: ../src/util.c:178
+#: ../src/util.c:180
 msgid "Exit from the installer"
 msgstr ""
 
-#: ../src/util.c:179
+#: ../src/util.c:181
 msgid "Are you sure you want to exit from the installer?"
 msgstr ""
