@@ -474,6 +474,7 @@ int fw_select(char *repo, GList **config, int selpkgc, GList *syncs)
 				(char*)alpm_pkg_getinfo(pkg, PM_PKG_VERSION));
 			allpkgs = g_list_append(allpkgs, ptr);
 		}
+		alpm_trans_release();
 		data_put(config, "packages", allpkgs);
 	}
 	else
