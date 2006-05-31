@@ -17,7 +17,7 @@
 #
 
 UI ?= dialog
-CFLAGS ?= -g -Wall -O2 -pipe
+CFLAGS ?= -g -Wall -Werror -O2 -pipe
 CFLAGS += -I.. $(FINAL) -DARCH="\"$(shell arch)\""
 LDFLAGS += -lparted -ldl -lalpm
 ifeq ($(shell arch),x86_64)

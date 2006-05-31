@@ -17,7 +17,7 @@
 #
 
 UI ?= dialog
-CFLAGS ?= -g -Wall -O2 -pipe
+CFLAGS ?= -g -Wall -Werror -O2 -pipe
 CFLAGS += $(FINAL) $(STABLE) -DARCH="\"$(shell arch)\""
 LDFLAGS += -ldl -rdynamic
 CFLAGS += $(shell pkg-config --cflags glib-2.0)
