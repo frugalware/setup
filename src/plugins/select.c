@@ -443,7 +443,36 @@ int fw_select(char *repo, GList **config, int selpkgc, GList *syncs)
 			allpkgs = g_list_append(allpkgs, g_list_nth_data(pkgs, j));
 	}
 	if(!extra)
+	{
+		// FIXME: currently we add the missing deps for the fw repo
+		// of course it _could_ be done for extra, too
+		PM_LIST *lp, *junk, *sorted;
+		char *ptr;
+
+		if(alpm_trans_init(PM_TRANS_TYPE_SYNC, PM_TRANS_FLAG_NOCONFLICTS, NULL, NULL, NULL) == -1)
+			return(1);
+		for(i=0;i<g_list_length(allpkgs);i++)
+		{
+			ptr = strdup((char*)g_list_nth_data(allpkgs, i));
+			if(alpm_trans_addtarget(drop_version(ptr)))
+				return(1);
+			FREE(ptr);
+		}
+		g_list_free(allpkgs);
+		allpkgs=NULL;
+		if(alpm_trans_prepare(&junk) == -1)
+			return(1);
+		sorted = alpm_trans_getinfo(PM_TRANS_PACKAGES);
+		for(lp = alpm_list_first(sorted); lp; lp = alpm_list_next(lp))
+		{
+			PM_SYNCPKG *sync = alpm_list_getdata(lp);
+			PM_PKG *pkg = alpm_sync_getinfo(sync, PM_SYNC_PKG);
+			ptr = g_strdup_printf("%s-%s", (char*)alpm_pkg_getinfo(pkg, PM_PKG_NAME),
+				(char*)alpm_pkg_getinfo(pkg, PM_PKG_VERSION));
+			allpkgs = g_list_append(allpkgs, ptr);
+		}
 		data_put(config, "packages", allpkgs);
+	}
 	else
 		data_put(config, "expackages", allpkgs);
 	return(0);
