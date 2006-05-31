@@ -375,6 +375,7 @@ GList *g_list_strremove(GList *list, char *str)
 	for(i=0;i<g_list_length(list);i++)
 		if(!strcmp(g_list_nth_data(list, i), str))
 			return(g_list_remove(list, g_list_nth_data(list, i)));
+	return(NULL);
 }
 
 
