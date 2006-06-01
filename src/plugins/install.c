@@ -50,11 +50,8 @@ int installpkgs_forreal(GList *pkgs)
 {
 	char *ptr;
 
-	if(!g_list_length(pkgs))
-		// nothing to do
-		return(0);
 	ptr = g_list_display(pkgs, " ");
-	if(ptr!=NULL)
+	if(ptr!=NULL && strlen(ptr))
 	{
 		fw_end_dialog();
 		if (system(g_strdup_printf("pacman -S -r ./ --noconfirm %s", ptr))
