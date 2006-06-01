@@ -360,7 +360,7 @@ char *g_list_display(GList *list, char *sep)
 		return(NULL);
 	MALLOC(ret, len);
 	*ret='\0';
-	for (i=1; i<g_list_length(list); i++)
+	for (i=0; i<g_list_length(list); i++)
 	{
 		strcat(ret, (char*)g_list_nth_data(list, i));
 		strcat(ret, sep);
