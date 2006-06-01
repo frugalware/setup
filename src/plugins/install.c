@@ -137,7 +137,8 @@ int installpkgs(GList *pkgs, int extra, GList **config)
 		for(i=0;i<g_list_length(list);i++)
 			pkgs=g_list_strremove(pkgs, (char*)g_list_nth_data(list, i));
 		// install them
-		installpkgs_forreal(list);
+		if(g_list_length(list))
+			installpkgs_forreal(list);
 	}
 	else
 		installpkgs_forreal(pkgs);
