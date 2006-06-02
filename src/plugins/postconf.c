@@ -175,7 +175,7 @@ int run(GList **config)
 
 	if(!fw_system("pacman -Q xorg-server -r ./"))
 	{
-		system("chroot ./ /sbin/xconfig");
+		system("chroot ./ su -c /sbin/xconfig");
 		system("chroot ./ /sbin/xwmconfig --silent");
 	}
 	fw_init_dialog();
