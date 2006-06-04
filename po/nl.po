@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: setup current\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-02-28 23:33+0100\n"
+"POT-Creation-Date: 2006-06-04 13:50+0100\n"
 "PO-Revision-Date: 2005-11-25 18:06+0100\n"
 "Last-Translator: David Kimpe <David.Kimpe@DistroTalk.net>\n"
 "Language-Team: Dutch <translation-team-nl@lists.sourceforge.net>\n"
@@ -20,8 +20,8 @@ msgstr ""
 #: ../src/plugins/configsource.c:57 ../src/plugins/configsource.c:89
 #: ../src/plugins/configsource.c:94 ../src/plugins/dolangsh.c:52
 #: ../src/plugins/formatdisk.c:230 ../src/plugins/formatdisk.c:373
-#: ../src/plugins/layout.c:114 ../src/plugins/loadsource.c:75
-#: ../src/plugins/select.c:347 ../src/util.c:247
+#: ../src/plugins/layout.c:115 ../src/plugins/loadsource.c:76
+#: ../src/plugins/select.c:350 ../src/util.c:306
 msgid "Could not open output file for writing"
 msgstr "Kon het output bestand niet openen om ernaar te schrijven"
 
@@ -42,7 +42,8 @@ msgstr ""
 "downloaden. In de meeste gevallen zal de standaardwaarde goed zijn."
 
 #: ../src/plugins/configsource.c:158 ../src/plugins/hotplug.c:53
-#: ../src/plugins/select.c:421 ../src/plugins/select.c:436
+#: ../src/plugins/select.c:417 ../src/plugins/select.c:432
+#: ../src/plugins/select.c:464
 msgid "Please wait"
 msgstr "Gelieve te wachten"
 
@@ -59,7 +60,8 @@ msgid "Setting up swap partitions"
 msgstr "De swap partities aan het instellen"
 
 #: ../src/plugins/formatdisk.c:145
-msgid "Please select which swap partitions do you want Frugalware to use:"
+#, fuzzy
+msgid "Please select which swap partitions you want Frugalware to use:"
 msgstr "Kies welke swap partities Frugalware moet gebruiken:"
 
 #: ../src/plugins/formatdisk.c:156 ../src/plugins/formatdisk.c:178
@@ -100,15 +102,18 @@ msgid "Standard Linux ext2fs filesystem"
 msgstr "Standaard Linux ext2fs bestandssysteem"
 
 #: ../src/plugins/formatdisk.c:202
-msgid "Journaling version of the ext2fs filesystem"
+#, fuzzy
+msgid "Journalising version of the ext2fs filesystem"
 msgstr "Journaling versie van het ext2FS bestandssysteem"
 
 #: ../src/plugins/formatdisk.c:203
-msgid "Hans Reiser's journaling filesystem"
+#, fuzzy
+msgid "Hans Reiser's journalising filesystem"
 msgstr "Hans Reiser's journaling bestandssysteem"
 
 #: ../src/plugins/formatdisk.c:204
-msgid "SGI's journaling filesystem"
+#, fuzzy
+msgid "SGI's journalising filesystem"
 msgstr "SGI's journaling bestandssysteem"
 
 #: ../src/plugins/formatdisk.c:211
@@ -171,7 +176,7 @@ msgstr "Het %s bestandssysteem creëren op %s"
 msgid "Select mount point for %s"
 msgstr "Selecteer het mount punt voor %s"
 
-#: ../src/plugins/formatdisk.c:413 ../src/plugins/formatdisk.c:524
+#: ../src/plugins/formatdisk.c:413 ../src/plugins/formatdisk.c:543
 msgid "(in use)"
 msgstr "(in gebruik)"
 
@@ -181,19 +186,19 @@ msgid "%s on %s\t%s"
 msgstr "%s op %s\t%s"
 
 #. non-root partitions
-#: ../src/plugins/formatdisk.c:497
+#: ../src/plugins/formatdisk.c:516
 msgid "Selecting other partitions"
 msgstr "Andere partities selecteren"
 
-#: ../src/plugins/formatdisk.c:504 ../src/plugins/partdisk.c:139
+#: ../src/plugins/formatdisk.c:523 ../src/plugins/partdisk.c:139
 msgid "Continue"
 msgstr "Verdergaan"
 
-#: ../src/plugins/formatdisk.c:508
+#: ../src/plugins/formatdisk.c:527
 msgid "Select other Linux partitions for /etc/fstab"
 msgstr "Selecteer andere Linux partities voor /etc/fstab"
 
-#: ../src/plugins/formatdisk.c:509
+#: ../src/plugins/formatdisk.c:528
 msgid ""
 "You may use your other partitions to distribute your Linux system across "
 "more than one partition. Currently, you have only mounted your / partition. "
@@ -223,10 +228,11 @@ msgid "Welcome"
 msgstr "Welkom"
 
 #: ../src/plugins/greet.c:58
+#, fuzzy
 msgid ""
 "Welcome among the users of Frugalware!\n"
 "\n"
-"The aim of creating Frugalware was to help you make your work faster and "
+"The aim of creating Frugalware was to help you to do your work faster and "
 "simpler. We hope that you will like our product.\n"
 "\n"
 "The Frugalware Developer Team"
@@ -266,36 +272,37 @@ msgstr ""
 "gekozen. Gebruik de BOVEN/ONDER pijltjestoetsen en PageUp/PageDown om door "
 "de volledige lijst met keuzes te scrollen."
 
-#: ../src/plugins/loadsource.c:122
+#: ../src/plugins/loadsource.c:123
 msgid "Selecting source media"
 msgstr "Bron media selecteren"
 
-#: ../src/plugins/loadsource.c:125
+#: ../src/plugins/loadsource.c:126
 msgid "Scanning"
 msgstr "Scannen"
 
-#: ../src/plugins/loadsource.c:125
+#: ../src/plugins/loadsource.c:126
 msgid "Scanning for a CD/DVD drive containing a Frugalware install disc..."
 msgstr ""
 "Scanner naar een CD/DVD drive die een Frugalware installatie disc bevat..."
 
-#: ../src/plugins/loadsource.c:135
+#: ../src/plugins/loadsource.c:136
 msgid "CD/DVD drive found"
 msgstr "CD/DVD drive gevonden"
 
-#: ../src/plugins/loadsource.c:135
+#: ../src/plugins/loadsource.c:136
 #, c-format
 msgid "A Frugalware install disc was found in device /dev/%s."
 msgstr "Eine Frugalware Installations Quelle wurde in /dev/%s gefunden."
 
-#: ../src/plugins/loadsource.c:145
+#: ../src/plugins/loadsource.c:156
 msgid "CD/DVD drive not found"
 msgstr "CD/DVD drive niet gevonden"
 
-#: ../src/plugins/loadsource.c:145
+#: ../src/plugins/loadsource.c:156
+#, fuzzy
 msgid ""
-"Sorry, no Frugalware install disc was found in your drives. Press ENTER to "
-"reboot."
+"Sorry, no Frugalware install disc was found in any of your drives. Press "
+"ENTER to reboot."
 msgstr ""
 "Sorry, er werd geen Frugalware instalatie disc gevonden in je drives. Druk "
 "op ENTER om te herstarten."
@@ -317,7 +324,8 @@ msgid "Select partitioning program"
 msgstr "Selecteer partitie programma"
 
 #: ../src/plugins/partdisk.c:85
-msgid "Select which program do you want to use for partitioning:"
+#, fuzzy
+msgid "Select the program you want to use for partitioning:"
 msgstr "Selecteer welk programma je wil gebruiken om te partitioneren"
 
 #: ../src/plugins/partdisk.c:96
@@ -333,8 +341,10 @@ msgid "Disk drive not found"
 msgstr "Disk drive niet gevonden"
 
 #: ../src/plugins/partdisk.c:119
+#, fuzzy
 msgid ""
-"Sorry, no hard disk drives were found in this box. Press ENTER to reboot."
+"Sorry, no hard disk drives were found in this computer. Press ENTER to "
+"reboot."
 msgstr ""
 "Sorry, er werden geen disk drives gevonden. Druk op ENTER om te herstarten "
 
@@ -347,12 +357,13 @@ msgid "Select a hard disk to partition"
 msgstr "Selecteer een harde schijf om te partitioneren"
 
 #: ../src/plugins/partdisk.c:143
+#, fuzzy
 msgid ""
-"Please select a hard disk to partition. The following one are available:"
+"Please select a hard disk to partition. The following ones are available:"
 msgstr ""
 "Selecteer een harde schijf om te partitioneren. De volgende zijn beschikbaar:"
 
-#: ../src/plugins/restart.c:55 ../src/util.c:115
+#: ../src/plugins/restart.c:55 ../src/util.c:123
 msgid "Setup complete"
 msgstr "Setup voltooid"
 
@@ -360,41 +371,42 @@ msgstr "Setup voltooid"
 #, fuzzy, c-format
 msgid ""
 "System installation and configuration is successfully completed. We hope "
-"that %s will make you content. Please remove the media from your drive and "
-"press ENTER to reboot."
+"that you will enjoy %s. Please remove the media from your drive and press "
+"ENTER to reboot."
 msgstr ""
 "Systeeminstallatie en configuratie zijn successvol voltooid. We hopen dat %s "
 "je zal tevreden zal stellen. Gelieve de bronmedia van je drive te "
 "verwijderen en druk ENTER om te herstarten."
 
-#: ../src/plugins/select.c:260
+#: ../src/plugins/select.c:263
 msgid "Selecting categories"
 msgstr "Categories selecteren"
 
-#: ../src/plugins/select.c:262
+#: ../src/plugins/select.c:265
 msgid "Please select which extra categories to install:"
 msgstr "Gelieve te selecteren welke extra categories je wil installeren:"
 
-#: ../src/plugins/select.c:263
+#: ../src/plugins/select.c:266
 msgid "Please select which frugalware categories to install:"
 msgstr "Gelieve te selecteren welke Frugalware categories je wil installeren:"
 
-#: ../src/plugins/select.c:280
+#: ../src/plugins/select.c:283
 msgid "Selecting packages"
 msgstr "pakketten selecteren"
 
-#: ../src/plugins/select.c:293
+#: ../src/plugins/select.c:296
 msgid "Use expert menus?"
 msgstr "Expert menu's gebruiken?"
 
-#: ../src/plugins/select.c:294
+#: ../src/plugins/select.c:297
+#, fuzzy
 msgid ""
 "If you like, you may select your packages from expert menus. Where the "
 "normal menu shows a choice like 'C compiler system', the expert menus show "
 "you 'C libs', 'C compiler', 'C include files', etc - each individual "
 "package. Obviously, you should know what you're doing if you use the expert "
 "menus since it's possible to skip packages that are crucial to the "
-"functioning of a subsystem. Choose 'no' for using normal menus that select "
+"functioning of your system. Choose 'no' for using normal menus that select "
 "groups of packages, or choose 'yes' for using expert menus with a switch for "
 "each package."
 msgstr ""
@@ -406,37 +418,42 @@ msgstr ""
 "Kies 'nee' voor normale menu's die pakketgroepen selecteren, of kies 'ja' "
 "voor expert menu's om individuele paketten te kiezen."
 
-#: ../src/plugins/select.c:414
+#: ../src/plugins/select.c:410
 msgid "Selecting frugalware packages"
 msgstr "Frugalware pakketten selecteren"
 
-#: ../src/plugins/select.c:417
+#: ../src/plugins/select.c:413
 msgid "Selecting extra packages"
 msgstr "Extra pakketten selecteren"
 
-#: ../src/plugins/select.c:421
+#: ../src/plugins/select.c:417
 msgid "Searching for categories..."
 msgstr "Zoeken naar categories..."
 
-#: ../src/plugins/select.c:436
+#: ../src/plugins/select.c:432
 msgid "Searching for packages..."
 msgstr "Zoeken naar pakketten."
 
-#: ../src/plugins/install.c:89
-#, c-format
+#: ../src/plugins/select.c:464
+#, fuzzy
+msgid "Searching for missing dependencies..."
+msgstr "Zoeken naar pakketten."
+
+#: ../src/plugins/install.c:60
+#, fuzzy, c-format
 msgid ""
-"Errors occured while installing selected packages from the %s section.\n"
+"Errors occured while installing selected packages.\n"
 "Press ENTER to continue..."
 msgstr ""
 "Fouten tegengekomen tijdens het installeren van de geselecteerde pakketten "
 "van de %s sectie.\n"
 "Druk ENTER om verder te gaan..."
 
-#: ../src/plugins/install.c:136
+#: ../src/plugins/install.c:80
 msgid "Insert next disc"
 msgstr "Steek de volgende disc in"
 
-#: ../src/plugins/install.c:137
+#: ../src/plugins/install.c:81
 msgid ""
 "Please insert the next Frugalware install disc and press ENTER to continue "
 "installing packages. If you don't have more disk, choose NO, and then you "
@@ -452,11 +469,12 @@ msgid "No root password detected"
 msgstr "Geen root passwoord gedetecteerd"
 
 #: ../src/plugins/postconf.c:74
+#, fuzzy
 msgid ""
 "There is currently no password set on the system administrator account "
 "(root). It is recommended that you set one now so that it is active the "
 "first time the machine is rebooted. This is especially important if your "
-"machine is on an internet connected lan. Would you like to set a root "
+"machine is on an internet connected LAN. Would you like to set a root "
 "password?"
 msgstr ""
 "Er is momenteel geen passwoord ingesteld voor de systeemadministrator "
@@ -492,23 +510,23 @@ msgstr "Kernel modules configureren"
 msgid "Updating module dependencies..."
 msgstr "Module afhankelijkheden updaten..."
 
-#: ../src/util.c:44
+#: ../src/util.c:50
 msgid "Setup"
 msgstr "Setup"
 
-#: ../src/util.c:57
+#: ../src/util.c:63
 msgid "Could not open file for reading"
 msgstr "Kon bestand niet openen om het te lezen"
 
-#: ../src/util.c:115
+#: ../src/util.c:123
 msgid "Ejecting installation media..."
 msgstr "Ejecting het installatie media..."
 
-#: ../src/util.c:149
+#: ../src/util.c:163
 msgid "Installation error"
 msgstr "Installatie fouten"
 
-#: ../src/util.c:150
+#: ../src/util.c:164
 msgid ""
 "Errors occured while installing selected packages. It is recommended to "
 "abort the installation, however you may want to ignore this problem. Do you "
@@ -518,10 +536,10 @@ msgstr ""
 "Het is aangeraden om de installatie te stoppen, alhoewel je dit probleem "
 "misschien wil negeren. Wil je de installer verlaten?"
 
-#: ../src/util.c:166
+#: ../src/util.c:180
 msgid "Exit from the installer"
 msgstr "De installatie beïndigen"
 
-#: ../src/util.c:167
+#: ../src/util.c:181
 msgid "Are you sure you want to exit from the installer?"
 msgstr "Weet je zeker dat je de installer wil verlaten?"

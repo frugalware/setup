@@ -75,7 +75,7 @@ int confirm_rootpw()
 		"administrator account (root). It is recommended that you set "
 		"one now so that it is active the first time the machine is "
 		"rebooted. This is especially important if your machine is on "
-		"an internet connected lan. Would you like to set a root "
+		"an internet connected LAN. Would you like to set a root "
 		"password?"), 0, 0);
 	if(ret==DLG_EXIT_OK)
 		return(1);

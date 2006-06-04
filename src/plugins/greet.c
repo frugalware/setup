@@ -56,7 +56,7 @@ int run(GList **config)
 	dlg_put_backtitle();
 	dlg_clear();
 	dialog_msgbox(title, _("Welcome among the users of Frugalware!\n\n"
-		"The aim of creating Frugalware was to help you make your work "
+		"The aim of creating Frugalware was to help you to do your work "
 		"faster and simpler. We hope that you will like our "
 		"product.\n\n"
 		"The Frugalware Developer Team"), 0, 0, 1);

@@ -142,7 +142,7 @@ GList *selswap(void)
 	dlg_put_backtitle();
 	dlg_clear();
 	partlist = fw_checklist(_("Setting up swap partitions"),
-		_("Please select which swap partitions do you want Frugalware "
+		_("Please select which swap partitions you want Frugalware "
 		"to use:"), 0, 0, 0, g_list_length(partschk)/3, arraychk,
 		FLAG_CHECK);
 	return(partlist);

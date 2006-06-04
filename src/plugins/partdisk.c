@@ -116,7 +116,7 @@ int run(GList **config)
 
 	if((lp = listparts())==NULL)
 	{
-		dialog_msgbox(_("Disk drive not found"), _("Sorry, no hard disk drives were found in this box. Press ENTER to reboot."), 0, 0, 1);
+		dialog_msgbox(_("Disk drive not found"), _("Sorry, no hard disk drives were found in this computer. Press ENTER to reboot."), 0, 0, 1);
 		exit_perform();
 	}
 

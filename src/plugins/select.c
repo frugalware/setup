@@ -300,7 +300,7 @@ int selpkg_confirm(void)
 		"'C include files', etc - each individual package. Obviously, "
 		"you should know what you're doing if you use the expert menus "
 		"since it's possible to skip packages that are crucial to the "
-		"functioning of a subsystem. Choose 'no' for using normal "
+		"functioning of your system. Choose 'no' for using normal "
 		"menus that select groups of packages, or choose 'yes' for "
 		"using expert menus with a switch for each package."), 0, 0);
 	dialog_vars.defaultno=0;

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: setup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-31 21:45+0200\n"
+"POT-Creation-Date: 2006-06-04 13:50+0100\n"
 "PO-Revision-Date: 2005-11-27 22:25+0100\n"
 "Last-Translator: Laszlo Dvornik <dvornik@gnome.hu>\n"
 "Language-Team: Hungarian <frugalware-devel@frugalware.org>\n"
@@ -58,7 +58,8 @@ msgid "Setting up swap partitions"
 msgstr "Swap partíciók beállítása"
 
 #: ../src/plugins/formatdisk.c:145
-msgid "Please select which swap partitions do you want Frugalware to use:"
+#, fuzzy
+msgid "Please select which swap partitions you want Frugalware to use:"
 msgstr "Válassza ki, hogy mely swap partíciókat használhatja a Frugalware:"
 
 #: ../src/plugins/formatdisk.c:156 ../src/plugins/formatdisk.c:178
@@ -222,10 +223,11 @@ msgid "Welcome"
 msgstr "Üdvözöljük"
 
 #: ../src/plugins/greet.c:58
+#, fuzzy
 msgid ""
 "Welcome among the users of Frugalware!\n"
 "\n"
-"The aim of creating Frugalware was to help you make your work faster and "
+"The aim of creating Frugalware was to help you to do your work faster and "
 "simpler. We hope that you will like our product.\n"
 "\n"
 "The Frugalware Developer Team"
@@ -291,9 +293,10 @@ msgid "CD/DVD drive not found"
 msgstr "CD/DVD meghajtó nem található"
 
 #: ../src/plugins/loadsource.c:156
+#, fuzzy
 msgid ""
-"Sorry, no Frugalware install disc was found in your drives. Press ENTER to "
-"reboot."
+"Sorry, no Frugalware install disc was found in any of your drives. Press "
+"ENTER to reboot."
 msgstr ""
 "Sajnos nem található Frugalware telepítõlemez a meghajtókban. Üssön ENTER-t "
 "az újraindításhoz."
@@ -333,8 +336,10 @@ msgid "Disk drive not found"
 msgstr "Lemezmeghajtó nem található"
 
 #: ../src/plugins/partdisk.c:119
+#, fuzzy
 msgid ""
-"Sorry, no hard disk drives were found in this box. Press ENTER to reboot."
+"Sorry, no hard disk drives were found in this computer. Press ENTER to "
+"reboot."
 msgstr ""
 "Sajnos nem található merevlemez meghajtó a számítógépben. Üssön ENTER-t az "
 "újraindításhoz."
@@ -358,11 +363,11 @@ msgid "Setup complete"
 msgstr "Telepítés kész"
 
 #: ../src/plugins/restart.c:55
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "System installation and configuration is successfully completed. We hope "
-"that %s will make you content. Please remove the media from your drive and "
-"press ENTER to reboot."
+"that you will enjoy %s. Please remove the media from your drive and press "
+"ENTER to reboot."
 msgstr ""
 "A rendszer telepítése és beállítása sikeresen befejezõdött. Reméljük, hogy a "
 "%s elnyeri tetszését. Távolítsa el az adathordozót a meghajtóból és üssön "
@@ -389,13 +394,14 @@ msgid "Use expert menus?"
 msgstr "Használni szeretné a haladó menüket?"
 
 #: ../src/plugins/select.c:297
+#, fuzzy
 msgid ""
 "If you like, you may select your packages from expert menus. Where the "
 "normal menu shows a choice like 'C compiler system', the expert menus show "
 "you 'C libs', 'C compiler', 'C include files', etc - each individual "
 "package. Obviously, you should know what you're doing if you use the expert "
 "menus since it's possible to skip packages that are crucial to the "
-"functioning of a subsystem. Choose 'no' for using normal menus that select "
+"functioning of your system. Choose 'no' for using normal menus that select "
 "groups of packages, or choose 'yes' for using expert menus with a switch for "
 "each package."
 msgstr ""
@@ -457,11 +463,12 @@ msgid "No root password detected"
 msgstr "Nem található rendszergazda (root) jelszó"
 
 #: ../src/plugins/postconf.c:74
+#, fuzzy
 msgid ""
 "There is currently no password set on the system administrator account "
 "(root). It is recommended that you set one now so that it is active the "
 "first time the machine is rebooted. This is especially important if your "
-"machine is on an internet connected lan. Would you like to set a root "
+"machine is on an internet connected LAN. Would you like to set a root "
 "password?"
 msgstr ""
 "Jelenleg nincs beállítva a rendszergazdának (root) jelszó. Ajánlott megadni "

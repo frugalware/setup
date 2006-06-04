@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-31 21:45+0200\n"
+"POT-Creation-Date: 2006-06-04 13:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -57,7 +57,7 @@ msgid "Setting up swap partitions"
 msgstr ""
 
 #: ../src/plugins/formatdisk.c:145
-msgid "Please select which swap partitions do you want Frugalware to use:"
+msgid "Please select which swap partitions you want Frugalware to use:"
 msgstr ""
 
 #: ../src/plugins/formatdisk.c:156 ../src/plugins/formatdisk.c:178
@@ -210,7 +210,7 @@ msgstr ""
 msgid ""
 "Welcome among the users of Frugalware!\n"
 "\n"
-"The aim of creating Frugalware was to help you make your work faster and "
+"The aim of creating Frugalware was to help you to do your work faster and "
 "simpler. We hope that you will like our product.\n"
 "\n"
 "The Frugalware Developer Team"
@@ -267,8 +267,8 @@ msgstr ""
 
 #: ../src/plugins/loadsource.c:156
 msgid ""
-"Sorry, no Frugalware install disc was found in your drives. Press ENTER to "
-"reboot."
+"Sorry, no Frugalware install disc was found in any of your drives. Press "
+"ENTER to reboot."
 msgstr ""
 
 #: ../src/plugins/partdisk.c:77
@@ -305,7 +305,8 @@ msgstr ""
 
 #: ../src/plugins/partdisk.c:119
 msgid ""
-"Sorry, no hard disk drives were found in this box. Press ENTER to reboot."
+"Sorry, no hard disk drives were found in this computer. Press ENTER to "
+"reboot."
 msgstr ""
 
 #: ../src/plugins/partdisk.c:134
@@ -329,8 +330,8 @@ msgstr ""
 #, c-format
 msgid ""
 "System installation and configuration is successfully completed. We hope "
-"that %s will make you content. Please remove the media from your drive and "
-"press ENTER to reboot."
+"that you will enjoy %s. Please remove the media from your drive and press "
+"ENTER to reboot."
 msgstr ""
 
 #: ../src/plugins/select.c:263
@@ -360,7 +361,7 @@ msgid ""
 "you 'C libs', 'C compiler', 'C include files', etc - each individual "
 "package. Obviously, you should know what you're doing if you use the expert "
 "menus since it's possible to skip packages that are crucial to the "
-"functioning of a subsystem. Choose 'no' for using normal menus that select "
+"functioning of your system. Choose 'no' for using normal menus that select "
 "groups of packages, or choose 'yes' for using expert menus with a switch for "
 "each package."
 msgstr ""
@@ -412,7 +413,7 @@ msgid ""
 "There is currently no password set on the system administrator account "
 "(root). It is recommended that you set one now so that it is active the "
 "first time the machine is rebooted. This is especially important if your "
-"machine is on an internet connected lan. Would you like to set a root "
+"machine is on an internet connected LAN. Would you like to set a root "
 "password?"
 msgstr ""
 
