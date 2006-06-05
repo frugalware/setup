@@ -7,6 +7,7 @@ mount -t tmpfs none /tmp
 cat /proc/mounts >/etc/mtab
 depmod -a
 modprobe iso9660
+modprobe ntfs
 modprobe BusLogic 2>/dev/null
 
 # try to load all the hub modules:
