@@ -1,4 +1,4 @@
-LANGS=id hu de nl pt
+LANGS=id hu de nl pt fr
 
 mos:
 	for i in $(LANGS); do \
