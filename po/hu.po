@@ -1,19 +1,22 @@
+# translation of hu.po to Hungarian
 # Hungarian translations for setup package.
 # Copyright (C) 2005 The Frugalware Development Team
 # This file is distributed under the same license as the setup package.
-# Laszlo Dvornik <dvornik@gnome.hu>, 2005.
 #
+# Laszlo Dvornik <dvornik@gnome.hu>, 2005.
+# Miklos Vajna <vmiklos@frugalware.org>, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: setup\n"
+"Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-06-04 13:50+0100\n"
-"PO-Revision-Date: 2005-11-27 22:25+0100\n"
-"Last-Translator: Laszlo Dvornik <dvornik@gnome.hu>\n"
-"Language-Team: Hungarian <frugalware-devel@frugalware.org>\n"
+"PO-Revision-Date: 2006-06-05 03:16+0200\n"
+"Last-Translator: Miklos Vajna <vmiklos@frugalware.org>\n"
+"Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.2\n"
 
 #: ../src/plugins/configsource.c:57 ../src/plugins/configsource.c:89
 #: ../src/plugins/configsource.c:94 ../src/plugins/dolangsh.c:52
@@ -58,7 +61,6 @@ msgid "Setting up swap partitions"
 msgstr "Swap partíciók beállítása"
 
 #: ../src/plugins/formatdisk.c:145
-#, fuzzy
 msgid "Please select which swap partitions you want Frugalware to use:"
 msgstr "Válassza ki, hogy mely swap partíciókat használhatja a Frugalware:"
 
@@ -223,7 +225,6 @@ msgid "Welcome"
 msgstr "Üdvözöljük"
 
 #: ../src/plugins/greet.c:58
-#, fuzzy
 msgid ""
 "Welcome among the users of Frugalware!\n"
 "\n"
@@ -293,12 +294,11 @@ msgid "CD/DVD drive not found"
 msgstr "CD/DVD meghajtó nem található"
 
 #: ../src/plugins/loadsource.c:156
-#, fuzzy
 msgid ""
 "Sorry, no Frugalware install disc was found in any of your drives. Press "
 "ENTER to reboot."
 msgstr ""
-"Sajnos nem található Frugalware telepítõlemez a meghajtókban. Üssön ENTER-t "
+"Sajnos egyik meghajtóban sem található Frugalware telepítõlemez. Üssön ENTER-t "
 "az újraindításhoz."
 
 #: ../src/plugins/partdisk.c:77
@@ -319,8 +319,7 @@ msgstr "Particionáló program kiválasztása"
 
 #: ../src/plugins/partdisk.c:85
 msgid "Select the program you want to use for partitioning:"
-msgstr ""
-"Válassza ki, hogy melyik programot kívánja használni a particionáláshoz:"
+msgstr "Válassza ki, hogy melyik programot kívánja használni a particionáláshoz:"
 
 #: ../src/plugins/partdisk.c:96
 msgid "Want to create RAID?"
@@ -328,15 +327,13 @@ msgstr "Szeretne RAID-et építeni?"
 
 #: ../src/plugins/partdisk.c:97
 msgid "Do you want to create software raid partitions during partitioning?"
-msgstr ""
-"Létre szeretne hozni szoftveres RAID partíciókat a particionálás során?"
+msgstr "Létre szeretne hozni szoftveres RAID partíciókat a particionálás során?"
 
 #: ../src/plugins/partdisk.c:119
 msgid "Disk drive not found"
 msgstr "Lemezmeghajtó nem található"
 
 #: ../src/plugins/partdisk.c:119
-#, fuzzy
 msgid ""
 "Sorry, no hard disk drives were found in this computer. Press ENTER to "
 "reboot."
@@ -353,17 +350,15 @@ msgid "Select a hard disk to partition"
 msgstr "Válassza ki a particionálni kívánt merevlemezt"
 
 #: ../src/plugins/partdisk.c:143
-msgid ""
-"Please select a hard disk to partition. The following ones are available:"
-msgstr ""
-"Válassza ki a particionálni kívánt merevlemezt. A következõk érhetõek el:"
+msgid "Please select a hard disk to partition. The following ones are available:"
+msgstr "Válassza ki a particionálni kívánt merevlemezt. A következõk érhetõek el:"
 
 #: ../src/plugins/restart.c:55 ../src/util.c:123
 msgid "Setup complete"
 msgstr "Telepítés kész"
 
 #: ../src/plugins/restart.c:55
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "System installation and configuration is successfully completed. We hope "
 "that you will enjoy %s. Please remove the media from your drive and press "
@@ -394,7 +389,6 @@ msgid "Use expert menus?"
 msgstr "Használni szeretné a haladó menüket?"
 
 #: ../src/plugins/select.c:297
-#, fuzzy
 msgid ""
 "If you like, you may select your packages from expert menus. Where the "
 "normal menu shows a choice like 'C compiler system', the expert menus show "
@@ -463,7 +457,6 @@ msgid "No root password detected"
 msgstr "Nem található rendszergazda (root) jelszó"
 
 #: ../src/plugins/postconf.c:74
-#, fuzzy
 msgid ""
 "There is currently no password set on the system administrator account "
 "(root). It is recommended that you set one now so that it is active the "
@@ -535,3 +528,4 @@ msgstr "Kilépés a telepítõbõl"
 #: ../src/util.c:181
 msgid "Are you sure you want to exit from the installer?"
 msgstr "Biztos benne hogy kilép a telepítõbõl?"
+
