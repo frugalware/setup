@@ -25,6 +25,10 @@ packages=('bash' 'kernel' 'busybox' 'dhcpcd' 'dialog' 'e2fsprogs' 'eject' \
 	  'netkit-base' 'pacman' 'reiserfsprogs' 'udev' \
 	  'util-linux' 'mdadm' 'xfsprogs' 'ppp' 'rp-pppoe' 'glib2' 'parted' \
 	  'bzip2' 'libarchive' 'zlib' 'frugalwareutils')
+# since we're not in chroot, we need up to date libs. but don't be too
+# agressive, we add libs to here just in case there was a bugreport about it
+# parted: #807
+libs=('parted')
 
 _configure_mirror="http://ftp.frugalware.org/pub/frugalware/frugalware-current"
 arch=`uname -m`
@@ -32,6 +36,17 @@ arch=`uname -m`
 unset LANG LC_ALL
 
 rm -f config.mak dl.lst
+
+for i in ${libs[@]}
+do
+	echo -n "checking the host $i... "
+	if [ "`pacman -Si $i|grep ^Version|sed 's/.*: //'`" != "`pacman -Qi $i|grep ^Version|sed 's/.*: //'`" ]; then
+		echo "failed, please do a 'pacman -Sy $i'"
+		exit 1
+	else
+		echo "done."
+	fi
+done
 
 for i in ${packages[@]}
 do
