@@ -83,9 +83,12 @@ all: initrd
 compile: check ccache setup $(packages) misc
 
 clean:
-	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img.gz dl.lst config.mak
+	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img.gz
 	rm -rf $(packages) vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(CDIR)/*
 	$(MAKE) -C src clean
+
+distclean:
+	rm -rf dl.lst config.mak
 
 ccache:
 	install -d -m 2775 /var/cache/ccache/setup
