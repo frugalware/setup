@@ -124,7 +124,7 @@ devices: compile
 	mknod -m 700 $(MDIR)/dev/tty2 c 4 2
 	mknod -m 700 $(MDIR)/dev/tty3 c 4 3
 
-initrd: config.mak devices
+initrd: clean config.mak devices
 	dd if=/dev/zero of=initrd-$(CARCH).img bs=1k count=$$(echo "$$(`which du` -s $(MDIR)|sed 's/^\(.*\)\t.*$$/\1/')+500"|bc)
 	/sbin/mke2fs -F initrd-$(CARCH).img
 	mkdir i
