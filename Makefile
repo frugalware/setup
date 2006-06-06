@@ -24,6 +24,7 @@ STABLE = false
 KERNELV = $(shell echo $(KERNELVER)|sed 's/-.*//')
 KERNELREL = $(shell echo $(KERNELVER)|sed 's/.*-//')
 
+CLEANUP = rm -rf $(BDIR) && mkdir $(BDIR) && rm -rf $@
 export PATH := /usr/lib/ccache/bin:$(PATH)
 export CCACHE_DIR=/var/cache/ccache/setup
 export CCACHE_NOLINK=1
@@ -152,35 +153,27 @@ check: dl.lst
 	done
 
 bash:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf bash
+	$(CLEANUP)
 	mkdir -p bash/{bin,etc}
 	cd $(BDIR) && tar xjf ../$(CDIR)/bash-$(BASHVER)-$(CARCH).fpm
 	cp -a $(BDIR)/bin/bash bash/bin/
 	echo "root:x:0:0::/root:/bin/sh" >bash/etc/passwd
 
 busybox:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf busybox
+	$(CLEANUP)
 	cd $(BDIR) && tar xjf ../$(CDIR)/busybox-$(BUSYBOXVER)-$(CARCH).fpm
 	cp -a $(BDIR)/usr/share/busybox busybox
 	mkdir -p busybox/mnt/{source,target}
 	mkdir -p busybox/tmp
 
 dialog:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf dialog
+	$(CLEANUP)
 	mkdir -p dialog/bin
 	cd $(BDIR) && tar xjf ../$(CDIR)/dialog-$(DIALOGVER)-$(CARCH).fpm
 	cp -a $(BDIR)/bin/dialog dialog/bin/
 
 e2fsprogs:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf e2fsprogs
+	$(CLEANUP)
 	mkdir -p e2fsprogs/{sbin,lib}
 	cd $(BDIR) && tar xjf ../$(CDIR)/e2fsprogs-$(E2FSPROGSVER)-$(CARCH).fpm
 	cp -a $(BDIR)/sbin/{mke2fs,e2fsck} e2fsprogs/sbin/
@@ -189,35 +182,27 @@ e2fsprogs:
 	touch e2fsprogs/etc/fstab
 
 reiserfsprogs:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf reiserfsprog
+	$(CLEANUP)
 	mkdir -p reiserfsprogs/sbin
 	cd $(BDIR) && tar xzf ../$(CDIR)/reiserfsprogs-$(REISERFSPROGSVER)-$(CARCH).fpm
 	cp -a $(BDIR)/sbin/{mkreiserfs,reiserfsck} reiserfsprogs/sbin/
 	mkdir reiserfsprogs/etc/
 	touch reiserfsprogs/etc/fstab
 lynx:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf lynx
+	$(CLEANUP)
 	mkdir -p lynx/usr/bin lynx/etc/lynx
 	cd $(BDIR) && tar xjf ../$(CDIR)/lynx-$(LYNXVER)-$(CARCH).fpm
 	cp -a $(BDIR)/usr/bin/lynx lynx/usr/bin/
 	cp -a $(BDIR)/etc/lynx/lynx.cfg lynx/etc/lynx/
 
 dhcpcd:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf dhcpcd
+	$(CLEANUP)
 	mkdir -p dhcpcd/sbin
 	cd $(BDIR) && tar xjf ../$(CDIR)/dhcpcd-$(DHCPCDVER)-$(CARCH).fpm
 	cp -a $(BDIR)/sbin/dhcpcd dhcpcd/sbin/
 
 frugalware:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf frugalware
+	$(CLEANUP)
 	mkdir -p frugalware/{var/lib/frugalware/messages/,etc}
 	cd $(BDIR) && tar xjf ../$(CDIR)/frugalware-$(FRUGALWAREVER)-$(CARCH).fpm
 	cp -a $(BDIR)/var/lib/frugalware/messages/rc.messages \
@@ -228,9 +213,7 @@ ifeq ($(CARCH),x86_64)
 endif
 
 glibc:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf glibc
+	$(CLEANUP)
 	mkdir -p glibc/{lib,usr/lib/locale}
 	cd $(BDIR) && tar xjf ../$(CDIR)/glibc-$(GLIBCVER)-$(CARCH).fpm
 	cp -a $(BDIR)/lib/{ld*,libc*,libm*,libdl*,libnss*,libresolv*} glibc/lib/
@@ -244,9 +227,7 @@ glibc:
 	cp -a $(BDIR)/usr/lib/locale/locale-archive glibc/usr/lib/locale/
 
 kbd:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf kbd
+	$(CLEANUP)
 	mkdir -p kbd/usr/{bin,share/kbd/keymaps,share/kbd/consolefonts}
 	cd $(BDIR) && tar xjf ../$(CDIR)/kbd-$(KBDVER)-$(CARCH).fpm
 	cp -a $(BDIR)/{bin/loadkeys,usr/bin/setfont} kbd/usr/bin/
@@ -258,9 +239,7 @@ kbd:
 	done
 
 kernel:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf kernel
+	$(CLEANUP)
 	mkdir -p kernel/lib
 	cd $(BDIR) && tar xjf ../$(CDIR)/kernel-$(KERNELV)-$(KERNELREL)-$(CARCH).fpm
 	cp -a $(BDIR)/lib/modules kernel/lib/
@@ -270,26 +249,20 @@ kernel:
 	for i in drivers/{cpufreq,telephony,hwmon,media/{dvb,radio,video}} security; do rm -rfv kernel/lib/modules/$(KERNELV)-fw$(KERNELREL)/kernel/$$i; done
 
 module-init-tools:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf module-init-tools
+	$(CLEANUP)
 	mkdir -p module-init-tools/{bin,sbin}
 	cd $(BDIR) && tar xjf ../$(CDIR)/module-init-tools-$(MODULE-INIT-TOOLSVER)-$(CARCH).fpm
 	cp -a $(BDIR)/sbin/* module-init-tools/sbin/
 
 ncurses:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf ncurses
+	$(CLEANUP)
 	mkdir -p ncurses/{lib,usr/share/terminfo/l}
 	cd $(BDIR) && tar xjf ../$(CDIR)/ncurses-$(NCURSESVER)-$(CARCH).fpm
 	cp -a $(BDIR)/lib/libncurses* ncurses/lib/
 	cp -a $(BDIR)/usr/share/terminfo/l/linux ncurses/usr/share/terminfo/l/
 
 pacman:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf pacman
+	$(CLEANUP)
 	mkdir -p pacman/bin pacman/etc/pacman.d/ pacman/usr/{lib,share}
 	cd $(BDIR) && tar xjf ../$(CDIR)/pacman-$(PACMANVER)-$(CARCH).fpm
 	cp -a $(BDIR)/usr/bin/pacman pacman/bin/pacman
@@ -309,9 +282,7 @@ endif
 
 
 udev:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf udev
+	$(CLEANUP)
 	mkdir -p udev/{proc,sys,dev}
 	cd $(BDIR) && tar xjf ../$(CDIR)/udev-$(UDEVVER)-$(CARCH).fpm
 	cp -a $(BDIR)/{etc,lib,sbin} udev/
@@ -319,59 +290,45 @@ udev:
 	sed -i 's|^mount /|#mount /|;s/mount none/#mount none/;s|! \[ `pidof -o .*` \]|true|' udev/etc/rc.d/rc.udev
 
 eject:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf eject
+	$(CLEANUP)
 	mkdir -p eject/bin
 	cd $(BDIR) && tar xzf ../$(CDIR)/eject-$(EJECTVER)-$(CARCH).fpm
 	cp -a $(BDIR)/usr/bin/eject eject/bin/
 
 util-linux:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf util-linux
+	$(CLEANUP)
 	mkdir -p util-linux/{sbin,usr/bin}
 	cd $(BDIR) && tar xjf ../$(CDIR)/util-linux-$(UTIL-LINUXVER)-$(CARCH).fpm
 	cp -a $(BDIR)/sbin/{cfdisk,fdisk} util-linux/sbin/
 	cp -a $(BDIR)/usr/bin/setterm util-linux/usr/bin/
 
 netkit-base:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf netkit-base
+	$(CLEANUP)
 	mkdir -p netkit-base/etc
 	cd $(BDIR) && tar xjf ../$(CDIR)/netkit-base-$(NETKIT-BASEVER)-$(CARCH).fpm
 	cp -a $(BDIR)/etc/services netkit-base/etc/
 
 mdadm:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf mdadm
+	$(CLEANUP)
 	mkdir -p mdadm/sbin
 	cd $(BDIR) && tar xjf ../$(CDIR)/mdadm-$(MDADMVER)-$(CARCH).fpm; \
 	cp -a sbin/mdadm ../mdadm/sbin/
 
 xfsprogs:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf xfsprogs
+	$(CLEANUP)
 	mkdir -p xfsprogs/sbin
 	cd $(BDIR) && tar xjf ../$(CDIR)/xfsprogs-$(XFSPROGSVER)-$(CARCH).fpm; \
 	cp -a sbin/mkfs.xfs ../xfsprogs/sbin/
 
 ppp:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf ppp
+	$(CLEANUP)
 	mkdir -p ppp/usr
 	cd $(BDIR) && tar xzf ../$(CDIR)/ppp-$(PPPVER)-$(CARCH).fpm; \
 	cp -a etc ../ppp/; \
 	cp -a usr/{lib,sbin} ../ppp/usr/
 
 pppoe:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf pppoe
+	$(CLEANUP)
 	mkdir -p pppoe/usr/share
 	cd $(BDIR) && tar xjf ../$(CDIR)/rp-pppoe-$(RP-PPPOEVER)-$(CARCH).fpm; \
 	cp -a etc ../pppoe/; \
@@ -380,17 +337,13 @@ pppoe:
 	sed -i 's|/bin/sh|/bin/bash|' pppoe/usr/sbin/adslconfig
 
 glib2:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf glib2
+	$(CLEANUP)
 	mkdir -p glib2/usr/lib
 	cd $(BDIR) && tar xjf ../$(CDIR)/glib2-$(GLIB2VER)-$(CARCH).fpm; \
 	cp -a usr/lib/libglib-2.0.so* ../glib2/usr/lib/
 
 parted:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf parted
+	$(CLEANUP)
 	mkdir -p parted/usr/{lib,sbin,share/locale}
 	cd $(BDIR) && tar xjf ../$(CDIR)/parted-$(PARTEDVER)-$(CARCH).fpm; \
 	cp -a usr/lib/{libparted.so,libparted-*} ../parted/usr/lib/; \
@@ -398,50 +351,38 @@ parted:
 	cp -a usr/share/locale/* ../parted/usr/share/locale/
 
 bzip2:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf bzip2
+	$(CLEANUP)
 	mkdir -p bzip2/lib
 	cd $(BDIR) && tar xjf ../$(CDIR)/bzip2-$(BZIP2VER)-$(CARCH).fpm; \
 	cp -a lib/libbz2.so* ../bzip2/lib/
 
 libarchive:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf libarchive
+	$(CLEANUP)
 	mkdir -p libarchive/usr/lib
 	cd $(BDIR) && tar xjf ../$(CDIR)/libarchive-$(LIBARCHIVEVER)-$(CARCH).fpm; \
 	cp -a usr/lib/libarchive.so* ../libarchive/usr/lib/
 
 zlib:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf zlib
+	$(CLEANUP)
 	mkdir -p zlib/usr/lib
 	cd $(BDIR) && tar xzf ../$(CDIR)/zlib-$(ZLIBVER)-$(CARCH).fpm; \
 	cp -a usr/lib/libz.so* ../zlib/usr/lib/
 
 frugalwareutils:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf frugalwareutils
+	$(CLEANUP)
 	mkdir -p frugalwareutils/{etc/sysconfig/network,usr/share}
 	cd $(BDIR) && tar xjf ../$(CDIR)/frugalwareutils-$(FRUGALWAREUTILSVER)-$(CARCH).fpm; \
 	cp -a lib sbin ../frugalwareutils/; \
 	cp -a usr/share/locale ../frugalwareutils/usr/share/
 
 wireless_tools:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf wireless_tools
+	$(CLEANUP)
 	mkdir -p wireless_tools/usr/
 	cd $(BDIR) && tar xjf ../$(CDIR)/wireless_tools-$(WIRELESS_TOOLSVER)-$(CARCH).fpm; \
 	cp -a usr/{lib,sbin} ../wireless_tools/usr/
 
 ipw2200-firmware:
-	rm -rf $(BDIR)
-	mkdir $(BDIR)
-	rm -rf ipw2200-firmware
+	$(CLEANUP)
 	mkdir ipw2200-firmware
 	cd $(BDIR) && tar xjf ../$(CDIR)/ipw2200-firmware-$(IPW2200-FIRMWAREVER)-$(CARCH).fpm; \
 	cp -a lib ../ipw2200-firmware/
