@@ -2,6 +2,7 @@ LANGS=id hu de nl pt fr
 
 mos:
 	for i in $(LANGS); do \
+		echo -n "$$i: "; \
 		msgfmt -c --statistics -o ../merge/usr/share/locale/`basename $$i .po`/LC_MESSAGES/setup.mo $$i; \
 	done
 
