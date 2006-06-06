@@ -49,7 +49,7 @@ CWD=`pwd`
 packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 	   glibc kbd kernel module-init-tools ncurses pacman eject \
 	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted \
-	   bzip2 libarchive zlib frugalwareutils
+	   bzip2 libarchive zlib frugalwareutils wireless_tools
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
 	  dhcpcd-$(DHCPCDVER)-$(CARCH).fpm dialog-$(DIALOGVER)-$(CARCH).fpm \
@@ -73,7 +73,8 @@ sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
 	  bzip2-$(BZIP2VER)-$(CARCH).fpm \
 	  libarchive-$(LIBARCHIVEVER)-$(CARCH).fpm \
 	  zlib-$(ZLIBVER)-$(CARCH).fpm \
-	  frugalwareutils-$(FRUGALWAREUTILSVER)-$(CARCH).fpm
+	  frugalwareutils-$(FRUGALWAREUTILSVER)-$(CARCH).fpm \
+	  wireless_tools-$(WIRELESS_TOOLSVER)-$(CARCH).fpm
 
 all: initrd
 
@@ -427,3 +428,11 @@ frugalwareutils:
 	cd $(BDIR) && tar xjf ../$(CDIR)/frugalwareutils-$(FRUGALWAREUTILSVER)-$(CARCH).fpm; \
 	cp -a lib sbin ../frugalwareutils/; \
 	cp -a usr/share/locale ../frugalwareutils/usr/share/
+
+wireless_tools:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf wireless_tools
+	mkdir -p wireless_tools/usr/
+	cd $(BDIR) && tar xjf ../$(CDIR)/wireless_tools-$(WIRELESS_TOOLSVER)-$(CARCH).fpm; \
+	cp -a usr/{lib,sbin} ../wireless_tools/usr/
