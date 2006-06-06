@@ -49,7 +49,7 @@ CWD=`pwd`
 packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 	   glibc kbd kernel module-init-tools ncurses pacman eject \
 	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted \
-	   bzip2 libarchive zlib frugalwareutils wireless_tools
+	   bzip2 libarchive zlib frugalwareutils wireless_tools ipw2200-firmware
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
 	  dhcpcd-$(DHCPCDVER)-$(CARCH).fpm dialog-$(DIALOGVER)-$(CARCH).fpm \
@@ -74,7 +74,8 @@ sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
 	  libarchive-$(LIBARCHIVEVER)-$(CARCH).fpm \
 	  zlib-$(ZLIBVER)-$(CARCH).fpm \
 	  frugalwareutils-$(FRUGALWAREUTILSVER)-$(CARCH).fpm \
-	  wireless_tools-$(WIRELESS_TOOLSVER)-$(CARCH).fpm
+	  wireless_tools-$(WIRELESS_TOOLSVER)-$(CARCH).fpm \
+	  ipw2200-firmware-$(IPW2200-FIRMWAREVER)-$(CARCH).fpm
 
 all: initrd
 
@@ -436,3 +437,11 @@ wireless_tools:
 	mkdir -p wireless_tools/usr/
 	cd $(BDIR) && tar xjf ../$(CDIR)/wireless_tools-$(WIRELESS_TOOLSVER)-$(CARCH).fpm; \
 	cp -a usr/{lib,sbin} ../wireless_tools/usr/
+
+ipw2200-firmware:
+	rm -rf $(BDIR)
+	mkdir $(BDIR)
+	rm -rf ipw2200-firmware
+	mkdir ipw2200-firmware
+	cd $(BDIR) && tar xjf ../$(CDIR)/ipw2200-firmware-$(IPW2200-FIRMWAREVER)-$(CARCH).fpm; \
+	cp -a lib ../ipw2200-firmware/

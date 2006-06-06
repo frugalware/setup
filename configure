@@ -24,7 +24,8 @@ packages=('bash' 'kernel' 'busybox' 'dhcpcd' 'dialog' 'e2fsprogs' 'eject' \
 	  'frugalware' 'glibc' 'kbd' 'lynx' 'module-init-tools' 'ncurses' \
 	  'netkit-base' 'pacman' 'reiserfsprogs' 'udev' \
 	  'util-linux' 'mdadm' 'xfsprogs' 'ppp' 'rp-pppoe' 'glib2' 'parted' \
-	  'bzip2' 'libarchive' 'zlib' 'frugalwareutils' 'wireless_tools')
+	  'bzip2' 'libarchive' 'zlib' 'frugalwareutils' 'wireless_tools' \
+	  'ipw2200-firmware')
 # since we're not in chroot, we need up to date libs. but don't be too
 # agressive, we add libs to here just in case there was a bugreport about it
 # parted: #807
@@ -51,7 +52,7 @@ done
 for i in ${packages[@]}
 do
 	echo -n "checking for $i... "
-	if [ "$i" = "busybox" ]; then
+	if [ "$i" = "busybox" -o "$i" = "ipw2200-firmware" ]; then
 		expath="extra/"
 	else
 		unset expath
