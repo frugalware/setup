@@ -151,6 +151,10 @@ int run(GList **config)
 		_("Updating module dependencies..."), 0, 0, 0);
 	fw_system("chroot ./ /sbin/depmod -a");
 
+	// newer shadow requires /dev/stdin :/
+	ptr = g_strdup_printf("mount /dev -o bind %s/dev", TARGETDIR);
+	system(ptr);
+	free(ptr);
 	while(!has_rootpw("etc/shadow") && confirm_rootpw())
 	{
 		fw_end_dialog();
@@ -164,6 +168,9 @@ int run(GList **config)
 		system("chroot ./ /usr/sbin/adduser");
 		fw_init_dialog();
 	}
+	ptr = g_strdup_printf("umount %s/dev", TARGETDIR);
+	system(ptr);
+	free(ptr);
 
 	if((ptr = (char*)data_get(*config, "font")))
 		append_font("etc/sysconfig/font", ptr);
