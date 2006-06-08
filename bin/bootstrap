@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ -z "$1" ]; then
+	echo "usage: $0 device"
+fi
+
+mkdir /bootstrap
+mount $1 /bootstrap || exit 1
+mount /dev -o bind /bootstrap/dev
+chroot /bootstrap mount /proc
+chroot /bootstrap mount /sys
+chroot /bootstrap mount /home
+chroot /bootstrap su -

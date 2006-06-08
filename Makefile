@@ -118,6 +118,8 @@ misc: merge
 	cp etc/inittab $(MDIR)/etc/
 	cp etc/rc.S $(MDIR)/etc/rc.d/
 	chmod +x $(MDIR)/etc/rc.d/rc.S
+	cp bin/bootstrap $(MDIR)/bin/
+	chmod +x $(MDIR)/bin/bootstrap
 
 devices: compile
 	mknod -m 700 $(MDIR)/dev/console c 5 1
