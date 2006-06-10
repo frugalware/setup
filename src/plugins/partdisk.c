@@ -47,10 +47,35 @@ plugin_t *info()
 	return &plugin;
 }
 
+int buggy_md0()
+{
+	FILE *fp;
+	char line[256];
+
+	fp = fopen("/proc/mdstat", "r");
+	if(!fp)
+		return(1);
+	while(!feof(fp))
+	{
+		if(fgets(line, 255, fp) == NULL)
+			break;
+		if(!strncmp(line, "md", 2))
+		{
+			fclose(fp);
+			return(0);
+		}
+	}
+	return(1);
+}
+
 GList *listparts(void)
 {
 	GList *devs=NULL;
 	PedDevice *dev=NULL;
+
+	// silly raid autodetect, md0 always created
+	if(buggy_md0())
+		unlink("/dev/md0");
 
 	ped_device_probe_all();
 
