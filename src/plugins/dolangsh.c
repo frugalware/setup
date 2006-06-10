@@ -57,9 +57,13 @@ int run(GList **config)
 		"# Set the system locale\n"
 		"# For a list of locales which are supported by this machine, "
 		"type: locale -a\n\n");
-	fprintf(fp, "export LANG=%s\n", getenv("LANG"));
+	if(strcmp(getenv("LANG"), "zh_CN"))
+		fprintf(fp, "export LANG=%s\n", getenv("LANG"));
+	else
+		fprintf(fp, "export LANG=zh_CN.utf8\n");
 	fprintf(fp, "export LC_ALL=$LANG\n");
-	fprintf(fp, "export CHARSET=%s\n", getenv("CHARSET"));
+	if(getenv("CHARSET"))
+		fprintf(fp, "export CHARSET=%s\n", getenv("CHARSET"));
 	fclose(fp);
 
 	// sample: adds a "content" string titled "stuff" to the config list

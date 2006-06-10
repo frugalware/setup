@@ -35,7 +35,7 @@
 #include <util.h>
 #include "common.h"
 
-#define LANGSNUM 9
+#define LANGSNUM 10
 char *langs[] =
 {
 	"en_US", "English                         ",
@@ -49,7 +49,8 @@ char *langs[] =
 	"pl_PL", "Polish / Polski                 ",
 	"pt_PT", "Portuguese / Português          ",
 	"pt_BR", "Portuguese (Brazillian) / Português (Brazillian) ",
-	"sk_SK", "Slovak / Slovensky              "
+	"sk_SK", "Slovak / Slovensky              ",
+	"zh_CN", "Chinese                         "
 };
 
 plugin_t plugin =
