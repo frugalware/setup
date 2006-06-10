@@ -60,7 +60,10 @@ int run(GList **config)
 	if(strcmp(getenv("LANG"), "zh_CN"))
 		fprintf(fp, "export LANG=%s\n", getenv("LANG"));
 	else
+	{
+		fprintf(fp, "if [ \"$TERM\" = \"linux\" ]; then\n\techo -ne \"\e%G\"\nfi\n");
 		fprintf(fp, "export LANG=zh_CN.utf8\n");
+	}
 	fprintf(fp, "export LC_ALL=$LANG\n");
 	if(getenv("CHARSET"))
 		fprintf(fp, "export CHARSET=%s\n", getenv("CHARSET"));
