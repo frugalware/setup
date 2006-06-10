@@ -35,7 +35,7 @@
 #include <util.h>
 #include "common.h"
 
-#define LANGSNUM 10
+#define LANGSNUM 13
 char *langs[] =
 {
 	"en_US", "English                         ",
