@@ -25,7 +25,7 @@ packages=('bash' 'kernel' 'busybox' 'dhcpcd' 'dialog' 'e2fsprogs' 'eject' \
 	  'netkit-base' 'pacman' 'reiserfsprogs' 'udev' \
 	  'util-linux' 'mdadm' 'xfsprogs' 'ppp' 'rp-pppoe' 'glib2' 'parted' \
 	  'bzip2' 'libarchive' 'zlib' 'frugalwareutils' 'wireless_tools' \
-	  'ipw2200-firmware')
+	  'ipw2200-firmware' 'openssl' 'openssh')
 # since we're not in chroot, we need up to date libs. but don't be too
 # agressive, we add libs to here just in case there was a bugreport about it
 # parted: #807
@@ -40,7 +40,7 @@ rm -f config.mak dl.lst
 
 for i in ${libs[@]}
 do
-	echo -n "checking the host $i... "
+	echo -n "checking for host $i... "
 	if [ "`pacman -Si $i|grep ^Version|sed 's/.*: //'`" != "`pacman -Qi $i|grep ^Version|sed 's/.*: //'`" ]; then
 		echo "failed, please do a 'pacman -Sy $i'"
 		exit 1
