@@ -339,7 +339,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 		{
 			makepath(pkgdb);
 			// TODO: use libarchive for this
-			system(g_strdup_printf("tar xzf %s/%s.fdb -C %s", pacbindir, repo, pkgdb));
+			system(g_strdup_printf("tar xjf %s/%s.fdb -C %s", pacbindir, repo, pkgdb));
 #ifdef FINAL
 			if(!extra)
 				mode = strdup("w");
