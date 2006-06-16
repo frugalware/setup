@@ -122,8 +122,11 @@ int detect_raids()
 			*ptr='\0';
 			dev = ped_device_get(g_strdup_printf("/dev/%s", line));
 			disk = ped_disk_new_fresh(dev, ped_disk_type_get ("loop"));
-			part=ped_disk_next_partition(disk, NULL);
-			partdetails(part);
+			if(disk)
+			{
+				part=ped_disk_next_partition(disk, NULL);
+				partdetails(part);
+			}
 		}
 	}
 	FREE(line);
