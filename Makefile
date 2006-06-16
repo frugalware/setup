@@ -51,7 +51,8 @@ packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 	   glibc kbd kernel module-init-tools ncurses pacman eject \
 	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted \
 	   bzip2 libarchive zlib frugalwareutils wireless_tools ipw2200-firmware \
-	   openssl openssh
+	   openssl openssh bastet
+	   
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
 	  dhcpcd-$(DHCPCDVER)-$(CARCH).fpm dialog-$(DIALOGVER)-$(CARCH).fpm \
@@ -79,7 +80,8 @@ sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
 	  wireless_tools-$(WIRELESS_TOOLSVER)-$(CARCH).fpm \
 	  ipw2200-firmware-$(IPW2200-FIRMWAREVER)-$(CARCH).fpm \
 	  openssl-$(OPENSSLVER)-$(CARCH).fpm \
-	  openssh-$(OPENSSHVER)-$(CARCH).fpm
+	  openssh-$(OPENSSHVER)-$(CARCH).fpm \
+	  bastet-$(BASTETVER)-$(CARCH).fpm
 
 all: initrd
 
@@ -403,6 +405,13 @@ openssh:
 	mkdir -p openssh/usr/bin
 	cd $(BDIR) && tar xjf ../$(CDIR)/openssh-$(OPENSSHVER)-$(CARCH).fpm; \
 	cp -a usr/bin/{ssh,scp} ../openssh/usr/bin/
+
+bastet:
+	$(CLEANUP)
+	mkdir -p bastet/usr/bin
+	cd $(BDIR) && tar xjf ../$(CDIR)/bastet-$(BASTETVER)-$(CARCH).fpm; \
+	cp -a usr/bin/bastet ../bastet/usr/bin/
+
 
 ipw2200-firmware:
 	$(CLEANUP)

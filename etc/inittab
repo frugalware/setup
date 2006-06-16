@@ -10,6 +10,7 @@
 # Start an "askfirst" shell on tty2 and tty3
 tty2::askfirst:-/bin/sh
 tty3::askfirst:-/bin/sh
+tty5::respawn:-/usr/bin/bastet
 
 # Reboot when ctrl-alt-del keys are pressed. 
 ::ctrlaltdel:/sbin/reboot 
