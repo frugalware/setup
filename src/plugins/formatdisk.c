@@ -432,6 +432,11 @@ char **parts2dialog(GList *list)
 	return(array);
 }
 
+PedExceptionOption peh(PedException* ex)
+{
+	return(PED_EXCEPTION_IGNORE);
+}
+
 int run(GList **config)
 {
 	PedDevice *dev = NULL;
@@ -441,6 +446,7 @@ int run(GList **config)
 	int ret;
 	char my_buffer[MAX_LEN + 1] = "";
 
+	ped_exception_set_handler(peh);
 	ped_device_probe_all();
 
 	if(ped_device_get_next(NULL)==NULL)
@@ -454,7 +460,8 @@ int run(GList **config)
 			// we don't want to partition cds ;-)
 			continue;
 		disk = ped_disk_new(dev);
-		listparts(disk);
+		if(disk)
+			listparts(disk);
 	}
 
 	// software raids

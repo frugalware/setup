@@ -68,6 +68,11 @@ int buggy_md0()
 	return(1);
 }
 
+PedExceptionOption peh(PedException* ex)
+{
+	return(PED_EXCEPTION_IGNORE);
+}
+
 GList *listparts(void)
 {
 	GList *devs=NULL;
@@ -77,6 +82,7 @@ GList *listparts(void)
 	if(buggy_md0())
 		unlink("/dev/md0");
 
+	ped_exception_set_handler(peh);
 	ped_device_probe_all();
 
 	if(ped_device_get_next(NULL)==NULL)
