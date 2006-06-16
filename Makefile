@@ -93,7 +93,7 @@ clean:
 	rm -rf $(packages) vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(CDIR)/*
 	$(MAKE) -C src clean
 
-distclean:
+distclean: clean
 	rm -rf dl.lst config.mak
 
 ccache:
