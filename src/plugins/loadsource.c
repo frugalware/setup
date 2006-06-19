@@ -151,10 +151,11 @@ int run(GList **config)
 		FREE(pacbindir);
 		FREE(pacexbindir);
 	}
+	/* comment this out for now, as requested at http://forums.frugalware.org/index.php?t=rview&goto=3479#msg_3479
 	if(data_get(*config, "srcdev")==NULL)
 	{
 		dialog_msgbox(_("CD/DVD drive not found"), _("Sorry, no Frugalware install disc was found in any of your drives. Press ENTER to reboot."), 0, 0, 1);
 		exit_perform();
-	}
+	}*/
 	return(0);
 }
