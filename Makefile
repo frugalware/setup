@@ -51,7 +51,7 @@ packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
 	   glibc kbd kernel module-init-tools ncurses pacman eject \
 	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted \
 	   bzip2 libarchive zlib frugalwareutils wireless_tools ipw2200-firmware \
-	   openssl openssh bastet
+	   openssl openssh bastet readline
 	   
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
@@ -81,7 +81,8 @@ sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
 	  ipw2200-firmware-$(IPW2200-FIRMWAREVER)-$(CARCH).fpm \
 	  openssl-$(OPENSSLVER)-$(CARCH).fpm \
 	  openssh-$(OPENSSHVER)-$(CARCH).fpm \
-	  bastet-$(BASTETVER)-$(CARCH).fpm
+	  bastet-$(BASTETVER)-$(CARCH).fpm \
+	  readline-$(READLINEVER)-$(CARCH).fpm
 
 all: initrd
 
@@ -418,3 +419,9 @@ ipw2200-firmware:
 	mkdir ipw2200-firmware
 	cd $(BDIR) && tar xjf ../$(CDIR)/ipw2200-firmware-$(IPW2200-FIRMWAREVER)-$(CARCH).fpm; \
 	cp -a lib ../ipw2200-firmware/
+
+readline:
+	$(CLEANUP)
+	mkdir -p readline/usr/lib/
+	cd $(BDIR) && tar xjf ../$(CDIR)/readline-$(READLINEVER)-$(CARCH).fpm; \
+	cp -a usr/lib/libreadline.so* ../readline/usr/lib/
