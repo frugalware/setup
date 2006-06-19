@@ -102,11 +102,12 @@ GList *listparts(void)
 
 char *selpartsw()
 {
-	int swnum=2;
+	int swnum=3;
 	char *sws[] =
 	{
 		"cfdisk", _("User friendly (curses based) version of fdisk"),
-		"fdisk", _("The traditional partitioning program for Linux")
+		"fdisk", _("The traditional partitioning program for Linux"),
+		"parted", _("A partition manipulation program")
 	};
 	
 	dialog_vars.backtitle=gen_backtitle(_("Creating partitions"));
