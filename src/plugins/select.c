@@ -198,7 +198,7 @@ char* categorysize(GList *syncs, char *category)
 	size = (double)(size/1048576.0);
 	if(size < 0.1)
 		size=0.1;
-	return(g_strdup_printf("    %.1f MB", size));
+	return(g_strdup_printf("%6.1f MB", size));
 }
 
 GList *selcat(PM_DB *db, GList *syncs)
