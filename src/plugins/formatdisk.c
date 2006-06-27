@@ -420,9 +420,9 @@ char **parts2dialog(GList *list)
 		else
 		{
 			ptr = findmount((char*)g_list_nth_data(list, i-1), 1);
-			if(ptr!=NULL)
-				array[i] = g_strdup_printf(_("%s on %s\t%s"),
-					(char*)g_list_nth_data(list, i-1), ptr,
+			if(ptr && (strlen(TARGETDIR) <= strlen(ptr)))
+				array[i] = g_strdup_printf(_("%s on %s/\t%s"),
+					(char*)g_list_nth_data(list, i-1), ptr+strlen(TARGETDIR),
 					(char*)g_list_nth_data(list, i));
 			else
 				array[i] = g_strdup_printf("%s",
