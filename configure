@@ -21,7 +21,7 @@
 #
 
 packages=('bash' 'kernel' 'busybox' 'dhcpcd' 'dialog' 'e2fsprogs' 'eject' \
-	  'frugalware' 'glibc' 'kbd' 'lynx' 'module-init-tools' 'ncurses' \
+	  'frugalware' 'glibc' 'kbd' 'module-init-tools' 'ncurses' \
 	  'netkit-base' 'pacman' 'reiserfsprogs' 'udev' \
 	  'util-linux' 'mdadm' 'xfsprogs' 'ppp' 'rp-pppoe' 'glib2' 'parted' \
 	  'bzip2' 'libarchive' 'zlib' 'frugalwareutils' 'wireless_tools' \

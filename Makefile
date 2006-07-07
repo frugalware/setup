@@ -47,7 +47,7 @@ BDIR = build
 MDIR = merge
 CWD=`pwd`
 
-packages = bash busybox dialog e2fsprogs reiserfsprogs lynx dhcpcd frugalware \
+packages = bash busybox dialog e2fsprogs reiserfsprogs dhcpcd frugalware \
 	   glibc kbd kernel module-init-tools ncurses pacman eject \
 	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted \
 	   bzip2 libarchive zlib frugalwareutils wireless_tools ipw2200-firmware \
@@ -60,7 +60,6 @@ sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
 	  frugalware-$(FRUGALWAREVER)-$(CARCH).fpm \
 	  glibc-$(GLIBCVER)-$(CARCH).fpm kbd-$(KBDVER)-$(CARCH).fpm \
 	  kernel-$(KERNELV)-$(KERNELREL)-$(CARCH).fpm \
-	  lynx-$(LYNXVER)-$(CARCH).fpm \
 	  module-init-tools-$(MODULE-INIT-TOOLSVER)-$(CARCH).fpm \
 	  ncurses-$(NCURSESVER)-$(CARCH).fpm netkit-base-$(NETKIT-BASEVER)-$(CARCH).fpm \
 	  pacman-$(PACMANVER)-$(CARCH).fpm \
@@ -203,12 +202,6 @@ reiserfsprogs:
 	cp -a $(BDIR)/sbin/{mkreiserfs,reiserfsck} reiserfsprogs/sbin/
 	mkdir reiserfsprogs/etc/
 	touch reiserfsprogs/etc/fstab
-lynx:
-	$(CLEANUP)
-	mkdir -p lynx/usr/bin lynx/etc/lynx
-	cd $(BDIR) && tar xjf ../$(CDIR)/lynx-$(LYNXVER)-$(CARCH).fpm
-	cp -a $(BDIR)/usr/bin/lynx lynx/usr/bin/
-	cp -a $(BDIR)/etc/lynx/lynx.cfg lynx/etc/lynx/
 
 dhcpcd:
 	$(CLEANUP)
