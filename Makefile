@@ -51,7 +51,7 @@ packages = bash busybox dialog e2fsprogs reiserfsprogs dhcpcd frugalware \
 	   glibc kbd kernel module-init-tools ncurses pacman eject \
 	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted \
 	   bzip2 libarchive zlib frugalwareutils wireless_tools ipw2200-firmware \
-	   openssl openssh bastet readline acx100
+	   dropbear bastet readline acx100
 	   
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
@@ -78,8 +78,7 @@ sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
 	  frugalwareutils-$(FRUGALWAREUTILSVER)-$(CARCH).fpm \
 	  wireless_tools-$(WIRELESS_TOOLSVER)-$(CARCH).fpm \
 	  ipw2200-firmware-$(IPW2200-FIRMWAREVER)-$(CARCH).fpm \
-	  openssl-$(OPENSSLVER)-$(CARCH).fpm \
-	  openssh-$(OPENSSHVER)-$(CARCH).fpm \
+	  dropbear-$(DROPBEARVER)-$(CARCH).fpm \
 	  bastet-$(BASTETVER)-$(CARCH).fpm \
 	  readline-$(READLINEVER)-$(CARCH).fpm \
 	  acx100-$(ACX100VER)-$(CARCH).fpm
@@ -389,17 +388,12 @@ wireless_tools:
 	cd $(BDIR) && tar xjf ../$(CDIR)/wireless_tools-$(WIRELESS_TOOLSVER)-$(CARCH).fpm; \
 	cp -a usr/{lib,sbin} ../wireless_tools/usr/
 
-openssl:
+dropbear:
 	$(CLEANUP)
-	mkdir -p openssl/usr/lib/
-	cd $(BDIR) && tar xjf ../$(CDIR)/openssl-$(OPENSSLVER)-$(CARCH).fpm; \
-	cp -a usr/lib/libcrypto* ../openssl/usr/lib/
-
-openssh:
-	$(CLEANUP)
-	mkdir -p openssh/usr/bin
-	cd $(BDIR) && tar xjf ../$(CDIR)/openssh-$(OPENSSHVER)-$(CARCH).fpm; \
-	cp -a usr/bin/{ssh,scp} ../openssh/usr/bin/
+	mkdir -p dropbear/usr/bin
+	cd $(BDIR) && tar xjf ../$(CDIR)/dropbear-$(DROPBEARVER)-$(CARCH).fpm; \
+	cp -a usr/bin/dbclient ../dropbear/usr/bin/ssh
+	cp -a usr/bin/dbscp ../dropbear/usr/bin/scp
 
 bastet:
 	$(CLEANUP)
