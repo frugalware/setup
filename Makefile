@@ -157,6 +157,7 @@ upload:
 	scp initrd-$(CARCH).img.gz frugalware.org:/home/ftp/pub/frugalware/frugalware-current/boot/
 
 config.mak:
+	pacman -Sy
 	sh configure
 
 check: dl.lst
