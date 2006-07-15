@@ -106,7 +106,7 @@ int run(GList **config)
 	ptr[strlen(ptr)-7]='\0';
 	
 	//TODO: maybe there is a proper system call for this?
-	system(g_strdup_printf("loadkeys /usr/share/kbd/keymaps/i386/%s.map.gz >%s 2>%s", ptr, LOGDEV, LOGDEV));
+	system(g_strdup_printf("loadkeys /usr/share/keymaps/i386/%s.map.gz >%s 2>%s", ptr, LOGDEV, LOGDEV));
 	
 	fn = strdup("/tmp/setup_XXXXXX");
 	mkstemp(fn);
@@ -116,8 +116,8 @@ int run(GList **config)
 		return(1);
 	}
 	fprintf(fp, "# /etc/sysconfig/keymap\n\n"
-		"# sepecify the keyboard map, maps are in "
-		"/usr/share/kbd/keymaps\n\n");
+		"# specify the keyboard map, maps are in "
+		"/usr/share/keymaps\n\n");
 	fprintf(fp, "keymap=%s\n", strstr(ptr, "/")+1);
 	FREE(ptr);
 	fclose(fp);
