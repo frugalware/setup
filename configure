@@ -53,7 +53,7 @@ done
 for i in ${packages[@]}
 do
 	echo -n "checking for $i... "
-	if [ "$i" = "busybox" -o "$i" = "ipw2200-firmware" -o "$i" = "bastet" -o "$i" = "acx100" ]; then
+	if [ "$i" = "busybox" -o "$i" = "ipw2200-firmware" -o "$i" = "bastet" -o "$i" = "acx100" -o "$i" = "dropbear" ]; then
 		expath="extra/"
 	else
 		unset expath
