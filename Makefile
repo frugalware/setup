@@ -235,14 +235,14 @@ glibc:
 
 kbd:
 	$(CLEANUP)
-	mkdir -p kbd/usr/{bin,share/kbd/keymaps,share/kbd/consolefonts}
+	mkdir -p kbd/usr/{bin,share/keymaps,share/consolefonts}
 	cd $(BDIR) && tar xjf ../$(CDIR)/kbd-$(KBDVER)-$(CARCH).fpm
 	cp -a $(BDIR)/{bin/loadkeys,usr/bin/setfont} kbd/usr/bin/
-	cp -a $(BDIR)/usr/share/kbd/keymaps/{i386,include} \
-		kbd/usr/share/kbd/keymaps/
+	cp -a $(BDIR)/usr/share/keymaps/{i386,include} \
+		kbd/usr/share/keymaps/
 	for i in $(fonts); do \
-		cp -a $(BDIR)/usr/share/kbd/consolefonts/$$i \
-			kbd/usr/share/kbd/consolefonts/; \
+		cp -a $(BDIR)/usr/share/consolefonts/$$i \
+			kbd/usr/share/consolefonts/; \
 	done
 
 kernel:
@@ -330,7 +330,7 @@ xfsprogs:
 ppp:
 	$(CLEANUP)
 	mkdir -p ppp/usr
-	cd $(BDIR) && tar xzf ../$(CDIR)/ppp-$(PPPVER)-$(CARCH).fpm; \
+	cd $(BDIR) && tar xjf ../$(CDIR)/ppp-$(PPPVER)-$(CARCH).fpm; \
 	cp -a etc ../ppp/; \
 	cp -a usr/{lib,sbin} ../ppp/usr/
 
@@ -340,8 +340,6 @@ pppoe:
 	cd $(BDIR) && tar xjf ../$(CDIR)/rp-pppoe-$(RP-PPPOEVER)-$(CARCH).fpm; \
 	cp -a etc ../pppoe/; \
 	cp -a usr/sbin ../pppoe/usr/; \
-	cp -a usr/share/locale ../pppoe/usr/share/
-	sed -i 's|/bin/sh|/bin/bash|' pppoe/usr/sbin/adslconfig
 
 glib2:
 	$(CLEANUP)
@@ -392,7 +390,7 @@ dropbear:
 	$(CLEANUP)
 	mkdir -p dropbear/usr/bin
 	cd $(BDIR) && tar xjf ../$(CDIR)/dropbear-$(DROPBEARVER)-$(CARCH).fpm; \
-	cp -a usr/bin/dbclient ../dropbear/usr/bin/ssh
+	cp -a usr/bin/dbclient ../dropbear/usr/bin/ssh; \
 	cp -a usr/bin/dbscp ../dropbear/usr/bin/scp
 
 bastet:

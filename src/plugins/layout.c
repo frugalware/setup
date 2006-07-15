@@ -87,7 +87,7 @@ int run(GList **config)
 	char *fn, *ptr;
 	FILE* fp;
 	
-	find("/usr/share/kbd/keymaps/i386");
+	find("/usr/share/keymaps/i386");
 	array = glist4dialog(layoutl, "");
 	
 	dialog_vars.backtitle=gen_backtitle(_("Configuring the keyboard"));
