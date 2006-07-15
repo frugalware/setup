@@ -8,6 +8,13 @@ saved to pacman's cache and you need to be able to mount the initrd image file.
 
 Hopefully you'll get the vmlinuz* and initrd*.img.gz files after make ends.
 
+Cleaning up
+-----------
+
+If you built the initrd in the past and you don't want to start from scratch,
+then use 'darcs pull' and 'sudo make distclen' to update the source and clean
+up the generated files.
+
 Adding new translations
 -----------------------
 1) first push the po file to the po/ dir
