@@ -21,6 +21,7 @@
 -include config.mak
 
 STABLE = false
+TESTING = false
 KERNELV = $(shell echo $(KERNELVER)|sed 's/-.*//')
 KERNELREL = $(shell echo $(KERNELVER)|sed 's/.*-//')
 
@@ -286,6 +287,9 @@ ifeq ($(STABLE),false)
 else
 	echo "Include = /etc/pacman.d/frugalware" >> pacman/etc/pacman.conf
 	echo "Include = /etc/pacman.d/extra" >>pacman/etc/pacman.conf
+endif
+ifneq ($(TESTING),false)
+	sed -i 's/current/testing/' pacman/etc/pacman.d/{frugalware,extra}-current
 endif
 
 
