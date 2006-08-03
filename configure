@@ -53,13 +53,8 @@ done
 for i in ${packages[@]}
 do
 	echo -n "checking for $i... "
-	if [ "$i" = "busybox" -o "$i" = "ipw2200-firmware" -o "$i" = "bastet" -o "$i" = "acx100" -o "$i" = "dropbear" ]; then
-		expath="extra/"
-	else
-		unset expath
-	fi
 	ver=`pacman -Si $i|grep ^Version|sed 's/.*: //'`
-	echo "$_configure_mirror/${expath}frugalware-$arch/$i-$ver-$arch.fpm" >>dl.lst
+	echo "$_configure_mirror/frugalware-$arch/$i-$ver-$arch.fpm" >>dl.lst
 	echo "`echo $i|tr [a-z] [A-Z]`VER = $ver" >>config.mak
 	echo "done."
 done
