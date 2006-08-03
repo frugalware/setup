@@ -283,13 +283,11 @@ pacman:
 	echo "LogFile     = /mnt/target/var/log/pacman.log" >> pacman/etc/pacman.conf
 ifeq ($(STABLE),false)
 	echo "Include = /etc/pacman.d/frugalware-current" >> pacman/etc/pacman.conf
-	echo "Include = /etc/pacman.d/extra-current" >>pacman/etc/pacman.conf
 else
 	echo "Include = /etc/pacman.d/frugalware" >> pacman/etc/pacman.conf
-	echo "Include = /etc/pacman.d/extra" >>pacman/etc/pacman.conf
 endif
 ifneq ($(TESTING),false)
-	sed -i 's/current/testing/' pacman/etc/pacman.d/{frugalware,extra}-current
+	sed -i 's/current/testing/' pacman/etc/pacman.d/frugalware-current
 endif
 
 
