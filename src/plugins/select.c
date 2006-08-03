@@ -63,7 +63,7 @@ GList* group2pkgs(GList *syncs, char *group, int dialog)
 	PM_LIST *pmpkgs, *lp, *junk;
 	GList *pkgs=NULL;
 	GList *list=NULL;
-	int i, extra=0, addpkg=1;
+	int i, optional=0, addpkg=1;
 	char *ptr, *pkgname, *pkgfullname, *lang;
 
 	// add the core group to the start of the base list
@@ -76,7 +76,7 @@ GList* group2pkgs(GList *syncs, char *group, int dialog)
 	*ptr = '\0';
 
 	if(strlen(group) >= strlen(EXGRPSUFFIX) && !strcmp(group + strlen(group) - strlen(EXGRPSUFFIX), EXGRPSUFFIX))
-		extra=1;
+		optional=1;
 
 	for (i=0; i<g_list_length(syncs); i++)
 	{
@@ -125,7 +125,7 @@ GList* group2pkgs(GList *syncs, char *group, int dialog)
 		addpkg = ((!strcmp(group, "locale-extra") &&
 			strlen(pkgname) >= strlen(lang) &&
 			!strcmp(pkgname + strlen(pkgname) -
-			strlen(lang), lang)) || !extra);
+			strlen(lang), lang)) || !optional);
 		if(!dialog && addpkg && !g_list_is_strin(pkgfullname, list))
 			list = g_list_append(list, strdup(pkgfullname));
 		if(dialog && !g_list_is_strin(pkgfullname, list))
@@ -217,34 +217,19 @@ GList *selcat(PM_DB *db, GList *syncs)
 
 		ptr = (char *)alpm_grp_getinfo(grp, PM_GRP_NAME);
 
-		if(!strcmp(name, "frugalware-current") || !strcmp(name, "frugalware"))
-		{
 			if((index(ptr, '-')==NULL) && strcmp(ptr, "core"))
 			{
 				catlist = g_list_append(catlist, strdup(ptr));
-#ifdef FINAL
 				catlist = g_list_append(catlist,
 					categorysize(syncs, ptr));
-#else
-				catlist = g_list_append(catlist,
-					"   ");
-#endif
 				catlist = g_list_append(catlist, strdup("On"));
 			}
-		}
-		else
-		{
 			if((index(ptr, '-')!=NULL) &&
-				(strstr(ptr, "-extra")!=NULL))
+				(strstr(ptr, EXGRPSUFFIX)!=NULL))
 			{
 				catlist = g_list_append(catlist, strdup(ptr));
-#ifdef FINAL
 				catlist = g_list_append(catlist,
 					categorysize(syncs, ptr));
-#else
-				catlist = g_list_append(catlist,
-					"   ");
-#endif
 				if(strcmp(ptr, "locale-extra"))
 					catlist = g_list_append(catlist,
 						strdup("Off"));
@@ -252,7 +237,6 @@ GList *selcat(PM_DB *db, GList *syncs)
 					catlist = g_list_append(catlist,
 						strdup("On"));
 			}
-		}
 	}
 
 	// now display the list
@@ -261,9 +245,7 @@ GList *selcat(PM_DB *db, GList *syncs)
 	dlg_put_backtitle();
 	dlg_clear();
 	ret = fw_checklist(_("Selecting categories"),
-		(!strcmp(name, "frugalware-current") || !strcmp(name, "frugalware")) ?
-		_("Please select which extra categories to install:") :
-		_("Please select which frugalware categories to install:"),
+		_("Please select which categories to install:"),
 		0, 0, 0, g_list_length(catlist)/3, arraychk,
 		FLAG_CHECK);
 	return(ret);
@@ -314,21 +296,13 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 {
 	char *pacbindir, *pkgdb;
 	struct stat sbuf;
-	int extra=0;
 	PM_DB *i;
 #ifdef FINAL
-	char *mode;
 	FILE *fp;
 #endif
 
-	if((!strcmp(repo, "extra"))||(!strcmp(repo, "extra-current")))
-		extra=1;
-	if(!extra)
-		pacbindir = g_strdup_printf("%s/frugalware-%s",
-			SOURCEDIR, ARCH);
-	else
-		pacbindir = g_strdup_printf("%s/extra/frugalware-%s",
-			SOURCEDIR, ARCH);
+	pacbindir = g_strdup_printf("%s/frugalware-%s",
+		SOURCEDIR, ARCH);
 	pkgdb = g_strdup_printf("%s/var/lib/pacman/%s", TARGETDIR, repo);
 
 	// prepare pkgdb if necessary
@@ -341,24 +315,16 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			// TODO: use libarchive for this
 			system(g_strdup_printf("tar xjf %s/%s.fdb -C %s", pacbindir, repo, pkgdb));
 #ifdef FINAL
-			if(!extra)
-				mode = strdup("w");
-			else
-				mode = strdup("a");
-			if ((fp = fopen("/etc/pacman.conf", mode)) == NULL)
+			if ((fp = fopen("/etc/pacman.conf", "w")) == NULL)
 			{
 				perror(_("Could not open output file for writing"));
 				return(1);
 			}
-			if(!extra)
-			{
-				fprintf(fp, "[options]\n");
-				fprintf(fp, "LogFile = %s/var/log/pacman.log\n", TARGETDIR);
-			}
+			fprintf(fp, "[options]\n");
+			fprintf(fp, "LogFile = %s/var/log/pacman.log\n", TARGETDIR);
 			fprintf(fp, "[%s]\n", repo);
 			fprintf(fp, "Server = file://%s\n\n", pacbindir);
 			fclose(fp);
-			FREE(mode);
 #endif
 		}
 		else
@@ -370,62 +336,31 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 	}
 
 	// register the database
-	if(!extra)
+	i = alpm_db_register(PACCONF);
+	if(i==NULL)
 	{
-		i = alpm_db_register(PACCONF);
-		if(i==NULL)
-		{
-			fprintf(stderr, "could not register '%s' database (%s)\n",
-				PACCONF, alpm_strerror(pm_errno));
-			return(1);
-		}
-		else
-			*syncs = g_list_append(*syncs, i);
+		fprintf(stderr, "could not register '%s' database (%s)\n",
+			PACCONF, alpm_strerror(pm_errno));
+		return(1);
 	}
 	else
-	{
-		i = alpm_db_register(PACEXCONF);
-		if(i==NULL)
-		{
-			fprintf(stderr, "could not register '%s' database (%s)\n",
-				PACEXCONF, alpm_strerror(pm_errno));
-			return(1);
-		}
-		else
-			*syncs = g_list_append(*syncs, i);
-	}
+		*syncs = g_list_append(*syncs, i);
 	return(0);
 }
 
-int fw_select(char *repo, GList **config, int selpkgc, GList *syncs)
+int fw_select(GList **config, int selpkgc, GList *syncs)
 {
-	int i, j, extra=0;
+	int i, j;
 	GList *cats=NULL;
 	GList *allpkgs=NULL;
 
-	if((!strcmp(repo, "extra"))||(!strcmp(repo, "extra-current")))
-		extra=1;
-
-	if(!extra)
-		dialog_vars.backtitle=gen_backtitle(_("Selecting frugalware "
-			"packages"));
-	else
-		dialog_vars.backtitle=gen_backtitle(_("Selecting extra "
-			"packages"));
+	dialog_vars.backtitle=gen_backtitle(_("Selecting packages"));
 	dlg_put_backtitle();
 	dlg_clear();
 	dialog_msgbox(_("Please wait"), _("Searching for categories..."),
 		0, 0, 0);
-	if(!extra)
-	{
-		prepare_pkgdb(PACCONF, config, &syncs);
-		if(((char*)data_get(*config, "netinstall")!=NULL) ||
-			((char*)data_get(*config, "dvd")!=NULL))
-			prepare_pkgdb(PACEXCONF, config, &syncs);
-		cats = selcat(g_list_nth_data(syncs, 1), syncs);
-	}
-	else
-		cats = selcat(g_list_nth_data(syncs, 2), syncs);
+	prepare_pkgdb(PACCONF, config, &syncs);
+	cats = selcat(g_list_nth_data(syncs, 1), syncs);
 	if(!selpkgc)
 	{
 		dlg_put_backtitle();
@@ -442,10 +377,6 @@ int fw_select(char *repo, GList **config, int selpkgc, GList *syncs)
 		for(j=0;j<g_list_length(pkgs);j++)
 			allpkgs = g_list_append(allpkgs, g_list_nth_data(pkgs, j));
 	}
-	if(!extra)
-	{
-		// FIXME: currently we add the missing deps for the fw repo
-		// of course it _could_ be done for extra, too
 		PM_LIST *lp, *junk, *sorted;
 		char *ptr;
 
@@ -476,9 +407,6 @@ int fw_select(char *repo, GList **config, int selpkgc, GList *syncs)
 		}
 		alpm_trans_release();
 		data_put(config, "packages", allpkgs);
-	}
-	else
-		data_put(config, "expackages", allpkgs);
 	return(0);
 }
 int run(GList **config)
@@ -511,10 +439,7 @@ int run(GList **config)
 
 	selpkgc = selpkg_confirm();
 	chdir(TARGETDIR);
-	fw_select("frugalware", config, selpkgc, syncs);
-	if(((char*)data_get(*config, "netinstall")!=NULL) ||
-		((char*)data_get(*config, "dvd")!=NULL))
-		fw_select("extra", config, selpkgc, syncs);
+	fw_select(config, selpkgc, syncs);
 	alpm_release();
 	return(0);
 }

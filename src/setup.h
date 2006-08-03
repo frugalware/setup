@@ -53,10 +53,8 @@
 
 #ifndef STABLE
 #define PACCONF "frugalware-current"
-#define PACEXCONF "extra-current"
 #else
 #define PACCONF "frugalware"
-#define PACEXCONF "extra"
 #endif
 
 #define EXGRPSUFFIX "-extra"

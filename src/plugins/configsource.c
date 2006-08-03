@@ -64,7 +64,7 @@ char *firstmirror(char *fn)
 		if(line == strstr(line, "Server = "))
 		{
 			fclose(fp);
-			// drop [/extra]/frugalware-ARCH
+			// drop /frugalware-ARCH
 			ptr = strrchr(line, '/');
 			*ptr = '\0';
 			return(strstr(line, " = ")+3);
@@ -73,7 +73,7 @@ char *firstmirror(char *fn)
 	return(NULL);
 }
 
-int updateconfig(char *fn, char *mirror, int extra)
+int updateconfig(char *fn, char *mirror)
 {
 	FILE *fp, *tfp;
 	char line[PATH_MAX];
@@ -100,10 +100,7 @@ int updateconfig(char *fn, char *mirror, int extra)
 			break;
 		if((line == strstr(line, "Server = ")) && firstline)
 		{
-			if(!extra)
-				fprintf(fp, "Server = %s/frugalware-%s\n", mirror, ARCH);
-			else
-				fprintf(fp, "Server = %s/extra/frugalware-%s\n", mirror, ARCH);
+			fprintf(fp, "Server = %s/frugalware-%s\n", mirror, ARCH);
 			fprintf(fp, line);
 			firstline=0;
 		}
@@ -137,9 +134,7 @@ int mirrorconf(void)
 			exit_perform();
 	}
 
-	updateconfig(fn, dialog_vars.input_result, 0);
-	fn = g_strdup_printf("%s/%s", PACCONFPATH, PACEXCONF);
-	updateconfig(fn, dialog_vars.input_result, 1);
+	updateconfig(fn, dialog_vars.input_result);
 	
 	return(0);
 }

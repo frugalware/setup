@@ -504,22 +504,19 @@ int run(GList **config)
 	chmod (np, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
 	FREE(np);
 
-	// disable caching for cd/dvd
-	// this is needed here since when the cd/dvd is loaded we had no
+	// disable caching for cds
+	// this is needed here since when the cds is loaded we had no
 	// formatted root partition
 	if((char*)data_get(*config, "netinstall")==NULL)
 	{
 		char *pacbindir = g_strdup_printf("%s/frugalware-%s", SOURCEDIR, ARCH);
-		char *pacexbindir = g_strdup_printf("%s/extra/frugalware-%s", SOURCEDIR, ARCH);
 		char *ptr;
 
 		ptr = g_strdup_printf("%s/var/cache/pacman/pkg", TARGETDIR);
 		makepath(ptr);
 		FREE(ptr);
 		disable_cache(pacbindir);
-		disable_cache(pacexbindir);
 		FREE(pacbindir);
-		FREE(pacexbindir);
 	}
 
 	// non-root partitions

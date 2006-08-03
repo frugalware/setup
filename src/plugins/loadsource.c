@@ -89,25 +89,11 @@ GList *grep_drives(char *file)
 	return(NULL);
 }
 
-int is_dvd(char *path)
-{
-	struct stat statbuf;
-	if((!stat(g_strdup_printf("%s/frugalware-%s", path, ARCH), &statbuf)
-		&& S_ISDIR(statbuf.st_mode)) &&
-		(!stat(g_strdup_printf("%s/extra/frugalware-%s", path, ARCH),
-		&statbuf) && S_ISDIR(statbuf.st_mode)))
-		return(1);
-	else
-		return(0);
-}
-
 int is_netinstall(char *path)
 {
 	struct stat statbuf;
-	if(!((!stat(g_strdup_printf("%s/frugalware-%s", path, ARCH), &statbuf)
-		&& S_ISDIR(statbuf.st_mode)) ||
-		(!stat(g_strdup_printf("%s/extra/frugalware-%s", path, ARCH),
-		&statbuf) && S_ISDIR(statbuf.st_mode))))
+	if(!(!stat(g_strdup_printf("%s/frugalware-%s", path, ARCH), &statbuf)
+		&& S_ISDIR(statbuf.st_mode)))
 		return(1);
 	else
 		return(0);
@@ -134,22 +120,17 @@ int run(GList **config)
 			data_put(config, "srcdev", (char*)g_list_nth_data(drives, i));
 			dlg_put_backtitle();
 			dialog_msgbox(_("CD/DVD drive found"), g_strdup_printf(_("A Frugalware install disc was found in device /dev/%s."), (char*)g_list_nth_data(drives, i)), 0, 0, 0);
-			if(is_dvd(SOURCEDIR))
-				data_put(config, "dvd", "");
 			if(is_netinstall(SOURCEDIR))
 				data_put(config, "netinstall", "");
 			break;
 		}
 	}
-	// disable caching for cd/dvd
+	// disable caching for cds
 	if((char*)data_get(*config, "netinstall")==NULL)
 	{
 		char *pacbindir = g_strdup_printf("%s/frugalware-%s", SOURCEDIR, ARCH);
-		char *pacexbindir = g_strdup_printf("%s/extra/frugalware-%s", SOURCEDIR, ARCH);
 		disable_cache(pacbindir);
-		disable_cache(pacexbindir);
 		FREE(pacbindir);
-		FREE(pacexbindir);
 	}
 	/* comment this out for now, as requested at http://forums.frugalware.org/index.php?t=rview&goto=3479#msg_3479
 	if(data_get(*config, "srcdev")==NULL)

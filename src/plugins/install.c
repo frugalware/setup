@@ -89,7 +89,7 @@ int ask_cdchange(void)
 #endif
 }
 
-int installpkgs(GList *pkgs, int extra, GList **config)
+int installpkgs(GList *pkgs, GList **config)
 {
 	int i, first=1;
 
@@ -123,12 +123,8 @@ int installpkgs(GList *pkgs, int extra, GList **config)
 		// see what packages can be usefull from this volume
 		for(i=0;i<g_list_length(pkgs);i++)
 		{
-			if(!extra)
-				ptr = g_strdup_printf("%s/frugalware-%s/%s-%s.fpm", SOURCEDIR, ARCH,
-					(char*)g_list_nth_data(pkgs, i), ARCH);
-			else
-				ptr = g_strdup_printf("%s/extra/frugalware-%s/%s-%s.fpm", SOURCEDIR, ARCH,
-					(char*)g_list_nth_data(pkgs, i), ARCH);
+			ptr = g_strdup_printf("%s/frugalware-%s/%s-%s.fpm", SOURCEDIR, ARCH,
+				(char*)g_list_nth_data(pkgs, i), ARCH);
 			if(!stat(ptr, &buf))
 				list = g_list_append(list, strdup((char*)g_list_nth_data(pkgs, i)));
 			FREE(ptr);
@@ -146,11 +142,8 @@ int installpkgs(GList *pkgs, int extra, GList **config)
 
 int run(GList **config)
 {
-	installpkgs((GList*)data_get(*config, "packages"), 0, config);
-	if(((char*)data_get(*config, "netinstall")!=NULL) ||
-			((char*)data_get(*config, "dvd")!=NULL))
-		installpkgs((GList*)data_get(*config, "expackages"), 1, config);
-	// if the source media is cd/dvd, we don't need broken symlinks after
+	installpkgs((GList*)data_get(*config, "packages"), config);
+	// if the source media is cd, we don't need broken symlinks after
 	// the installtion
 	if((char*)data_get(*config, "netinstall")==NULL)
 		rmrf("var/cache/pacman/pkg");
