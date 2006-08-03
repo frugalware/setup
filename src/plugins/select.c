@@ -217,15 +217,14 @@ GList *selcat(PM_DB *db, GList *syncs)
 
 		ptr = (char *)alpm_grp_getinfo(grp, PM_GRP_NAME);
 
-			if((index(ptr, '-')==NULL) && strcmp(ptr, "core"))
+			if(!index(ptr, '-') && strcmp(ptr, "core"))
 			{
 				catlist = g_list_append(catlist, strdup(ptr));
 				catlist = g_list_append(catlist,
 					categorysize(syncs, ptr));
 				catlist = g_list_append(catlist, strdup("On"));
 			}
-			if((index(ptr, '-')!=NULL) &&
-				(strstr(ptr, EXGRPSUFFIX)!=NULL))
+			else if(strstr(ptr, EXGRPSUFFIX))
 			{
 				catlist = g_list_append(catlist, strdup(ptr));
 				catlist = g_list_append(catlist,
@@ -308,7 +307,9 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 	// prepare pkgdb if necessary
 	if(stat(pkgdb, &sbuf) || !S_ISDIR(sbuf.st_mode))
 	{
+		// pacman can't lock & log without these
 		makepath(g_strdup_printf("%s/tmp", TARGETDIR));
+		makepath(g_strdup_printf("%s/var/log", TARGETDIR));
 		if((char*)data_get(*config, "netinstall")==NULL)
 		{
 			makepath(pkgdb);
@@ -331,8 +332,6 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			// TODO: handle if pacman returns an error, probably the
 			// network has not been configured properly
 			fw_system("pacman -Sy -r ./");
-		// pacman can't log without this
-		makepath(g_strdup_printf("%s/var/log", TARGETDIR));
 	}
 
 	// register the database
