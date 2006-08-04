@@ -21,6 +21,7 @@
 
 #include <stdio.h>
 #include <dialog.h>
+#include <sys/stat.h>
 
 #include <setup.h>
 #include <util.h>
@@ -134,6 +135,7 @@ int append_font(char *fn, char *font)
 int run(GList **config)
 {
 	char *ptr;
+	struct stat buf;
 
 	dialog_vars.backtitle=gen_backtitle(_("Post-install configuration"));
 
@@ -180,7 +182,7 @@ int run(GList **config)
 	system("chroot ./ /sbin/timeconfig");
 	system("chroot ./ /sbin/mouseconfig");
 
-	if(!fw_system("pacman -Q xorg-server -r ./"))
+	if(!stat("usr/bin/X", &buf))
 	{
 		system("chroot ./ su -c /sbin/xconfig");
 		system("chroot ./ /sbin/xwmconfig --silent");
