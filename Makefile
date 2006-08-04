@@ -287,7 +287,7 @@ else
 	echo "Include = /etc/pacman.d/frugalware" >> pacman/etc/pacman.conf
 endif
 ifneq ($(TESTING),false)
-	sed -i 's/current/testing/' pacman/etc/pacman.d/{frugalware,extra}-current
+	sed -i 's|current/|testing/|' pacman/etc/pacman.d/frugalware-current
 endif
 
 
