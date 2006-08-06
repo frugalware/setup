@@ -1,0 +1,7 @@
+#!/bin/sh
+
+if [ "$1" = "adsl" -a "$2" = "start" ]; then
+	pppoe-connect >/dev/tty4 2>/dev/tty4 &
+else
+	echo "usage: $0 adsl start"
+fi
