@@ -92,7 +92,7 @@ int run(GList **config)
 	dlg_put_backtitle();
 	dlg_clear();
 	fw_menu("Please select your language",
-		"Please select your language from the list. If your language"
+		"Please select your language from the list. If your language "
 		"is not in the list, you probably should choose English.",
 		0, 0, 0, LANGSNUM, langs);
 
