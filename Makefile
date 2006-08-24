@@ -48,7 +48,7 @@ BDIR = build
 MDIR = merge
 CWD=`pwd`
 
-packages = bash busybox dialog e2fsprogs reiserfsprogs dhcpcd frugalware \
+packages = bash busybox dialog e2fsprogs reiserfsprogs dhclient frugalware \
 	   glibc kbd kernel module-init-tools ncurses pacman eject \
 	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted \
 	   bzip2 libarchive zlib frugalwareutils wireless_tools ipw2200-firmware \
@@ -56,7 +56,7 @@ packages = bash busybox dialog e2fsprogs reiserfsprogs dhcpcd frugalware \
 	   
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
-	  dhcpcd-$(DHCPCDVER)-$(CARCH).fpm dialog-$(DIALOGVER)-$(CARCH).fpm \
+	  dhclient-$(DHCLIENTVER)-$(CARCH).fpm dialog-$(DIALOGVER)-$(CARCH).fpm \
 	  e2fsprogs-$(E2FSPROGSVER)-$(CARCH).fpm eject-$(EJECTVER)-$(CARCH).fpm \
 	  frugalware-$(FRUGALWAREVER)-$(CARCH).fpm \
 	  glibc-$(GLIBCVER)-$(CARCH).fpm kbd-$(KBDVER)-$(CARCH).fpm \
@@ -206,11 +206,11 @@ reiserfsprogs:
 	mkdir reiserfsprogs/etc/
 	touch reiserfsprogs/etc/fstab
 
-dhcpcd:
+dhclient:
 	$(CLEANUP)
-	mkdir -p dhcpcd/sbin
-	cd $(BDIR) && tar xf ../$(CDIR)/dhcpcd-$(DHCPCDVER)-$(CARCH).fpm
-	cp -a $(BDIR)/sbin/dhcpcd dhcpcd/sbin/
+	mkdir -p dhclient/
+	cd $(BDIR) && tar xf ../$(CDIR)/dhclient-$(DHCLIENTVER)-$(CARCH).fpm
+	cp -a $(BDIR)/{etc,sbin,var} dhcpcd/
 
 frugalware:
 	$(CLEANUP)
