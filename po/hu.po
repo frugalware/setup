@@ -10,13 +10,12 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-08-26 14:12+0200\n"
-"PO-Revision-Date: 2006-06-19 02:16+0200\n"
+"PO-Revision-Date: 2006-08-26 14:15+0200\n"
 "Last-Translator: Miklos Vajna <vmiklos@frugalware.org>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.11.2\n"
+"Content-Transfer-Encoding: 8bit"
 
 #: ../src/plugins/configsource.c:57 ../src/plugins/configsource.c:89
 #: ../src/plugins/configsource.c:94 ../src/plugins/dolangsh.c:52
@@ -24,7 +23,7 @@ msgstr ""
 #: ../src/plugins/layout.c:115 ../src/plugins/loadsource.c:76
 #: ../src/plugins/select.c:321 ../src/util.c:306
 msgid "Could not open output file for writing"
-msgstr "Nem lehet írásra megnyitni a kimeneti fájlt"
+msgstr "Nem sikerült írásra megnyitni a kimeneti fájlt"
 
 #: ../src/plugins/configsource.c:124
 msgid "Selecting a mirror"
@@ -177,7 +176,7 @@ msgid "(in use)"
 msgstr "(használatban)"
 
 #: ../src/plugins/formatdisk.c:424
-#, fuzzy, c-format
+#, c-format
 msgid "%s on %s/\t%s"
 msgstr "%s ezen: %s\t%s"
 
@@ -369,9 +368,8 @@ msgid "Selecting categories"
 msgstr "Kategóriák kiválasztása"
 
 #: ../src/plugins/select.c:247
-#, fuzzy
 msgid "Please select which categories to install:"
-msgstr "Válassza ki a telepíteni kívánt extra kategóriákat:"
+msgstr "Válassza ki a telepíteni kívánt kategóriákat:"
 
 #: ../src/plugins/select.c:264 ../src/plugins/select.c:356
 msgid "Selecting packages"
@@ -515,20 +513,20 @@ msgid "Are you sure you want to exit from the installer?"
 msgstr "Biztos benne hogy kilép a telepítõbõl?"
 
 #~ msgid "CD/DVD drive not found"
-#~ msgstr "CD/DVD meghajtó nem található"
+#~ msgstr "CD/DVD meghajtÃ³ nem talÃ¡lhatÃ³"
 
 #~ msgid ""
 #~ "Sorry, no Frugalware install disc was found in any of your drives. Press "
 #~ "ENTER to reboot."
 #~ msgstr ""
-#~ "Sajnos egyik meghajtóban sem található Frugalware telepítõlemez. Üssön "
-#~ "ENTER-t az újraindításhoz."
+#~ "Sajnos egyik meghajtÃ³ban sem talÃ¡lhatÃ³ Frugalware telepÃ­tÅ‘lemez. ÃœssÃ¶n "
+#~ "ENTER-t az ÃºjraindÃ­tÃ¡shoz."
 
 #~ msgid "Please select which frugalware categories to install:"
-#~ msgstr "Válassza ki a telepíteni kívánt frugalware kategóriákat:"
+#~ msgstr "VÃ¡lassza ki a telepÃ­teni kÃ­vÃ¡nt frugalware kategÃ³riÃ¡kat:"
 
 #~ msgid "Selecting frugalware packages"
-#~ msgstr "Frugalware csomagok kiválasztása"
+#~ msgstr "Frugalware csomagok kivÃ¡lasztÃ¡sa"
 
 #~ msgid "Selecting extra packages"
-#~ msgstr "Extra csomagok kiválasztása"
+#~ msgstr "Extra csomagok kivÃ¡lasztÃ¡sa"
