@@ -210,7 +210,7 @@ dhclient:
 	$(CLEANUP)
 	mkdir -p dhclient/
 	cd $(BDIR) && tar xf ../$(CDIR)/dhclient-$(DHCLIENTVER)-$(CARCH).fpm
-	cp -a $(BDIR)/{etc,sbin,var} dhcpcd/
+	cp -a $(BDIR)/{etc,sbin,var} dhclient/
 
 frugalware:
 	$(CLEANUP)
