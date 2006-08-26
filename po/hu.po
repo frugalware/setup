@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-19 02:10+0200\n"
+"POT-Creation-Date: 2006-08-26 14:12+0200\n"
 "PO-Revision-Date: 2006-06-19 02:16+0200\n"
 "Last-Translator: Miklos Vajna <vmiklos@frugalware.org>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
@@ -22,19 +22,19 @@ msgstr ""
 #: ../src/plugins/configsource.c:94 ../src/plugins/dolangsh.c:52
 #: ../src/plugins/formatdisk.c:233 ../src/plugins/formatdisk.c:376
 #: ../src/plugins/layout.c:115 ../src/plugins/loadsource.c:76
-#: ../src/plugins/select.c:350 ../src/util.c:306
+#: ../src/plugins/select.c:321 ../src/util.c:306
 msgid "Could not open output file for writing"
 msgstr "Nem lehet írásra megnyitni a kimeneti fájlt"
 
-#: ../src/plugins/configsource.c:127
+#: ../src/plugins/configsource.c:124
 msgid "Selecting a mirror"
 msgstr "Tükör kiválasztása"
 
-#: ../src/plugins/configsource.c:133
+#: ../src/plugins/configsource.c:130
 msgid "Please select a mirror"
 msgstr "Válasszon ki egy tükröt"
 
-#: ../src/plugins/configsource.c:133
+#: ../src/plugins/configsource.c:130
 msgid ""
 "You may now specify the mirror closest to you in order to download the "
 "packages faster. In most cases the default value will be fine."
@@ -42,13 +42,13 @@ msgstr ""
 "A gyorsabb letöltés érdekében megadhatja a legközelebbi tükörszerver címét. "
 "A legtöbb esetben az alapértelmezett érték megfelelõ lesz."
 
-#: ../src/plugins/configsource.c:158 ../src/plugins/hotplug.c:53
-#: ../src/plugins/select.c:417 ../src/plugins/select.c:432
-#: ../src/plugins/select.c:464
+#: ../src/plugins/configsource.c:153 ../src/plugins/hotplug.c:53
+#: ../src/plugins/select.c:359 ../src/plugins/select.c:366
+#: ../src/plugins/select.c:394
 msgid "Please wait"
 msgstr "Kérem várjon"
 
-#: ../src/plugins/configsource.c:158
+#: ../src/plugins/configsource.c:153
 msgid "Configuring the network interface..."
 msgstr "Hálózati felület beállítása..."
 
@@ -172,29 +172,29 @@ msgstr "%s fájlrendszer létrehozása a %s partíción"
 msgid "Select mount point for %s"
 msgstr "Csatolási pont kiválasztása a %s számára"
 
-#: ../src/plugins/formatdisk.c:416 ../src/plugins/formatdisk.c:553
+#: ../src/plugins/formatdisk.c:416 ../src/plugins/formatdisk.c:550
 msgid "(in use)"
 msgstr "(használatban)"
 
 #: ../src/plugins/formatdisk.c:424
-#, c-format
-msgid "%s on %s\t%s"
+#, fuzzy, c-format
+msgid "%s on %s/\t%s"
 msgstr "%s ezen: %s\t%s"
 
 #. non-root partitions
-#: ../src/plugins/formatdisk.c:526
+#: ../src/plugins/formatdisk.c:523
 msgid "Selecting other partitions"
 msgstr "Egyéb partíciók kiválasztása"
 
-#: ../src/plugins/formatdisk.c:533 ../src/plugins/partdisk.c:171
+#: ../src/plugins/formatdisk.c:530 ../src/plugins/partdisk.c:171
 msgid "Continue"
 msgstr "Folytatás"
 
-#: ../src/plugins/formatdisk.c:537
+#: ../src/plugins/formatdisk.c:534
 msgid "Select other Linux partitions for /etc/fstab"
 msgstr "Egyéb Linux partíciók beállítása az /etc/fstab-ban"
 
-#: ../src/plugins/formatdisk.c:538
+#: ../src/plugins/formatdisk.c:535
 msgid ""
 "You may use your other partitions to distribute your Linux system across "
 "more than one partition. Currently, you have only mounted your / partition. "
@@ -268,38 +268,26 @@ msgstr ""
 "alapértelmezett. Használja a fel/le nyilakat ill. a PageUp/PageDown-t a "
 "teljes lista megtekintéséhez."
 
-#: ../src/plugins/loadsource.c:123
+#: ../src/plugins/loadsource.c:109
 msgid "Selecting source media"
 msgstr "Forrás adathordozó kiválasztása"
 
-#: ../src/plugins/loadsource.c:126
+#: ../src/plugins/loadsource.c:112
 msgid "Scanning"
 msgstr "Keresés"
 
-#: ../src/plugins/loadsource.c:126
+#: ../src/plugins/loadsource.c:112
 msgid "Scanning for a CD/DVD drive containing a Frugalware install disc..."
 msgstr "A Frugalware telepítõlemezt tartalmazó CD/DVD meghajtó keresése..."
 
-#: ../src/plugins/loadsource.c:136
+#: ../src/plugins/loadsource.c:122
 msgid "CD/DVD drive found"
 msgstr "Megtalált CD/DVD meghajtó"
 
-#: ../src/plugins/loadsource.c:136
+#: ../src/plugins/loadsource.c:122
 #, c-format
 msgid "A Frugalware install disc was found in device /dev/%s."
 msgstr "Frugalware telepítõ lemez a /dev/%s eszközön"
-
-#: ../src/plugins/loadsource.c:156
-msgid "CD/DVD drive not found"
-msgstr "CD/DVD meghajtó nem található"
-
-#: ../src/plugins/loadsource.c:156
-msgid ""
-"Sorry, no Frugalware install disc was found in any of your drives. Press "
-"ENTER to reboot."
-msgstr ""
-"Sajnos egyik meghajtóban sem található Frugalware telepítõlemez. Üssön ENTER-"
-"t az újraindításhoz."
 
 #: ../src/plugins/partdisk.c:108
 msgid "User friendly (curses based) version of fdisk"
@@ -323,7 +311,8 @@ msgstr "Particionáló program kiválasztása"
 
 #: ../src/plugins/partdisk.c:117
 msgid "Select the program you want to use for partitioning:"
-msgstr "Válassza ki, hogy melyik programot kívánja használni a particionáláshoz:"
+msgstr ""
+"Válassza ki, hogy melyik programot kívánja használni a particionáláshoz:"
 
 #: ../src/plugins/partdisk.c:128
 msgid "Want to create RAID?"
@@ -331,7 +320,8 @@ msgstr "Szeretne RAID-et építeni?"
 
 #: ../src/plugins/partdisk.c:129
 msgid "Do you want to create software raid partitions during partitioning?"
-msgstr "Létre szeretne hozni szoftveres RAID partíciókat a particionálás során?"
+msgstr ""
+"Létre szeretne hozni szoftveres RAID partíciókat a particionálás során?"
 
 #: ../src/plugins/partdisk.c:151
 msgid "Disk drive not found"
@@ -354,8 +344,10 @@ msgid "Select a hard disk to partition"
 msgstr "Válassza ki a particionálni kívánt merevlemezt"
 
 #: ../src/plugins/partdisk.c:175
-msgid "Please select a hard disk to partition. The following ones are available:"
-msgstr "Válassza ki a particionálni kívánt merevlemezt. A következõk érhetõek el:"
+msgid ""
+"Please select a hard disk to partition. The following ones are available:"
+msgstr ""
+"Válassza ki a particionálni kívánt merevlemezt. A következõk érhetõek el:"
 
 #: ../src/plugins/restart.c:55 ../src/util.c:123
 msgid "Setup complete"
@@ -372,27 +364,24 @@ msgstr ""
 "%s elnyeri tetszését. Távolítsa el az adathordozót a meghajtóból és üssön "
 "ENTER-t az újraindításhoz."
 
-#: ../src/plugins/select.c:263
+#: ../src/plugins/select.c:246
 msgid "Selecting categories"
 msgstr "Kategóriák kiválasztása"
 
-#: ../src/plugins/select.c:265
-msgid "Please select which extra categories to install:"
+#: ../src/plugins/select.c:247
+#, fuzzy
+msgid "Please select which categories to install:"
 msgstr "Válassza ki a telepíteni kívánt extra kategóriákat:"
 
-#: ../src/plugins/select.c:266
-msgid "Please select which frugalware categories to install:"
-msgstr "Válassza ki a telepíteni kívánt frugalware kategóriákat:"
-
-#: ../src/plugins/select.c:283
+#: ../src/plugins/select.c:264 ../src/plugins/select.c:356
 msgid "Selecting packages"
 msgstr "Csomagok kiválasztása"
 
-#: ../src/plugins/select.c:296
+#: ../src/plugins/select.c:277
 msgid "Use expert menus?"
 msgstr "Használni szeretné a haladó menüket?"
 
-#: ../src/plugins/select.c:297
+#: ../src/plugins/select.c:278
 msgid ""
 "If you like, you may select your packages from expert menus. Where the "
 "normal menu shows a choice like 'C compiler system', the expert menus show "
@@ -413,23 +402,15 @@ msgstr ""
 "normál menük használatához, vagy az 'igen'-t a csomagok egyesével való "
 "kiválasztását támogató haladó menükhöz."
 
-#: ../src/plugins/select.c:410
-msgid "Selecting frugalware packages"
-msgstr "Frugalware csomagok kiválasztása"
-
-#: ../src/plugins/select.c:413
-msgid "Selecting extra packages"
-msgstr "Extra csomagok kiválasztása"
-
-#: ../src/plugins/select.c:417
+#: ../src/plugins/select.c:359
 msgid "Searching for categories..."
 msgstr "Kategóriák keresése..."
 
-#: ../src/plugins/select.c:432
+#: ../src/plugins/select.c:366
 msgid "Searching for packages..."
 msgstr "Csomagok keresése..."
 
-#: ../src/plugins/select.c:464
+#: ../src/plugins/select.c:394
 msgid "Searching for missing dependencies..."
 msgstr "Hiányzó függõségek keresése..."
 
@@ -456,11 +437,11 @@ msgstr ""
 "csomagok telepítésének folytatásához. Ha nincs több lemeze, válassza a NEM-"
 "et, és befejezheti a telepítést. Behelyezte a következõ lemezt?"
 
-#: ../src/plugins/postconf.c:73
+#: ../src/plugins/postconf.c:74
 msgid "No root password detected"
 msgstr "Nem található rendszergazda (root) jelszó"
 
-#: ../src/plugins/postconf.c:74
+#: ../src/plugins/postconf.c:75
 msgid ""
 "There is currently no password set on the system administrator account "
 "(root). It is recommended that you set one now so that it is active the "
@@ -473,11 +454,11 @@ msgstr ""
 "ha a gépe az internetre van csatlakozva. Szeretné beállítani a rendszergazda "
 "jelszavát?"
 
-#: ../src/plugins/postconf.c:110
+#: ../src/plugins/postconf.c:111
 msgid "No normal user account detected"
 msgstr "Nem található normál felhasználói fiók"
 
-#: ../src/plugins/postconf.c:111
+#: ../src/plugins/postconf.c:112
 msgid ""
 "There is currently no non-root user account configured. It is strongly "
 "recommended to create one. Would you like to create a normal user account "
@@ -487,15 +468,15 @@ msgstr ""
 "ajánlott létrehozni legalább egyet. Szeretne létrehozni most egy normál "
 "felhasználói fiókot?"
 
-#: ../src/plugins/postconf.c:138
+#: ../src/plugins/postconf.c:140
 msgid "Post-install configuration"
 msgstr "Telepítés utáni beállítások"
 
-#: ../src/plugins/postconf.c:150
+#: ../src/plugins/postconf.c:152
 msgid "Configuring kernel modules"
 msgstr "Kernelmodulok beállítása"
 
-#: ../src/plugins/postconf.c:151
+#: ../src/plugins/postconf.c:153
 msgid "Updating module dependencies..."
 msgstr "Modulfüggõségek frissítése..."
 
@@ -533,3 +514,21 @@ msgstr "Kilépés a telepítõbõl"
 msgid "Are you sure you want to exit from the installer?"
 msgstr "Biztos benne hogy kilép a telepítõbõl?"
 
+#~ msgid "CD/DVD drive not found"
+#~ msgstr "CD/DVD meghajtó nem található"
+
+#~ msgid ""
+#~ "Sorry, no Frugalware install disc was found in any of your drives. Press "
+#~ "ENTER to reboot."
+#~ msgstr ""
+#~ "Sajnos egyik meghajtóban sem található Frugalware telepítõlemez. Üssön "
+#~ "ENTER-t az újraindításhoz."
+
+#~ msgid "Please select which frugalware categories to install:"
+#~ msgstr "Válassza ki a telepíteni kívánt frugalware kategóriákat:"
+
+#~ msgid "Selecting frugalware packages"
+#~ msgstr "Frugalware csomagok kiválasztása"
+
+#~ msgid "Selecting extra packages"
+#~ msgstr "Extra csomagok kiválasztása"

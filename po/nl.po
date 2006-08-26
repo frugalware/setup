@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: setup current\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-04 13:50+0100\n"
+"POT-Creation-Date: 2006-08-26 14:12+0200\n"
 "PO-Revision-Date: 2005-11-25 18:06+0100\n"
 "Last-Translator: David Kimpe <David.Kimpe@DistroTalk.net>\n"
 "Language-Team: Dutch <translation-team-nl@lists.sourceforge.net>\n"
@@ -19,21 +19,21 @@ msgstr ""
 
 #: ../src/plugins/configsource.c:57 ../src/plugins/configsource.c:89
 #: ../src/plugins/configsource.c:94 ../src/plugins/dolangsh.c:52
-#: ../src/plugins/formatdisk.c:230 ../src/plugins/formatdisk.c:373
+#: ../src/plugins/formatdisk.c:233 ../src/plugins/formatdisk.c:376
 #: ../src/plugins/layout.c:115 ../src/plugins/loadsource.c:76
-#: ../src/plugins/select.c:350 ../src/util.c:306
+#: ../src/plugins/select.c:321 ../src/util.c:306
 msgid "Could not open output file for writing"
 msgstr "Kon het output bestand niet openen om ernaar te schrijven"
 
-#: ../src/plugins/configsource.c:127
+#: ../src/plugins/configsource.c:124
 msgid "Selecting a mirror"
 msgstr "Een mirror kiezen"
 
-#: ../src/plugins/configsource.c:133
+#: ../src/plugins/configsource.c:130
 msgid "Please select a mirror"
 msgstr "Kies een mirror"
 
-#: ../src/plugins/configsource.c:133
+#: ../src/plugins/configsource.c:130
 msgid ""
 "You may now specify the mirror closest to you in order to download the "
 "packages faster. In most cases the default value will be fine."
@@ -41,48 +41,48 @@ msgstr ""
 "Je kan nu een mirror dicht bij jou specifiëren om de pakketten sneller te "
 "downloaden. In de meeste gevallen zal de standaardwaarde goed zijn."
 
-#: ../src/plugins/configsource.c:158 ../src/plugins/hotplug.c:53
-#: ../src/plugins/select.c:417 ../src/plugins/select.c:432
-#: ../src/plugins/select.c:464
+#: ../src/plugins/configsource.c:153 ../src/plugins/hotplug.c:53
+#: ../src/plugins/select.c:359 ../src/plugins/select.c:366
+#: ../src/plugins/select.c:394
 msgid "Please wait"
 msgstr "Gelieve te wachten"
 
-#: ../src/plugins/configsource.c:158
+#: ../src/plugins/configsource.c:153
 msgid "Configuring the network interface..."
 msgstr "De netwerk interface aan het configureren..."
 
-#: ../src/plugins/formatdisk.c:141
+#: ../src/plugins/formatdisk.c:144
 msgid "Setting up swap space"
 msgstr "Swapruimte aan het instellen"
 
-#: ../src/plugins/formatdisk.c:144
+#: ../src/plugins/formatdisk.c:147
 msgid "Setting up swap partitions"
 msgstr "De swap partities aan het instellen"
 
-#: ../src/plugins/formatdisk.c:145
+#: ../src/plugins/formatdisk.c:148
 #, fuzzy
 msgid "Please select which swap partitions you want Frugalware to use:"
 msgstr "Kies welke swap partities Frugalware moet gebruiken:"
 
-#: ../src/plugins/formatdisk.c:156 ../src/plugins/formatdisk.c:178
+#: ../src/plugins/formatdisk.c:159 ../src/plugins/formatdisk.c:181
 msgid "Quick format with no bad block checking"
 msgstr "Snel formatteren zonder controle op defecte blokken"
 
-#: ../src/plugins/formatdisk.c:157 ../src/plugins/formatdisk.c:179
+#: ../src/plugins/formatdisk.c:160 ../src/plugins/formatdisk.c:182
 msgid "Slow format that checks for bad blocks"
 msgstr "Traag formatteren met controle op defecte blokken"
 
-#: ../src/plugins/formatdisk.c:160 ../src/plugins/formatdisk.c:183
-#: ../src/plugins/formatdisk.c:207
+#: ../src/plugins/formatdisk.c:163 ../src/plugins/formatdisk.c:186
+#: ../src/plugins/formatdisk.c:210
 msgid "Formatting partitions"
 msgstr "Partities aan het formatteren"
 
-#: ../src/plugins/formatdisk.c:163 ../src/plugins/formatdisk.c:186
+#: ../src/plugins/formatdisk.c:166 ../src/plugins/formatdisk.c:189
 #, c-format
 msgid "Format %s"
 msgstr "%s formatteren"
 
-#: ../src/plugins/formatdisk.c:164 ../src/plugins/formatdisk.c:187
+#: ../src/plugins/formatdisk.c:167 ../src/plugins/formatdisk.c:190
 #, c-format
 msgid ""
 "If %s has not been formatted, you should format it.\n"
@@ -93,63 +93,63 @@ msgstr ""
 "LET OP: Dit zal alle data op %s verwijderen. Weet je zeker dat je deze "
 "partitie wilt formatteren?"
 
-#: ../src/plugins/formatdisk.c:180
+#: ../src/plugins/formatdisk.c:183
 msgid "Do not format, just mount the partition"
 msgstr "De partitie niet formatteren, enkel mounten"
 
-#: ../src/plugins/formatdisk.c:201
+#: ../src/plugins/formatdisk.c:204
 msgid "Standard Linux ext2fs filesystem"
 msgstr "Standaard Linux ext2fs bestandssysteem"
 
-#: ../src/plugins/formatdisk.c:202
+#: ../src/plugins/formatdisk.c:205
 #, fuzzy
 msgid "Journalising version of the ext2fs filesystem"
 msgstr "Journaling versie van het ext2FS bestandssysteem"
 
-#: ../src/plugins/formatdisk.c:203
+#: ../src/plugins/formatdisk.c:206
 #, fuzzy
 msgid "Hans Reiser's journalising filesystem"
 msgstr "Hans Reiser's journaling bestandssysteem"
 
-#: ../src/plugins/formatdisk.c:204
+#: ../src/plugins/formatdisk.c:207
 #, fuzzy
 msgid "SGI's journalising filesystem"
 msgstr "SGI's journaling bestandssysteem"
 
-#: ../src/plugins/formatdisk.c:211
+#: ../src/plugins/formatdisk.c:214
 #, c-format
 msgid "Selecting filesystem for %s"
 msgstr "Bestandssysteem selecteren voor %s"
 
-#: ../src/plugins/formatdisk.c:212
+#: ../src/plugins/formatdisk.c:215
 #, c-format
 msgid "Please select the type of filesystem to use for %s."
 msgstr "Kies het type bestandssysteem om %s te laten gebruiken"
 
-#: ../src/plugins/formatdisk.c:252 ../src/plugins/formatdisk.c:259
+#: ../src/plugins/formatdisk.c:255 ../src/plugins/formatdisk.c:262
 msgid "Formatting swap partition"
 msgstr "Swap partitie formatteren"
 
-#: ../src/plugins/formatdisk.c:253
+#: ../src/plugins/formatdisk.c:256
 #, c-format
 msgid "Formatting %s as a swap partition"
 msgstr "%s formatteren als swap partitie"
 
-#: ../src/plugins/formatdisk.c:260
+#: ../src/plugins/formatdisk.c:263
 #, c-format
 msgid "Formatting %s as a swap partition and checking for bad blocks"
 msgstr ""
 "%s aan het formatteren als swap partitie en te controleren op defecte blokken"
 
-#: ../src/plugins/formatdisk.c:281
+#: ../src/plugins/formatdisk.c:284
 msgid "Setting up the root partition"
 msgstr "Root partitie aan het instellen"
 
-#: ../src/plugins/formatdisk.c:283
+#: ../src/plugins/formatdisk.c:286
 msgid "Select the Linux installation partition"
 msgstr "Selecteer de Linux installatie partitie"
 
-#: ../src/plugins/formatdisk.c:284
+#: ../src/plugins/formatdisk.c:287
 msgid ""
 "Please select a partition from the following list to use for your root (/) "
 "partition. The following ones are available:"
@@ -157,48 +157,48 @@ msgstr ""
 "Kies een partitie uit de volgende lijst om te gebruiken voor je root (/) "
 "partitie. De volgende zijn beschikbaar:"
 
-#: ../src/plugins/formatdisk.c:296
+#: ../src/plugins/formatdisk.c:299
 msgid "Formatting"
 msgstr "Bezig met formatteren"
 
-#: ../src/plugins/formatdisk.c:297
+#: ../src/plugins/formatdisk.c:300
 #, c-format
 msgid "Creating %s filesystem on %s and checking for bad blocks"
 msgstr "Het %s bestandssysteem creëren op %s en controleren op defecte blokken"
 
-#: ../src/plugins/formatdisk.c:298
+#: ../src/plugins/formatdisk.c:301
 #, c-format
 msgid "Creating %s filesystem on %s"
 msgstr "Het %s bestandssysteem creëren op %s"
 
-#: ../src/plugins/formatdisk.c:393
+#: ../src/plugins/formatdisk.c:396
 #, c-format
 msgid "Select mount point for %s"
 msgstr "Selecteer het mount punt voor %s"
 
-#: ../src/plugins/formatdisk.c:413 ../src/plugins/formatdisk.c:543
+#: ../src/plugins/formatdisk.c:416 ../src/plugins/formatdisk.c:550
 msgid "(in use)"
 msgstr "(in gebruik)"
 
-#: ../src/plugins/formatdisk.c:421
-#, c-format
-msgid "%s on %s\t%s"
+#: ../src/plugins/formatdisk.c:424
+#, fuzzy, c-format
+msgid "%s on %s/\t%s"
 msgstr "%s op %s\t%s"
 
 #. non-root partitions
-#: ../src/plugins/formatdisk.c:516
+#: ../src/plugins/formatdisk.c:523
 msgid "Selecting other partitions"
 msgstr "Andere partities selecteren"
 
-#: ../src/plugins/formatdisk.c:523 ../src/plugins/partdisk.c:139
+#: ../src/plugins/formatdisk.c:530 ../src/plugins/partdisk.c:171
 msgid "Continue"
 msgstr "Verdergaan"
 
-#: ../src/plugins/formatdisk.c:527
+#: ../src/plugins/formatdisk.c:534
 msgid "Select other Linux partitions for /etc/fstab"
 msgstr "Selecteer andere Linux partities voor /etc/fstab"
 
-#: ../src/plugins/formatdisk.c:528
+#: ../src/plugins/formatdisk.c:535
 msgid ""
 "You may use your other partitions to distribute your Linux system across "
 "more than one partition. Currently, you have only mounted your / partition. "
@@ -272,75 +272,67 @@ msgstr ""
 "gekozen. Gebruik de BOVEN/ONDER pijltjestoetsen en PageUp/PageDown om door "
 "de volledige lijst met keuzes te scrollen."
 
-#: ../src/plugins/loadsource.c:123
+#: ../src/plugins/loadsource.c:109
 msgid "Selecting source media"
 msgstr "Bron media selecteren"
 
-#: ../src/plugins/loadsource.c:126
+#: ../src/plugins/loadsource.c:112
 msgid "Scanning"
 msgstr "Scannen"
 
-#: ../src/plugins/loadsource.c:126
+#: ../src/plugins/loadsource.c:112
 msgid "Scanning for a CD/DVD drive containing a Frugalware install disc..."
 msgstr ""
 "Scanner naar een CD/DVD drive die een Frugalware installatie disc bevat..."
 
-#: ../src/plugins/loadsource.c:136
+#: ../src/plugins/loadsource.c:122
 msgid "CD/DVD drive found"
 msgstr "CD/DVD drive gevonden"
 
-#: ../src/plugins/loadsource.c:136
+#: ../src/plugins/loadsource.c:122
 #, c-format
 msgid "A Frugalware install disc was found in device /dev/%s."
 msgstr "Eine Frugalware Installations Quelle wurde in /dev/%s gefunden."
 
-#: ../src/plugins/loadsource.c:156
-msgid "CD/DVD drive not found"
-msgstr "CD/DVD drive niet gevonden"
-
-#: ../src/plugins/loadsource.c:156
-#, fuzzy
-msgid ""
-"Sorry, no Frugalware install disc was found in any of your drives. Press "
-"ENTER to reboot."
-msgstr ""
-"Sorry, er werd geen Frugalware instalatie disc gevonden in je drives. Druk "
-"op ENTER om te herstarten."
-
-#: ../src/plugins/partdisk.c:77
+#: ../src/plugins/partdisk.c:108
 msgid "User friendly (curses based) version of fdisk"
 msgstr "Gebruiksvriendelijke (curses gebaseerde) versie van fdisk"
 
-#: ../src/plugins/partdisk.c:78
+#: ../src/plugins/partdisk.c:109
 msgid "The traditional partitioning program for Linux"
 msgstr "Het traditionele partitie programma for Linux"
 
-#: ../src/plugins/partdisk.c:81 ../src/plugins/partdisk.c:125
+#: ../src/plugins/partdisk.c:110
+#, fuzzy
+msgid "A partition manipulation program"
+msgstr "Selecteer partitie programma"
+
+#: ../src/plugins/partdisk.c:113 ../src/plugins/partdisk.c:157
 msgid "Creating partitions"
 msgstr "Partities creëren"
 
-#: ../src/plugins/partdisk.c:84
+#: ../src/plugins/partdisk.c:116
 msgid "Select partitioning program"
 msgstr "Selecteer partitie programma"
 
-#: ../src/plugins/partdisk.c:85
+#: ../src/plugins/partdisk.c:117
 #, fuzzy
 msgid "Select the program you want to use for partitioning:"
 msgstr "Selecteer welk programma je wil gebruiken om te partitioneren"
 
-#: ../src/plugins/partdisk.c:96
+#: ../src/plugins/partdisk.c:128
 msgid "Want to create RAID?"
 msgstr "Wil je een RAID creëren?"
 
-#: ../src/plugins/partdisk.c:97
+#: ../src/plugins/partdisk.c:129
 msgid "Do you want to create software raid partitions during partitioning?"
 msgstr "Wil je een software raid partities creëren tijdens het partitioneren?"
 
-#: ../src/plugins/partdisk.c:119
+#: ../src/plugins/partdisk.c:151
 msgid "Disk drive not found"
 msgstr "Disk drive niet gevonden"
 
-#: ../src/plugins/partdisk.c:119
+#: ../src/plugins/partdisk.c:151
 #, fuzzy
 msgid ""
 "Sorry, no hard disk drives were found in this computer. Press ENTER to "
@@ -348,15 +340,15 @@ msgid ""
 msgstr ""
 "Sorry, er werden geen disk drives gevonden. Druk op ENTER om te herstarten "
 
-#: ../src/plugins/partdisk.c:134
+#: ../src/plugins/partdisk.c:166
 msgid "Create RAID"
 msgstr "RAID creëren"
 
-#: ../src/plugins/partdisk.c:142
+#: ../src/plugins/partdisk.c:174
 msgid "Select a hard disk to partition"
 msgstr "Selecteer een harde schijf om te partitioneren"
 
-#: ../src/plugins/partdisk.c:143
+#: ../src/plugins/partdisk.c:175
 #, fuzzy
 msgid ""
 "Please select a hard disk to partition. The following ones are available:"
@@ -378,27 +370,24 @@ msgstr ""
 "je zal tevreden zal stellen. Gelieve de bronmedia van je drive te "
 "verwijderen en druk ENTER om te herstarten."
 
-#: ../src/plugins/select.c:263
+#: ../src/plugins/select.c:246
 msgid "Selecting categories"
 msgstr "Categories selecteren"
 
-#: ../src/plugins/select.c:265
-msgid "Please select which extra categories to install:"
+#: ../src/plugins/select.c:247
+#, fuzzy
+msgid "Please select which categories to install:"
 msgstr "Gelieve te selecteren welke extra categories je wil installeren:"
 
-#: ../src/plugins/select.c:266
-msgid "Please select which frugalware categories to install:"
-msgstr "Gelieve te selecteren welke Frugalware categories je wil installeren:"
-
-#: ../src/plugins/select.c:283
+#: ../src/plugins/select.c:264 ../src/plugins/select.c:356
 msgid "Selecting packages"
 msgstr "pakketten selecteren"
 
-#: ../src/plugins/select.c:296
+#: ../src/plugins/select.c:277
 msgid "Use expert menus?"
 msgstr "Expert menu's gebruiken?"
 
-#: ../src/plugins/select.c:297
+#: ../src/plugins/select.c:278
 #, fuzzy
 msgid ""
 "If you like, you may select your packages from expert menus. Where the "
@@ -418,23 +407,15 @@ msgstr ""
 "Kies 'nee' voor normale menu's die pakketgroepen selecteren, of kies 'ja' "
 "voor expert menu's om individuele paketten te kiezen."
 
-#: ../src/plugins/select.c:410
-msgid "Selecting frugalware packages"
-msgstr "Frugalware pakketten selecteren"
-
-#: ../src/plugins/select.c:413
-msgid "Selecting extra packages"
-msgstr "Extra pakketten selecteren"
-
-#: ../src/plugins/select.c:417
+#: ../src/plugins/select.c:359
 msgid "Searching for categories..."
 msgstr "Zoeken naar categories..."
 
-#: ../src/plugins/select.c:432
+#: ../src/plugins/select.c:366
 msgid "Searching for packages..."
 msgstr "Zoeken naar pakketten."
 
-#: ../src/plugins/select.c:464
+#: ../src/plugins/select.c:394
 #, fuzzy
 msgid "Searching for missing dependencies..."
 msgstr "Zoeken naar pakketten."
@@ -464,11 +445,11 @@ msgstr ""
 "kies dan NEE, dan kan je de installatie vervolledigen. Heb je de volgende "
 "disc in de drive gestopt?"
 
-#: ../src/plugins/postconf.c:73
+#: ../src/plugins/postconf.c:74
 msgid "No root password detected"
 msgstr "Geen root passwoord gedetecteerd"
 
-#: ../src/plugins/postconf.c:74
+#: ../src/plugins/postconf.c:75
 #, fuzzy
 msgid ""
 "There is currently no password set on the system administrator account "
@@ -483,11 +464,11 @@ msgstr ""
 "belangrijk wanneer je machine verbonden is met een internet lan. Wil je het "
 "root instellen?"
 
-#: ../src/plugins/postconf.c:110
+#: ../src/plugins/postconf.c:111
 msgid "No normal user account detected"
 msgstr "Geen normale gebruikersaccounts gedetecteerd"
 
-#: ../src/plugins/postconf.c:111
+#: ../src/plugins/postconf.c:112
 #, fuzzy
 msgid ""
 "There is currently no non-root user account configured. It is strongly "
@@ -498,15 +479,15 @@ msgstr ""
 "aangeraden om er een te creëren. Wil je nu een normale gebruikeraccount "
 "creëren?"
 
-#: ../src/plugins/postconf.c:138
+#: ../src/plugins/postconf.c:140
 msgid "Post-install configuration"
 msgstr "Post-Installatie configuratie"
 
-#: ../src/plugins/postconf.c:150
+#: ../src/plugins/postconf.c:152
 msgid "Configuring kernel modules"
 msgstr "Kernel modules configureren"
 
-#: ../src/plugins/postconf.c:151
+#: ../src/plugins/postconf.c:153
 msgid "Updating module dependencies..."
 msgstr "Module afhankelijkheden updaten..."
 
@@ -543,3 +524,24 @@ msgstr "De installatie beïndigen"
 #: ../src/util.c:181
 msgid "Are you sure you want to exit from the installer?"
 msgstr "Weet je zeker dat je de installer wil verlaten?"
+
+#~ msgid "CD/DVD drive not found"
+#~ msgstr "CD/DVD drive niet gevonden"
+
+#, fuzzy
+#~ msgid ""
+#~ "Sorry, no Frugalware install disc was found in any of your drives. Press "
+#~ "ENTER to reboot."
+#~ msgstr ""
+#~ "Sorry, er werd geen Frugalware instalatie disc gevonden in je drives. "
+#~ "Druk op ENTER om te herstarten."
+
+#~ msgid "Please select which frugalware categories to install:"
+#~ msgstr ""
+#~ "Gelieve te selecteren welke Frugalware categories je wil installeren:"
+
+#~ msgid "Selecting frugalware packages"
+#~ msgstr "Frugalware pakketten selecteren"
+
+#~ msgid "Selecting extra packages"
+#~ msgstr "Extra pakketten selecteren"

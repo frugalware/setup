@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: id\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-06-04 13:50+0100\n"
+"POT-Creation-Date: 2006-08-26 14:12+0200\n"
 "PO-Revision-Date: 2006-05-12 19:24+0700\n"
 "Last-Translator: Edo Hikmahtiar <firesand@gmail.com>\n"
 "Language-Team: Indonesia <en@li.org>\n"
@@ -19,21 +19,21 @@ msgstr ""
 
 #: ../src/plugins/configsource.c:57 ../src/plugins/configsource.c:89
 #: ../src/plugins/configsource.c:94 ../src/plugins/dolangsh.c:52
-#: ../src/plugins/formatdisk.c:230 ../src/plugins/formatdisk.c:373
+#: ../src/plugins/formatdisk.c:233 ../src/plugins/formatdisk.c:376
 #: ../src/plugins/layout.c:115 ../src/plugins/loadsource.c:76
-#: ../src/plugins/select.c:350 ../src/util.c:306
+#: ../src/plugins/select.c:321 ../src/util.c:306
 msgid "Could not open output file for writing"
 msgstr "Tidak bisa membuka berkas hasil untuk ditulis"
 
-#: ../src/plugins/configsource.c:127
+#: ../src/plugins/configsource.c:124
 msgid "Selecting a mirror"
 msgstr "Memilih sebuah jalur mirror "
 
-#: ../src/plugins/configsource.c:133
+#: ../src/plugins/configsource.c:130
 msgid "Please select a mirror"
 msgstr "Pilihlah sebuah jalur mirror"
 
-#: ../src/plugins/configsource.c:133
+#: ../src/plugins/configsource.c:130
 msgid ""
 "You may now specify the mirror closest to you in order to download the "
 "packages faster. In most cases the default value will be fine."
@@ -41,48 +41,48 @@ msgstr ""
 "Sekarang tentukan mirror terdekat untuk mengunduh paket secara cepat.Secara "
 "umum pilihan awal dapat digunakan."
 
-#: ../src/plugins/configsource.c:158 ../src/plugins/hotplug.c:53
-#: ../src/plugins/select.c:417 ../src/plugins/select.c:432
-#: ../src/plugins/select.c:464
+#: ../src/plugins/configsource.c:153 ../src/plugins/hotplug.c:53
+#: ../src/plugins/select.c:359 ../src/plugins/select.c:366
+#: ../src/plugins/select.c:394
 msgid "Please wait"
 msgstr "Silahkan tunggu"
 
-#: ../src/plugins/configsource.c:158
+#: ../src/plugins/configsource.c:153
 msgid "Configuring the network interface..."
 msgstr "Mengatur tampilan jaringan..."
 
-#: ../src/plugins/formatdisk.c:141
+#: ../src/plugins/formatdisk.c:144
 msgid "Setting up swap space"
 msgstr "Menyusun tempat swap"
 
-#: ../src/plugins/formatdisk.c:144
+#: ../src/plugins/formatdisk.c:147
 msgid "Setting up swap partitions"
 msgstr "Menyusun partisi swap"
 
-#: ../src/plugins/formatdisk.c:145
+#: ../src/plugins/formatdisk.c:148
 #, fuzzy
 msgid "Please select which swap partitions you want Frugalware to use:"
 msgstr "Pilihlah partisi swap mana yang akan digunakan oleh Frugalware:"
 
-#: ../src/plugins/formatdisk.c:156 ../src/plugins/formatdisk.c:178
+#: ../src/plugins/formatdisk.c:159 ../src/plugins/formatdisk.c:181
 msgid "Quick format with no bad block checking"
 msgstr "Format cepat tanpa mengecheck bagian yang rusak"
 
-#: ../src/plugins/formatdisk.c:157 ../src/plugins/formatdisk.c:179
+#: ../src/plugins/formatdisk.c:160 ../src/plugins/formatdisk.c:182
 msgid "Slow format that checks for bad blocks"
 msgstr "Format pelan yang akan memeriksa bagian yang rusak"
 
-#: ../src/plugins/formatdisk.c:160 ../src/plugins/formatdisk.c:183
-#: ../src/plugins/formatdisk.c:207
+#: ../src/plugins/formatdisk.c:163 ../src/plugins/formatdisk.c:186
+#: ../src/plugins/formatdisk.c:210
 msgid "Formatting partitions"
 msgstr "Memformat partisi"
 
-#: ../src/plugins/formatdisk.c:163 ../src/plugins/formatdisk.c:186
+#: ../src/plugins/formatdisk.c:166 ../src/plugins/formatdisk.c:189
 #, c-format
 msgid "Format %s"
 msgstr "Format %s"
 
-#: ../src/plugins/formatdisk.c:164 ../src/plugins/formatdisk.c:187
+#: ../src/plugins/formatdisk.c:167 ../src/plugins/formatdisk.c:190
 #, c-format
 msgid ""
 "If %s has not been formatted, you should format it.\n"
@@ -93,62 +93,62 @@ msgstr ""
 "CATATAN: Hal ini akan menghapus semua data pada %s. Apakah anda akan "
 "memformat partisi ini?"
 
-#: ../src/plugins/formatdisk.c:180
+#: ../src/plugins/formatdisk.c:183
 msgid "Do not format, just mount the partition"
 msgstr "Jangan format, hanya mount partisinya saja"
 
-#: ../src/plugins/formatdisk.c:201
+#: ../src/plugins/formatdisk.c:204
 msgid "Standard Linux ext2fs filesystem"
 msgstr "Sistem berkas Linux ext2fs standar"
 
-#: ../src/plugins/formatdisk.c:202
+#: ../src/plugins/formatdisk.c:205
 #, fuzzy
 msgid "Journalising version of the ext2fs filesystem"
 msgstr "Menjurnal versi sistem berkas ext2fs"
 
-#: ../src/plugins/formatdisk.c:203
+#: ../src/plugins/formatdisk.c:206
 #, fuzzy
 msgid "Hans Reiser's journalising filesystem"
 msgstr "Sistem berkas menjurnal Hans Reiser"
 
-#: ../src/plugins/formatdisk.c:204
+#: ../src/plugins/formatdisk.c:207
 #, fuzzy
 msgid "SGI's journalising filesystem"
 msgstr "Sistem berkas menjurnal SGI"
 
-#: ../src/plugins/formatdisk.c:211
+#: ../src/plugins/formatdisk.c:214
 #, c-format
 msgid "Selecting filesystem for %s"
 msgstr "Memilih sistem berkas untuk %s"
 
-#: ../src/plugins/formatdisk.c:212
+#: ../src/plugins/formatdisk.c:215
 #, c-format
 msgid "Please select the type of filesystem to use for %s."
 msgstr "Pilihlah tipe sistem berkas untuk digunakan pada %s"
 
-#: ../src/plugins/formatdisk.c:252 ../src/plugins/formatdisk.c:259
+#: ../src/plugins/formatdisk.c:255 ../src/plugins/formatdisk.c:262
 msgid "Formatting swap partition"
 msgstr "Memformat partisi swap"
 
-#: ../src/plugins/formatdisk.c:253
+#: ../src/plugins/formatdisk.c:256
 #, c-format
 msgid "Formatting %s as a swap partition"
 msgstr "Memformat %s sebagai partisi swap"
 
-#: ../src/plugins/formatdisk.c:260
+#: ../src/plugins/formatdisk.c:263
 #, c-format
 msgid "Formatting %s as a swap partition and checking for bad blocks"
 msgstr "Memformat %s sebagai partisi swap dan memeriksa bagian yang rusak"
 
-#: ../src/plugins/formatdisk.c:281
+#: ../src/plugins/formatdisk.c:284
 msgid "Setting up the root partition"
 msgstr "Megatur partisi root"
 
-#: ../src/plugins/formatdisk.c:283
+#: ../src/plugins/formatdisk.c:286
 msgid "Select the Linux installation partition"
 msgstr "Pilih partisi Linux untuk pemasangan"
 
-#: ../src/plugins/formatdisk.c:284
+#: ../src/plugins/formatdisk.c:287
 msgid ""
 "Please select a partition from the following list to use for your root (/) "
 "partition. The following ones are available:"
@@ -156,48 +156,48 @@ msgstr ""
 "Pilihlah sebuah partisi dari daftar berikut ini sebagai partisi root (/) "
 "Yaitu sebagai berikut:"
 
-#: ../src/plugins/formatdisk.c:296
+#: ../src/plugins/formatdisk.c:299
 msgid "Formatting"
 msgstr "Memformat"
 
-#: ../src/plugins/formatdisk.c:297
+#: ../src/plugins/formatdisk.c:300
 #, c-format
 msgid "Creating %s filesystem on %s and checking for bad blocks"
 msgstr "Membuat %s sistem berkas pada %s dan memeriksa bagian rusak"
 
-#: ../src/plugins/formatdisk.c:298
+#: ../src/plugins/formatdisk.c:301
 #, c-format
 msgid "Creating %s filesystem on %s"
 msgstr "Membuat %s sistem berkas pada %s"
 
-#: ../src/plugins/formatdisk.c:393
+#: ../src/plugins/formatdisk.c:396
 #, c-format
 msgid "Select mount point for %s"
 msgstr "Pilih titik mount untuk %s"
 
-#: ../src/plugins/formatdisk.c:413 ../src/plugins/formatdisk.c:543
+#: ../src/plugins/formatdisk.c:416 ../src/plugins/formatdisk.c:550
 msgid "(in use)"
 msgstr "(terpakai)"
 
-#: ../src/plugins/formatdisk.c:421
-#, c-format
-msgid "%s on %s\t%s"
+#: ../src/plugins/formatdisk.c:424
+#, fuzzy, c-format
+msgid "%s on %s/\t%s"
 msgstr "%s pada %s\t%s"
 
 #. non-root partitions
-#: ../src/plugins/formatdisk.c:516
+#: ../src/plugins/formatdisk.c:523
 msgid "Selecting other partitions"
 msgstr "Memilih partisi lain"
 
-#: ../src/plugins/formatdisk.c:523 ../src/plugins/partdisk.c:139
+#: ../src/plugins/formatdisk.c:530 ../src/plugins/partdisk.c:171
 msgid "Continue"
 msgstr "Lanjutkan"
 
-#: ../src/plugins/formatdisk.c:527
+#: ../src/plugins/formatdisk.c:534
 msgid "Select other Linux partitions for /etc/fstab"
 msgstr "Pilih partisi Linux lainnya untuk /etc/fstab"
 
-#: ../src/plugins/formatdisk.c:528
+#: ../src/plugins/formatdisk.c:535
 msgid ""
 "You may use your other partitions to distribute your Linux system across "
 "more than one partition. Currently, you have only mounted your / partition. "
@@ -267,74 +267,66 @@ msgid ""
 "of choices."
 msgstr ""
 
-#: ../src/plugins/loadsource.c:123
+#: ../src/plugins/loadsource.c:109
 msgid "Selecting source media"
 msgstr "Memilih media sumber"
 
-#: ../src/plugins/loadsource.c:126
+#: ../src/plugins/loadsource.c:112
 msgid "Scanning"
 msgstr "Mencari"
 
-#: ../src/plugins/loadsource.c:126
+#: ../src/plugins/loadsource.c:112
 msgid "Scanning for a CD/DVD drive containing a Frugalware install disc..."
 msgstr "Mencari penggerak CD/DVD yang berisi keping cakram Frugalware..."
 
-#: ../src/plugins/loadsource.c:136
+#: ../src/plugins/loadsource.c:122
 msgid "CD/DVD drive found"
 msgstr "Penggerak CD/DVD ditemukan"
 
-#: ../src/plugins/loadsource.c:136
+#: ../src/plugins/loadsource.c:122
 #, c-format
 msgid "A Frugalware install disc was found in device /dev/%s."
 msgstr "Keping cakram pemasangan Frugalware ditemukan pada device /dev/%s."
 
-#: ../src/plugins/loadsource.c:156
-msgid "CD/DVD drive not found"
-msgstr "Penggerak CD/DVD tidak ditemukan"
-
-#: ../src/plugins/loadsource.c:156
-#, fuzzy
-msgid ""
-"Sorry, no Frugalware install disc was found in any of your drives. Press "
-"ENTER to reboot."
-msgstr ""
-"Maaf, tidak ada keping cakram Frugalware pada penggerak. Tekan ENTER untuk "
-"reboot."
-
-#: ../src/plugins/partdisk.c:77
+#: ../src/plugins/partdisk.c:108
 msgid "User friendly (curses based) version of fdisk"
 msgstr "Versi mudah fdisk (berdasarkan curses)"
 
-#: ../src/plugins/partdisk.c:78
+#: ../src/plugins/partdisk.c:109
 msgid "The traditional partitioning program for Linux"
 msgstr "Program partisi Linux tradisional"
 
-#: ../src/plugins/partdisk.c:81 ../src/plugins/partdisk.c:125
+#: ../src/plugins/partdisk.c:110
+#, fuzzy
+msgid "A partition manipulation program"
+msgstr "Pilih program partisi"
+
+#: ../src/plugins/partdisk.c:113 ../src/plugins/partdisk.c:157
 msgid "Creating partitions"
 msgstr "Membuat partisi-partisi"
 
-#: ../src/plugins/partdisk.c:84
+#: ../src/plugins/partdisk.c:116
 msgid "Select partitioning program"
 msgstr "Pilih program partisi"
 
-#: ../src/plugins/partdisk.c:85
+#: ../src/plugins/partdisk.c:117
 #, fuzzy
 msgid "Select the program you want to use for partitioning:"
 msgstr "Pilih program mana yang ingin digunakan untuk mempartisi:"
 
-#: ../src/plugins/partdisk.c:96
+#: ../src/plugins/partdisk.c:128
 msgid "Want to create RAID?"
 msgstr "Ingin membuat sebuah RAID?"
 
-#: ../src/plugins/partdisk.c:97
+#: ../src/plugins/partdisk.c:129
 msgid "Do you want to create software raid partitions during partitioning?"
 msgstr "Apakah anda ingin membuat perangkat lunak raid pada proses partisi?"
 
-#: ../src/plugins/partdisk.c:119
+#: ../src/plugins/partdisk.c:151
 msgid "Disk drive not found"
 msgstr "Penggerak cakram tidak ditemukan"
 
-#: ../src/plugins/partdisk.c:119
+#: ../src/plugins/partdisk.c:151
 #, fuzzy
 msgid ""
 "Sorry, no hard disk drives were found in this computer. Press ENTER to "
@@ -342,15 +334,15 @@ msgid ""
 msgstr ""
 "Maaf, tidak ditemukan penggerak cakram keras. Tekan ENTER untuk reboot."
 
-#: ../src/plugins/partdisk.c:134
+#: ../src/plugins/partdisk.c:166
 msgid "Create RAID"
 msgstr "Membuat RAID"
 
-#: ../src/plugins/partdisk.c:142
+#: ../src/plugins/partdisk.c:174
 msgid "Select a hard disk to partition"
 msgstr "Pilih sebuah partisi cakram keras"
 
-#: ../src/plugins/partdisk.c:143
+#: ../src/plugins/partdisk.c:175
 #, fuzzy
 msgid ""
 "Please select a hard disk to partition. The following ones are available:"
@@ -371,27 +363,24 @@ msgstr ""
 "anda betah. Silahkan keluarkan media dari penggerak anda dan tekan ENTER "
 "untuk reboot."
 
-#: ../src/plugins/select.c:263
+#: ../src/plugins/select.c:246
 msgid "Selecting categories"
 msgstr "Memilih kategori"
 
-#: ../src/plugins/select.c:265
-msgid "Please select which extra categories to install:"
+#: ../src/plugins/select.c:247
+#, fuzzy
+msgid "Please select which categories to install:"
 msgstr "Pilihlah kategori tambahan mana yang akan dipasang:"
 
-#: ../src/plugins/select.c:266
-msgid "Please select which frugalware categories to install:"
-msgstr "Pilihlah kategori frugalware mana yang akan dipasang:"
-
-#: ../src/plugins/select.c:283
+#: ../src/plugins/select.c:264 ../src/plugins/select.c:356
 msgid "Selecting packages"
 msgstr "Memilih paket-paket"
 
-#: ../src/plugins/select.c:296
+#: ../src/plugins/select.c:277
 msgid "Use expert menus?"
 msgstr "Menggunakan mode daftar terampil?"
 
-#: ../src/plugins/select.c:297
+#: ../src/plugins/select.c:278
 #, fuzzy
 msgid ""
 "If you like, you may select your packages from expert menus. Where the "
@@ -412,23 +401,15 @@ msgstr ""
 "memilih 'kelompok paket-paket',atau pilih 'ya' untuk mode terampil yang akan "
 "memilih satu persatu paket."
 
-#: ../src/plugins/select.c:410
-msgid "Selecting frugalware packages"
-msgstr "Memilih paket-paket Frugalware"
-
-#: ../src/plugins/select.c:413
-msgid "Selecting extra packages"
-msgstr "Memilih paket-paket tambahan"
-
-#: ../src/plugins/select.c:417
+#: ../src/plugins/select.c:359
 msgid "Searching for categories..."
 msgstr "Mencari kategori..."
 
-#: ../src/plugins/select.c:432
+#: ../src/plugins/select.c:366
 msgid "Searching for packages..."
 msgstr "Mencari paket-paket..."
 
-#: ../src/plugins/select.c:464
+#: ../src/plugins/select.c:394
 #, fuzzy
 msgid "Searching for missing dependencies..."
 msgstr "Mencari paket-paket..."
@@ -456,11 +437,11 @@ msgstr ""
 "melanjutkan memasang paket-paket. Jika tidak ada keping cakram lain, pilih "
 "TIDAK, dan anda dapat selesai. Sudahkan anda memasukkannya?"
 
-#: ../src/plugins/postconf.c:73
+#: ../src/plugins/postconf.c:74
 msgid "No root password detected"
 msgstr "Tidak terdeteksi katakunci untuk root"
 
-#: ../src/plugins/postconf.c:74
+#: ../src/plugins/postconf.c:75
 #, fuzzy
 msgid ""
 "There is currently no password set on the system administrator account "
@@ -474,11 +455,11 @@ msgstr ""
 "kali reboot. Hal ini sangat penting bagi yang terhubung pada koneksi "
 "internet lan. Apakah anda akan membuat sebuah katakunci untuk root?"
 
-#: ../src/plugins/postconf.c:110
+#: ../src/plugins/postconf.c:111
 msgid "No normal user account detected"
 msgstr "Tidak terdeteksi catatan pengguna biasa"
 
-#: ../src/plugins/postconf.c:111
+#: ../src/plugins/postconf.c:112
 msgid ""
 "There is currently no non-root user account configured. It is strongly "
 "recommended to create one. Would you like to create a normal user account "
@@ -487,15 +468,15 @@ msgstr ""
 "Saat ini tidak ada catatan pengguna selain root. Sangat dianjurkan untuk "
 "membuatnya. Apakah anda akan membuat catatan pengguna biasa sekarang?"
 
-#: ../src/plugins/postconf.c:138
+#: ../src/plugins/postconf.c:140
 msgid "Post-install configuration"
 msgstr "Pengaturan tahap terakhir pemasangan"
 
-#: ../src/plugins/postconf.c:150
+#: ../src/plugins/postconf.c:152
 msgid "Configuring kernel modules"
 msgstr "Mengatur modul-modul kernel"
 
-#: ../src/plugins/postconf.c:151
+#: ../src/plugins/postconf.c:153
 msgid "Updating module dependencies..."
 msgstr "Memperbaharui ketergantungan modul-modul..."
 
@@ -532,3 +513,23 @@ msgstr "Keluar dari proses pemasangan"
 #: ../src/util.c:181
 msgid "Are you sure you want to exit from the installer?"
 msgstr "Apakah anda yakin untuk keluar dari proses pemasangan?"
+
+#~ msgid "CD/DVD drive not found"
+#~ msgstr "Penggerak CD/DVD tidak ditemukan"
+
+#, fuzzy
+#~ msgid ""
+#~ "Sorry, no Frugalware install disc was found in any of your drives. Press "
+#~ "ENTER to reboot."
+#~ msgstr ""
+#~ "Maaf, tidak ada keping cakram Frugalware pada penggerak. Tekan ENTER "
+#~ "untuk reboot."
+
+#~ msgid "Please select which frugalware categories to install:"
+#~ msgstr "Pilihlah kategori frugalware mana yang akan dipasang:"
+
+#~ msgid "Selecting frugalware packages"
+#~ msgstr "Memilih paket-paket Frugalware"
+
+#~ msgid "Selecting extra packages"
+#~ msgstr "Memilih paket-paket tambahan"
