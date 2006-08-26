@@ -52,7 +52,7 @@ packages = bash busybox dialog e2fsprogs reiserfsprogs dhclient frugalware \
 	   glibc kbd kernel module-init-tools ncurses pacman eject \
 	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted \
 	   bzip2 libarchive zlib frugalwareutils wireless_tools ipw2200-firmware \
-	   dropbear bastet readline acx100
+	   dropbear bastet readline acx100 shadow
 	   
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
@@ -82,7 +82,8 @@ sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
 	  dropbear-$(DROPBEARVER)-$(CARCH).fpm \
 	  bastet-$(BASTETVER)-$(CARCH).fpm \
 	  readline-$(READLINEVER)-$(CARCH).fpm \
-	  acx100-$(ACX100VER)-$(CARCH).fpm
+	  acx100-$(ACX100VER)-$(CARCH).fpm \
+	  shadow-$(SHADOWVER)-$(CARCH).fpm
 
 all: initrd
 
@@ -422,3 +423,9 @@ readline:
 	mkdir -p readline/usr/lib/
 	cd $(BDIR) && tar xf ../$(CDIR)/readline-$(READLINEVER)-$(CARCH).fpm; \
 	cp -a usr/lib/libreadline.so* ../readline/usr/lib/
+
+shadow:
+	$(CLEANUP)
+	mkdir -p shadow/etc
+	cd $(BDIR) && tar xf ../$(CDIR)/shadow-$(SHADOWVER)-$(CARCH).fpm; \
+	cp -a etc/{passwd,group} ../shadow/etc

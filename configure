@@ -30,7 +30,7 @@ packages=('bash' 'kernel' 'busybox' 'dhclient' 'dialog' 'e2fsprogs' 'eject' \
 	  'util-linux' 'mdadm' 'xfsprogs' 'ppp' 'rp-pppoe' 'glib2' \
 	  'bzip2' 'libarchive' 'zlib' 'frugalwareutils' 'wireless_tools' \
 	  'ipw2200-firmware' 'dropbear' 'bastet' 'readline' \
-	  'acx100' ${libs[@]})
+	  'acx100' 'shadow' ${libs[@]})
 
 _configure_mirror="http://ftp.frugalware.org/pub/frugalware/frugalware-current"
 arch=`uname -m`
