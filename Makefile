@@ -162,7 +162,7 @@ upload:
 
 config.mak:
 	pacman -Sy
-	sh configure
+	python configure.py
 
 check: dl.lst
 	cd $(CDIR) && sh ../bin/download ../dl.lst
