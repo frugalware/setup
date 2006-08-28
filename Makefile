@@ -42,7 +42,7 @@ MARCH ?= $(CARCH)
 KARCH ?= $(CARCH)
 export CFLAGS = -march=$(MARCH) -O2 -pipe
 
-CDIR = cache
+CDIR = /var/cache/pacman/pkg/
 CONFDIR = config
 BDIR = build
 MDIR = merge
@@ -94,11 +94,11 @@ clean:
 	echo "error: you cannot perform this operation unless you are root."; exit 1; \
 	fi
 	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img.gz
-	rm -rf $(packages) vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(CDIR)/*
+	rm -rf $(packages) vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	$(MAKE) -C src clean
 
 distclean: clean
-	rm -rf dl.lst config.mak
+	rm -rf config.mak
 
 ccache:
 	install -d -m 2775 /var/cache/ccache/setup
@@ -164,8 +164,8 @@ config.mak:
 	pacman -Sy
 	python configure.py
 
-check: dl.lst
-	cd $(CDIR) && sh ../bin/download ../dl.lst
+check:
+	pacman -Sw `sed 's/VER =.*//' config.mak|tr '[A-Z]' '[a-z]'` --noconfirm
 	@for i in $(sources); do \
 		ls $(CDIR)/$$i >/dev/null || exit 1; \
 	done

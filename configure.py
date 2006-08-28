@@ -41,7 +41,7 @@ for k, v in remotevers.items():
 	else:
 		sys.stdout.write("done.\n")
 
-localvers = pkgGetVers(local, packages, localvers)
+remotevers = pkgGetVers(remote, packages, remotevers)
 socket = open("config.mak", "w")
 for k, v in localvers.items():
 	print "checking for %s... %s" % (k, v)
