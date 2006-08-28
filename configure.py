@@ -5,14 +5,24 @@ import alpm, os, sys
 # since we're not in chroot, we need up to date libs. but don't be too
 # agressive, we add libs to here just in case there was a bugreport about it
 # parted: #807
-libs=('parted' 'pacman')
-packages=('bash' 'kernel' 'busybox' 'dhclient' 'dialog' 'e2fsprogs' 'eject' \
-	  'frugalware' 'glibc' 'kbd' 'module-init-tools' 'ncurses' \
-	  'netkit-base' 'reiserfsprogs' 'udev' \
-	  'util-linux' 'mdadm' 'xfsprogs' 'ppp' 'rp-pppoe' 'glib2' \
-	  'bzip2' 'libarchive' 'zlib' 'frugalwareutils' 'wireless_tools' \
-	  'ipw2200-firmware' 'dropbear' 'bastet' 'readline' \
-	  'acx100' ${libs[@]})
+libs = ['parted', 'pacman']
+packages = ['bash', 'kernel', 'busybox', 'dhclient', 'dialog', 'e2fsprogs',
+		'eject', 'frugalware', 'glibc', 'kbd', 'module-init-tools',
+		'ncurses', 'netkit-base', 'reiserfsprogs', 'udev',
+		'util-linux', 'mdadm', 'xfsprogs', 'ppp', 'rp-pppoe', 'glib2',
+		'bzip2', 'libarchive', 'zlib', 'frugalwareutils',
+		'wireless_tools', 'ipw2200-firmware', 'dropbear', 'bastet',
+		'readline', 'acx100', 'shadow']
+
+def pkgGetVers(db, names, ret={}):
+	lp = alpm.db_getpkgcache(db)
+	while lp:
+		pkg = alpm.void_to_PM_PKG(alpm.list_getdata(lp))
+		pkgname = alpm.void_to_char(alpm.pkg_getinfo(pkg, alpm.PKG_NAME))
+		if pkgname in names and pkgname not in ret:
+			ret[pkgname] = pkgname = alpm.void_to_char(alpm.pkg_getinfo(pkg, alpm.PKG_VERSION))
+		lp = alpm.list_next(lp)
+	return ret
 
 try:
 	os.unlink('config.mak')
