@@ -427,5 +427,5 @@ readline:
 shadow:
 	$(CLEANUP)
 	mkdir -p shadow/etc
-	cd $(BDIR) && tar xf ../$(CDIR)/shadow-$(SHADOWVER)-$(CARCH).fpm; \
+	cd $(BDIR) && tar xf $(CDIR)/shadow-$(SHADOWVER)-$(CARCH).fpm; \
 	cp -a etc/{passwd,group} ../shadow/etc
