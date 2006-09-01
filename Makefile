@@ -228,7 +228,7 @@ glibc:
 	$(CLEANUP)
 	mkdir -p glibc/{lib,usr/lib/locale}
 	cd $(BDIR) && tar xf $(CDIR)/glibc-$(GLIBCVER)-$(CARCH).fpm
-	cp -a $(BDIR)/lib/{ld*,libc*,libm*,libdl*,libnss*,libresolv*,libutil*,libnsl*} glibc/lib/
+	cp -a $(BDIR)/lib/{ld*,libc*,libm*,libdl*,libnss*,libresolv*,libutil*,libnsl*,librt*,libpthread*} glibc/lib/
 	
 	# generate the necessary locales
 	cd $(BDIR) && rm -rf usr/ && mkdir -p usr/lib/locale/
