@@ -1,0 +1,490 @@
+# Piotr Maliñski <admin@rk.edu.pl>, 2006.
+#
+
+
+msgid ""
+msgstr ""
+"Project-Id-Version: pl\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-08-09 00:20+0200\n"
+"PO-Revision-Date: 2006-04-08 12:19+0900\n"
+"Last-Translator: Piotr Maliñski <admin@rk.edu.pl>\n"
+"Language-Team: Polish <translation-team-pl@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../src/plugins/configsource.c:57 ../src/plugins/configsource.c:89
+#: ../src/plugins/configsource.c:94 ../src/plugins/dolangsh.c:52
+#: ../src/plugins/formatdisk.c:233 ../src/plugins/formatdisk.c:376
+#: ../src/plugins/layout.c:115 ../src/plugins/loadsource.c:76
+#: ../src/plugins/select.c:321 ../src/util.c:306
+msgid "Could not open output file for writing"
+msgstr "Nie mogê otworzyæ pliku do zapisu"
+
+#: ../src/plugins/configsource.c:124
+msgid "Selecting a mirror"
+msgstr "Wybór serwera lustrzanego"
+
+#: ../src/plugins/configsource.c:130
+msgid "Please select a mirror"
+msgstr "Wybierz serwer"
+
+#: ../src/plugins/configsource.c:130
+msgid ""
+"You may now specify the mirror closest to you in order to download the "
+"packages faster. In most cases the default value will be fine."
+msgstr ""
+"Mo¿esz wybraæ najbli¿szy serwer w celu "
+"szybszego pobrania pakietów."
+
+#: ../src/plugins/configsource.c:153 ../src/plugins/hotplug.c:53
+#: ../src/plugins/select.c:359 ../src/plugins/select.c:366
+#: ../src/plugins/select.c:394
+msgid "Please wait"
+msgstr "Proszê czekaæ"
+
+#: ../src/plugins/configsource.c:153
+msgid "Configuring the network interface..."
+msgstr "Konfigurujê interfejsy sieciowe..."
+
+#: ../src/plugins/formatdisk.c:144
+msgid "Setting up swap space"
+msgstr "Ustawiam SWAP"
+
+#: ../src/plugins/formatdisk.c:147
+msgid "Setting up swap partitions"
+msgstr "Ustawiam partycje SWAP"
+
+#: ../src/plugins/formatdisk.c:148
+msgid "Please select which swap partitions you want Frugalware to use:"
+msgstr "Wybierz partycje swap z których Frugalware ma korzystaæ:"
+
+#: ../src/plugins/formatdisk.c:159 ../src/plugins/formatdisk.c:181
+msgid "Quick format with no bad block checking"
+msgstr "Szybkie formatowanie bez sprawdzania uszkodzonych bloków"
+
+#: ../src/plugins/formatdisk.c:160 ../src/plugins/formatdisk.c:182
+msgid "Slow format that checks for bad blocks"
+msgstr "Powolne formatowanie sprawdzaj±ce uszkodzone bloki"
+
+#: ../src/plugins/formatdisk.c:163 ../src/plugins/formatdisk.c:186
+#: ../src/plugins/formatdisk.c:210
+msgid "Formatting partitions"
+msgstr "Formatujê partycje"
+
+#: ../src/plugins/formatdisk.c:166 ../src/plugins/formatdisk.c:189
+#, c-format
+msgid "Format %s"
+msgstr "Formatuj %s"
+
+#: ../src/plugins/formatdisk.c:167 ../src/plugins/formatdisk.c:190
+#, c-format
+msgid ""
+"If %s has not been formatted, you should format it.\n"
+"NOTE: This will erase all data on %s. Would you like to format this "
+"partition?"
+msgstr ""
+"Je¿eli %s nie zosta³o sformatowane to powiniene¶ zrobiæ to teraz.\n"
+"NOTE: Formatowanie skasuje wszystkie dane z %s. \nSformatowaæ  "
+"t± partycjê?"
+
+#: ../src/plugins/formatdisk.c:183
+msgid "Do not format, just mount the partition"
+msgstr "NIE formatuj, tylko zamontuj"
+
+#: ../src/plugins/formatdisk.c:204
+msgid "Standard Linux ext2fs filesystem"
+msgstr "System plików EXT2"
+
+#: ../src/plugins/formatdisk.c:205
+msgid "Journalising version of the ext2fs filesystem"
+msgstr "System plików EXT3"
+
+#: ../src/plugins/formatdisk.c:206
+msgid "Hans Reiser's journalising filesystem"
+msgstr "ReiserFS"
+
+#: ../src/plugins/formatdisk.c:207
+msgid "SGI's journalising filesystem"
+msgstr "System plików XFS"
+
+#: ../src/plugins/formatdisk.c:214
+#, c-format
+msgid "Selecting filesystem for %s"
+msgstr "Wybór systemu plików dla %s"
+
+#: ../src/plugins/formatdisk.c:215
+#, c-format
+msgid "Please select the type of filesystem to use for %s."
+msgstr "Proszê wybraæ system plików dla %s."
+
+#: ../src/plugins/formatdisk.c:255 ../src/plugins/formatdisk.c:262
+msgid "Formatting swap partition"
+msgstr "Formatujê partycjê SWAP"
+
+#: ../src/plugins/formatdisk.c:256
+#, c-format
+msgid "Formatting %s as a swap partition"
+msgstr "Formatujê %s jako partycjê swap"
+
+#: ../src/plugins/formatdisk.c:263
+#, c-format
+msgid "Formatting %s as a swap partition and checking for bad blocks"
+msgstr "Formatujê %s jako partycjê swap i sprawdzam na obecno¶æ uszkodzonych bloków"
+
+#: ../src/plugins/formatdisk.c:284
+msgid "Setting up the root partition"
+msgstr "Ustawienia g³ównej partycji"
+
+#: ../src/plugins/formatdisk.c:286
+msgid "Select the Linux installation partition"
+msgstr "Wybierz g³ówn± partycjê systemu"
+
+#: ../src/plugins/formatdisk.c:287
+msgid ""
+"Please select a partition from the following list to use for your root (/) "
+"partition. The following ones are available:"
+msgstr ""
+"Proszê wybraæ partycjê g³ówn± (/) dla Frugalware. "
+"Dostêpne s±:"
+
+#: ../src/plugins/formatdisk.c:299
+msgid "Formatting"
+msgstr "Formatujê"
+
+#: ../src/plugins/formatdisk.c:300
+#, c-format
+msgid "Creating %s filesystem on %s and checking for bad blocks"
+msgstr "Tworzê system plików %s na %s i sprawdzam na obecno¶æ uszkodzonych bloków"
+
+#: ../src/plugins/formatdisk.c:301
+#, c-format
+msgid "Creating %s filesystem on %s"
+msgstr "Tworzê system plików %s na %s"
+
+#: ../src/plugins/formatdisk.c:396
+#, c-format
+msgid "Select mount point for %s"
+msgstr "Wybierz punkt montowania dla %s"
+
+#: ../src/plugins/formatdisk.c:416 ../src/plugins/formatdisk.c:550
+msgid "(in use)"
+msgstr "(w u¿yciu)"
+
+#: ../src/plugins/formatdisk.c:424
+#, c-format
+msgid "%s on %s/\t%s"
+msgstr "%s na %s/\t%s"
+
+#. non-root partitions
+#: ../src/plugins/formatdisk.c:523
+msgid "Selecting other partitions"
+msgstr "Wybieram inne partycje"
+
+#: ../src/plugins/formatdisk.c:530 ../src/plugins/partdisk.c:171
+msgid "Continue"
+msgstr "Kontynuuj"
+
+#: ../src/plugins/formatdisk.c:534
+msgid "Select other Linux partitions for /etc/fstab"
+msgstr "Wybierz inne partycje dla /etc/fstab"
+
+#: ../src/plugins/formatdisk.c:535
+msgid ""
+"You may use your other partitions to distribute your Linux system across "
+"more than one partition. Currently, you have only mounted your / partition. "
+"You might want to mount directories such as /boot, /home or /usr/local on "
+"separate partitions. You should not try to mount /usr, /etc, /sbin, or /bin "
+"on their own partitions since they contain utilities needed to bring the "
+"system up and mount partitions. Also, do not reuse a partition that you've "
+"already entered before. Please select one of the partitions listed below, or "
+"if you're done, hit Continue."
+msgstr ""
+"Mo¿esz skonfigurowaæ inne partycje i ich punkty montowania. Obecnie "
+"zamontowana jest tylko partycja g³ówna. Mo¿esz zamontowaæ inne partycje np. "
+"jako /boot czy /home. Nie powiniene¶ montowaæ partycji pod /usr /etc /sbin czy /bin. "
+"Nie powiniene¶ tak¿e montowaæ ju¿ wykorzystanych partycji. Gdy skoñczysz kliknij Kontynuuj."
+
+#: ../src/plugins/greet.c:53
+#, c-format
+msgid "Welcome to %s"
+msgstr "Witaj w %s"
+
+#: ../src/plugins/greet.c:55
+msgid "Welcome"
+msgstr "Witaj"
+
+#: ../src/plugins/greet.c:58
+msgid ""
+"Welcome among the users of Frugalware!\n"
+"\n"
+"The aim of creating Frugalware was to help you to do your work faster and "
+"simpler. We hope that you will like our product.\n"
+"\n"
+"The Frugalware Developer Team"
+msgstr ""
+"Witaj po¶ród u¿ytkowników Frugalware!\n"
+"\n"
+"Celem Frugalware jest u³atwienie twojej pracy. "
+"Mamy nadziejê ¿e polubisz nasz produkt.\n"
+"\n"
+"Zespó³ Frugalware!"
+
+#: ../src/plugins/hotplug.c:50
+msgid "Detecting hardware"
+msgstr "Wykrywam sprzêt"
+
+#: ../src/plugins/hotplug.c:53
+msgid "Scanning for SCSI and PCI cards"
+msgstr "Poszukujê kart PCI i SCSI"
+
+#: ../src/plugins/layout.c:93
+msgid "Configuring the keyboard"
+msgstr "Konfiguracja klawiatury"
+
+#: ../src/plugins/layout.c:96
+msgid "Keyboard map selection"
+msgstr "Wybór mapy klawiatury"
+
+#: ../src/plugins/layout.c:97
+msgid ""
+"You may select one of the following keyboard maps. If you do not select a "
+"keyboard map, 'qwerty/us.map.gz' (the US keyboard map) is the default. Use "
+"the UP/DOWN arrow keys and PageUp/PageDown to scroll through the whole list "
+"of choices."
+msgstr ""
+"Musisz wybraæ mapê klawiatury.  Je¿eli nie wybierzesz ¿adnej u¿yta zostanie "
+"qwerty/us.map.gz. Polskie mapy zawieraj± *pl* w nazwie. U¿yj strza³ek oraz PageUp/PageDown "
+"do przewiniêcia listy"
+
+#: ../src/plugins/loadsource.c:109
+msgid "Selecting source media"
+msgstr "Wybór medium instalacyjnego"
+
+#: ../src/plugins/loadsource.c:112
+msgid "Scanning"
+msgstr "Wyszukujê"
+
+#: ../src/plugins/loadsource.c:112
+msgid "Scanning for a CD/DVD drive containing a Frugalware install disc..."
+msgstr "Szukam CD/DVD instalacyjnego..."
+
+#: ../src/plugins/loadsource.c:122
+msgid "CD/DVD drive found"
+msgstr "Znaleziono CD/DVD"
+
+#: ../src/plugins/loadsource.c:122
+#, c-format
+msgid "A Frugalware install disc was found in device /dev/%s."
+msgstr "Znaleziono p³ytê instalacyjn± w urz±dzeniu /dev/%s."
+
+#: ../src/plugins/partdisk.c:108
+msgid "User friendly (curses based) version of fdisk"
+msgstr "Quasigraficzna (curses) wersja fdisk"
+
+#: ../src/plugins/partdisk.c:109
+msgid "The traditional partitioning program for Linux"
+msgstr "Standardowy program partycjonuj±cy"
+
+#: ../src/plugins/partdisk.c:110
+msgid "A partition manipulation program"
+msgstr "Program do partycjonowania"
+
+#: ../src/plugins/partdisk.c:113 ../src/plugins/partdisk.c:157
+msgid "Creating partitions"
+msgstr "Tworzê partycje"
+
+#: ../src/plugins/partdisk.c:116
+msgid "Select partitioning program"
+msgstr "Wybierz program partycjonuj±cy"
+
+#: ../src/plugins/partdisk.c:117
+msgid "Select the program you want to use for partitioning:"
+msgstr "Wybierz program za pomoc± którego stworzysz partycje:"
+
+#: ../src/plugins/partdisk.c:128
+msgid "Want to create RAID?"
+msgstr "Chcesz stworzyæ RAID?"
+
+#: ../src/plugins/partdisk.c:129
+msgid "Do you want to create software raid partitions during partitioning?"
+msgstr "Czy chcesz utworzyæ partycje software raid?"
+
+#: ../src/plugins/partdisk.c:151
+msgid "Disk drive not found"
+msgstr "Nie znaleziono dysku"
+
+#: ../src/plugins/partdisk.c:151
+msgid ""
+"Sorry, no hard disk drives were found in this computer. Press ENTER to "
+"reboot."
+msgstr ""
+"Nie znaleziono dysków twardych. Wci¶nij ENTER by zrestartowaæ."
+
+#: ../src/plugins/partdisk.c:166
+msgid "Create RAID"
+msgstr "Stwórz RAID"
+
+#: ../src/plugins/partdisk.c:174
+msgid "Select a hard disk to partition"
+msgstr "Wybierz dysk do partycjonowania"
+
+#: ../src/plugins/partdisk.c:175
+msgid ""
+"Please select a hard disk to partition. The following ones are available:"
+msgstr ""
+"Wybierz dysk do partycjonowania. Dostêpne:"
+
+#: ../src/plugins/restart.c:55 ../src/util.c:123
+msgid "Setup complete"
+msgstr "Konfiguracja zakoñczona"
+
+#: ../src/plugins/restart.c:55
+#, c-format
+msgid ""
+"System installation and configuration is successfully completed. We hope "
+"that you will enjoy %s. Please remove the media from your drive and press "
+"ENTER to reboot."
+msgstr ""
+"Instalacja i konfiguracja systemu zakoñczona pomy¶lnie. Mamy nadziejê "
+"¿e spodoba ci siê %s. Wysuñ p³ytê instalacyjn± i wci¶nij ENTER by zrestartowaæ system."
+
+#: ../src/plugins/select.c:246
+msgid "Selecting categories"
+msgstr "Wybór kategorii"
+
+#: ../src/plugins/select.c:247
+msgid "Please select which categories to install:"
+msgstr "Wybierz kategorie pakietów do instalacji"
+
+#: ../src/plugins/select.c:264 ../src/plugins/select.c:356
+msgid "Selecting packages"
+msgstr "Wybór pakietów"
+
+#: ../src/plugins/select.c:277
+msgid "Use expert menus?"
+msgstr "U¿yæ szczegó³owego menu?"
+
+#: ../src/plugins/select.c:278
+msgid ""
+"If you like, you may select your packages from expert menus. Where the "
+"normal menu shows a choice like 'C compiler system', the expert menus show "
+"you 'C libs', 'C compiler', 'C include files', etc - each individual "
+"package. Obviously, you should know what you're doing if you use the expert "
+"menus since it's possible to skip packages that are crucial to the "
+"functioning of your system. Choose 'no' for using normal menus that select "
+"groups of packages, or choose 'yes' for using expert menus with a switch for "
+"each package."
+msgstr ""
+"Szczegó³owe menu pozwol± na wybranie poszczególnych pakietów. Widok "
+"standardowy poka¿e jedynie grupy pakietów. Widok szczegó³owy nie powinien byæ "
+"stosowany przez osoby niedo¶wiadczone. U¿yæ szczegó³owego menu?"
+
+#: ../src/plugins/select.c:359
+msgid "Searching for categories..."
+msgstr "Szukam kategorii..."
+
+#: ../src/plugins/select.c:366
+msgid "Searching for packages..."
+msgstr "Szukam pakietów..."
+
+#: ../src/plugins/select.c:394
+msgid "Searching for missing dependencies..."
+msgstr "Szukam brakuj±cych zale¿no¶ci..."
+
+#: ../src/plugins/install.c:60
+#, c-format
+msgid ""
+"Errors occured while installing selected packages.\n"
+"Press ENTER to continue..."
+msgstr ""
+"Pojawi³ siê b³±d podczasz instalacji.\n"
+"Wci¶nij ENTER by kontynuowaæ..."
+
+#: ../src/plugins/install.c:80
+msgid "Insert next disc"
+msgstr "W³ó¿ kolejn± p³ytê instalacyjn±"
+
+#: ../src/plugins/install.c:81
+msgid ""
+"Please insert the next Frugalware install disc and press ENTER to continue "
+"installing packages. If you don't have more disk, choose NO, and then you "
+"can finish up the installation. Have you inserted the next disk?"
+msgstr ""
+"Proszê w³o¿yæ do napêdu kolejn± p³ytê instalacyjn± i wcisn±æ ENTER by kontynuowaæ. "
+"Je¿eli nie masz kolejnych p³yt wybierz NO by pominaæ instalacjê dalszych pakietów "
+"i zakoñczyæ instalacjê. W³o¿y³e¶ kolejn± p³ytê?"
+
+#: ../src/plugins/postconf.c:74
+msgid "No root password detected"
+msgstr "Brak has³a roota"
+
+#: ../src/plugins/postconf.c:75
+msgid ""
+"There is currently no password set on the system administrator account "
+"(root). It is recommended that you set one now so that it is active the "
+"first time the machine is rebooted. This is especially important if your "
+"machine is on an internet connected LAN. Would you like to set a root "
+"password?"
+msgstr ""
+"Konto administratora systemu (root) nie ma ustawionego has³a. "
+"Zaleca siê (bardzo) ustawienie has³a dla tego u¿ytkownika. Ustawiæ has³o "
+"dla u¿ytkownika root?"
+
+#: ../src/plugins/postconf.c:111
+msgid "No normal user account detected"
+msgstr "Brak konta zwyk³ego u¿ytkownika"
+
+#: ../src/plugins/postconf.c:112
+msgid ""
+"There is currently no non-root user account configured. It is strongly "
+"recommended to create one. Would you like to create a normal user account "
+"now?"
+msgstr "Brak konta zwyk³ego u¿ytkownika. Zaleca siê stworzenie jednego takiego konta do "
+"codziennej pracy. Stworzyæ konto ?"
+
+#: ../src/plugins/postconf.c:140
+msgid "Post-install configuration"
+msgstr "Konfiguracja poinstalacyjna"
+
+#: ../src/plugins/postconf.c:152
+msgid "Configuring kernel modules"
+msgstr "Konfigurujê modu³y kernela"
+
+#: ../src/plugins/postconf.c:153
+msgid "Updating module dependencies..."
+msgstr "Aktualizujê zale¿no¶ci modu³ów..."
+
+#: ../src/util.c:50
+msgid "Setup"
+msgstr "Setup"
+
+#: ../src/util.c:63
+msgid "Could not open file for reading"
+msgstr "Nie mogê otworzyæ pliku do odczytu"
+
+#: ../src/util.c:123
+msgid "Ejecting installation media..."
+msgstr "Wysuwam media instalacyjne"
+
+#: ../src/util.c:163
+msgid "Installation error"
+msgstr "B³±d instalacji"
+
+#: ../src/util.c:164
+msgid ""
+"Errors occured while installing selected packages. It is recommended to "
+"abort the installation, however you may want to ignore this problem. Do you "
+"want to leave the installer?"
+msgstr ""
+"Wyst±pi³ b³±d przy instalacji pakietów. Zaleca siê przerwanie instalacji, "
+"chocia¿ mo¿esz j± kontynuowaæ. Zakoñczyæ instalacjê ? "
+
+#: ../src/util.c:180
+msgid "Exit from the installer"
+msgstr "Zamknij instalator"
+
+#: ../src/util.c:181
+msgid "Are you sure you want to exit from the installer?"
+msgstr "Czy jeste¶ pewien ¿e chcesz zakoñczyæ instalacjê ?"
