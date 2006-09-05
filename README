@@ -26,7 +26,6 @@ Adding new packages
 
 1) add the package to configure
 2) add a target for it to Makefile
-2) add the package to the source and packages list
 
 Greetings,
 VMiklos

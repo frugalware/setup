@@ -48,43 +48,7 @@ BDIR = build
 MDIR = merge
 CWD=`pwd`
 
-packages = bash busybox dialog e2fsprogs reiserfsprogs dhclient frugalware \
-	   glibc kbd kernel module-init-tools ncurses pacman eject \
-	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted \
-	   bzip2 libarchive zlib frugalwareutils wireless_tools ipw2200-firmware \
-	   dropbear bastet readline acx100 shadow madwifi-ng
-	   
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
-sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
-	  dhclient-$(DHCLIENTVER)-$(CARCH).fpm dialog-$(DIALOGVER)-$(CARCH).fpm \
-	  e2fsprogs-$(E2FSPROGSVER)-$(CARCH).fpm eject-$(EJECTVER)-$(CARCH).fpm \
-	  frugalware-$(FRUGALWAREVER)-$(CARCH).fpm \
-	  glibc-$(GLIBCVER)-$(CARCH).fpm kbd-$(KBDVER)-$(CARCH).fpm \
-	  kernel-$(KERNELV)-$(KERNELREL)-$(CARCH).fpm \
-	  module-init-tools-$(MODULE-INIT-TOOLSVER)-$(CARCH).fpm \
-	  ncurses-$(NCURSESVER)-$(CARCH).fpm netkit-base-$(NETKIT-BASEVER)-$(CARCH).fpm \
-	  pacman-$(PACMANVER)-$(CARCH).fpm \
-	  reiserfsprogs-$(REISERFSPROGSVER)-$(CARCH).fpm udev-$(UDEVVER)-$(CARCH).fpm \
-	  util-linux-$(UTIL-LINUXVER)-$(CARCH).fpm \
-	  netkit-base-$(NETKIT-BASEVER)-$(CARCH).fpm \
-	  mdadm-$(MDADMVER)-$(CARCH).fpm \
-	  xfsprogs-$(XFSPROGSVER)-$(CARCH).fpm \
-	  ppp-$(PPPVER)-$(CARCH).fpm \
-	  rp-pppoe-$(RP-PPPOEVER)-$(CARCH).fpm \
-	  glib2-$(GLIB2VER)-$(CARCH).fpm \
-	  parted-$(PARTEDVER)-$(CARCH).fpm \
-	  bzip2-$(BZIP2VER)-$(CARCH).fpm \
-	  libarchive-$(LIBARCHIVEVER)-$(CARCH).fpm \
-	  zlib-$(ZLIBVER)-$(CARCH).fpm \
-	  frugalwareutils-$(FRUGALWAREUTILSVER)-$(CARCH).fpm \
-	  wireless_tools-$(WIRELESS_TOOLSVER)-$(CARCH).fpm \
-	  ipw2200-firmware-$(IPW2200-FIRMWAREVER)-$(CARCH).fpm \
-	  dropbear-$(DROPBEARVER)-$(CARCH).fpm \
-	  bastet-$(BASTETVER)-$(CARCH).fpm \
-	  readline-$(READLINEVER)-$(CARCH).fpm \
-	  acx100-$(ACX100VER)-$(CARCH).fpm \
-	  shadow-$(SHADOWVER)-$(CARCH).fpm \
-	  madwifi-ng-$(MADWIFI-NGVER)-$(CARCH).fpm
 
 all: initrd
 
@@ -166,7 +130,7 @@ config.mak:
 	python configure.py
 
 check:
-	pacman -Sw `sed 's/VER =.*//' config.mak|tr '[A-Z]' '[a-z]'` --noconfirm
+	pacman -Sw `grep 'VER =' config.mak |sed 's/VER =.*//' |tr '[A-Z]' '[a-z]'` --noconfirm
 	@for i in $(sources); do \
 		ls $(CDIR)/$$i >/dev/null || exit 1; \
 	done
@@ -341,7 +305,7 @@ ppp:
 	cp -a etc ../ppp/; \
 	cp -a usr/{lib,sbin} ../ppp/usr/
 
-pppoe:
+rp-pppoe:
 	$(CLEANUP)
 	mkdir -p pppoe/usr/share
 	cd $(BDIR) && tar xf $(CDIR)/rp-pppoe-$(RP-PPPOEVER)-$(CARCH).fpm; \

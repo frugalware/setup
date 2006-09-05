@@ -56,5 +56,17 @@ socket = open("config.mak", "w")
 for k, v in localvers.items():
 	print "checking for %s... %s" % (k, v)
 	socket.write("%sVER = %s\n" % (k.upper(), v))
+socket.write("\n")
+
+socket.write("packages = \\\n")
+for k, v in localvers.items():
+	socket.write("\t   %s \\\n" % k)
+socket.write("\t   \n")
+
+socket.write("sources = \\\n")
+for k, v in localvers.items():
+	socket.write("\t  %s-$(%sVER)-$(CARCH).fpm \\\n" % (k, k.upper()))
+socket.write("\t  \n")
+
 socket.close()
 alpm.release()
