@@ -52,7 +52,7 @@ packages = bash busybox dialog e2fsprogs reiserfsprogs dhclient frugalware \
 	   glibc kbd kernel module-init-tools ncurses pacman eject \
 	   udev util-linux netkit-base mdadm xfsprogs ppp pppoe glib2 parted \
 	   bzip2 libarchive zlib frugalwareutils wireless_tools ipw2200-firmware \
-	   dropbear bastet readline acx100 shadow
+	   dropbear bastet readline acx100 shadow madwifi-ng
 	   
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
@@ -83,7 +83,8 @@ sources = bash-$(BASHVER)-$(CARCH).fpm busybox-$(BUSYBOXVER)-$(CARCH).fpm \
 	  bastet-$(BASTETVER)-$(CARCH).fpm \
 	  readline-$(READLINEVER)-$(CARCH).fpm \
 	  acx100-$(ACX100VER)-$(CARCH).fpm \
-	  shadow-$(SHADOWVER)-$(CARCH).fpm
+	  shadow-$(SHADOWVER)-$(CARCH).fpm \
+	  madwifi-ng-$(MADWIFI-NGVER)-$(CARCH).fpm
 
 all: initrd
 
@@ -429,3 +430,10 @@ shadow:
 	mkdir -p shadow/etc
 	cd $(BDIR) && tar xf $(CDIR)/shadow-$(SHADOWVER)-$(CARCH).fpm; \
 	cp -a etc/{passwd,group} ../shadow/etc
+
+madwifi-ng:
+	$(CLEANUP)
+	mkdir -p madwifi-ng/usr/bin
+	cd $(BDIR) && tar xf $(CDIR)/madwifi-ng-$(MADWIFI-NGVER)-$(CARCH).fpm; \
+	cp -a lib ../madwifi-ng/; \
+	cp -a usr/bin/wlanconfig ../madwifi-ng/usr/bin/
