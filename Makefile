@@ -131,7 +131,7 @@ config.mak:
 	python configure.py
 
 check:
-	pacman -Sw `grep 'VER =' config.mak |sed 's/VER =.*//' |tr '[A-Z]' '[a-z]'` --noconfirm
+	pacman -Swd `grep 'VER =' config.mak |sed 's/VER =.*//' |tr '[A-Z]' '[a-z]'` --noconfirm
 	@for i in $(sources); do \
 		ls $(CDIR)/$$i >/dev/null || exit 1; \
 	done
