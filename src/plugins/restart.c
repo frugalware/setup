@@ -20,6 +20,7 @@
  */
 
 #include <stdio.h>
+#include <sys/mount.h>
 #ifdef DIALOG
     #include <dialog.h>
 #endif
@@ -44,12 +45,38 @@ plugin_t *info()
 	return &plugin;
 }
 
+static void umount_targets()
+{
+	FILE *fp;
+	char *mp, *ptr;
+
+	if((fp = fopen("/proc/mounts", "r")))
+	{
+		char line[256];
+		while(!feof(fp))
+		{
+			if(!fgets(line, 255, fp))
+				break;
+			if(!strstr(line, "root"))
+			{
+				if(!(mp = strchr(line, ' ')))
+					break;
+				if((ptr = strchr(++mp, ' ')))
+					*ptr='\0';
+				umount(mp);
+			}
+		}
+	}
+	fclose(fp);
+}
+
 int run(GList **config)
 {
 	char *version = get_version();
 
 	eject((char*)data_get(*config, "srcdev"), SOURCEDIR);
 
+	umount_targets();
 	dlg_put_backtitle();
 	dlg_clear();
 	dialog_msgbox(_("Setup complete"), g_strdup_printf(_("System "
