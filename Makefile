@@ -173,11 +173,11 @@ reiserfsprogs:
 	mkdir reiserfsprogs/etc/
 	touch reiserfsprogs/etc/fstab
 
-dhclient:
+dhcpcd:
 	$(CLEANUP)
-	mkdir -p dhclient/
+	mkdir -p dhcpcd/sbin
 	$(UNPACK)
-	cp -a $(BDIR)/{etc,sbin,var} dhclient/
+	cp -a $(BDIR)/sbin/dhcpcd dhcpcd/sbin/
 
 frugalware:
 	$(CLEANUP)

@@ -6,7 +6,7 @@ import alpm, os, sys
 # agressive, we add libs to here just in case there was a bugreport about it
 # parted: #807
 libs = ['parted', 'pacman']
-packages = ['bash', 'kernel', 'busybox', 'dhclient', 'dialog', 'e2fsprogs',
+packages = ['bash', 'kernel', 'busybox', 'dhcpcd', 'dialog', 'e2fsprogs',
 		'eject', 'frugalware', 'glibc', 'kbd', 'module-init-tools',
 		'ncurses', 'netkit-base', 'reiserfsprogs', 'udev',
 		'util-linux', 'mdadm', 'xfsprogs', 'ppp', 'rp-pppoe', 'glib2',
