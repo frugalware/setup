@@ -124,7 +124,11 @@ update:
 	sudo $(MAKE) initrd
 
 upload:
+ifeq ($(STABLE),false)
 	scp initrd-$(CARCH).img.gz frugalware.org:/home/ftp/pub/frugalware/frugalware-current/boot/
+else
+	scp initrd-$(CARCH).img.gz frugalware.org:/home/ftp/pub/frugalware/frugalware-0.5/boot/
+endif
 
 config.mak:
 	pacman -Sy
