@@ -12,7 +12,7 @@ packages = ['bash', 'kernel', 'busybox', 'dhcpcd', 'dialog', 'e2fsprogs',
 		'util-linux', 'mdadm', 'xfsprogs', 'ppp', 'rp-pppoe', 'glib2',
 		'bzip2', 'libarchive', 'zlib', 'frugalwareutils',
 		'wireless_tools', 'ipw2200-firmware', 'dropbear', 'bastet',
-		'readline', 'acx100', 'shadow', 'madwifi-ng']
+		'readline', 'acx100', 'shadow', 'madwifi-ng', 'rt2500']
 
 def pkgGetVers(db, names, ret={}):
 	lp = alpm.db_getpkgcache(db)

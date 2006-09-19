@@ -406,3 +406,9 @@ madwifi-ng:
 	$(UNPACK); \
 	cp -a lib ../madwifi-ng/; \
 	cp -a usr/bin/wlanconfig ../madwifi-ng/usr/bin/
+
+rt2500:
+	$(CLEANUP)
+	mkdir -p rt2500
+	$(UNPACK); \
+	cp -a lib ../rt2500
