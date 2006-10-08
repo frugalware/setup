@@ -340,14 +340,14 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 		else
 			// we need to parse pacman.conf into alpm otherwise the db update won't work
 			if (alpm_parse_config("/etc/pacman.conf", cb_db_register) == -1) {
-				fprintf(LOGDEV, "failed to parse pacman config (%s)\n", alpm_strerror(pm_errno));
+				fprintf(stderr, "failed to parse pacman config (%s)\n", alpm_strerror(pm_errno));
 				return(1);
 			}
 			
 			// get our database
 			if(mydatabase == NULL)
 			{
-				fprintf(LOGDEV, "could not register '%s' database (%s)\n", PACCONF, alpm_strerror(pm_errno));
+				fprintf(stderr, "could not register '%s' database (%s)\n", PACCONF, alpm_strerror(pm_errno));
 				return(1);
 			}
 			else
@@ -356,11 +356,11 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 				ret = alpm_db_update(0, mydatabase);
 				if(ret > 0) {
 					if(pm_errno == PM_ERR_DB_SYNC)
-						fprintf(LOGDEV, "failed to synchronize %s\n", PACCONF);
+						fprintf(stderr, "failed to synchronize %s\n", PACCONF);
 					else
-						fprintf(LOGDEV, "failed to update %s (%s)\n", PACCONF, alpm_strerror(pm_errno));
+						fprintf(stderr, "failed to update %s (%s)\n", PACCONF, alpm_strerror(pm_errno));
 				} else if(ret < 0)
-					fprintf(LOGDEV, " %s is up to date\n", PACCONF);
+					fprintf(stderr, " %s is up to date\n", PACCONF);
 			}
 			
 			// and clean up.
