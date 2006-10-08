@@ -70,3 +70,5 @@ void fw_end_gtk(GtkWidget *win);
 void gtk_draw_framework();
 int plugin_next();
 #endif
+
+void signal_handler(int signum);

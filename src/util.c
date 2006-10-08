@@ -29,6 +29,7 @@
 #include <errno.h>
 #include <sys/types.h>
 #include <sys/fcntl.h>
+#include <signal.h>
 #ifdef DIALOG
 #include <dialog.h>
 #endif
@@ -599,3 +600,19 @@ int plugin_next(GtkWidget *w, gpointer user_data)
 }
 
 #endif
+
+void signal_handler(int signum)
+{
+	if (signum == SIGSEGV)
+	{
+		fw_init_dialog();
+		dialog_vars.backtitle = gen_backtitle(_("Oops"));
+		dlg_put_backtitle();
+		dialog_msgbox(_("A problem has occurred"), _("Internal error: Segmentation fault. Please report this issue to http://bugs.frugalware.org"), 7, 40, 1);
+		exit_perform();
+	} else if (signum == SIGINT) {
+		signal(SIGINT, signal_handler);
+	} else {
+		exit_perform();
+	}
+}

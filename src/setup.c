@@ -110,7 +110,17 @@ int main(int argc, char *argv[])
 	int i;
 	plugin_t *plugin;
 	GList *config=NULL;
-
+	
+	if (signal(SIGINT, signal_handler) == SIG_ERR) {
+		perror("signal");
+		exit(1);
+	}
+	
+	if (signal(SIGSEGV, signal_handler) == SIG_ERR) {
+		perror("signal");
+		exit(1);
+	}
+	
 	init_plugins(PLUGDIR);
 
 #ifdef DIALOG

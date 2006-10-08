@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: setup current\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-26 14:12+0200\n"
+"POT-Creation-Date: 2006-10-08 15:11+0100\n"
 "PO-Revision-Date: 2005-11-25 18:06+0100\n"
 "Last-Translator: Marcus Habermehl <bmh1980de@yahoo.de>\n"
 "Language-Team: German <translation-team-de@lists.sourceforge.net>\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: ../src/plugins/configsource.c:94 ../src/plugins/dolangsh.c:52
 #: ../src/plugins/formatdisk.c:233 ../src/plugins/formatdisk.c:376
 #: ../src/plugins/layout.c:115 ../src/plugins/loadsource.c:76
-#: ../src/plugins/select.c:321 ../src/util.c:306
+#: ../src/plugins/select.c:330 ../src/util.c:307
 msgid "Could not open output file for writing"
 msgstr "Konnte Ausgabedatei nicht zum Schreiben öffnen"
 
@@ -43,8 +43,8 @@ msgstr ""
 "Mirror in Ordnung."
 
 #: ../src/plugins/configsource.c:153 ../src/plugins/hotplug.c:53
-#: ../src/plugins/select.c:359 ../src/plugins/select.c:366
-#: ../src/plugins/select.c:394
+#: ../src/plugins/select.c:393 ../src/plugins/select.c:400
+#: ../src/plugins/select.c:428
 msgid "Please wait"
 msgstr "Bitte warten"
 
@@ -173,34 +173,34 @@ msgstr "Erzeuge %s Dateisystem auf %s und prüfe auf defekte Blöcke"
 msgid "Creating %s filesystem on %s"
 msgstr "Erzeuge %s Dateisystem auf %s"
 
-#: ../src/plugins/formatdisk.c:396
+#: ../src/plugins/formatdisk.c:398
 #, c-format
 msgid "Select mount point for %s"
 msgstr "Mount-Punkt für %s auswählen"
 
-#: ../src/plugins/formatdisk.c:416 ../src/plugins/formatdisk.c:550
+#: ../src/plugins/formatdisk.c:418 ../src/plugins/formatdisk.c:552
 msgid "(in use)"
 msgstr "(belegt)"
 
-#: ../src/plugins/formatdisk.c:424
+#: ../src/plugins/formatdisk.c:426
 #, fuzzy, c-format
 msgid "%s on %s/\t%s"
 msgstr "%s auf %s\t%s"
 
 #. non-root partitions
-#: ../src/plugins/formatdisk.c:523
+#: ../src/plugins/formatdisk.c:525
 msgid "Selecting other partitions"
 msgstr "Andere Partitionen auswählen"
 
-#: ../src/plugins/formatdisk.c:530 ../src/plugins/partdisk.c:171
+#: ../src/plugins/formatdisk.c:532 ../src/plugins/partdisk.c:171
 msgid "Continue"
 msgstr "Weiter"
 
-#: ../src/plugins/formatdisk.c:534
+#: ../src/plugins/formatdisk.c:536
 msgid "Select other Linux partitions for /etc/fstab"
 msgstr "Weitere Linux Partitionen für /etc/fstab auswählen"
 
-#: ../src/plugins/formatdisk.c:535
+#: ../src/plugins/formatdisk.c:537
 msgid ""
 "You may use your other partitions to distribute your Linux system across "
 "more than one partition. Currently, you have only mounted your / partition. "
@@ -365,11 +365,11 @@ msgstr ""
 "Bitte wählen Sie eine Festplatte zum Partitionieren. Die folgenden "
 "Partitionen sind verfügbar."
 
-#: ../src/plugins/restart.c:55 ../src/util.c:123
+#: ../src/plugins/restart.c:82 ../src/util.c:124
 msgid "Setup complete"
 msgstr "Setup vollständig"
 
-#: ../src/plugins/restart.c:55
+#: ../src/plugins/restart.c:82
 #, fuzzy, c-format
 msgid ""
 "System installation and configuration is successfully completed. We hope "
@@ -380,24 +380,24 @@ msgstr ""
 "dass %s Sie zufrieden stellt. Bitte entfernen Sie alle Datenträger aus Ihren "
 "Laufwerken und drücken ENTER um neu zu starten."
 
-#: ../src/plugins/select.c:246
+#: ../src/plugins/select.c:254
 msgid "Selecting categories"
 msgstr "Kategorien auswählen"
 
-#: ../src/plugins/select.c:247
+#: ../src/plugins/select.c:255
 #, fuzzy
 msgid "Please select which categories to install:"
 msgstr "Bitte wählen Sie, welche extra Kategorien installiert werden sollen:"
 
-#: ../src/plugins/select.c:264 ../src/plugins/select.c:356
+#: ../src/plugins/select.c:272 ../src/plugins/select.c:390
 msgid "Selecting packages"
 msgstr "Pakete auswählen"
 
-#: ../src/plugins/select.c:277
+#: ../src/plugins/select.c:285
 msgid "Use expert menus?"
 msgstr "Erweiterte Menüs verwenden?"
 
-#: ../src/plugins/select.c:278
+#: ../src/plugins/select.c:286
 #, fuzzy
 msgid ""
 "If you like, you may select your packages from expert menus. Where the "
@@ -416,15 +416,15 @@ msgstr ""
 "Sie tun. Wählen Sie 'nein' um normale Menüs zu verwenden, oder 'ja' für die "
 "erweiterten Menüs."
 
-#: ../src/plugins/select.c:359
+#: ../src/plugins/select.c:393
 msgid "Searching for categories..."
 msgstr "Suche nach Kategorien..."
 
-#: ../src/plugins/select.c:366
+#: ../src/plugins/select.c:400
 msgid "Searching for packages..."
 msgstr "Suche nach Paketen..."
 
-#: ../src/plugins/select.c:394
+#: ../src/plugins/select.c:428
 #, fuzzy
 msgid "Searching for missing dependencies..."
 msgstr "Suche nach Paketen..."
@@ -497,23 +497,23 @@ msgstr "Konfiguriere Kernel Module"
 msgid "Updating module dependencies..."
 msgstr "Aktualisiere Modul-Abhängigkeiten..."
 
-#: ../src/util.c:50
+#: ../src/util.c:51
 msgid "Setup"
 msgstr ""
 
-#: ../src/util.c:63
+#: ../src/util.c:64
 msgid "Could not open file for reading"
 msgstr "Konnte Datei nicht zum Lesen öffnen"
 
-#: ../src/util.c:123
+#: ../src/util.c:124
 msgid "Ejecting installation media..."
 msgstr "Werfe Installations-Medium aus..."
 
-#: ../src/util.c:163
+#: ../src/util.c:164
 msgid "Installation error"
 msgstr "Installations-Fehler"
 
-#: ../src/util.c:164
+#: ../src/util.c:165
 msgid ""
 "Errors occured while installing selected packages. It is recommended to "
 "abort the installation, however you may want to ignore this problem. Do you "
@@ -522,13 +522,27 @@ msgstr ""
 "Es traten Fehler während der Installation auf. Möchten Sie die Installation "
 "abbrechen?"
 
-#: ../src/util.c:180
+#: ../src/util.c:181
 msgid "Exit from the installer"
 msgstr "Installation beenden"
 
-#: ../src/util.c:181
+#: ../src/util.c:182
 msgid "Are you sure you want to exit from the installer?"
 msgstr "Sind Sie sicher, dass Sie die Installation beenden möchten?"
+
+#: ../src/util.c:609
+msgid "Oops"
+msgstr ""
+
+#: ../src/util.c:611
+msgid "A problem has occurred"
+msgstr ""
+
+#: ../src/util.c:611
+msgid ""
+"Internal error: Segmentation fault. Please report this issue to http://bugs."
+"frugalware.org"
+msgstr ""
 
 #~ msgid "CD/DVD drive not found"
 #~ msgstr "CD/DVD Laufwerk nicht gefunden"

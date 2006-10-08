@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: id\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-26 14:12+0200\n"
+"POT-Creation-Date: 2006-10-08 15:11+0100\n"
 "PO-Revision-Date: 2006-05-12 19:24+0700\n"
 "Last-Translator: Edo Hikmahtiar <firesand@gmail.com>\n"
 "Language-Team: Indonesia <en@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: ../src/plugins/configsource.c:94 ../src/plugins/dolangsh.c:52
 #: ../src/plugins/formatdisk.c:233 ../src/plugins/formatdisk.c:376
 #: ../src/plugins/layout.c:115 ../src/plugins/loadsource.c:76
-#: ../src/plugins/select.c:321 ../src/util.c:306
+#: ../src/plugins/select.c:330 ../src/util.c:307
 msgid "Could not open output file for writing"
 msgstr "Tidak bisa membuka berkas hasil untuk ditulis"
 
@@ -42,8 +42,8 @@ msgstr ""
 "umum pilihan awal dapat digunakan."
 
 #: ../src/plugins/configsource.c:153 ../src/plugins/hotplug.c:53
-#: ../src/plugins/select.c:359 ../src/plugins/select.c:366
-#: ../src/plugins/select.c:394
+#: ../src/plugins/select.c:393 ../src/plugins/select.c:400
+#: ../src/plugins/select.c:428
 msgid "Please wait"
 msgstr "Silahkan tunggu"
 
@@ -170,34 +170,34 @@ msgstr "Membuat %s sistem berkas pada %s dan memeriksa bagian rusak"
 msgid "Creating %s filesystem on %s"
 msgstr "Membuat %s sistem berkas pada %s"
 
-#: ../src/plugins/formatdisk.c:396
+#: ../src/plugins/formatdisk.c:398
 #, c-format
 msgid "Select mount point for %s"
 msgstr "Pilih titik mount untuk %s"
 
-#: ../src/plugins/formatdisk.c:416 ../src/plugins/formatdisk.c:550
+#: ../src/plugins/formatdisk.c:418 ../src/plugins/formatdisk.c:552
 msgid "(in use)"
 msgstr "(terpakai)"
 
-#: ../src/plugins/formatdisk.c:424
+#: ../src/plugins/formatdisk.c:426
 #, fuzzy, c-format
 msgid "%s on %s/\t%s"
 msgstr "%s pada %s\t%s"
 
 #. non-root partitions
-#: ../src/plugins/formatdisk.c:523
+#: ../src/plugins/formatdisk.c:525
 msgid "Selecting other partitions"
 msgstr "Memilih partisi lain"
 
-#: ../src/plugins/formatdisk.c:530 ../src/plugins/partdisk.c:171
+#: ../src/plugins/formatdisk.c:532 ../src/plugins/partdisk.c:171
 msgid "Continue"
 msgstr "Lanjutkan"
 
-#: ../src/plugins/formatdisk.c:534
+#: ../src/plugins/formatdisk.c:536
 msgid "Select other Linux partitions for /etc/fstab"
 msgstr "Pilih partisi Linux lainnya untuk /etc/fstab"
 
-#: ../src/plugins/formatdisk.c:535
+#: ../src/plugins/formatdisk.c:537
 msgid ""
 "You may use your other partitions to distribute your Linux system across "
 "more than one partition. Currently, you have only mounted your / partition. "
@@ -348,11 +348,11 @@ msgid ""
 "Please select a hard disk to partition. The following ones are available:"
 msgstr "Pilihlah partisi dari sebuah cakram keras. Sebagai berikut:"
 
-#: ../src/plugins/restart.c:55 ../src/util.c:123
+#: ../src/plugins/restart.c:82 ../src/util.c:124
 msgid "Setup complete"
 msgstr "Aturan selesai"
 
-#: ../src/plugins/restart.c:55
+#: ../src/plugins/restart.c:82
 #, fuzzy, c-format
 msgid ""
 "System installation and configuration is successfully completed. We hope "
@@ -363,24 +363,24 @@ msgstr ""
 "anda betah. Silahkan keluarkan media dari penggerak anda dan tekan ENTER "
 "untuk reboot."
 
-#: ../src/plugins/select.c:246
+#: ../src/plugins/select.c:254
 msgid "Selecting categories"
 msgstr "Memilih kategori"
 
-#: ../src/plugins/select.c:247
+#: ../src/plugins/select.c:255
 #, fuzzy
 msgid "Please select which categories to install:"
 msgstr "Pilihlah kategori tambahan mana yang akan dipasang:"
 
-#: ../src/plugins/select.c:264 ../src/plugins/select.c:356
+#: ../src/plugins/select.c:272 ../src/plugins/select.c:390
 msgid "Selecting packages"
 msgstr "Memilih paket-paket"
 
-#: ../src/plugins/select.c:277
+#: ../src/plugins/select.c:285
 msgid "Use expert menus?"
 msgstr "Menggunakan mode daftar terampil?"
 
-#: ../src/plugins/select.c:278
+#: ../src/plugins/select.c:286
 #, fuzzy
 msgid ""
 "If you like, you may select your packages from expert menus. Where the "
@@ -401,15 +401,15 @@ msgstr ""
 "memilih 'kelompok paket-paket',atau pilih 'ya' untuk mode terampil yang akan "
 "memilih satu persatu paket."
 
-#: ../src/plugins/select.c:359
+#: ../src/plugins/select.c:393
 msgid "Searching for categories..."
 msgstr "Mencari kategori..."
 
-#: ../src/plugins/select.c:366
+#: ../src/plugins/select.c:400
 msgid "Searching for packages..."
 msgstr "Mencari paket-paket..."
 
-#: ../src/plugins/select.c:394
+#: ../src/plugins/select.c:428
 #, fuzzy
 msgid "Searching for missing dependencies..."
 msgstr "Mencari paket-paket..."
@@ -480,23 +480,23 @@ msgstr "Mengatur modul-modul kernel"
 msgid "Updating module dependencies..."
 msgstr "Memperbaharui ketergantungan modul-modul..."
 
-#: ../src/util.c:50
+#: ../src/util.c:51
 msgid "Setup"
 msgstr "Aturan"
 
-#: ../src/util.c:63
+#: ../src/util.c:64
 msgid "Could not open file for reading"
 msgstr "Tidak dapat membuka berkas untuk dibaca"
 
-#: ../src/util.c:123
+#: ../src/util.c:124
 msgid "Ejecting installation media..."
 msgstr "Mengeluarkan media pemasangan"
 
-#: ../src/util.c:163
+#: ../src/util.c:164
 msgid "Installation error"
 msgstr "Proses pemasangan gagal"
 
-#: ../src/util.c:164
+#: ../src/util.c:165
 msgid ""
 "Errors occured while installing selected packages. It is recommended to "
 "abort the installation, however you may want to ignore this problem. Do you "
@@ -506,13 +506,27 @@ msgstr ""
 "membatalkan proses pemasangan, Tetapi anda bisa juga menghiraukan ini.Apakah "
 "anda ingin meninggalkan proses pemasangan?"
 
-#: ../src/util.c:180
+#: ../src/util.c:181
 msgid "Exit from the installer"
 msgstr "Keluar dari proses pemasangan"
 
-#: ../src/util.c:181
+#: ../src/util.c:182
 msgid "Are you sure you want to exit from the installer?"
 msgstr "Apakah anda yakin untuk keluar dari proses pemasangan?"
+
+#: ../src/util.c:609
+msgid "Oops"
+msgstr ""
+
+#: ../src/util.c:611
+msgid "A problem has occurred"
+msgstr ""
+
+#: ../src/util.c:611
+msgid ""
+"Internal error: Segmentation fault. Please report this issue to http://bugs."
+"frugalware.org"
+msgstr ""
 
 #~ msgid "CD/DVD drive not found"
 #~ msgstr "Penggerak CD/DVD tidak ditemukan"
