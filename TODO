@@ -6,7 +6,6 @@ TODO list for Frugalware setup
  * layout.c: replace the system("loadkeys") call with some function calls
  * select.c: replace the system("tar ...") call with libalpm calls
  * select.c: progress bar for downloading the package database
- * select.c: display an error dialog if alpm failed to download the package database
  * install.c: use libalpm to download and install packages
  * util.c: replace the system("clear") call with some function calls
  * *.c: GTK installer
