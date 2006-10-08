@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-08 15:11+0100\n"
+"POT-Creation-Date: 2006-10-08 17:26+0100\n"
 "PO-Revision-Date: 2006-08-26 14:15+0200\n"
 "Last-Translator: Miklos Vajna <vmiklos@frugalware.org>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
@@ -21,7 +21,7 @@ msgstr ""
 #: ../src/plugins/configsource.c:94 ../src/plugins/dolangsh.c:52
 #: ../src/plugins/formatdisk.c:233 ../src/plugins/formatdisk.c:376
 #: ../src/plugins/layout.c:115 ../src/plugins/loadsource.c:76
-#: ../src/plugins/select.c:330 ../src/util.c:307
+#: ../src/plugins/select.c:330 ../src/util.c:308
 msgid "Could not open output file for writing"
 msgstr "Nem sikerült írásra megnyitni a kimeneti fájlt"
 
@@ -42,8 +42,8 @@ msgstr ""
 "A legtöbb esetben az alapértelmezett érték megfelelõ lesz."
 
 #: ../src/plugins/configsource.c:153 ../src/plugins/hotplug.c:53
-#: ../src/plugins/select.c:393 ../src/plugins/select.c:400
-#: ../src/plugins/select.c:428
+#: ../src/plugins/select.c:401 ../src/plugins/select.c:408
+#: ../src/plugins/select.c:436
 msgid "Please wait"
 msgstr "Kérem várjon"
 
@@ -348,7 +348,7 @@ msgid ""
 msgstr ""
 "Válassza ki a particionálni kívánt merevlemezt. A következõk érhetõek el:"
 
-#: ../src/plugins/restart.c:82 ../src/util.c:124
+#: ../src/plugins/restart.c:82 ../src/util.c:125
 msgid "Setup complete"
 msgstr "Telepítés kész"
 
@@ -371,7 +371,7 @@ msgstr "Kategóriák kiválasztása"
 msgid "Please select which categories to install:"
 msgstr "Válassza ki a telepíteni kívánt kategóriákat:"
 
-#: ../src/plugins/select.c:272 ../src/plugins/select.c:390
+#: ../src/plugins/select.c:272 ../src/plugins/select.c:398
 msgid "Selecting packages"
 msgstr "Csomagok kiválasztása"
 
@@ -400,15 +400,40 @@ msgstr ""
 "normál menük használatához, vagy az 'igen'-t a csomagok egyesével való "
 "kiválasztását támogató haladó menükhöz."
 
-#: ../src/plugins/select.c:393
+#: ../src/plugins/select.c:344 ../src/plugins/select.c:352
+#: ../src/plugins/select.c:362 ../src/plugins/select.c:366
+msgid "Error"
+msgstr ""
+
+#: ../src/plugins/select.c:344
+#, c-format
+msgid "Failed to parse pacman configuration file (%s)"
+msgstr ""
+
+#: ../src/plugins/select.c:352
+#, c-format
+msgid "Could not register '%s' database (%s)"
+msgstr ""
+
+#: ../src/plugins/select.c:362
+#, c-format
+msgid "Failed to synchronize %s"
+msgstr ""
+
+#: ../src/plugins/select.c:366
+#, c-format
+msgid "Failed to update %s (%s)"
+msgstr ""
+
+#: ../src/plugins/select.c:401
 msgid "Searching for categories..."
 msgstr "Kategóriák keresése..."
 
-#: ../src/plugins/select.c:400
+#: ../src/plugins/select.c:408
 msgid "Searching for packages..."
 msgstr "Csomagok keresése..."
 
-#: ../src/plugins/select.c:428
+#: ../src/plugins/select.c:436
 msgid "Searching for missing dependencies..."
 msgstr "Hiányzó függõségek keresése..."
 
@@ -478,23 +503,23 @@ msgstr "Kernelmodulok beállítása"
 msgid "Updating module dependencies..."
 msgstr "Modulfüggõségek frissítése..."
 
-#: ../src/util.c:51
+#: ../src/util.c:52
 msgid "Setup"
 msgstr "Telepítõ"
 
-#: ../src/util.c:64
+#: ../src/util.c:65
 msgid "Could not open file for reading"
 msgstr "Nem lehet olvasásra megnyitni a fájlt"
 
-#: ../src/util.c:124
+#: ../src/util.c:125
 msgid "Ejecting installation media..."
 msgstr "Telepítõ adathordozó kiadása..."
 
-#: ../src/util.c:164
+#: ../src/util.c:165
 msgid "Installation error"
 msgstr "Telepítési hiba"
 
-#: ../src/util.c:165
+#: ../src/util.c:166
 msgid ""
 "Errors occured while installing selected packages. It is recommended to "
 "abort the installation, however you may want to ignore this problem. Do you "
@@ -504,23 +529,23 @@ msgstr ""
 "hagyhatja a problémát, de ajánlott megszakítani a telepítést. Ki szeretne "
 "lépni a telepítõbõl?"
 
-#: ../src/util.c:181
+#: ../src/util.c:182
 msgid "Exit from the installer"
 msgstr "Kilépés a telepítõbõl"
 
-#: ../src/util.c:182
+#: ../src/util.c:183
 msgid "Are you sure you want to exit from the installer?"
 msgstr "Biztos benne hogy kilép a telepítõbõl?"
 
-#: ../src/util.c:609
+#: ../src/util.c:610
 msgid "Oops"
 msgstr ""
 
-#: ../src/util.c:611
+#: ../src/util.c:612
 msgid "A problem has occurred"
 msgstr ""
 
-#: ../src/util.c:611
+#: ../src/util.c:612
 msgid ""
 "Internal error: Segmentation fault. Please report this issue to http://bugs."
 "frugalware.org"
