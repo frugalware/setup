@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-08 17:26+0100\n"
-"PO-Revision-Date: 2006-08-26 14:15+0200\n"
+"PO-Revision-Date: 2006-10-08 21:04+0200\n"
 "Last-Translator: Miklos Vajna <vmiklos@frugalware.org>\n"
 "Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -403,27 +403,27 @@ msgstr ""
 #: ../src/plugins/select.c:344 ../src/plugins/select.c:352
 #: ../src/plugins/select.c:362 ../src/plugins/select.c:366
 msgid "Error"
-msgstr ""
+msgstr "Hiba"
 
 #: ../src/plugins/select.c:344
 #, c-format
 msgid "Failed to parse pacman configuration file (%s)"
-msgstr ""
+msgstr "Nem sikerült értelmezni a pacman beállítási fájlját (%s)"
 
 #: ../src/plugins/select.c:352
 #, c-format
 msgid "Could not register '%s' database (%s)"
-msgstr ""
+msgstr "Nem sikerült regisztrálni a '%s' adatbázist (%s)"
 
 #: ../src/plugins/select.c:362
 #, c-format
 msgid "Failed to synchronize %s"
-msgstr ""
+msgstr "Nem sikerült szinkronizálni a %s adatbázist"
 
 #: ../src/plugins/select.c:366
 #, c-format
 msgid "Failed to update %s (%s)"
-msgstr ""
+msgstr "Nem sikerült frissiteni: %s (%s)"
 
 #: ../src/plugins/select.c:401
 msgid "Searching for categories..."
@@ -539,17 +539,19 @@ msgstr "Biztos benne hogy kilép a telepítõbõl?"
 
 #: ../src/util.c:610
 msgid "Oops"
-msgstr ""
+msgstr "Upsz"
 
 #: ../src/util.c:612
 msgid "A problem has occurred"
-msgstr ""
+msgstr "Probléma történt"
 
 #: ../src/util.c:612
 msgid ""
 "Internal error: Segmentation fault. Please report this issue to http://bugs."
 "frugalware.org"
 msgstr ""
+"Belsõ hiba: Szegmens hiba. Kérjük jelentse ezt a hibát a http://bugs."
+"frugalware.org címen."
 
 #~ msgid "CD/DVD drive not found"
 #~ msgstr "CD/DVD meghajtÃ³ nem talÃ¡lhatÃ³"
