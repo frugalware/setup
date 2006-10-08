@@ -1,0 +1,12 @@
+TODO list for Frugalware setup
+------------------------------
+
+ * formatdisk.c: unmount file systems if necessary before formatting them
+ * asklang.c: replace the system("setfont") call with some function calls
+ * layout.c: replace the system("loadkeys") call with some function calls
+ * select.c: replace the system("tar ...") call with libalpm calls
+ * select.c: progress bar for downloading the package database
+ * select.c: display an error dialog if alpm failed to download the package database
+ * install.c: use libalpm to download and install packages
+ * util.c: replace the system("clear") call with some function calls
+ * *.c: signal handler to ignore Ctrl+C and display an error dialog and abort setup upon a segfault
