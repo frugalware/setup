@@ -339,7 +339,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 		}
 		else
 			// we need to parse pacman.conf into alpm otherwise the db update won't work
-			if (alpm_parse_config("/etc/pacman.conf", cb_db_register) == -1) {
+			if (alpm_parse_config("/etc/pacman.conf", cb_db_register, "") == -1) {
 				dlg_put_backtitle();
 				dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to parse pacman configuration file (%s)"), alpm_strerror(pm_errno)), 0, 0, 1);
 				exit_perform();
