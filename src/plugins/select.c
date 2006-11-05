@@ -338,6 +338,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 #endif
 		}
 		else
+		{
 			// we need to parse pacman.conf into alpm otherwise the db update won't work
 			if (alpm_parse_config("/etc/pacman.conf", cb_db_register, "") == -1) {
 				dlg_put_backtitle();
@@ -374,6 +375,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			// and clean up.
 			alpm_db_unregister(mydatabase);
 			mydatabase = NULL;
+		}
 	}
 
 	// register the database
