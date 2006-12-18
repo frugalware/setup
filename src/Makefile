@@ -17,7 +17,11 @@
 #
 
 UI ?= dialog
-CFLAGS ?= -g -Wall -Werror -O2 -pipe
+ifeq ($(DEBUG),false)
+CFLAGS ?= -Wall -Werror -O2 -pipe
+else
+CFLAGS ?= -g -Wall -Werror
+endif
 CFLAGS += $(FINAL) $(STABLE) -DARCH="\"$(shell arch)\""
 LDFLAGS += -ldl -rdynamic
 CFLAGS += $(shell pkg-config --cflags glib-2.0)

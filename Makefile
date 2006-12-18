@@ -42,7 +42,11 @@ ifeq ($(CARCH),x86_64)
 endif
 MARCH ?= $(CARCH)
 KARCH ?= $(CARCH)
+ifeq ($(DEBUG),false)
 export CFLAGS = -march=$(MARCH) -O2 -pipe
+else
+export CFLAGS = -g
+endif
 
 CDIR = /var/cache/pacman/pkg
 CONFDIR = config
