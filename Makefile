@@ -22,6 +22,7 @@
 
 STABLE = false
 TESTING = false
+DEBUG = false
 KERNELV = $(shell echo $(KERNELVER)|sed 's/-.*//')
 KERNELREL = $(shell echo $(KERNELVER)|sed 's/.*-//')
 
@@ -132,7 +133,11 @@ endif
 
 config.mak:
 	pacman -Sy
+ifeq ($(DEBUG),false)
 	python configure.py
+else
+	python configure.py --enable-debug
+endif
 
 check:
 	pacman -Swd `grep 'VER =' config.mak |sed 's/VER =.*//' |tr '[A-Z]' '[a-z]'` --noconfirm
@@ -198,7 +203,7 @@ glibc:
 	$(CLEANUP)
 	mkdir -p glibc/{lib,usr/lib/locale}
 	$(UNPACK)
-	cp -a $(BDIR)/lib/{ld*,libc*,libm*,libdl*,libnss*,libresolv*,libutil*,libnsl*,librt*,libpthread*} glibc/lib/
+	cp -a $(BDIR)/lib/{ld*,libc*,libm*,libdl*,libnss*,libresolv*,libutil*,libnsl*,librt*,libpthread*,libthread*} glibc/lib/
 	
 	# generate the necessary locales
 	cd $(BDIR) && rm -rf usr/ && mkdir -p usr/lib/locale/
@@ -412,3 +417,9 @@ rt2500:
 	mkdir -p rt2500
 	$(UNPACK); \
 	cp -a lib ../rt2500
+
+gdb:
+	$(CLEANUP)
+	mkdir -p gdb/usr/bin/
+	$(UNPACK); \
+	cp -a usr/bin/gdb ../gdb/usr/bin/

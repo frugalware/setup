@@ -14,6 +14,12 @@ packages = ['bash', 'kernel', 'busybox', 'dhcpcd', 'dialog', 'e2fsprogs',
 		'wireless_tools', 'ipw2200-firmware', 'dropbear', 'bastet',
 		'readline', 'acx100', 'shadow', 'madwifi-ng', 'rt2500']
 
+try:
+	if sys.argv[1] == "--enable-debug":
+		packages.append('gdb')
+except IndexError:
+	pass
+
 def pkgGetVers(db, names, ret={}):
 	lp = alpm.db_getpkgcache(db)
 	while lp:
