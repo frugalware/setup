@@ -139,7 +139,7 @@ else
 endif
 
 config.mak:
-	pacman -Sy
+	pacman-g2 -Sy
 ifeq ($(DEBUG),false)
 	python configure.py
 else
@@ -147,7 +147,7 @@ else
 endif
 
 check:
-	pacman -Swd `grep 'VER =' config.mak |sed 's/VER =.*//' |tr '[A-Z]' '[a-z]'` --noconfirm
+	pacman-g2 -Swd `grep 'VER =' config.mak |sed 's/VER =.*//' |tr '[A-Z]' '[a-z]'` --noconfirm
 	@for i in $(sources); do \
 		ls $(CDIR)/$$i >/dev/null || exit 1; \
 	done
@@ -255,24 +255,24 @@ ncurses:
 	cp -a $(BDIR)/lib/libncurses* ncurses/lib/
 	cp -a $(BDIR)/usr/share/terminfo/l/linux ncurses/usr/share/terminfo/l/
 
-pacman:
+pacman-g2:
 	$(CLEANUP)
-	mkdir -p pacman/bin pacman/etc/pacman.d/ pacman/usr/{lib,share}
+	mkdir -p pacman-g2/bin pacman-g2/etc/pacman.d/ pacman-g2/usr/{lib,share}
 	$(UNPACK)
-	cp -a $(BDIR)/usr/bin/pacman pacman/bin/pacman
-	cp -a $(BDIR)/usr/lib/libalpm.so* pacman/usr/lib/
-	cp -a $(BDIR)/usr/bin/vercmp pacman/bin/
-	cp -a $(BDIR)/usr/share/locale pacman/usr/share/
-	cp -a $(BDIR)/etc/pacman.d/* pacman/etc/pacman.d/
-	echo "[options]" >>pacman/etc/pacman.conf
-	echo "LogFile     = /mnt/target/var/log/pacman.log" >> pacman/etc/pacman.conf
+	cp -a $(BDIR)/usr/bin/pacman{,-g2} pacman-g2/bin/
+	cp -a $(BDIR)/usr/lib/libalpm.so* pacman-g2/usr/lib/
+	cp -a $(BDIR)/usr/bin/vercmp pacman-g2/bin/
+	cp -a $(BDIR)/usr/share/locale pacman-g2/usr/share/
+	cp -a $(BDIR)/etc/pacman.d/* pacman-g2/etc/pacman.d/
+	echo "[options]" >>pacman-g2/etc/pacman.conf
+	echo "LogFile     = /mnt/target/var/log/pacman-g2.log" >> pacman-g2/etc/pacman.conf
 ifeq ($(STABLE),false)
-	echo "Include = /etc/pacman.d/frugalware-current" >> pacman/etc/pacman.conf
+	echo "Include = /etc/pacman.d/frugalware-current" >> pacman-g2/etc/pacman.conf
 else
-	echo "Include = /etc/pacman.d/frugalware" >> pacman/etc/pacman.conf
+	echo "Include = /etc/pacman.d/frugalware" >> pacman-g2/etc/pacman.conf
 endif
 ifneq ($(TESTING),false)
-	sed -i 's|current/|testing/|' pacman/etc/pacman.d/frugalware-current
+	sed -i 's|current/|testing/|' pacman-g2/etc/pacman.d/frugalware-current
 endif
 
 

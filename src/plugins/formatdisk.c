@@ -383,7 +383,7 @@ int mountdev(char *dev, char *mountpoint, GList **config)
 	fw_system(g_strdup_printf("mount %s %s/%s",
 		dev, TARGETDIR, mountpoint));
 	// unlink a possible stale lockfile
-	unlink(g_strdup_printf("%s/%s/tmp/pacman.lck", TARGETDIR, mountpoint));
+	unlink(g_strdup_printf("%s/%s/tmp/pacman-g2.lck", TARGETDIR, mountpoint));
 
 	// make fstab entry
 	type = findmount(dev, 0);

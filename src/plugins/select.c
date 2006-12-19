@@ -331,7 +331,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 				return(1);
 			}
 			fprintf(fp, "[options]\n");
-			fprintf(fp, "LogFile = %s/var/log/pacman.log\n", TARGETDIR);
+			fprintf(fp, "LogFile = %s/var/log/pacman-g2.log\n", TARGETDIR);
 			fprintf(fp, "[%s]\n", repo);
 			fprintf(fp, "Server = file://%s\n\n", pacbindir);
 			fclose(fp);
@@ -342,7 +342,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			// we need to parse pacman.conf into alpm otherwise the db update won't work
 			if (alpm_parse_config("/etc/pacman.conf", cb_db_register, "") == -1) {
 				dlg_put_backtitle();
-				dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to parse pacman configuration file (%s)"), alpm_strerror(pm_errno)), 0, 0, 1);
+				dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to parse pacman-g2 configuration file (%s)"), alpm_strerror(pm_errno)), 0, 0, 1);
 				exit_perform();
 			}
 			

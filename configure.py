@@ -5,7 +5,7 @@ import alpm, os, sys
 # since we're not in chroot, we need up to date libs. but don't be too
 # agressive, we add libs to here just in case there was a bugreport about it
 # parted: #807
-libs = ['parted', 'pacman']
+libs = ['parted', 'pacman-g2']
 packages = ['bash', 'kernel', 'busybox', 'dhcpcd', 'dialog', 'e2fsprogs',
 		'eject', 'frugalware', 'glibc', 'kbd', 'module-init-tools',
 		'ncurses', 'netkit-base', 'reiserfsprogs', 'udev',
@@ -52,7 +52,7 @@ sys.stdout.flush()
 for k, v in remotevers.items():
 	sys.stdout.write("checking for host %s... " % k)
 	if remotevers[k] != localvers[k]:
-		sys.stdout.write("failed, please do a 'pacman -S %s'\n" % k)
+		sys.stdout.write("failed, please do a 'pacman-g2 -S %s'\n" % k)
 		sys.exit(1)
 	else:
 		sys.stdout.write("done.\n")

@@ -4,7 +4,7 @@ Building
 --------
 
 Run 'sudo make'. You need to be root as the downloaded packages are
-saved to pacman's cache and you need to be able to mount the initrd image file.
+saved to pacman-g2's cache and you need to be able to mount the initrd image file.
 
 Hopefully you'll get the vmlinuz* and initrd*.img.gz files after make ends.
 
