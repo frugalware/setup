@@ -95,7 +95,7 @@ misc: merge
 	cp src/plugins/*.so $(MDIR)/lib/plugins/
 	cp etc/inittab $(MDIR)/etc/
 ifneq ($(DEBUG),false)
-	sed -i 's|/bin/setup|/usr/bin/gdb /bin/setup' $(MDIR)/etc/inittab
+	sed -i 's|/bin/setup|/usr/bin/gdb /bin/setup|' $(MDIR)/etc/inittab
 endif
 	cp etc/rc.S $(MDIR)/etc/rc.d/
 	chmod +x $(MDIR)/etc/rc.d/rc.S
