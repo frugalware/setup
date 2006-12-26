@@ -483,8 +483,6 @@ int run(GList **config)
 
 	// select swap partitions to use
 	partlist = selswap();
-	if(partlist == NULL)
-		return(-1);
 
 	// format swap partitions
 	if(doswap(partlist, config) == -1)
