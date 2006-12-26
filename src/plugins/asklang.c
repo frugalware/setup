@@ -56,6 +56,7 @@ char *langs[] =
 plugin_t plugin =
 {
 	"asklang",
+	"Selecting language",
 	01,
 	run,
 	NULL // dlopen handle
@@ -91,10 +92,11 @@ int run(GList **config)
 	dialog_vars.backtitle=gen_backtitle("Selecting language");
 	dlg_put_backtitle();
 	dlg_clear();
-	fw_menu("Please select your language",
+	if(fw_menu("Please select your language",
 		"Please select your language from the list. If your language "
 		"is not in the list, you probably should choose English.",
-		0, 0, 0, LANGSNUM, langs);
+		0, 0, 0, LANGSNUM, langs) == -1)
+		return(-1);
 
 	setenv("LC_ALL", dialog_vars.input_result, 1);
 	setenv("LANG",   dialog_vars.input_result, 1);

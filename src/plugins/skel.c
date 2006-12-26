@@ -29,6 +29,7 @@
 plugin_t plugin =
 {
 	"skel",
+	"Sample description",
 	99,
 	run,
 	NULL // dlopen handle

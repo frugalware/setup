@@ -35,6 +35,7 @@
 plugin_t plugin =
 {
 	"hotplug",
+	"Detecting hardware",
 	20,
 	run,
 	NULL // dlopen handle

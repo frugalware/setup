@@ -37,6 +37,7 @@
 plugin_t plugin =
 {
 	"partdisk",
+	"Partitioning the disk drives",
 	35,
 	run,
 	NULL // dlopen handle
@@ -113,9 +114,10 @@ char *selpartsw()
 	dialog_vars.backtitle=gen_backtitle(_("Creating partitions"));
 	dlg_put_backtitle();
 	dlg_clear();
-	fw_menu(_("Select partitioning program"),
+	if(fw_menu(_("Select partitioning program"),
 		_("Select the program you want to use for partitioning:"),
-		0, 0, 0, swnum, sws);
+		0, 0, 0, swnum, sws) == -1)
+		return(NULL);
 
 	return(dialog_vars.input_result);
 }
@@ -145,6 +147,7 @@ int run(GList **config)
 	int ret;
 	char my_buffer[MAX_LEN + 1] = "";
 	int wantraid;
+	char *ptr;
 
 	if((lp = listparts())==NULL)
 	{
@@ -184,7 +187,10 @@ int run(GList **config)
 		{
 			strcpy(path, dialog_vars.input_result);
 			dialog_vars.input_result[0]='\0';
-			strcpy(partsw, selpartsw());
+			ptr = selpartsw();
+			if(ptr == NULL)
+				return(-1);
+			strcpy(partsw, ptr);
 			fw_end_dialog();
 			system(g_strdup_printf("%s %s", partsw, path));
 			fw_init_dialog();

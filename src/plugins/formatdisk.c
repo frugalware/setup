@@ -33,6 +33,7 @@
 plugin_t plugin =
 {
 	"formatdisk",
+	"Formatting the hard disks",
 	40,
 	run,
 	NULL // dlopen handle
@@ -163,12 +164,13 @@ char *selmkswapmode(char *dev)
 	dialog_vars.backtitle=gen_backtitle(_("Formatting partitions"));
 	dlg_put_backtitle();
 	dlg_clear();
-	fw_menu(g_strdup_printf(_("Format %s"), dev),
+	if(fw_menu(g_strdup_printf(_("Format %s"), dev),
 		g_strdup_printf(_("If %s has not been formatted, you should "
 		"format it.\n"
 		"NOTE: This will erase all data on %s. Would you like to "
 		"format this partition?"), dev, dev),
-		0, 0, 0, modenum, modes);
+		0, 0, 0, modenum, modes) == -1)
+		return(NULL);
 
 	return(dialog_vars.input_result);
 }
@@ -186,12 +188,13 @@ char *selformatmode(char *dev)
 	dialog_vars.backtitle=gen_backtitle(_("Formatting partitions"));
 	dlg_put_backtitle();
 	dlg_clear();
-	fw_menu(g_strdup_printf(_("Format %s"), dev),
+	if(fw_menu(g_strdup_printf(_("Format %s"), dev),
 		g_strdup_printf(_("If %s has not been formatted, you should "
 		"format it.\n"
 		"NOTE: This will erase all data on %s. Would you like to "
 		"format this partition?"), dev, dev),
-		0, 0, 0, modenum, modes);
+		0, 0, 0, modenum, modes) == -1)
+		return(NULL);
 
 	return(strdup(dialog_vars.input_result));
 }
@@ -211,9 +214,10 @@ char *selfs(char *dev)
 	dlg_put_backtitle();
 	dlg_clear();
 	dialog_vars.default_item=strdup("ext3");
-	fw_menu(g_strdup_printf(_("Selecting filesystem for %s"), dev),
+	if(fw_menu(g_strdup_printf(_("Selecting filesystem for %s"), dev),
 		g_strdup_printf(_("Please select the type of filesystem to "
-		"use for %s."), dev), 0, 0, 0, fsnum, fss);
+		"use for %s."), dev), 0, 0, 0, fsnum, fss) == -1)
+		return(NULL);
 	FREE(dialog_vars.default_item);
 
 	return(strdup(dialog_vars.input_result));
@@ -250,6 +254,8 @@ int doswap(GList *partlist, GList **config)
 		dialog_vars.input_result[0]='\0';
 		item = strdup((char*)g_list_nth_data(partlist, i));
 		ptr = selmkswapmode(item);
+		if(ptr == NULL)
+			return(-1);
 		if(!strcmp("format", ptr))
 		{
 			fw_info(_("Formatting swap partition"),
@@ -283,10 +289,11 @@ char *selrootdev()
 	array = glist2dialog(parts);
 	dialog_vars.backtitle=gen_backtitle(_("Setting up the root partition"));
 	dlg_put_backtitle();
-	fw_menu(_("Select the Linux installation partition"),
+	if(fw_menu(_("Select the Linux installation partition"),
 		_("Please select a partition from the following list to use "
 		"for your root (/) partition. The following ones "
-		"are available:"), 0, 0, 0, g_list_length(parts)/2, array);
+		"are available:"), 0, 0, 0, g_list_length(parts)/2, array) == -1)
+		return(NULL);
 	return(strdup(dialog_vars.input_result));
 }
 
@@ -322,6 +329,8 @@ int formatdev(char *dev)
 
 	dialog_vars.input_result[0]='\0';
 	mode = selformatmode(dev);
+	if(mode == NULL)
+		return(-1);
 
 	// if don't have to format, nothing to do
 	if(!strcmp("noformat", mode))
@@ -330,6 +339,8 @@ int formatdev(char *dev)
 		check=1;
 
 	fs = selfs(dev);
+	if(fs == NULL)
+		return(-1);
 	return(mkfss(dev, fs, check));
 }
 
@@ -395,11 +406,12 @@ int mountdev(char *dev, char *mountpoint, GList **config)
 
 char *asktowhere(char *dev)
 {
-	fw_inputbox(g_strdup_printf(_("Select mount point for %s"), dev),
+	if(fw_inputbox(g_strdup_printf(_("Select mount point for %s"), dev),
 		"You need to specify where you want the new partition mounted. "
 		"For example, if you want to put it under /usr/local, then "
 		"respond: /usr/local\n\nWhere would you like to mount this "
-		"partition?", 0, 0, "", 0);
+		"partition?", 0, 0, "", 0) == -1)
+		return(NULL);
 	return(strdup(dialog_vars.input_result));
 }
 
@@ -444,7 +456,7 @@ int run(GList **config)
 	PedDevice *dev = NULL;
 	PedDisk *disk = NULL;
 	GList *partlist;
-	char **nrdevs, *ptr, *op, *np;
+	char **nrdevs, *ptr, *op, *np, *dest;
 	int ret;
 	char my_buffer[MAX_LEN + 1] = "";
 
@@ -471,13 +483,19 @@ int run(GList **config)
 
 	// select swap partitions to use
 	partlist = selswap();
+	if(partlist == NULL)
+		return(-1);
 
 	// format swap partitions
-	doswap(partlist, config);
+	if(doswap(partlist, config) == -1)
+		return(-1);
 
 	// root partition
 	ptr = selrootdev();
-	formatdev(ptr);
+	if(ptr == NULL)
+		return(-1);
+	if(formatdev(ptr) == -1);
+		return(-1);
 	mountdev(ptr, "/", config);
 
 	// move temporarily stuff to the final location
@@ -552,8 +570,12 @@ int run(GList **config)
 			if(!strcmp(_("(in use)"), dialog_vars.input_result))
 				continue;
 			ptr = strdup(dialog_vars.input_result);
-			formatdev(ptr);
-			mountdev(ptr, asktowhere(ptr), config);
+			if(formatdev(ptr) == -1)
+				return(-1);
+			dest = asktowhere(ptr);
+			if(dest == NULL)
+				return(-1);
+			mountdev(ptr, dest, config);
 			FREE(ptr);
 		}
 		else

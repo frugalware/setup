@@ -35,7 +35,8 @@ extern GList *plugin_list;
 
 plugin_t plugin =
 {
-	"skel",
+	"install",
+	"Installing the selected packages",
 	50,
 	run,
 	NULL // dlopen handle

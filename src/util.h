@@ -72,3 +72,4 @@ int plugin_next();
 #endif
 
 void signal_handler(int signum);
+void show_menu(GList *plugin_list, int *state);

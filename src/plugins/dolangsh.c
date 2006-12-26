@@ -30,6 +30,7 @@
 plugin_t plugin =
 {
 	"dolangsh",
+	"Writing the language configuration file",
 	05,
 	run,
 	NULL // dlopen handle

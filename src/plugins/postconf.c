@@ -30,6 +30,7 @@
 plugin_t plugin =
 {
 	"postconf",
+	"Configuring the installed system",
 	55,
 	run,
 	NULL // dlopen handle

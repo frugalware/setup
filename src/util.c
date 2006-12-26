@@ -418,19 +418,15 @@ int fw_menu(const char *title, const char *cprompt, int height, int width,
 	int ret;
 	char my_buffer[MAX_LEN + 1] = "";
 
-	while(1)
-	{
-		dialog_vars.input_result = my_buffer;
-		dlg_put_backtitle();
-		dlg_clear();
-		ret = dialog_menu(title, cprompt, height, width, menu_height,
-			item_no, items);
-		if (ret != DLG_EXIT_CANCEL)
-			break;
-		if(exit_confirm())
-			exit_perform();
-	}
-	return(0);
+	dialog_vars.input_result = my_buffer;
+	dlg_put_backtitle();
+	dlg_clear();
+	ret = dialog_menu(title, cprompt, height, width, menu_height,
+		item_no, items);
+	if (ret != DLG_EXIT_CANCEL)
+		return(0);
+	else
+		return(-1);
 }
 
 int fw_inputbox(const char *title, const char *cprompt, int height, int width,
@@ -439,19 +435,15 @@ int fw_inputbox(const char *title, const char *cprompt, int height, int width,
 	int ret;
 	char my_buffer[MAX_LEN + 1] = "";
 
-	while(1)
-	{
-		dialog_vars.input_result = my_buffer;
-		dlg_put_backtitle();
-		dlg_clear();
-		ret = dialog_inputbox(title, cprompt, height, width, init,
-			password);
-		if (ret != DLG_EXIT_CANCEL)
-			break;
-		if(exit_confirm())
-			exit_perform();
-	}
-	return(ret);
+	dialog_vars.input_result = my_buffer;
+	dlg_put_backtitle();
+	dlg_clear();
+	ret = dialog_inputbox(title, cprompt, height, width, init,
+		password);
+	if (ret != DLG_EXIT_CANCEL)
+		return(0);
+	else
+		return(-1);
 }
 
 int fw_init_dialog(void)
@@ -494,16 +486,11 @@ GList* fw_checklist(const char *title, const char *cprompt, int height,
 	char *ptr, *ptrn;
 	GList *list=NULL;
 
-	while(1)
-	{
-		dialog_vars.input_result = my_buffer;
-		ret = dialog_checklist(title, cprompt, height, width,
-			menu_height, item_no, items, flag);
-		if (ret != DLG_EXIT_CANCEL)
-			break;
-		if(exit_confirm())
-			exit_perform();
-	}
+	dialog_vars.input_result = my_buffer;
+	ret = dialog_checklist(title, cprompt, height, width,
+		menu_height, item_no, items, flag);
+	if (ret == DLG_EXIT_CANCEL)
+		return(NULL);
 
 	if(strlen(dialog_vars.input_result)==0)
 		// no item selected
@@ -616,4 +603,48 @@ void signal_handler(int signum)
 	} else {
 		exit_perform();
 	}
+}
+
+void show_menu(GList *plugin_list, int *state)
+{
+	GList *menu = NULL;
+	char **items;
+	int i;
+	plugin_t *plugin;
+	int ret;
+	char my_buffer[MAX_LEN + 1] = "";
+
+	for(i=0;i<g_list_length(plugin_list);i++)
+	{
+		plugin = g_list_nth_data(plugin_list, i);
+		menu = g_list_append(menu, plugin->name);
+		menu = g_list_append(menu, plugin->desc);
+	}
+	items = glist2dialog(menu);
+
+	dialog_vars.backtitle=gen_backtitle(_("Selecting a task"));
+	dlg_put_backtitle();
+	dlg_clear();
+	while(1)
+	{
+		dialog_vars.input_result = my_buffer;
+		dlg_put_backtitle();
+		dlg_clear();
+		ret = dialog_menu(_("Select task to continue with"),
+		_("You selected to change the way normally Frugalware is "
+			"installed. Here are the list of tasks you can continue "
+			"with:"),
+		0, 0, 0, g_list_length(menu)/2, items);
+		if (ret != DLG_EXIT_CANCEL)
+			break;
+		if(exit_confirm())
+			exit_perform();
+	}
+	for(i=0;i<g_list_length(plugin_list);i++)
+	{
+		plugin = g_list_nth_data(plugin_list, i);
+		if(!strcmp(plugin->name, dialog_vars.input_result))
+			*state = i;
+	}
+	free(items);
 }

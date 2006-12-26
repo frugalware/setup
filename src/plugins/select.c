@@ -37,6 +37,7 @@
 plugin_t plugin =
 {
 	"select",
+	"Selecting packages",
 	45,
 	run,
 	NULL // dlopen handle
@@ -404,6 +405,8 @@ int fw_select(GList **config, int selpkgc, GList *syncs)
 		0, 0, 0);
 	prepare_pkgdb(PACCONF, config, &syncs);
 	cats = selcat(g_list_nth_data(syncs, 1), syncs);
+	if(cats == NULL)
+		return(-1);
 	if(!selpkgc)
 	{
 		dlg_put_backtitle();
@@ -414,7 +417,11 @@ int fw_select(GList **config, int selpkgc, GList *syncs)
 	{
 		GList *pkgs=NULL;
 		if(selpkgc)
+		{
 			pkgs = selpkg(strdup((char*)g_list_nth_data(cats, i)), syncs);
+			if(pkgs == NULL)
+				return(-1);
+		}
 		else
 			pkgs = group2pkgs(syncs, strdup((char*)g_list_nth_data(cats, i)), 0);
 		for(j=0;j<g_list_length(pkgs);j++)
@@ -482,7 +489,8 @@ int run(GList **config)
 
 	selpkgc = selpkg_confirm();
 	chdir(TARGETDIR);
-	fw_select(config, selpkgc, syncs);
+	if(fw_select(config, selpkgc, syncs) == -1)
+		return(-1);
 	alpm_release();
 	return(0);
 }

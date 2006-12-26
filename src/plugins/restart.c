@@ -35,6 +35,7 @@
 plugin_t plugin =
 {
 	"restart",
+	"Restarting your computer",
 	95,
 	run,
 	NULL // dlopen handle

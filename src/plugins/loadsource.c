@@ -40,6 +40,7 @@
 plugin_t plugin =
 {
 	"loadsource",
+	"Loading the installation source",
 	25,
 	run,
 	NULL // dlopen handle

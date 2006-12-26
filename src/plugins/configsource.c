@@ -36,6 +36,7 @@
 plugin_t plugin =
 {
 	"configsource",
+	"Configuring the source of the installation",
 	30,
 	run,
 	NULL // dlopen handle

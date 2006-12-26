@@ -35,6 +35,7 @@
 plugin_t plugin =
 {
 	"greet",
+	"Welcome splash",
 	10,
 	run,
 	NULL // dlopen handle

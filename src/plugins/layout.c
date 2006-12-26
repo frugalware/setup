@@ -41,6 +41,7 @@ GList *layoutl;
 plugin_t plugin =
 {
 	"layout",
+	"Selecting the keyboard map",
 	15,
 	run,
 	NULL // dlopen handle
@@ -93,12 +94,13 @@ int run(GList **config)
 	dialog_vars.backtitle=gen_backtitle(_("Configuring the keyboard"));
 	dlg_put_backtitle();
 	dlg_clear();
-	fw_menu(_("Keyboard map selection"),
+	if(fw_menu(_("Keyboard map selection"),
 		_("You may select one of the following keyboard maps. If you "
 		"do not select a keyboard map, 'qwerty/us.map.gz' (the US "
 		"keyboard map) is the default. Use the UP/DOWN arrow keys and "
 		"PageUp/PageDown to scroll through the whole list of choices."),
-		0, 0, 0, g_list_length(layoutl), array);
+		0, 0, 0, g_list_length(layoutl), array) == -1)
+		return(-1);
 	ptr=strdup(dialog_vars.input_result);
 
 	FREE(array);

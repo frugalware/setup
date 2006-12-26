@@ -133,10 +133,15 @@ int main(int argc, char *argv[])
 
 	plugin_list = g_list_sort(plugin_list, sort_plugins);
 #ifdef DIALOG
-	for (i=0; i<g_list_length(plugin_list); i++)
+	for (i=0; i<g_list_length(plugin_list);)
 	{
 		plugin = g_list_nth_data(plugin_list, i);
-		plugin->run(&config);
+		/* if an error occured, then show the setup menu, otherwise
+		 * just jump to the next plugin */
+		if (plugin->run(&config) == -1)
+			show_menu(plugin_list, &i);
+		else
+			i++;
 		if(dialog_vars.input_result)
 			dialog_vars.input_result[0]='\0';
 	}

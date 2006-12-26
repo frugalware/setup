@@ -64,6 +64,7 @@
 typedef struct
 {
 	char *name;
+	char *desc;
 	int priority;
 	int (*run)(GList **config);
 	void *handle;
