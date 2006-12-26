@@ -25,6 +25,7 @@ TESTING = false
 DEBUG = false
 KERNELV = $(shell echo $(KERNELVER)|sed 's/-.*//')
 KERNELREL = $(shell echo $(KERNELVER)|sed 's/.*-//')
+DESTDIR = $(shell source /etc/repoman.conf; [ -e ~/.repoman.conf ] && source ~/.repoman.conf; echo $$fst_root)
 
 CLEANUP = rm -rf $(BDIR) && mkdir $(BDIR) && rm -rf $@
 UNPACK = cd $(BDIR) && tar xf $(CDIR)/$@-$($(shell echo $@|tr '[a-z]' '[A-Z]')VER)-$(CARCH).fpm
@@ -67,6 +68,13 @@ clean:
 	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img.gz
 	rm -rf $(packages) vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	$(MAKE) -C src clean
+
+install:
+ifeq ($(STABLE),false)
+	cp vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz $(DESTDIR)/frugalware-current/boot/
+else
+	cp vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz $(DESTDIR)/frugalware-stable/boot/
+endif
 
 distclean: clean
 	rm -rf config.mak
