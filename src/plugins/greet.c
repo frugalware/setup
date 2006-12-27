@@ -35,11 +35,16 @@
 plugin_t plugin =
 {
 	"greet",
-	"Welcome splash",
+	desc,
 	10,
 	run,
 	NULL // dlopen handle
 };
+
+char *desc()
+{
+	return _("Welcome splash");
+}
 
 plugin_t *info()
 {

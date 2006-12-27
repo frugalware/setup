@@ -37,7 +37,7 @@
 plugin_t plugin =
 {
 	"select",
-	"Selecting packages",
+	desc,
 	45,
 	run,
 	NULL // dlopen handle
@@ -46,6 +46,11 @@ plugin_t plugin =
 plugin_t *info()
 {
 	return &plugin;
+}
+
+char *desc()
+{
+	return _("Selecting packages");
 }
 
 PM_DB *mydatabase;

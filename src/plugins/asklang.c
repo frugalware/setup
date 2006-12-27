@@ -56,7 +56,7 @@ char *langs[] =
 plugin_t plugin =
 {
 	"asklang",
-	"Selecting language",
+	desc,
 	01,
 	run,
 	NULL // dlopen handle
@@ -65,6 +65,11 @@ plugin_t plugin =
 plugin_t *info()
 {
 	return &plugin;
+}
+
+char *desc()
+{
+	return _("Selecting language");
 }
 
 int setcharset(char *name, GList **config)

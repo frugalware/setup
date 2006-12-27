@@ -29,7 +29,7 @@
 plugin_t plugin =
 {
 	"skel",
-	"Sample description",
+	desc,
 	99,
 	run,
 	NULL // dlopen handle
@@ -38,6 +38,11 @@ plugin_t plugin =
 plugin_t *info()
 {
 	return &plugin;
+}
+
+char *desc()
+{
+	return _("Sample description");
 }
 
 int run(GList **config)

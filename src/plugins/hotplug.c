@@ -35,7 +35,7 @@
 plugin_t plugin =
 {
 	"hotplug",
-	"Detecting hardware",
+	desc,
 	20,
 	run,
 	NULL // dlopen handle
@@ -44,6 +44,11 @@ plugin_t plugin =
 plugin_t *info()
 {
 	return &plugin;
+}
+
+char *desc()
+{
+	return _("Detecting hardware");
 }
 
 int run(GList **config)

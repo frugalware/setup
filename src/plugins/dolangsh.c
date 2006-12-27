@@ -30,7 +30,7 @@
 plugin_t plugin =
 {
 	"dolangsh",
-	"Writing the language configuration file",
+	desc,
 	05,
 	run,
 	NULL // dlopen handle
@@ -39,6 +39,11 @@ plugin_t plugin =
 plugin_t *info()
 {
 	return &plugin;
+}
+
+char *desc()
+{
+	return _("Writing the language configuration file");
 }
 
 int run(GList **config)

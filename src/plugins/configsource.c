@@ -36,7 +36,7 @@
 plugin_t plugin =
 {
 	"configsource",
-	"Configuring the source of the installation",
+	desc,
 	30,
 	run,
 	NULL // dlopen handle
@@ -45,6 +45,11 @@ plugin_t plugin =
 plugin_t *info()
 {
 	return &plugin;
+}
+
+char *desc()
+{
+	return _("Configuring the source of the installation");
 }
 
 char *firstmirror(char *fn)

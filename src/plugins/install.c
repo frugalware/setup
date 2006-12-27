@@ -36,7 +36,7 @@ extern GList *plugin_list;
 plugin_t plugin =
 {
 	"install",
-	"Installing the selected packages",
+	desc,
 	50,
 	run,
 	NULL // dlopen handle
@@ -45,6 +45,11 @@ plugin_t plugin =
 plugin_t *info()
 {
 	return &plugin;
+}
+
+char *desc()
+{
+	return _("Installing the selected packages");
 }
 
 int installpkgs_forreal(GList *pkgs)

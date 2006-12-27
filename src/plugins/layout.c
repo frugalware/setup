@@ -41,7 +41,7 @@ GList *layoutl;
 plugin_t plugin =
 {
 	"layout",
-	"Selecting the keyboard map",
+	desc,
 	15,
 	run,
 	NULL // dlopen handle
@@ -50,6 +50,11 @@ plugin_t plugin =
 plugin_t *info()
 {
 	return &plugin;
+}
+
+char *desc()
+{
+	return _("Selecting the keyboard map");
 }
 
 int find(char *dirname)

@@ -37,7 +37,7 @@
 plugin_t plugin =
 {
 	"partdisk",
-	"Partitioning the disk drives",
+	desc,
 	35,
 	run,
 	NULL // dlopen handle
@@ -46,6 +46,11 @@ plugin_t plugin =
 plugin_t *info()
 {
 	return &plugin;
+}
+
+char *desc()
+{
+	return _("Partitionong the disk drives");
 }
 
 int buggy_md0()

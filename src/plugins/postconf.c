@@ -30,7 +30,7 @@
 plugin_t plugin =
 {
 	"postconf",
-	"Configuring the installed system",
+	desc,
 	55,
 	run,
 	NULL // dlopen handle
@@ -39,6 +39,11 @@ plugin_t plugin =
 plugin_t *info()
 {
 	return &plugin;
+}
+
+char *desc()
+{
+	return _("Configuring the installed system");
 }
 
 int has_rootpw(char *fn)

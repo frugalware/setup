@@ -40,7 +40,7 @@
 plugin_t plugin =
 {
 	"loadsource",
-	"Loading the installation source",
+	desc,
 	25,
 	run,
 	NULL // dlopen handle
@@ -49,6 +49,11 @@ plugin_t plugin =
 plugin_t *info()
 {
 	return &plugin;
+}
+
+char *desc()
+{
+	return _("Loading the installation source");
 }
 
 GList *extract_drives(char *line)

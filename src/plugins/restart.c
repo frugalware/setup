@@ -35,7 +35,7 @@
 plugin_t plugin =
 {
 	"restart",
-	"Restarting your computer",
+	desc,
 	95,
 	run,
 	NULL // dlopen handle
@@ -44,6 +44,11 @@ plugin_t plugin =
 plugin_t *info()
 {
 	return &plugin;
+}
+
+char *desc()
+{
+	return _("Restarting your computer");
 }
 
 static void umount_targets()
