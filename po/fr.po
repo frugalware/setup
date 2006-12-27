@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: setup\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-08 17:26+0100\n"
+"POT-Creation-Date: 2006-12-27 15:39+0100\n"
 "PO-Revision-Date: 2006-09-10 03:10+0100\n"
 "Last-Translator: Enda <enda@netou.com>\n"
 "Language-Team: \n"
@@ -17,23 +17,32 @@ msgstr ""
 "X-Poedit-Language: French\n"
 "X-Poedit-Country: FRANCE\n"
 
-#: ../src/plugins/configsource.c:57 ../src/plugins/configsource.c:89
-#: ../src/plugins/configsource.c:94 ../src/plugins/dolangsh.c:52
-#: ../src/plugins/formatdisk.c:233 ../src/plugins/formatdisk.c:376
-#: ../src/plugins/layout.c:115 ../src/plugins/loadsource.c:76
-#: ../src/plugins/select.c:330 ../src/util.c:308
+#: ../src/plugins/asklang.c:72
+#, fuzzy
+msgid "Selecting language"
+msgstr "Sélection des paquets"
+
+#: ../src/plugins/configsource.c:52
+msgid "Configuring the source of the installation"
+msgstr ""
+
+#: ../src/plugins/configsource.c:63 ../src/plugins/configsource.c:95
+#: ../src/plugins/configsource.c:100 ../src/plugins/dolangsh.c:58
+#: ../src/plugins/formatdisk.c:244 ../src/plugins/formatdisk.c:394
+#: ../src/plugins/layout.c:122 ../src/plugins/loadsource.c:82
+#: ../src/plugins/select.c:336 ../src/util.c:308
 msgid "Could not open output file for writing"
 msgstr "N'a pas pu ouvrir le fichier en mode écriture"
 
-#: ../src/plugins/configsource.c:124
+#: ../src/plugins/configsource.c:130
 msgid "Selecting a mirror"
 msgstr "Sélection d'un miroir"
 
-#: ../src/plugins/configsource.c:130
+#: ../src/plugins/configsource.c:136
 msgid "Please select a mirror"
 msgstr "Veuillez sélectionner un miroir"
 
-#: ../src/plugins/configsource.c:130
+#: ../src/plugins/configsource.c:136
 msgid ""
 "You may now specify the mirror closest to you in order to download the "
 "packages faster. In most cases the default value will be fine."
@@ -42,49 +51,58 @@ msgstr ""
 "de télécharger les paquets plus rapidement. Dans la plupart des cas le choix "
 "par défaut est correct."
 
-#: ../src/plugins/configsource.c:153 ../src/plugins/hotplug.c:53
-#: ../src/plugins/select.c:401 ../src/plugins/select.c:408
-#: ../src/plugins/select.c:436
+#: ../src/plugins/configsource.c:159 ../src/plugins/hotplug.c:59
+#: ../src/plugins/select.c:409 ../src/plugins/select.c:418
+#: ../src/plugins/select.c:450
 msgid "Please wait"
 msgstr "Veuillez attendre"
 
-#: ../src/plugins/configsource.c:153
+#: ../src/plugins/configsource.c:159
 msgid "Configuring the network interface..."
 msgstr "Configuration de l'interface réseau..."
 
-#: ../src/plugins/formatdisk.c:144
+#: ../src/plugins/dolangsh.c:46
+msgid "Writing the language configuration file"
+msgstr ""
+
+#: ../src/plugins/formatdisk.c:50
+#, fuzzy
+msgid "Formatting the selected partitions"
+msgstr "Formatage des partitions"
+
+#: ../src/plugins/formatdisk.c:152
 msgid "Setting up swap space"
 msgstr "Mise en place de l'espace de swap"
 
-#: ../src/plugins/formatdisk.c:147
+#: ../src/plugins/formatdisk.c:155
 msgid "Setting up swap partitions"
 msgstr "Mise en place des partitions de swap"
 
-#: ../src/plugins/formatdisk.c:148
+#: ../src/plugins/formatdisk.c:156
 msgid "Please select which swap partitions you want Frugalware to use:"
 msgstr ""
 "Veuillez sélectionner quelles partition de swap vous souhaitez que "
 "Frugalware utilise:"
 
-#: ../src/plugins/formatdisk.c:159 ../src/plugins/formatdisk.c:181
+#: ../src/plugins/formatdisk.c:167 ../src/plugins/formatdisk.c:190
 msgid "Quick format with no bad block checking"
 msgstr "Formatage rapide sans analyse des blocs défectueux"
 
-#: ../src/plugins/formatdisk.c:160 ../src/plugins/formatdisk.c:182
+#: ../src/plugins/formatdisk.c:168 ../src/plugins/formatdisk.c:191
 msgid "Slow format that checks for bad blocks"
 msgstr "Formatage lent avec contrôle des blocs défectueux"
 
-#: ../src/plugins/formatdisk.c:163 ../src/plugins/formatdisk.c:186
-#: ../src/plugins/formatdisk.c:210
+#: ../src/plugins/formatdisk.c:171 ../src/plugins/formatdisk.c:195
+#: ../src/plugins/formatdisk.c:220
 msgid "Formatting partitions"
 msgstr "Formatage des partitions"
 
-#: ../src/plugins/formatdisk.c:166 ../src/plugins/formatdisk.c:189
+#: ../src/plugins/formatdisk.c:174 ../src/plugins/formatdisk.c:198
 #, c-format
 msgid "Format %s"
 msgstr "Formate %s"
 
-#: ../src/plugins/formatdisk.c:167 ../src/plugins/formatdisk.c:190
+#: ../src/plugins/formatdisk.c:175 ../src/plugins/formatdisk.c:199
 #, c-format
 msgid ""
 "If %s has not been formatted, you should format it.\n"
@@ -95,59 +113,59 @@ msgstr ""
 "NOTE: Ceci va effacer toutes les données sur %s. Êtes vous sur de vouloir "
 "formater cette partition?"
 
-#: ../src/plugins/formatdisk.c:183
+#: ../src/plugins/formatdisk.c:192
 msgid "Do not format, just mount the partition"
 msgstr "Ne pas formater, simplement monter la partition"
 
-#: ../src/plugins/formatdisk.c:204
+#: ../src/plugins/formatdisk.c:214
 msgid "Standard Linux ext2fs filesystem"
 msgstr "Système de fichier standard ext2fs"
 
-#: ../src/plugins/formatdisk.c:205
+#: ../src/plugins/formatdisk.c:215
 msgid "Journalising version of the ext2fs filesystem"
 msgstr "Version journalisé du système de fichiers ext2fs"
 
-#: ../src/plugins/formatdisk.c:206
+#: ../src/plugins/formatdisk.c:216
 msgid "Hans Reiser's journalising filesystem"
 msgstr "Système de fichiers journalisé de Hans Raiser"
 
-#: ../src/plugins/formatdisk.c:207
+#: ../src/plugins/formatdisk.c:217
 msgid "SGI's journalising filesystem"
 msgstr "Système de fichiers journalisé de SGI"
 
-#: ../src/plugins/formatdisk.c:214
+#: ../src/plugins/formatdisk.c:224
 #, c-format
 msgid "Selecting filesystem for %s"
 msgstr "Sélectionne le système de fichiers pour %s"
 
-#: ../src/plugins/formatdisk.c:215
+#: ../src/plugins/formatdisk.c:225
 #, c-format
 msgid "Please select the type of filesystem to use for %s."
 msgstr "Veuillez sélectionner le système de fichiers a utiliser pour %s"
 
-#: ../src/plugins/formatdisk.c:255 ../src/plugins/formatdisk.c:262
+#: ../src/plugins/formatdisk.c:268 ../src/plugins/formatdisk.c:275
 msgid "Formatting swap partition"
 msgstr "Formate la partition de swap"
 
-#: ../src/plugins/formatdisk.c:256
+#: ../src/plugins/formatdisk.c:269
 #, c-format
 msgid "Formatting %s as a swap partition"
 msgstr "Formate %s en tant que partition de swap"
 
-#: ../src/plugins/formatdisk.c:263
+#: ../src/plugins/formatdisk.c:276
 #, c-format
 msgid "Formatting %s as a swap partition and checking for bad blocks"
 msgstr "Formate %s en tant que partition de swap et la vérifie"
 
-#: ../src/plugins/formatdisk.c:284
+#: ../src/plugins/formatdisk.c:297
 msgid "Setting up the root partition"
 msgstr "Définir la partition racine"
 
-#: ../src/plugins/formatdisk.c:286
+#: ../src/plugins/formatdisk.c:299
 msgid "Select the Linux installation partition"
 msgstr "Sélection de la partition d'installation Linux"
 
-#: ../src/plugins/formatdisk.c:287
+#: ../src/plugins/formatdisk.c:300
 msgid ""
 "Please select a partition from the following list to use for your root (/) "
 "partition. The following ones are available:"
@@ -155,49 +173,49 @@ msgstr ""
 "Veuillez sélectionner une partition à utiliser en que partition racine (/) "
 "depuis la liste suivante. Sont disponibles:"
 
-#: ../src/plugins/formatdisk.c:299
+#: ../src/plugins/formatdisk.c:313
 msgid "Formatting"
 msgstr "Formate"
 
-#: ../src/plugins/formatdisk.c:300
+#: ../src/plugins/formatdisk.c:314
 #, c-format
 msgid "Creating %s filesystem on %s and checking for bad blocks"
 msgstr ""
 "Crée le système de fichier %s sur %s et vérifie les secteurs défectueux..."
 
-#: ../src/plugins/formatdisk.c:301
+#: ../src/plugins/formatdisk.c:315
 #, c-format
 msgid "Creating %s filesystem on %s"
 msgstr "Crée le système de fichier %s sur %s"
 
-#: ../src/plugins/formatdisk.c:398
+#: ../src/plugins/formatdisk.c:416
 #, c-format
 msgid "Select mount point for %s"
 msgstr "Sélectionner le point de montage pour %s"
 
-#: ../src/plugins/formatdisk.c:418 ../src/plugins/formatdisk.c:552
+#: ../src/plugins/formatdisk.c:437 ../src/plugins/formatdisk.c:587
 msgid "(in use)"
 msgstr "(utilisé)"
 
-#: ../src/plugins/formatdisk.c:426
+#: ../src/plugins/formatdisk.c:445
 #, fuzzy, c-format
 msgid "%s on %s/\t%s"
 msgstr "%s sur %s\t%s"
 
 #. non-root partitions
-#: ../src/plugins/formatdisk.c:525
+#: ../src/plugins/formatdisk.c:560
 msgid "Selecting other partitions"
 msgstr "Sélectionner d'autres partitions"
 
-#: ../src/plugins/formatdisk.c:532 ../src/plugins/partdisk.c:171
+#: ../src/plugins/formatdisk.c:567 ../src/plugins/partdisk.c:179
 msgid "Continue"
 msgstr "Continuer"
 
-#: ../src/plugins/formatdisk.c:536
+#: ../src/plugins/formatdisk.c:571
 msgid "Select other Linux partitions for /etc/fstab"
 msgstr "Sélectionner d'autres partitions Linux pour /etc/fstab"
 
-#: ../src/plugins/formatdisk.c:537
+#: ../src/plugins/formatdisk.c:572
 msgid ""
 "You may use your other partitions to distribute your Linux system across "
 "more than one partition. Currently, you have only mounted your / partition. "
@@ -218,16 +236,21 @@ msgstr ""
 "que vous venez de monter. Veuillez sélectionner une des partitions listées "
 "ci dessous, ou, si vous avez terminé, presser Continuer."
 
-#: ../src/plugins/greet.c:53
+#: ../src/plugins/greet.c:46
+#, fuzzy
+msgid "Welcome splash"
+msgstr "Bienvenue à %s"
+
+#: ../src/plugins/greet.c:59
 #, c-format
 msgid "Welcome to %s"
 msgstr "Bienvenue à %s"
 
-#: ../src/plugins/greet.c:55
+#: ../src/plugins/greet.c:61
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: ../src/plugins/greet.c:58
+#: ../src/plugins/greet.c:64
 msgid ""
 "Welcome among the users of Frugalware!\n"
 "\n"
@@ -244,23 +267,28 @@ msgstr ""
 "\n"
 "L'équipe de Développeurs Frugalware"
 
-#: ../src/plugins/hotplug.c:50
+#: ../src/plugins/hotplug.c:51 ../src/plugins/hotplug.c:56
 msgid "Detecting hardware"
 msgstr "Détection du matériel"
 
-#: ../src/plugins/hotplug.c:53
+#: ../src/plugins/hotplug.c:59
 msgid "Scanning for SCSI and PCI cards"
 msgstr "Recherche les cartes SCSI et PCI"
 
-#: ../src/plugins/layout.c:93
+#: ../src/plugins/layout.c:57
+#, fuzzy
+msgid "Selecting the keyboard map"
+msgstr "Configuration du clavier"
+
+#: ../src/plugins/layout.c:99
 msgid "Configuring the keyboard"
 msgstr "Configuration du clavier"
 
-#: ../src/plugins/layout.c:96
+#: ../src/plugins/layout.c:102
 msgid "Keyboard map selection"
 msgstr "Sélection de la disposition du clavier"
 
-#: ../src/plugins/layout.c:97
+#: ../src/plugins/layout.c:103
 msgid ""
 "You may select one of the following keyboard maps. If you do not select a "
 "keyboard map, 'qwerty/us.map.gz' (the US keyboard map) is the default. Use "
@@ -273,70 +301,78 @@ msgstr ""
 "touches Page Supérieure/Page Inférieure pour vous déplacer dans la liste de "
 "choix."
 
-#: ../src/plugins/loadsource.c:109
+#: ../src/plugins/loadsource.c:56
+msgid "Loading the installation source"
+msgstr ""
+
+#: ../src/plugins/loadsource.c:115
 msgid "Selecting source media"
 msgstr "Sélection du média source"
 
-#: ../src/plugins/loadsource.c:112
+#: ../src/plugins/loadsource.c:118
 msgid "Scanning"
 msgstr "Détection"
 
-#: ../src/plugins/loadsource.c:112
+#: ../src/plugins/loadsource.c:118
 msgid "Scanning for a CD/DVD drive containing a Frugalware install disc..."
 msgstr ""
 "Recherche d'un CD/DVD contenant un disque d'installation de Frugalware ..."
 
-#: ../src/plugins/loadsource.c:122
+#: ../src/plugins/loadsource.c:128
 msgid "CD/DVD drive found"
 msgstr "Lecteur CD/DVD trouvé"
 
-#: ../src/plugins/loadsource.c:122
+#: ../src/plugins/loadsource.c:128
 #, c-format
 msgid "A Frugalware install disc was found in device /dev/%s."
 msgstr ""
 "Aucun disque d'installation de Frugalware n'a été trouvé sur le matériel /"
 "dev/%s"
 
-#: ../src/plugins/partdisk.c:108
+#: ../src/plugins/partdisk.c:53
+msgid "Partitionong the disk drives"
+msgstr ""
+
+#: ../src/plugins/partdisk.c:114
 msgid "User friendly (curses based) version of fdisk"
 msgstr "Version 'amicale' (basée sur curses) de fdisk"
 
-#: ../src/plugins/partdisk.c:109
+#: ../src/plugins/partdisk.c:115
 msgid "The traditional partitioning program for Linux"
 msgstr "L'outil de partitionnement traditionnel de Linux"
 
-#: ../src/plugins/partdisk.c:110
+#: ../src/plugins/partdisk.c:116
 msgid "A partition manipulation program"
 msgstr "Un programme de partitionnement"
 
-#: ../src/plugins/partdisk.c:113 ../src/plugins/partdisk.c:157
+#: ../src/plugins/partdisk.c:119 ../src/plugins/partdisk.c:165
 msgid "Creating partitions"
 msgstr "Création des partitions"
 
-#: ../src/plugins/partdisk.c:116
+#: ../src/plugins/partdisk.c:122
 msgid "Select partitioning program"
 msgstr "Sélection du programme de partitionnement"
 
-#: ../src/plugins/partdisk.c:117
+#: ../src/plugins/partdisk.c:123
 msgid "Select the program you want to use for partitioning:"
 msgstr ""
 "Sélectionnez le programme que vous souhaitez utiliser pour partitionner:"
 
-#: ../src/plugins/partdisk.c:128
+#: ../src/plugins/partdisk.c:135
 msgid "Want to create RAID?"
 msgstr "Vous voulez créer un RAID?"
 
-#: ../src/plugins/partdisk.c:129
+#: ../src/plugins/partdisk.c:136
 msgid "Do you want to create software raid partitions during partitioning?"
 msgstr ""
 "Voulez vous créer des partitions en raid logiciel pendant l'étape de "
 "partitionnement?"
 
-#: ../src/plugins/partdisk.c:151
+#: ../src/plugins/partdisk.c:159
 msgid "Disk drive not found"
 msgstr "Disque dur non trouvé"
 
-#: ../src/plugins/partdisk.c:151
+#: ../src/plugins/partdisk.c:159
 msgid ""
 "Sorry, no hard disk drives were found in this computer. Press ENTER to "
 "reboot."
@@ -344,26 +380,30 @@ msgstr ""
 "Désolé, aucun disque dur n'a été trouvé dans l'ordinateur. Appuyer sur "
 "entrée pour redémarrer"
 
-#: ../src/plugins/partdisk.c:166
+#: ../src/plugins/partdisk.c:174
 msgid "Create RAID"
 msgstr "Créer un RAID"
 
-#: ../src/plugins/partdisk.c:174
+#: ../src/plugins/partdisk.c:182
 msgid "Select a hard disk to partition"
 msgstr "Sélectionner un disque dur à partitionner"
 
-#: ../src/plugins/partdisk.c:175
+#: ../src/plugins/partdisk.c:183
 msgid ""
 "Please select a hard disk to partition. The following ones are available:"
 msgstr ""
 "Veuillez sélectionner un disque dur à partitionner. Les suivants sont "
 "disponibles:"
 
-#: ../src/plugins/restart.c:82 ../src/util.c:125
+#: ../src/plugins/restart.c:51
+msgid "Restarting your computer"
+msgstr ""
+
+#: ../src/plugins/restart.c:88 ../src/util.c:125
 msgid "Setup complete"
 msgstr "Installation terminée"
 
-#: ../src/plugins/restart.c:82
+#: ../src/plugins/restart.c:88
 #, c-format
 msgid ""
 "System installation and configuration is successfully completed. We hope "
@@ -374,23 +414,28 @@ msgstr ""
 "Nous espérons que vous prendrez plaisir avec %s. Veuillez retirer le média "
 "de votre lecteur et appuyer sur entrée pour redémarrer."
 
-#: ../src/plugins/select.c:254
-msgid "Selecting categories"
-msgstr "Sélection des catégories"
+#: ../src/plugins/skel.c:45
+msgid "Sample description"
+msgstr ""
 
-#: ../src/plugins/select.c:255
-msgid "Please select which categories to install:"
-msgstr "Veuillez sélectionner les catégories à installer:"
-
-#: ../src/plugins/select.c:272 ../src/plugins/select.c:398
+#: ../src/plugins/select.c:53 ../src/plugins/select.c:278
+#: ../src/plugins/select.c:406
 msgid "Selecting packages"
 msgstr "Sélection des paquets"
 
-#: ../src/plugins/select.c:285
+#: ../src/plugins/select.c:260
+msgid "Selecting categories"
+msgstr "Sélection des catégories"
+
+#: ../src/plugins/select.c:261
+msgid "Please select which categories to install:"
+msgstr "Veuillez sélectionner les catégories à installer:"
+
+#: ../src/plugins/select.c:291
 msgid "Use expert menus?"
 msgstr "Utiliser les menus experts?"
 
-#: ../src/plugins/select.c:286
+#: ../src/plugins/select.c:292
 msgid ""
 "If you like, you may select your packages from expert menus. Where the "
 "normal menu shows a choice like 'C compiler system', the expert menus show "
@@ -411,44 +456,48 @@ msgstr ""
 "standards, 'oui' pour le mode expert avec une sélection individuelle de "
 "chaque paquet."
 
-#: ../src/plugins/select.c:344 ../src/plugins/select.c:352
-#: ../src/plugins/select.c:362 ../src/plugins/select.c:366
+#: ../src/plugins/select.c:351 ../src/plugins/select.c:359
+#: ../src/plugins/select.c:369 ../src/plugins/select.c:373
 msgid "Error"
 msgstr ""
 
-#: ../src/plugins/select.c:344
+#: ../src/plugins/select.c:351
 #, c-format
-msgid "Failed to parse pacman configuration file (%s)"
+msgid "Failed to parse pacman-g2 configuration file (%s)"
 msgstr ""
 
-#: ../src/plugins/select.c:352
+#: ../src/plugins/select.c:359
 #, c-format
 msgid "Could not register '%s' database (%s)"
 msgstr ""
 
-#: ../src/plugins/select.c:362
+#: ../src/plugins/select.c:369
 #, c-format
 msgid "Failed to synchronize %s"
 msgstr ""
 
-#: ../src/plugins/select.c:366
+#: ../src/plugins/select.c:373
 #, c-format
 msgid "Failed to update %s (%s)"
 msgstr ""
 
-#: ../src/plugins/select.c:401
+#: ../src/plugins/select.c:409
 msgid "Searching for categories..."
 msgstr "Recherche des catégories ..."
 
-#: ../src/plugins/select.c:408
+#: ../src/plugins/select.c:418
 msgid "Searching for packages..."
 msgstr "Recherche de paquets ..."
 
-#: ../src/plugins/select.c:436
+#: ../src/plugins/select.c:450
 msgid "Searching for missing dependencies..."
 msgstr "Recherche de dépendances non satisfaites..."
 
-#: ../src/plugins/install.c:60
+#: ../src/plugins/install.c:52
+msgid "Installing the selected packages"
+msgstr ""
+
+#: ../src/plugins/install.c:66
 #, c-format
 msgid ""
 "Errors occured while installing selected packages.\n"
@@ -457,11 +506,11 @@ msgstr ""
 "Des erreurs sont survenu pendant l'installation des paquets sélectionnés.\n"
 "Appuyer sur entrée pour continuer..."
 
-#: ../src/plugins/install.c:80
+#: ../src/plugins/install.c:86
 msgid "Insert next disc"
 msgstr "Insérer le disque suivant"
 
-#: ../src/plugins/install.c:81
+#: ../src/plugins/install.c:87
 msgid ""
 "Please insert the next Frugalware install disc and press ENTER to continue "
 "installing packages. If you don't have more disk, choose NO, and then you "
@@ -472,11 +521,16 @@ msgstr ""
 "d'avantage de disques, choisissez non, et vous pourrez finir l'installation. "
 "Avez vous inséré le disque suivant?"
 
-#: ../src/plugins/postconf.c:74
+#: ../src/plugins/postconf.c:46
+#, fuzzy
+msgid "Configuring the installed system"
+msgstr "Configuration du clavier"
+
+#: ../src/plugins/postconf.c:80
 msgid "No root password detected"
 msgstr "Aucun mot de passe détecté pour le compte root"
 
-#: ../src/plugins/postconf.c:75
+#: ../src/plugins/postconf.c:81
 msgid ""
 "There is currently no password set on the system administrator account "
 "(root). It is recommended that you set one now so that it is active the "
@@ -490,11 +544,11 @@ msgstr ""
 "particulièrement important si votre machine est connectée à internet. Voulez "
 "vous définir un mot de passe pour le compte root ?"
 
-#: ../src/plugins/postconf.c:111
+#: ../src/plugins/postconf.c:117
 msgid "No normal user account detected"
 msgstr "Aucun compte utilisateur standard détecté"
 
-#: ../src/plugins/postconf.c:112
+#: ../src/plugins/postconf.c:118
 msgid ""
 "There is currently no non-root user account configured. It is strongly "
 "recommended to create one. Would you like to create a normal user account "
@@ -504,15 +558,15 @@ msgstr ""
 "fortement recommandé d'en créer un. Voulez vous créer un compte utilisateur "
 "standard maintenant?"
 
-#: ../src/plugins/postconf.c:140
+#: ../src/plugins/postconf.c:146
 msgid "Post-install configuration"
 msgstr "Configuration post-installation"
 
-#: ../src/plugins/postconf.c:152
+#: ../src/plugins/postconf.c:158
 msgid "Configuring kernel modules"
 msgstr "Configuration des modules du noyau"
 
-#: ../src/plugins/postconf.c:153
+#: ../src/plugins/postconf.c:159
 msgid "Updating module dependencies..."
 msgstr "Mise à jour du module de dépendances ..."
 
@@ -550,18 +604,33 @@ msgstr "Quitter l'installateur"
 msgid "Are you sure you want to exit from the installer?"
 msgstr "Êtes vous sur de vouloir quitter l'installateur"
 
-#: ../src/util.c:610
+#: ../src/util.c:597
 msgid "Oops"
 msgstr ""
 
-#: ../src/util.c:612
+#: ../src/util.c:599
 msgid "A problem has occurred"
 msgstr ""
 
-#: ../src/util.c:612
+#: ../src/util.c:599
 msgid ""
 "Internal error: Segmentation fault. Please report this issue to http://bugs."
 "frugalware.org"
+msgstr ""
+
+#: ../src/util.c:625
+#, fuzzy
+msgid "Selecting a task"
+msgstr "Sélection des paquets"
+
+#: ../src/util.c:633
+msgid "Select task to continue with"
+msgstr ""
+
+#: ../src/util.c:634
+msgid ""
+"You selected to change the way normally Frugalware is installed. Here are "
+"the list of tasks you can continue with:"
 msgstr ""
 
 #~ msgid "CD/DVD drive not found"
