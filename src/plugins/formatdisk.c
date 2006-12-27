@@ -25,6 +25,7 @@
 #include <string.h>
 #include <limits.h>
 #include <sys/stat.h>
+#include <sys/mount.h>
 
 #include <setup.h>
 #include <util.h>
@@ -46,6 +47,7 @@ plugin_t *info()
 
 GList *parts=NULL;
 GList *partschk=NULL;
+char *findmount(char *dev, int mode);
 
 int partdetails(PedPartition *part)
 {
@@ -307,6 +309,7 @@ int mkfss(char *dev, char *fs, int check)
 		_("Creating %s filesystem on %s and checking for bad blocks") :
 		_("Creating %s filesystem on %s"),
 		fs, dev));
+	umount(findmount(dev, 1));
 	if(!strcmp(fs, "ext2"))
 		return(fw_system(g_strdup_printf("mke2fs %s %s", opts, dev)));
 	else if(!strcmp(fs, "ext3"))
@@ -469,6 +472,7 @@ int run(GList **config)
 		g_list_free(partschk);
 		partschk = NULL;
 	}
+	chdir("/");
 
 	ped_exception_set_handler(peh);
 	ped_device_probe_all();
