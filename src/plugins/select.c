@@ -461,7 +461,7 @@ int fw_select(GList **config, int selpkgc, GList *syncs)
 }
 int run(GList **config)
 {
-	int selpkgc;
+	int selpkgc, ret = 0;
 	PM_DB *i;
 	GList *syncs=NULL;
 
@@ -490,7 +490,7 @@ int run(GList **config)
 	selpkgc = selpkg_confirm();
 	chdir(TARGETDIR);
 	if(fw_select(config, selpkgc, syncs) == -1)
-		return(-1);
+		ret = -1;
 	alpm_release();
-	return(0);
+	return(ret);
 }
