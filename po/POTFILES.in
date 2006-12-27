@@ -8,7 +8,6 @@ src/plugins/layout.c
 src/plugins/loadsource.c
 src/plugins/partdisk.c
 src/plugins/restart.c
-src/plugins/skel.c
 src/plugins/select.c
 src/plugins/install.c
 src/plugins/postconf.c
