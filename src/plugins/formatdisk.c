@@ -459,6 +459,17 @@ int run(GList **config)
 	int ret;
 	char my_buffer[MAX_LEN + 1] = "";
 
+	if(parts)
+	{
+		g_list_free(parts);
+		parts = NULL;
+	}
+	if(partschk)
+	{
+		g_list_free(partschk);
+		partschk = NULL;
+	}
+
 	ped_exception_set_handler(peh);
 	ped_device_probe_all();
 
