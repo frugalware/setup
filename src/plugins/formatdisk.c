@@ -492,7 +492,7 @@ int run(GList **config)
 	ptr = selrootdev();
 	if(ptr == NULL)
 		return(-1);
-	if(formatdev(ptr) == -1);
+	if(formatdev(ptr) == -1)
 		return(-1);
 	mountdev(ptr, "/", config);
 
