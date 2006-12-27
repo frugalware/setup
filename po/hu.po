@@ -1,30 +1,31 @@
-# translation of hu.po to Hungarian
+# translation of hu.po to
 # Hungarian translations for setup package.
 # Copyright (C) 2005 The Frugalware Development Team
 # This file is distributed under the same license as the setup package.
 #
 # Laszlo Dvornik <dvornik@gnome.hu>, 2005.
 # Miklos Vajna <vmiklos@frugalware.org>, 2006.
+# VMiklos <vmiklos@frugalware.org>, 2006.
 msgid ""
 msgstr ""
 "Project-Id-Version: hu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-12-27 15:39+0100\n"
-"PO-Revision-Date: 2006-10-08 21:04+0200\n"
-"Last-Translator: Miklos Vajna <vmiklos@frugalware.org>\n"
-"Language-Team: Hungarian <translation-team-hu@lists.sourceforge.net>\n"
+"PO-Revision-Date: 2006-12-27 15:58+0100\n"
+"Last-Translator: VMiklos <vmiklos@frugalware.org>\n"
+"Language-Team:  <hu@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-2\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../src/plugins/asklang.c:72
-#, fuzzy
 msgid "Selecting language"
-msgstr "Csomagok kiválasztása"
+msgstr "Nyelv kiválasztása"
 
 #: ../src/plugins/configsource.c:52
 msgid "Configuring the source of the installation"
-msgstr ""
+msgstr "A telepítés forrásának beállítása"
 
 #: ../src/plugins/configsource.c:63 ../src/plugins/configsource.c:95
 #: ../src/plugins/configsource.c:100 ../src/plugins/dolangsh.c:58
@@ -61,14 +62,12 @@ msgid "Configuring the network interface..."
 msgstr "Hálózati felület beállítása..."
 
 #: ../src/plugins/dolangsh.c:46
-#, fuzzy
 msgid "Writing the language configuration file"
-msgstr "Nem sikerült értelmezni a pacman beállítási fájlját (%s)"
+msgstr "A nyelvi beállítófájl megírása"
 
 #: ../src/plugins/formatdisk.c:50
-#, fuzzy
 msgid "Formatting the selected partitions"
-msgstr "Partíciók formázása"
+msgstr "A kiválasztott partíciók formázása"
 
 #: ../src/plugins/formatdisk.c:152
 msgid "Setting up swap space"
@@ -234,9 +233,8 @@ msgstr ""
 "Folytatást."
 
 #: ../src/plugins/greet.c:46
-#, fuzzy
 msgid "Welcome splash"
-msgstr "Üdvözli a %s"
+msgstr "Üdvözlõ képernyõ"
 
 #: ../src/plugins/greet.c:59
 #, c-format
@@ -272,9 +270,8 @@ msgid "Scanning for SCSI and PCI cards"
 msgstr "SCSI és PCI kártyák keresése"
 
 #: ../src/plugins/layout.c:57
-#, fuzzy
 msgid "Selecting the keyboard map"
-msgstr "A billentyûzet beállítása"
+msgstr "A billentyûzetkiosztás kiválasztása"
 
 #: ../src/plugins/layout.c:99
 msgid "Configuring the keyboard"
@@ -298,7 +295,7 @@ msgstr ""
 
 #: ../src/plugins/loadsource.c:56
 msgid "Loading the installation source"
-msgstr ""
+msgstr "A telepítési forrás betöltése"
 
 #: ../src/plugins/loadsource.c:115
 msgid "Selecting source media"
@@ -323,7 +320,7 @@ msgstr "Frugalware telepítõ lemez a /dev/%s eszközön"
 
 #: ../src/plugins/partdisk.c:53
 msgid "Partitionong the disk drives"
-msgstr ""
+msgstr "A merevlemezek particionálása"
 
 #: ../src/plugins/partdisk.c:114
 msgid "User friendly (curses based) version of fdisk"
@@ -347,8 +344,7 @@ msgstr "Particionáló program kiválasztása"
 
 #: ../src/plugins/partdisk.c:123
 msgid "Select the program you want to use for partitioning:"
-msgstr ""
-"Válassza ki, hogy melyik programot kívánja használni a particionáláshoz:"
+msgstr "Válassza ki, hogy melyik programot kívánja használni a particionáláshoz:"
 
 #: ../src/plugins/partdisk.c:135
 msgid "Want to create RAID?"
@@ -356,8 +352,7 @@ msgstr "Szeretne RAID-et építeni?"
 
 #: ../src/plugins/partdisk.c:136
 msgid "Do you want to create software raid partitions during partitioning?"
-msgstr ""
-"Létre szeretne hozni szoftveres RAID partíciókat a particionálás során?"
+msgstr "Létre szeretne hozni szoftveres RAID partíciókat a particionálás során?"
 
 #: ../src/plugins/partdisk.c:159
 msgid "Disk drive not found"
@@ -380,14 +375,12 @@ msgid "Select a hard disk to partition"
 msgstr "Válassza ki a particionálni kívánt merevlemezt"
 
 #: ../src/plugins/partdisk.c:183
-msgid ""
-"Please select a hard disk to partition. The following ones are available:"
-msgstr ""
-"Válassza ki a particionálni kívánt merevlemezt. A következõk érhetõek el:"
+msgid "Please select a hard disk to partition. The following ones are available:"
+msgstr "Válassza ki a particionálni kívánt merevlemezt. A következõk érhetõek el:"
 
 #: ../src/plugins/restart.c:51
 msgid "Restarting your computer"
-msgstr ""
+msgstr "A számítógép újraindítása"
 
 #: ../src/plugins/restart.c:88 ../src/util.c:125
 msgid "Setup complete"
@@ -406,7 +399,7 @@ msgstr ""
 
 #: ../src/plugins/skel.c:45
 msgid "Sample description"
-msgstr ""
+msgstr "Példa leírás"
 
 #: ../src/plugins/select.c:53 ../src/plugins/select.c:278
 #: ../src/plugins/select.c:406
@@ -452,9 +445,9 @@ msgid "Error"
 msgstr "Hiba"
 
 #: ../src/plugins/select.c:351
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to parse pacman-g2 configuration file (%s)"
-msgstr "Nem sikerült értelmezni a pacman beállítási fájlját (%s)"
+msgstr "Nem sikerült értelmezni a pacman-g2 beállítási fájlját (%s)"
 
 #: ../src/plugins/select.c:359
 #, c-format
@@ -485,7 +478,7 @@ msgstr "Hiányzó függõségek keresése..."
 
 #: ../src/plugins/install.c:52
 msgid "Installing the selected packages"
-msgstr ""
+msgstr "A kiválasztott csomagok telepítése"
 
 #: ../src/plugins/install.c:66
 #, c-format
@@ -511,9 +504,8 @@ msgstr ""
 "et, és befejezheti a telepítést. Behelyezte a következõ lemezt?"
 
 #: ../src/plugins/postconf.c:46
-#, fuzzy
 msgid "Configuring the installed system"
-msgstr "A billentyûzet beállítása"
+msgstr "A telepített rendszer beállítása"
 
 #: ../src/plugins/postconf.c:80
 msgid "No root password detected"
@@ -609,35 +601,16 @@ msgstr ""
 "frugalware.org címen."
 
 #: ../src/util.c:625
-#, fuzzy
 msgid "Selecting a task"
-msgstr "Csomagok kiválasztása"
+msgstr "Egy feladat kiválasztása"
 
 #: ../src/util.c:633
 msgid "Select task to continue with"
-msgstr ""
+msgstr "Válasszon ki egy feladatot amivel folytatni kívánja"
 
 #: ../src/util.c:634
 msgid ""
 "You selected to change the way normally Frugalware is installed. Here are "
 "the list of tasks you can continue with:"
-msgstr ""
+msgstr "Azt választotta, hogy nem a megszokott módon telepíti a Frugalware-t. Itt egy lista a választható feladatokról amikkel folytathatja:"
 
-#~ msgid "CD/DVD drive not found"
-#~ msgstr "CD/DVD meghajtÃ³ nem talÃ¡lhatÃ³"
-
-#~ msgid ""
-#~ "Sorry, no Frugalware install disc was found in any of your drives. Press "
-#~ "ENTER to reboot."
-#~ msgstr ""
-#~ "Sajnos egyik meghajtÃ³ban sem talÃ¡lhatÃ³ Frugalware telepÃ­tÅ‘lemez. "
-#~ "ÃœssÃ¶n ENTER-t az ÃºjraindÃ­tÃ¡shoz."
-
-#~ msgid "Please select which frugalware categories to install:"
-#~ msgstr "VÃ¡lassza ki a telepÃ­teni kÃ­vÃ¡nt frugalware kategÃ³riÃ¡kat:"
-
-#~ msgid "Selecting frugalware packages"
-#~ msgstr "Frugalware csomagok kivÃ¡lasztÃ¡sa"
-
-#~ msgid "Selecting extra packages"
-#~ msgstr "Extra csomagok kivÃ¡lasztÃ¡sa"
