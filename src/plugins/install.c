@@ -52,16 +52,19 @@ char *desc()
 	return _("Installing the selected packages");
 }
 
-int installpkgs_forreal(GList *pkgs)
+int installpkgs_forreal(GList *pkgs, int fast)
 {
-	char *ptr;
+	char *ptr, *cmd;
 
 	ptr = g_list_display(pkgs, " ");
 	if(ptr!=NULL && strlen(ptr))
 	{
 		fw_end_dialog();
-		if (system(g_strdup_printf("pacman-g2 -S -r ./ --noconfirm %s", ptr))
-			!= 0)
+		if(fast)
+			cmd = g_strdup_printf("pacman-g2 -S -r ./ --noconfirm -f --nointegrity %s", ptr);
+		else
+			cmd = g_strdup_printf("pacman-g2 -S -r ./ --noconfirm %s", ptr);
+		if (system(cmd) != 0)
 		{
 			printf(_("Errors occured while installing "
 			"selected packages.\n"
@@ -76,6 +79,7 @@ int installpkgs_forreal(GList *pkgs)
 			fw_init_dialog();
 	}
 	FREE(ptr);
+	FREE(cmd);
 	return(0);
 }
 
@@ -139,10 +143,10 @@ int installpkgs(GList *pkgs, GList **config)
 		for(i=0;i<g_list_length(list);i++)
 			pkgs=g_list_strremove(pkgs, (char*)g_list_nth_data(list, i));
 		// install them
-		installpkgs_forreal(list);
+		installpkgs_forreal(list, 1);
 	}
 	else
-		installpkgs_forreal(pkgs);
+		installpkgs_forreal(pkgs, 0);
 	return(0);
 }
 
