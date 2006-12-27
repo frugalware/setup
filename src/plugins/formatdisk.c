@@ -307,7 +307,6 @@ int mkfss(char *dev, char *fs, int check)
 		_("Creating %s filesystem on %s and checking for bad blocks") :
 		_("Creating %s filesystem on %s"),
 		fs, dev));
-	// TODO: umount the filesystem if necessary
 	if(!strcmp(fs, "ext2"))
 		return(fw_system(g_strdup_printf("mke2fs %s %s", opts, dev)));
 	else if(!strcmp(fs, "ext3"))
