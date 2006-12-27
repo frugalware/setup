@@ -618,7 +618,7 @@ void show_menu(GList *plugin_list, int *state)
 	{
 		plugin = g_list_nth_data(plugin_list, i);
 		menu = g_list_append(menu, plugin->name);
-		menu = g_list_append(menu, plugin->desc);
+		menu = g_list_append(menu, plugin->desc());
 	}
 	items = glist2dialog(menu);
 
