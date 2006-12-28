@@ -90,7 +90,6 @@ int run(GList **config)
 		"hope that you will enjoy %s. Please remove "
 		"the media from your drive and press ENTER to reboot."),
 		version), 0, 0, 1);
-	exit_perform();
 	FREE(version);
 	return(0);
 }

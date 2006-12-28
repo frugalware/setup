@@ -349,7 +349,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			if (alpm_parse_config("/etc/pacman.conf", cb_db_register, "") == -1) {
 				dlg_put_backtitle();
 				dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to parse pacman-g2 configuration file (%s)"), alpm_strerror(pm_errno)), 0, 0, 1);
-				exit_perform();
+				return(-1);
 			}
 			
 			// get our database
@@ -357,7 +357,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			{
 				dlg_put_backtitle();
 				dialog_msgbox(_("Error"), g_strdup_printf(_("Could not register '%s' database (%s)"), PACCONF, alpm_strerror(pm_errno)), 0, 0, 1);
-				exit_perform();
+				return(-1);
 			}
 			else
 			{
@@ -367,11 +367,11 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 					if(pm_errno == PM_ERR_DB_SYNC) {
 						dlg_put_backtitle();
 						dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to synchronize %s"), PACCONF), 0, 0, 1);
-						exit_perform();
+						return(-1);
 					} else {
 						dlg_put_backtitle();
 						dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to update %s (%s)"), PACCONF, alpm_strerror(pm_errno)), 0, 0, 1);
-						exit_perform();
+						return(-1);
 					}
 				} else if (ret < 0) {
 					fprintf(stderr, " %s is up to date", PACCONF);
@@ -408,7 +408,8 @@ int fw_select(GList **config, int selpkgc, GList *syncs)
 	dlg_clear();
 	dialog_msgbox(_("Please wait"), _("Searching for categories..."),
 		0, 0, 0);
-	prepare_pkgdb(PACCONF, config, &syncs);
+	if(prepare_pkgdb(PACCONF, config, &syncs) == -1)
+		return(-1);
 	cats = selcat(g_list_nth_data(syncs, 1), syncs);
 	if(cats == NULL)
 		return(-1);

@@ -155,5 +155,6 @@ int main(int argc, char *argv[])
 	gtk_main();
 #endif
 	cleanup_plugins();
+	exit_perform();
 	return(0);
 }

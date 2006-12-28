@@ -142,7 +142,7 @@ int run(GList **config)
 	if(data_get(*config, "srcdev")==NULL)
 	{
 		dialog_msgbox(_("CD/DVD drive not found"), _("Sorry, no Frugalware install disc was found in any of your drives. Press ENTER to reboot."), 0, 0, 1);
-		exit_perform();
+		return(-1);
 	}*/
 	return(0);
 }

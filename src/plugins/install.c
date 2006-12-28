@@ -73,7 +73,7 @@ int installpkgs_forreal(GList *pkgs, int fast)
 			getchar();
 			fw_init_dialog();
 			if(exit_fail())
-				exit_perform();
+				return(-1);
 		}
 		else
 			fw_init_dialog();
@@ -143,10 +143,12 @@ int installpkgs(GList *pkgs, GList **config)
 		for(i=0;i<g_list_length(list);i++)
 			pkgs=g_list_strremove(pkgs, (char*)g_list_nth_data(list, i));
 		// install them
-		installpkgs_forreal(list, 1);
+		if(installpkgs_forreal(list, 1) == -1)
+			return(-1);
 	}
 	else
-		installpkgs_forreal(pkgs, 0);
+		if(installpkgs_forreal(pkgs, 0) == -1)
+			return(-1);
 	return(0);
 }
 

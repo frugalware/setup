@@ -157,7 +157,7 @@ int run(GList **config)
 	if((lp = listparts())==NULL)
 	{
 		dialog_msgbox(_("Disk drive not found"), _("Sorry, no hard disk drives were found in this computer. Press ENTER to reboot."), 0, 0, 1);
-		exit_perform();
+		return(-1);
 	}
 
 	array = glist2dialog(lp);
