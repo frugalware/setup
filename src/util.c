@@ -440,7 +440,7 @@ int fw_inputbox(const char *title, const char *cprompt, int height, int width,
 	dlg_clear();
 	ret = dialog_inputbox(title, cprompt, height, width, init,
 		password);
-	if (ret == DLG_EXIT_CANCEL)
+	if (ret != DLG_EXIT_CANCEL)
 		return(0);
 	else
 		return(-1);
