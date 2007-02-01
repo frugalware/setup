@@ -420,12 +420,12 @@ shadow:
 	$(UNPACK); \
 	cp -a etc/{passwd,group} ../shadow/etc
 
-madwifi-ng:
+madwifi:
 	$(CLEANUP)
-	mkdir -p madwifi-ng/usr/bin
+	mkdir -p madwifi/usr/bin
 	$(UNPACK); \
-	cp -a lib ../madwifi-ng/; \
-	cp -a usr/bin/wlanconfig ../madwifi-ng/usr/bin/
+	cp -a lib ../madwifi/; \
+	cp -a usr/bin/wlanconfig ../madwifi/usr/bin/
 
 rt2500:
 	$(CLEANUP)
