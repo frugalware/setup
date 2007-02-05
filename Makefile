@@ -438,3 +438,9 @@ gdb:
 	mkdir -p gdb/usr/bin/
 	$(UNPACK); \
 	cp -a usr/bin/gdb ../gdb/usr/bin/
+
+expat:
+	$(CLEANUP)
+	mkdir -p expat/usr
+	$(UNPACK); \
+	cp -a usr/lib ../expat/usr/

@@ -17,6 +17,7 @@ packages = ['bash', 'kernel', 'busybox', 'dhcpcd', 'dialog', 'e2fsprogs',
 try:
 	if sys.argv[1] == "--enable-debug":
 		packages.append('gdb')
+		packages.append('expat')
 except IndexError:
 	pass
 
