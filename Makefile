@@ -273,7 +273,6 @@ pacman-g2:
 	cp -a $(BDIR)/usr/share/locale pacman-g2/usr/share/
 	cp -a $(BDIR)/etc/pacman.d/* pacman-g2/etc/pacman.d/
 	echo "[options]" >>pacman-g2/etc/pacman.conf
-	echo "LogFile     = /mnt/target/var/log/pacman-g2.log" >> pacman-g2/etc/pacman.conf
 ifeq ($(STABLE),false)
 	echo "Include = /etc/pacman.d/frugalware-current" >> pacman-g2/etc/pacman.conf
 else
