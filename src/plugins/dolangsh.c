@@ -63,7 +63,7 @@ int run(GList **config)
 		"# Set the system locale\n"
 		"# For a list of locales which are supported by this machine, "
 		"type: locale -a\n\n");
-	if(strcmp(getenv("LANG"), "zh_CN"))
+	if(!getenv("LANG") || strcmp(getenv("LANG"), "zh_CN"))
 		fprintf(fp, "export LANG=%s\n", getenv("LANG"));
 	else
 	{
