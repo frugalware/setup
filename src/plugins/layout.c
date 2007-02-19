@@ -110,7 +110,8 @@ int run(GList **config)
 
 	FREE(array);
 	// drop .map.gz
-	ptr[strlen(ptr)-7]='\0';
+	if(strlen(ptr) >= 7)
+		ptr[strlen(ptr)-7]='\0';
 	
 	//TODO: maybe there is a proper system call for this?
 	system(g_strdup_printf("loadkeys /usr/share/kbd/keymaps/i386/%s.map.gz >%s 2>%s", ptr, LOGDEV, LOGDEV));
@@ -125,7 +126,8 @@ int run(GList **config)
 	fprintf(fp, "# /etc/sysconfig/keymap\n\n"
 		"# specify the keyboard map, maps are in "
 		"/usr/share/kbd/keymaps\n\n");
-	fprintf(fp, "keymap=%s\n", strstr(ptr, "/")+1);
+	if(strstr(ptr, "/"))
+		fprintf(fp, "keymap=%s\n", strstr(ptr, "/")+1);
 	FREE(ptr);
 	fclose(fp);
 
