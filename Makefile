@@ -33,6 +33,7 @@ export PATH := /usr/lib/ccache/bin:$(PATH)
 export CCACHE_DIR=/var/cache/ccache/setup
 export CCACHE_NOLINK=1
 export CCACHE_UMASK=002
+DIALOG_LANGS = `find po -name *.po |sed 's/.*\/\(.*\).po/\1/' |tr '\n' ' '`
 GLIBC_LANGS = en_US es_AR de_DE fr_FR id_ID it_IT hu_HU nl_NL pl_PL pt_PT sk_SK pt_BR
 CARCH ?= $(shell arch)
 ifeq ($(CARCH),i686)
@@ -176,9 +177,12 @@ busybox:
 
 dialog:
 	$(CLEANUP)
-	mkdir -p dialog/bin
+	mkdir -p dialog/{bin,usr/share/locale}
 	$(UNPACK)
 	cp -a $(BDIR)/bin/dialog dialog/bin/
+	for i in $(DIALOG_LANGS); do \
+		cp -a $(BDIR)/usr/share/locale/$$i dialog/usr/share/locale; \
+	done
 
 e2fsprogs:
 	$(CLEANUP)
