@@ -1,4 +1,5 @@
 LANGS=id hu de nl pl pt fr
+top_srcdir = /home/vmiklos/darcs/setup
 
 mos:
 	for i in $(LANGS); do \
@@ -6,8 +7,11 @@ mos:
 		msgfmt -c --statistics -o ../merge/usr/share/locale/`basename $$i .po`/LC_MESSAGES/setup.mo $$i; \
 	done
 
-pot:
+pot: intltool-extract
 	intltool-update --pot --gettext-package=setup
+
+intltool-extract:
+	cp /usr/bin/intltool-extract ./
 
 update-po: pot
 	for lang in $(LANGS); do \
