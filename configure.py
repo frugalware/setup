@@ -76,4 +76,3 @@ for k, v in localvers.items():
 socket.write("\t  \n")
 
 socket.close()
-alpm.release()
