@@ -122,7 +122,7 @@ devices: compile
 	mknod -m 700 $(MDIR)/dev/tty3 c 4 3
 
 initrd: clean config.mak devices
-	dd if=/dev/zero of=initrd-$(CARCH).img bs=1k count=$$(echo "$$(`which du` -s $(MDIR)|sed 's/^\(.*\)\t.*$$/\1/')+500"|bc)
+	dd if=/dev/zero of=initrd-$(CARCH).img bs=1k count=$$(echo "$$(`which du` -s $(MDIR)|sed 's/^\(.*\)\t.*$$/\1/')+1500"|bc)
 	/sbin/mke2fs -F initrd-$(CARCH).img
 	mkdir i
 	grep -q loop /proc/modules || /sbin/modprobe loop
