@@ -22,3 +22,6 @@ update-po: pot
 			rm -f $$lang.new.po; \
 		fi; \
 	done
+
+clean:
+	rm -f intltool-extract *.pot *.po
