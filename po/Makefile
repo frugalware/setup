@@ -1,7 +1,15 @@
-LANGS=id hu de nl pl pt fr
 top_srcdir =
+PO_DIR=~/darcs/translations/po
+LANGS = $(shell ls $(PO_DIR)/setup)
 
-mos:
+pos:
+	[ -d $(PO_DIR) ]
+	for i in $(LANGS); \
+	do \
+		cp $(PO_DIR)/setup/$$i/setup.po $$i.po; \
+	done
+
+mos: pos
 	for i in $(LANGS); do \
 		echo -n "$$i: "; \
 		msgfmt -c --statistics -o ../merge/usr/share/locale/`basename $$i .po`/LC_MESSAGES/setup.mo $$i; \
