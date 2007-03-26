@@ -69,6 +69,7 @@ clean:
 	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img.gz
 	rm -rf $(packages) vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	$(MAKE) -C src clean
+	$(MAKE) -C po clean
 
 install:
 ifeq ($(STABLE),false)
