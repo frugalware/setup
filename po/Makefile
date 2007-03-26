@@ -1,5 +1,5 @@
 LANGS=id hu de nl pl pt fr
-top_srcdir = /home/vmiklos/darcs/setup
+top_srcdir =
 
 mos:
 	for i in $(LANGS); do \
