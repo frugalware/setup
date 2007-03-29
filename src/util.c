@@ -125,7 +125,7 @@ int eject(char *dev, char *target)
 	dialog_msgbox(_("Setup complete"), _("Ejecting installation media..."),
 			0, 0, 0);
 
-	umount(target);
+	umount2(target,MNT_FORCE);
 
 	if((fd = open(dev, O_RDONLY|O_NONBLOCK))==-1)
 		return(1);
@@ -322,7 +322,7 @@ int umount_if_needed(char *sourcedir)
 	}
 	fclose(fp);
 	if(dev != NULL)
-		system(g_strdup_printf("umount %s >%s 2>%s", dev, LOGDEV, LOGDEV));
+		return (umount2(dev,0));
 	return(0);
 }
 
