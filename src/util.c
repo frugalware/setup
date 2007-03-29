@@ -328,12 +328,15 @@ int umount_if_needed(char *sourcedir)
 
 int fw_system(char* cmd)
 {
+	char *ptr;
 #ifdef FINAL
-	return(system(g_strdup_printf("%s >%s 2>%s", cmd, LOGDEV, LOGDEV)));
+	ptr = g_strdup_printf("%s >%s 2>%s", cmd, LOGDEV, LOGDEV);
 #else
-	return(system(g_strdup_printf("echo %s >%s 2>%s", cmd, LOGDEV,
-		LOGDEV)));
+	ptr = g_strdup_printf("echo %s >%s 2>%s", cmd, LOGDEV, LOGDEV);
 #endif
+	int ret = system(ptr);
+	free(ptr);
+	return (ret);
 }
 
 char *drop_version(char *str)
