@@ -14,6 +14,9 @@ packages = ['bash', 'kernel', 'busybox', 'dhcpcd', 'dialog', 'e2fsprogs',
 		'wireless_tools', 'ipw2200-firmware', 'dropbear', 'bastet',
 		'readline', 'acx100', 'shadow', 'madwifi', 'rt2500']
 
+# when releasing a new setup, please update this :)
+version = "0.7.0"
+
 try:
 	if sys.argv[1] == "--enable-debug":
 		packages.append('gdb')
@@ -60,6 +63,9 @@ for k, v in remotevers.items():
 
 remotevers = pkgGetVers(remote, packages, remotevers)
 socket = open("config.mak", "w")
+
+socket.write("VERSION = %s\n\n" % version)
+
 for k, v in localvers.items():
 	print "checking for %s... %s" % (k, v)
 	socket.write("%sVER = %s\n" % (k.upper(), v))
