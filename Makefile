@@ -23,6 +23,9 @@
 STABLE = false
 TESTING = false
 DEBUG = false
+ifeq ($(RELEASE),)
+	RELEASE = false
+endif
 KERNELV = $(shell echo $(KERNELVER)|sed 's/-.*//')
 KERNELREL = $(shell echo $(KERNELVER)|sed 's/.*-//')
 DESTDIR = $(shell source /etc/repoman.conf; [ -e ~/.repoman.conf ] && source ~/.repoman.conf; echo $$fst_root)
@@ -82,6 +85,26 @@ install: initrd
 
 distclean: clean
 	rm -rf config.mak
+
+dist: clean config.mak
+ifeq ($(RELEASE),true)
+	darcs changes >_darcs/current/ChangeLog
+	chmod 755 _darcs/current/configure
+else
+	darcs changes >_darcs/pristine/ChangeLog
+	chmod 755 _darcs/pristine/configure
+endif
+	darcs dist -d fwsetup-$(VERSION)
+ifeq ($(RELEASE),true)
+	rm _darcs/current/ChangeLog
+else
+	rm _darcs/pristine/ChangeLog
+endif
+ifeq ($(RELEASE),true)
+	gpg --comment "See http://ftp.frugalware.org/pub/README.GPG for info" -ba -u 20F55619 fwsetup-$(VERSION).tar.gz
+	mv fwsetup-$(VERSION).tar.gz.asc ../
+endif
+	mv fwsetup-$(VERSION).tar.gz ../
 
 ccache:
 	install -d -m 2775 /var/cache/ccache/setup
