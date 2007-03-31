@@ -23,9 +23,7 @@
 STABLE = false
 TESTING = false
 DEBUG = false
-ifeq ($(RELEASE),)
-	RELEASE = false
-endif
+DIR=$(shell [ -d _darcs/pristine ] && echo pristine || echo current)
 KERNELV = $(shell echo $(KERNELVER)|sed 's/-.*//')
 KERNELREL = $(shell echo $(KERNELVER)|sed 's/.*-//')
 DESTDIR = $(shell source /etc/repoman.conf; [ -e ~/.repoman.conf ] && source ~/.repoman.conf; echo $$fst_root)
@@ -87,7 +85,7 @@ distclean: clean
 	rm -rf config.mak
 
 dist: clean config.mak
-ifeq ($(RELEASE),true)
+ifeq ($(DIR),current)	
 	darcs changes >_darcs/current/ChangeLog
 	chmod 755 _darcs/current/configure
 else
@@ -95,12 +93,12 @@ else
 	chmod 755 _darcs/pristine/configure
 endif
 	darcs dist -d fwsetup-$(VERSION)
-ifeq ($(RELEASE),true)
+ifeq ($(DIR),current)
 	rm _darcs/current/ChangeLog
 else
 	rm _darcs/pristine/ChangeLog
 endif
-ifeq ($(RELEASE),true)
+ifeq ($(DIR),current)
 	gpg --comment "See http://ftp.frugalware.org/pub/README.GPG for info" -ba -u 20F55619 fwsetup-$(VERSION).tar.gz
 	mv fwsetup-$(VERSION).tar.gz.asc ../
 endif
