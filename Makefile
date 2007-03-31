@@ -62,6 +62,10 @@ all: initrd
 
 compile: check ccache setup $(packages) misc
 
+prepare:
+	rm -rf config.mak
+	chmod 755 configure
+
 clean:
 	@if [ "`id -u`" != 0 ]; then \
 	echo "error: you cannot perform this operation unless you are root."; exit 1; \
