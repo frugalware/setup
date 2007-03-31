@@ -71,12 +71,10 @@ clean:
 	$(MAKE) -C src clean
 	$(MAKE) -C po clean
 
-install:
-ifeq ($(STABLE),false)
-	cp vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz $(DESTDIR)/frugalware-current/boot/
-else
-	cp vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz $(DESTDIR)/frugalware-stable/boot/
-endif
+install: initrd
+	install -d -m0755 $(DESTDIR)/usr/share/setup
+	install -m0644 vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(DESTDIR)/usr/share/setup/vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
+	install -m0644 initrd-$(CARCH).img.gz $(DESTDIR)/usr/share/setup/initrd-$(CARCH).img.gz
 
 distclean: clean
 	rm -rf config.mak
