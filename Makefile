@@ -149,9 +149,9 @@ endif
 config.mak:
 	pacman-g2 -Sy
 ifeq ($(DEBUG),false)
-	python configure.py
+	python configure
 else
-	python configure.py --enable-debug
+	python configure --enable-debug
 endif
 
 check:
