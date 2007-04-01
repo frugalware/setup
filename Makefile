@@ -32,6 +32,7 @@ endif
 
 VERSION=$(shell grep ^version configure |sed 's/.*"\(.*\)"/\1/')
 DIR=$(shell [ -d _darcs/pristine ] && echo pristine || echo current)
+GPG=$(shell [ -d ../releases ] && echo true || echo false)
 
 KERNELV = $(shell echo $(KERNELVER)|sed 's/-.*//')
 KERNELREL = $(shell echo $(KERNELVER)|sed 's/.*-//')
@@ -98,11 +99,11 @@ dist:
 	darcs changes >_darcs/$(DIR)/ChangeLog
 	darcs dist -d fwsetup-$(VERSION)
 	rm _darcs/$(DIR)/ChangeLog
-ifeq ($(DIR),current)
+ifeq ($(GPG),true)
 	gpg --comment "See http://ftp.frugalware.org/pub/README.GPG for info" -ba -u 20F55619 fwsetup-$(VERSION).tar.gz
-	mv fwsetup-$(VERSION).tar.gz.asc ../
+	mv fwsetup-$(VERSION).tar.gz.asc ../releases
+	mv fwsetup-$(VERSION).tar.gz ../releases
 endif
-	mv fwsetup-$(VERSION).tar.gz ../
 
 ccache:
 	install -d -m 2775 /var/cache/ccache/setup
