@@ -85,7 +85,7 @@ clean:
 	rm -rf $(packages) vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	$(MAKE) -C src clean
 
-install: initrd
+install:
 	install -d -m0755 $(DESTDIR)/usr/share/setup
 	install -m0644 vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(DESTDIR)/usr/share/setup/vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	install -m0644 initrd-$(CARCH).img.gz $(DESTDIR)/usr/share/setup/initrd-$(CARCH).img.gz
