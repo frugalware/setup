@@ -30,6 +30,7 @@ ifeq ($(DEBUG),)
 	DEBUG = false
 endif
 
+VERSION=$(shell grep ^version configure |sed 's/.*"\(.*\)"/\1/')
 DIR=$(shell [ -d _darcs/pristine ] && echo pristine || echo current)
 
 KERNELV = $(shell echo $(KERNELVER)|sed 's/-.*//')
@@ -93,7 +94,7 @@ install: initrd
 distclean: clean
 	rm -rf config.mak
 
-dist: clean config.mak
+dist:
 ifeq ($(DIR),current)	
 	darcs changes >_darcs/current/ChangeLog
 	chmod 755 _darcs/current/configure
