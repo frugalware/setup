@@ -22,9 +22,11 @@ version = "0.7.0"
 parser = OptionParser(version="configure for Frugalware Setup v%s" % (version))
 parser.set_defaults(debug=False)
 parser.set_defaults(repo="current")
+parser.set_defaults(prefix="/usr/local")
 parser.add_option("--enable-debug", action="store_true", dest="debug", help="Build setup with debug options")
 parser.add_option("--disable-debug", action="store_false", dest="debug", help="Build setup without debug options")
 parser.add_option("--repo", action="store", dest="repo", help="Select the repo to build for. Can be current (default), testing or stable")
+parser.add_option("--prefix", action="store", dest="prefix", help="Select the install prefix (defaults to /usr/local)")
 (options, args) = parser.parse_args()
 
 # if we want debug then we should add gdb and it's dependencies
@@ -85,6 +87,8 @@ if options.debug:
 	socket.write("DEBUG = true\n\n")
 else:
 	socket.write("DEBUG = false\n\n")
+
+socket.write("PREFIX = %s\n" % options.prefix)
 
 # check whether stable or testing was requested
 sys.stdout.write("checking which repo to build for... ")
