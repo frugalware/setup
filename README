@@ -3,17 +3,22 @@ This is the source of the Frugalware Linux installer.
 Building
 --------
 
-Run 'sudo make'. You need to be root as the downloaded packages are
-saved to pacman-g2's cache and you need to be able to mount the initrd image file.
+As root, run the following commands:
 
-Hopefully you'll get the vmlinuz* and initrd*.img.gz files after make ends.
+./configure
+make
+
+You need to be root as the downloaded packages are saved to pacman-g2's cache
+and you need to be able to mount the initrd image file. Hopefully you'll get
+the vmlinuz* and initrd*.img.gz files after make ends. If you would like to
+copy these to /usr/share/setup, issue 'make install' as root.
 
 Cleaning up
 -----------
 
 If you built the initrd in the past and you don't want to start from scratch,
-then use 'darcs pull' and 'sudo make distclen' to update the source and clean
-up the generated files.
+just run 'make distclean' as root. If you are using setup from the darcs repo,
+you should run 'darcs pull', too.
 
 Adding new translations
 -----------------------
@@ -24,8 +29,5 @@ Adding new translations
 Adding new packages
 -------------------
 
-1) add the package to configure
-2) add a target for it to Makefile
-
-Greetings,
-VMiklos
+1) add the package to the packages array in configure
+2) add a target for it in the Makefile
