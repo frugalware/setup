@@ -1,0 +1,18 @@
+Patches
+=======
+
+If you have made changes to the source and would like to send these changes
+to us, you can use darcs to send the changes.
+
+darcs send --to=frugalware-devel@frugalware.org --from=your@email.addr.ess \
+	--subject="My setup patch"
+
+You need to make sure that Postfix or another Mail Transport Agent is running.
+
+Testing changes
+===============
+
+When you make a change, PLEASE test it by building the initrd + kernel then
+creating an ISO with mkiso, or using a network boot server. This is a core
+part of Frugalware we're talking about here, if it's broken, then it can
+render Frugalware uninstallable.
