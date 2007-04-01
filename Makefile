@@ -95,19 +95,9 @@ distclean: clean
 	rm -rf config.mak
 
 dist:
-ifeq ($(DIR),current)	
-	darcs changes >_darcs/current/ChangeLog
-	chmod 755 _darcs/current/configure
-else
-	darcs changes >_darcs/pristine/ChangeLog
-	chmod 755 _darcs/pristine/configure
-endif
+	darcs changes >_darcs/$(DIR)/ChangeLog
 	darcs dist -d fwsetup-$(VERSION)
-ifeq ($(DIR),current)
-	rm _darcs/current/ChangeLog
-else
-	rm _darcs/pristine/ChangeLog
-endif
+	rm _darcs/$(DIR)/ChangeLog
 ifeq ($(DIR),current)
 	gpg --comment "See http://ftp.frugalware.org/pub/README.GPG for info" -ba -u 20F55619 fwsetup-$(VERSION).tar.gz
 	mv fwsetup-$(VERSION).tar.gz.asc ../
