@@ -180,11 +180,6 @@ else
 	scp initrd-$(CARCH).img.gz frugalware.org:/home/ftp/pub/frugalware/frugalware-stable/boot/
 endif
 
-config.mak:
-	pacman-g2 -Sy
-	@echo -e "\nerror: please run configure to generate config.mak\n"
-	@false
-
 check:
 	pacman-g2 -Swd `grep 'VER =' config.mak |sed 's/VER =.*//' |tr '[A-Z]' '[a-z]'` --noconfirm
 	@for i in $(sources); do \
