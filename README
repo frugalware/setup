@@ -16,9 +16,9 @@ copy these to /usr/share/setup, issue 'make install' as root.
 Cleaning up
 -----------
 
-If you built the initrd in the past and you don't want to start from scratch,
-just run 'make distclean' as root. If you are using setup from the darcs repo,
-you should run 'darcs pull', too.
+If you have built the initrd in the past and you don't want to start from
+scratch, just run 'make distclean' as root. If you are using setup from the
+darcs repo, you should run 'darcs pull', too.
 
 Adding new translations
 -----------------------
