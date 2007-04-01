@@ -9,7 +9,7 @@ pos:
 		cp $(PO_DIR)/setup/$$i/setup.po $$i.po; \
 	done
 
-mos: pos
+mos:
 	for i in $(LANGS); do \
 		echo -n "$$i: "; \
 		msgfmt -c --statistics -o ../merge/usr/share/locale/`basename $$i .po`/LC_MESSAGES/setup.mo $$i; \
