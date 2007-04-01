@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import alpm, os, sys
+from optparse import OptionParser
 
 # since we're not in chroot, we need up to date libs. but don't be too
 # agressive, we add libs to here just in case there was a bugreport about it
@@ -17,12 +18,26 @@ packages = ['bash', 'kernel', 'busybox', 'dhcpcd', 'dialog', 'e2fsprogs',
 # when releasing a new setup, please update this :)
 version = "0.7.0"
 
-try:
-	if sys.argv[1] == "--enable-debug":
-		packages.append('gdb')
-		packages.append('expat')
-except IndexError:
-	pass
+# parse our options
+parser = OptionParser(version="configure for Frugalware Setup v%s" % (version))
+parser.set_defaults(debug=False)
+parser.set_defaults(repo="current")
+parser.add_option("--enable-debug", action="store_true", dest="debug", help="Build setup with debug options")
+parser.add_option("--disable-debug", action="store_false", dest="debug", help="Build setup without debug options")
+parser.add_option("--repo", action="store", dest="repo", help="Select the repo to build for. Can be current (default), testing or stable")
+(options, args) = parser.parse_args()
+
+# if we want debug then we should add gdb and it's dependencies
+sys.stdout.write("checking for debug support... ")
+sys.stdout.flush()
+if options.debug:
+	sys.stdout.write("yes.\n")
+	sys.stdout.flush()
+	packages.append('gdb')
+	packages.append('expat')
+else:
+	sys.stdout.write("no.\n")
+	sys.stdout.flush()
 
 def pkgGetVers(db, names, ret={}):
 	lp = alpm.db_getpkgcache(db)
@@ -64,13 +79,36 @@ for k, v in remotevers.items():
 remotevers = pkgGetVers(remote, packages, remotevers)
 socket = open("config.mak", "w")
 
-socket.write("VERSION = %s\n\n" % version)
+# write out our required options
+socket.write("VERSION = %s\n" % version)
+if options.debug:
+	socket.write("DEBUG = true\n\n")
+else:
+	socket.write("DEBUG = false\n\n")
 
+# check whether stable or testing was requested
+sys.stdout.write("checking which repo to build for... ")
+sys.stdout.flush()
+if options.repo == "current":
+	sys.stdout.write("current\n")
+	socket.write("STABLE = false\nTESTING = false\n\n")
+elif options.repo == "testing":
+	sys.stdout.write("testing\n")
+	socket.write("STABLE = false\nTESTING = true\n\n")
+elif options.repo == "stable":
+	sys.stdout.write("stable\n")
+	socket.write("STABLE = true\nTESTING = false\n\n")
+else:
+	sys.stdout.write("invalid repo specified!\n")
+	sys.exit(1)
+
+# write the package versions
 for k, v in localvers.items():
 	print "checking for %s... %s" % (k, v)
 	socket.write("%sVER = %s\n" % (k.upper(), v))
 socket.write("\n")
 
+# write the package and source arrays
 socket.write("packages = \\\n")
 for k, v in localvers.items():
 	socket.write("\t   %s \\\n" % k)

@@ -20,10 +20,18 @@
 
 -include config.mak
 
-STABLE = false
-TESTING = false
-DEBUG = false
+ifeq ($(STABLE),)
+	STABLE = false
+endif
+ifeq ($(TESTING),)
+	TESTING = false
+endif
+ifeq ($(DEBUG),)
+	DEBUG = false
+endif
+
 DIR=$(shell [ -d _darcs/pristine ] && echo pristine || echo current)
+
 KERNELV = $(shell echo $(KERNELVER)|sed 's/-.*//')
 KERNELREL = $(shell echo $(KERNELVER)|sed 's/.*-//')
 DESTDIR = $(shell source /etc/repoman.conf; [ -e ~/.repoman.conf ] && source ~/.repoman.conf; echo $$fst_root)
@@ -174,11 +182,8 @@ endif
 
 config.mak:
 	pacman-g2 -Sy
-ifeq ($(DEBUG),false)
-	python configure
-else
-	python configure --enable-debug
-endif
+	@echo -e "\nerror: please run configure to generate config.mak\n"
+	@false
 
 check:
 	pacman-g2 -Swd `grep 'VER =' config.mak |sed 's/VER =.*//' |tr '[A-Z]' '[a-z]'` --noconfirm
