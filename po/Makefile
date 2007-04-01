@@ -31,5 +31,5 @@ update-po: pot
 		fi; \
 	done
 
-clean:
+distclean:
 	rm -f intltool-extract *.pot *.po

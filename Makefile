@@ -84,7 +84,6 @@ clean:
 	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img.gz
 	rm -rf $(packages) vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	$(MAKE) -C src clean
-	$(MAKE) -C po clean
 
 install: initrd
 	install -d -m0755 $(DESTDIR)/usr/share/setup
@@ -92,6 +91,7 @@ install: initrd
 	install -m0644 initrd-$(CARCH).img.gz $(DESTDIR)/usr/share/setup/initrd-$(CARCH).img.gz
 
 distclean: clean
+	$(MAKE) -C po distclean
 	rm -rf config.mak
 
 dist:
