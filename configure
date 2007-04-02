@@ -16,7 +16,7 @@ packages = ['bash', 'kernel', 'busybox', 'dhcpcd', 'dialog', 'e2fsprogs',
 		'readline', 'acx100', 'shadow', 'madwifi', 'rt2500']
 
 # when releasing a new setup, please update this :)
-version = "0.7.0"
+version = "0.7.1"
 
 # parse our options
 parser = OptionParser(version="configure for Frugalware Setup v%s" % (version))
