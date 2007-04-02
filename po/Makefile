@@ -10,7 +10,7 @@ pos:
 	done
 
 mos:
-	for i in $(LANGS); do \
+	for i in $(wildcard *.po); do \
 		echo -n "$$i: "; \
 		msgfmt -c --statistics -o ../merge/usr/share/locale/`basename $$i .po`/LC_MESSAGES/setup.mo $$i; \
 	done
