@@ -22,7 +22,7 @@ darcs repo, you should run 'darcs pull', too.
 
 Adding new translations
 -----------------------
-1) first push the po file to the po/ dir
+1) first create a translation using pootle
 2) list the newly added language in src/plugins/asklang.c
 3) modify the glibc buildscript to include support for the given locale
 
