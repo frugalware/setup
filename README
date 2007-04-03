@@ -13,6 +13,25 @@ and you need to be able to mount the initrd image file. Hopefully you'll get
 the vmlinuz* and initrd*.img.gz files after make ends. If you would like to
 copy these to /usr/share/setup, issue 'make install' as root.
 
+From scratch
+------------
+
+If you never compiled the setup, you need the following steps:
+
+cd ~
+mkdir darcs
+cd darcs
+darcs get --partial http://darcs.frugalware.org/repos/setup
+darcs get --partial http://darcs.frugalware.org/repos/translations
+su -
+ln -s ~user/darcs ./
+cd darcs/setup
+
+then read the section titled "Building".
+
+NOTE: you can place your setup repo where you want, and if you want to place
+your translations repo somewhere else, you just need to edit po/Makefile.
+
 Cleaning up
 -----------
 
