@@ -23,7 +23,7 @@ else
 CFLAGS ?= -g -Wall -Werror
 endif
 CFLAGS += -I.. $(FINAL) -DARCH="\"$(shell arch)\""
-LDFLAGS += -lparted -ldl -lalpm
+LDFLAGS += -lparted -ldl -lpacman
 ifeq ($(shell arch),x86_64)
 CFLAGS += -fPIC
 endif

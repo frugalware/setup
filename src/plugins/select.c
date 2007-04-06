@@ -28,7 +28,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdlib.h>
-#include <alpm.h>
+#include <pacman.h>
 
 #include <setup.h>
 #include <util.h>
@@ -94,44 +94,44 @@ GList* group2pkgs(GList *syncs, char *group, int dialog)
 
 	for (i=0; i<g_list_length(syncs); i++)
 	{
-		grp = alpm_db_readgrp(g_list_nth_data(syncs, i), group);
+		grp = pacman_db_readgrp(g_list_nth_data(syncs, i), group);
 		if(grp)
 		{
-			pmpkgs = alpm_grp_getinfo(grp, PM_GRP_PKGNAMES);
-			for(lp = alpm_list_first(pmpkgs); lp; lp = alpm_list_next(lp))
-				pkgs = g_list_append(pkgs, alpm_list_getdata(lp));
+			pmpkgs = pacman_grp_getinfo(grp, PM_GRP_PKGNAMES);
+			for(lp = pacman_list_first(pmpkgs); lp; lp = pacman_list_next(lp))
+				pkgs = g_list_append(pkgs, pacman_list_getdata(lp));
 			break;
 		}
 	}
-	if(alpm_trans_init(PM_TRANS_TYPE_SYNC, PM_TRANS_FLAG_NODEPS|PM_TRANS_FLAG_NOCONFLICTS, NULL, NULL, NULL) == -1)
+	if(pacman_trans_init(PM_TRANS_TYPE_SYNC, PM_TRANS_FLAG_NODEPS|PM_TRANS_FLAG_NOCONFLICTS, NULL, NULL, NULL) == -1)
 	{
 		fprintf(stderr, "failed to init transaction (%s)\n",
-			alpm_strerror(pm_errno));
+			pacman_strerror(pm_errno));
 		return(NULL);
 	}
 	for (i=0; i<g_list_length(pkgs); i++)
-		if(alpm_trans_addtarget(g_list_nth_data(pkgs, i)))
+		if(pacman_trans_addtarget(g_list_nth_data(pkgs, i)))
 		{
 			fprintf(stderr, "failed to add target '%s' (%s)\n",
-				(char*)g_list_nth_data(pkgs, i), alpm_strerror(pm_errno));
+				(char*)g_list_nth_data(pkgs, i), pacman_strerror(pm_errno));
 			return(NULL);
 		}
 
-	if(alpm_trans_prepare(&junk) == -1)
+	if(pacman_trans_prepare(&junk) == -1)
 	{
 		fprintf(stderr, "failed to prepare transaction (%s)\n",
-			alpm_strerror(pm_errno));
+			pacman_strerror(pm_errno));
 		return(NULL);
 	}
-	pmpkgs = alpm_trans_getinfo(PM_TRANS_PACKAGES);
-	for(lp = alpm_list_first(pmpkgs); lp; lp = alpm_list_next(lp))
+	pmpkgs = pacman_trans_getinfo(PM_TRANS_PACKAGES);
+	for(lp = pacman_list_first(pmpkgs); lp; lp = pacman_list_next(lp))
 	{
-		PM_SYNCPKG *sync = alpm_list_getdata(lp);
-		PM_PKG *pkg = alpm_sync_getinfo(sync, PM_SYNC_PKG);
-		//printf("%s\n", alpm_pkg_getinfo(pkg, PM_PKG_NAME));
-		pkgname = alpm_pkg_getinfo(pkg, PM_PKG_NAME);
-		pkgfullname = g_strdup_printf("%s-%s", (char*)alpm_pkg_getinfo(pkg, PM_PKG_NAME),
-			(char*)alpm_pkg_getinfo(pkg, PM_PKG_VERSION));
+		PM_SYNCPKG *sync = pacman_list_getdata(lp);
+		PM_PKG *pkg = pacman_sync_getinfo(sync, PM_SYNC_PKG);
+		//printf("%s\n", pacman_pkg_getinfo(pkg, PM_PKG_NAME));
+		pkgname = pacman_pkg_getinfo(pkg, PM_PKG_NAME);
+		pkgfullname = g_strdup_printf("%s-%s", (char*)pacman_pkg_getinfo(pkg, PM_PKG_NAME),
+			(char*)pacman_pkg_getinfo(pkg, PM_PKG_VERSION));
 		// enable by default the packages in the
 		// frugalware repo + enable the
 		// language-specific parts from
@@ -147,7 +147,7 @@ GList* group2pkgs(GList *syncs, char *group, int dialog)
 			list = g_list_append(list, strdup(pkgfullname));
 			// TODO: PM_PKG_SIZE
 			list = g_list_append(list,
-				strdup(alpm_pkg_getinfo(pkg, PM_PKG_DESC)));
+				strdup(pacman_pkg_getinfo(pkg, PM_PKG_DESC)));
 			if(addpkg)
 				list = g_list_append(list,
 					strdup("On"));
@@ -157,7 +157,7 @@ GList* group2pkgs(GList *syncs, char *group, int dialog)
 		}
 		FREE(pkgfullname);
 	}
-	alpm_trans_release();
+	pacman_trans_release();
 	return(list);
 }
 
@@ -171,43 +171,43 @@ char* categorysize(GList *syncs, char *category)
 
 	for (i=0; i<g_list_length(syncs); i++)
 	{
-		grp = alpm_db_readgrp(g_list_nth_data(syncs, i), category);
+		grp = pacman_db_readgrp(g_list_nth_data(syncs, i), category);
 		if(grp)
 		{
-			pmpkgs = alpm_grp_getinfo(grp, PM_GRP_PKGNAMES);
-			for(lp = alpm_list_first(pmpkgs); lp; lp = alpm_list_next(lp))
-				pkgs = g_list_append(pkgs, alpm_list_getdata(lp));
+			pmpkgs = pacman_grp_getinfo(grp, PM_GRP_PKGNAMES);
+			for(lp = pacman_list_first(pmpkgs); lp; lp = pacman_list_next(lp))
+				pkgs = g_list_append(pkgs, pacman_list_getdata(lp));
 			break;
 		}
 	}
-	if(alpm_trans_init(PM_TRANS_TYPE_SYNC, PM_TRANS_FLAG_NODEPS|PM_TRANS_FLAG_NOCONFLICTS, NULL, NULL, NULL) == -1)
+	if(pacman_trans_init(PM_TRANS_TYPE_SYNC, PM_TRANS_FLAG_NODEPS|PM_TRANS_FLAG_NOCONFLICTS, NULL, NULL, NULL) == -1)
 	{
 		fprintf(stderr, "failed to init transaction (%s)\n",
-			alpm_strerror(pm_errno));
+			pacman_strerror(pm_errno));
 		return(NULL);
 	}
 	for (i=0; i<g_list_length(pkgs); i++)
-		if(alpm_trans_addtarget(g_list_nth_data(pkgs, i)))
+		if(pacman_trans_addtarget(g_list_nth_data(pkgs, i)))
 		{
 			fprintf(stderr, "failed to add target '%s' (%s)\n",
-				(char*)g_list_nth_data(pkgs, i), alpm_strerror(pm_errno));
+				(char*)g_list_nth_data(pkgs, i), pacman_strerror(pm_errno));
 			return(NULL);
 		}
 
-	if(alpm_trans_prepare(&junk) == -1)
+	if(pacman_trans_prepare(&junk) == -1)
 	{
 		fprintf(stderr, "failed to prepare transaction (%s)\n",
-			alpm_strerror(pm_errno));
+			pacman_strerror(pm_errno));
 		return(NULL);
 	}
-	pmpkgs = alpm_trans_getinfo(PM_TRANS_PACKAGES);
-	for(lp = alpm_list_first(pmpkgs); lp; lp = alpm_list_next(lp))
+	pmpkgs = pacman_trans_getinfo(PM_TRANS_PACKAGES);
+	for(lp = pacman_list_first(pmpkgs); lp; lp = pacman_list_next(lp))
 	{
-		PM_SYNCPKG *sync = alpm_list_getdata(lp);
-		PM_PKG *pkg = alpm_sync_getinfo(sync, PM_SYNC_PKG);
-		size += (int)alpm_pkg_getinfo(pkg, PM_PKG_SIZE);
+		PM_SYNCPKG *sync = pacman_list_getdata(lp);
+		PM_PKG *pkg = pacman_sync_getinfo(sync, PM_SYNC_PKG);
+		size += (int)pacman_pkg_getinfo(pkg, PM_PKG_SIZE);
 	}
-	alpm_trans_release();
+	pacman_trans_release();
 
 	size = (double)(size/1048576.0);
 	if(size < 0.1)
@@ -223,13 +223,13 @@ GList *selcat(PM_DB *db, GList *syncs)
 	GList *ret;
 	PM_LIST *lp;
 
-	name = alpm_db_getinfo(db, PM_DB_TREENAME);
+	name = pacman_db_getinfo(db, PM_DB_TREENAME);
 
-	for(lp = alpm_db_getgrpcache(db); lp; lp = alpm_list_next(lp))
+	for(lp = pacman_db_getgrpcache(db); lp; lp = pacman_list_next(lp))
 	{
-		PM_GRP *grp = alpm_list_getdata(lp);
+		PM_GRP *grp = pacman_list_getdata(lp);
 
-		ptr = (char *)alpm_grp_getinfo(grp, PM_GRP_NAME);
+		ptr = (char *)pacman_grp_getinfo(grp, PM_GRP_NAME);
 
 			if(!index(ptr, '-') && strcmp(ptr, "core"))
 			{
@@ -343,10 +343,10 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 		}
 		else
 		{
-			// we need to parse pacman.conf into alpm otherwise the db update won't work
-			if (alpm_parse_config("/etc/pacman.conf", cb_db_register, "") == -1) {
+			// we need to parse pacman.conf into pacman otherwise the db update won't work
+			if (pacman_parse_config("/etc/pacman.conf", cb_db_register, "") == -1) {
 				dlg_put_backtitle();
-				dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to parse pacman-g2 configuration file (%s)"), alpm_strerror(pm_errno)), 0, 0, 1);
+				dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to parse pacman-g2 configuration file (%s)"), pacman_strerror(pm_errno)), 0, 0, 1);
 				return(-1);
 			}
 			
@@ -354,13 +354,13 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			if (mydatabase == NULL)
 			{
 				dlg_put_backtitle();
-				dialog_msgbox(_("Error"), g_strdup_printf(_("Could not register '%s' database (%s)"), PACCONF, alpm_strerror(pm_errno)), 0, 0, 1);
+				dialog_msgbox(_("Error"), g_strdup_printf(_("Could not register '%s' database (%s)"), PACCONF, pacman_strerror(pm_errno)), 0, 0, 1);
 				return(-1);
 			}
 			else
 			{
 				// update it
-				ret = alpm_db_update(0, mydatabase);
+				ret = pacman_db_update(0, mydatabase);
 				if (ret > 0) {
 					if(pm_errno == PM_ERR_DB_SYNC) {
 						dlg_put_backtitle();
@@ -368,7 +368,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 						return(-1);
 					} else {
 						dlg_put_backtitle();
-						dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to update %s (%s)"), PACCONF, alpm_strerror(pm_errno)), 0, 0, 1);
+						dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to update %s (%s)"), PACCONF, pacman_strerror(pm_errno)), 0, 0, 1);
 						return(-1);
 					}
 				} else if (ret < 0) {
@@ -377,17 +377,17 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			}
 			
 			// and clean up.
-			alpm_db_unregister(mydatabase);
+			pacman_db_unregister(mydatabase);
 			mydatabase = NULL;
 		}
 	}
 
 	// register the database
-	i = alpm_db_register(PACCONF);
+	i = pacman_db_register(PACCONF);
 	if(i==NULL)
 	{
 		fprintf(stderr, "could not register '%s' database (%s)\n",
-			PACCONF, alpm_strerror(pm_errno));
+			PACCONF, pacman_strerror(pm_errno));
 		return(1);
 	}
 	else
@@ -434,12 +434,12 @@ int fw_select(GList **config, int selpkgc, GList *syncs)
 		PM_LIST *lp, *junk, *sorted;
 		char *ptr;
 
-		if(alpm_trans_init(PM_TRANS_TYPE_SYNC, PM_TRANS_FLAG_NOCONFLICTS, NULL, NULL, NULL) == -1)
+		if(pacman_trans_init(PM_TRANS_TYPE_SYNC, PM_TRANS_FLAG_NOCONFLICTS, NULL, NULL, NULL) == -1)
 			return(1);
 		for(i=0;i<g_list_length(allpkgs);i++)
 		{
 			ptr = strdup((char*)g_list_nth_data(allpkgs, i));
-			if(alpm_trans_addtarget(drop_version(ptr)))
+			if(pacman_trans_addtarget(drop_version(ptr)))
 				return(1);
 			FREE(ptr);
 		}
@@ -448,18 +448,18 @@ int fw_select(GList **config, int selpkgc, GList *syncs)
 		dlg_put_backtitle();
 		dialog_msgbox(_("Please wait"), _("Searching for missing dependencies..."),
 		0, 0, 0);
-		if(alpm_trans_prepare(&junk) == -1)
+		if(pacman_trans_prepare(&junk) == -1)
 			return(1);
-		sorted = alpm_trans_getinfo(PM_TRANS_PACKAGES);
-		for(lp = alpm_list_first(sorted); lp; lp = alpm_list_next(lp))
+		sorted = pacman_trans_getinfo(PM_TRANS_PACKAGES);
+		for(lp = pacman_list_first(sorted); lp; lp = pacman_list_next(lp))
 		{
-			PM_SYNCPKG *sync = alpm_list_getdata(lp);
-			PM_PKG *pkg = alpm_sync_getinfo(sync, PM_SYNC_PKG);
-			ptr = g_strdup_printf("%s-%s", (char*)alpm_pkg_getinfo(pkg, PM_PKG_NAME),
-				(char*)alpm_pkg_getinfo(pkg, PM_PKG_VERSION));
+			PM_SYNCPKG *sync = pacman_list_getdata(lp);
+			PM_PKG *pkg = pacman_sync_getinfo(sync, PM_SYNC_PKG);
+			ptr = g_strdup_printf("%s-%s", (char*)pacman_pkg_getinfo(pkg, PM_PKG_NAME),
+				(char*)pacman_pkg_getinfo(pkg, PM_PKG_VERSION));
 			allpkgs = g_list_append(allpkgs, ptr);
 		}
-		alpm_trans_release();
+		pacman_trans_release();
 		data_put(config, "packages", allpkgs);
 	return(0);
 }
@@ -469,23 +469,23 @@ int run(GList **config)
 	PM_DB *i;
 	GList *syncs=NULL;
 
-	if(alpm_initialize("/mnt/target") == -1)
+	if(pacman_initialize("/mnt/target") == -1)
 	{
-		fprintf(stderr, "failed to initilize alpm library (%s)\n",
-			alpm_strerror(pm_errno));
+		fprintf(stderr, "failed to initilize pacman library (%s)\n",
+			pacman_strerror(pm_errno));
 		return(1);
 	}
-	if(alpm_set_option(PM_OPT_DBPATH, (long)PM_DBPATH) == -1)
+	if(pacman_set_option(PM_OPT_DBPATH, (long)PM_DBPATH) == -1)
 	{
 		fprintf(stderr, "failed to set option DBPATH (%s)\n",
-				alpm_strerror(pm_errno));
+				pacman_strerror(pm_errno));
 		return(1);
 	}
-	i = alpm_db_register("local");
+	i = pacman_db_register("local");
 	if(i==NULL)
 	{
 		fprintf(stderr, "could not register 'local' database (%s)\n",
-			alpm_strerror(pm_errno));
+			pacman_strerror(pm_errno));
 		return(1);
 	}
 	else
@@ -495,6 +495,6 @@ int run(GList **config)
 	chdir(TARGETDIR);
 	if(fw_select(config, selpkgc, syncs) == -1)
 		ret = -1;
-	alpm_release();
+	pacman_release();
 	return(ret);
 }

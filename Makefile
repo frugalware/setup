@@ -289,7 +289,7 @@ pacman-g2:
 	mkdir -p pacman-g2/bin pacman-g2/etc/pacman.d/ pacman-g2/usr/{lib,share}
 	$(UNPACK)
 	cp -a $(BDIR)/usr/bin/pacman{,-g2} pacman-g2/bin/
-	cp -a $(BDIR)/usr/lib/libalpm.so* pacman-g2/usr/lib/
+	cp -a $(BDIR)/usr/lib/libpacman.so* pacman-g2/usr/lib/
 	cp -a $(BDIR)/usr/bin/vercmp pacman-g2/bin/
 	cp -a $(BDIR)/usr/share/locale pacman-g2/usr/share/
 	cp -a $(BDIR)/etc/pacman.d/* pacman-g2/etc/pacman.d/

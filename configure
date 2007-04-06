@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import alpm, os, sys
+import pacman, os, sys
 from optparse import OptionParser
 
 # since we're not in chroot, we need up to date libs. but don't be too
@@ -42,13 +42,13 @@ else:
 	sys.stdout.flush()
 
 def pkgGetVers(db, names, ret={}):
-	lp = alpm.db_getpkgcache(db)
+	lp = pacman.db_getpkgcache(db)
 	while lp:
-		pkg = alpm.void_to_PM_PKG(alpm.list_getdata(lp))
-		pkgname = alpm.void_to_char(alpm.pkg_getinfo(pkg, alpm.PKG_NAME))
+		pkg = pacman.void_to_PM_PKG(pacman.list_getdata(lp))
+		pkgname = pacman.void_to_char(pacman.pkg_getinfo(pkg, pacman.PKG_NAME))
 		if pkgname in names and pkgname not in ret:
-			ret[pkgname] = pkgname = alpm.void_to_char(alpm.pkg_getinfo(pkg, alpm.PKG_VERSION))
-		lp = alpm.list_next(lp)
+			ret[pkgname] = pkgname = pacman.void_to_char(pacman.pkg_getinfo(pkg, pacman.PKG_VERSION))
+		lp = pacman.list_next(lp)
 	return ret
 
 try:
@@ -56,11 +56,11 @@ try:
 except OSError:
 	pass
 
-if alpm.initialize("/") == -1:
-	raise "failed to init the alpm lib"
+if pacman.initialize("/") == -1:
+	raise "failed to init the pacman lib"
 
-remote = alpm.db_register("frugalware-current")
-local = alpm.db_register("local")
+remote = pacman.db_register("frugalware-current")
+local = pacman.db_register("local")
 sys.stdout.write("reading the remote database... ")
 sys.stdout.flush()
 remotevers = pkgGetVers(remote, libs)

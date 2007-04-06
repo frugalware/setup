@@ -5,7 +5,7 @@ TODO list for Frugalware setup
  * layout.c: replace the system("loadkeys") call with some function calls
  * select.c: replace the system("tar ...") call with libarchive calls
  * select.c: progress bar for downloading the package database
- * install.c: use libalpm to download and install packages
+ * install.c: use libpacman to download and install packages
  * util.c: replace the system("clear") call with some function calls
  * *.c: GTK installer
  * see http://wiki.frugalware.org/Setup-0.7
