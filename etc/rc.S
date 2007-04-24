@@ -5,7 +5,6 @@ mount -t proc none /proc
 mount -t sysfs none /sys
 mount -t tmpfs none /tmp
 cat /proc/mounts >/etc/mtab
-depmod -a
 modprobe iso9660
 modprobe ntfs
 modprobe BusLogic 2>/dev/null
