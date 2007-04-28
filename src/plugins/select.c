@@ -361,7 +361,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			{
 				// update it
 				ret = pacman_db_update(0, mydatabase);
-				if (ret > 0) {
+				if (ret == -1) {
 					if(pm_errno == PM_ERR_DB_SYNC) {
 						dlg_put_backtitle();
 						dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to synchronize %s"), PACCONF), 0, 0, 1);
@@ -371,7 +371,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 						dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to update %s (%s)"), PACCONF, pacman_strerror(pm_errno)), 0, 0, 1);
 						return(-1);
 					}
-				} else if (ret < 0) {
+				} else if (ret == 1) {
 					fprintf(stderr, " %s is up to date", PACCONF);
 				}
 			}
