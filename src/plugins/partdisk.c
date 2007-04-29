@@ -50,7 +50,7 @@ plugin_t *info()
 
 char *desc()
 {
-	return _("Partitionong the disk drives");
+	return _("Partitioning the disk drives");
 }
 
 int buggy_md0()
