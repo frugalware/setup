@@ -35,22 +35,19 @@
 #include <util.h>
 #include "common.h"
 
-#define LANGSNUM 13
+#define LANGSNUM 10
 char *langs[] =
 {
-	"en_US", "English                         ",
-	"es_AR", "Spanish / Espagnole             ",
-	"de_DE", "German / Deutsch                ",
-	"fr_FR", "French / Francais               ",
-        "id_ID", "Indonesia / Indonesian          ",
-	"it_IT", "Italian / Italiano              ",
-	"hu_HU", "Hungarian / Magyar              ",
-	"nl_NL", "Dutch / Nederlands              ",
-	"pl_PL", "Polish / Polski                 ",
-	"pt_PT", "Portuguese / Português          ",
-	"pt_BR", "Portuguese (Brazillian) / Português (Brazillian) ",
-	"sk_SK", "Slovak / Slovensky              ",
-	"zh_CN", "Chinese                         "
+	"en_US", "English",
+	"de_DE", "German / Deutsch",
+	"fr_FR", "French / Français",
+	"hu_HU", "Hungarian / Magyar",
+        "id_ID", "Indonesian / Bahasa Indonesia",
+	"nl_NL", "Dutch / Nederlands",
+	"pt_BR", "Brazilian Portuguese / Português do Brasil",
+	"ro_RO", "Romanian / Românã",
+	"sk_SK", "Slovak / Slovenèina",
+	"sv_SV", "Swedish / Svenska"
 };
 
 plugin_t plugin =
