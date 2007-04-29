@@ -573,7 +573,7 @@ int run(GList **config)
 		"system across more than one partition. Currently, you have "
 		"only mounted your / partition. You might want to mount "
 		"directories such as /boot, /home or /usr/local on separate "
-		"partitions. You should not try to mount /usr, /etc, /sbin, or "
+		"partitions. You should not try to mount /usr, /etc, /sbin or "
 		"/bin on their own partitions since they contain utilities "
 		"needed to bring the system up and mount partitions. Also, "
 		"do not reuse a partition that you've already entered before. "
