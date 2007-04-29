@@ -45,7 +45,7 @@ export CCACHE_DIR=/var/cache/ccache/setup
 export CCACHE_NOLINK=1
 export CCACHE_UMASK=002
 DIALOG_LANGS = `find po -name *.po |sed 's/.*\/\(.*\).po/\1/' |tr '\n' ' '`
-GLIBC_LANGS = en_US es_AR de_DE fr_FR id_ID it_IT hu_HU nl_NL pl_PL pt_PT sk_SK pt_BR
+GLIBC_LANGS = en_US de_DE fr_FR hu_HU id_ID nl_NL pt_BR ro_RO sk_SK sv_SV
 CARCH ?= $(shell arch)
 ifeq ($(CARCH),i686)
 	KARCH ?= i386
