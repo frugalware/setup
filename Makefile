@@ -202,7 +202,7 @@ dialog:
 	$(UNPACK)
 	cp -a $(BDIR)/bin/dialog dialog/bin/
 	for i in $(DIALOG_LANGS); do \
-		[ -d $(BDIR)/usr/share/locale/$$i ] && cp -a $(BDIR)/usr/share/locale/$$i dialog/usr/share/locale; \
+		if [ -d $(BDIR)/usr/share/locale/$$i ]; then cp -a $(BDIR)/usr/share/locale/$$i dialog/usr/share/locale; fi; \
 	done
 
 e2fsprogs:
