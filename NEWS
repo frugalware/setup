@@ -1,7 +1,7 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
 0.7.3         - small sppedup hacks
-              - new translations
+              - new translations (ro, sk, sv)
               - spelling fixes
 0.7.2         - switch to libpacman
 0.7.1         - fixed the installation of the mo files
