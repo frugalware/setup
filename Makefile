@@ -105,6 +105,10 @@ ifeq ($(GPG),true)
 	mv fwsetup-$(VERSION).tar.gz ../releases
 endif
 
+release:
+	darcs tag --checkpoint $(VERSION)
+	$(MAKE) dist
+
 ccache:
 	install -d -m 2775 /var/cache/ccache/setup
 
