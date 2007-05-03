@@ -7,6 +7,9 @@ pos:
 	for i in $(LANGS); \
 	do \
 		cp $(PO_DIR)/setup/$$i/setup.po $$i.po; \
+		if ! msgfmt -c --statistics -o $$i.gmo $$i.po; then \
+			echo "WARNING: $$i.po will break your build!"; \
+		fi; \
 	done
 
 mos:
