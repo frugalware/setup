@@ -72,7 +72,7 @@ fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 
 all: initrd_gz
 
-compile: check ccache setup $(packages) misc
+compile: check ccache $(packages) misc
 
 prepare:
 	rm -rf config.mak
@@ -128,7 +128,7 @@ merge: $(packages)
 	done
 	make -C po mos
 
-install-setup:
+install-setup: setup
 	mkdir -p $(MDIR)/lib/plugins
 	cp src/setup $(MDIR)/bin/
 	cp src/plugins/*.so $(MDIR)/lib/plugins/
