@@ -128,10 +128,12 @@ merge: $(packages)
 	done
 	make -C po mos
 
-misc: merge
-	mkdir $(MDIR)/lib/plugins
+install-setup:
+	mkdir -p $(MDIR)/lib/plugins
 	cp src/setup $(MDIR)/bin/
 	cp src/plugins/*.so $(MDIR)/lib/plugins/
+
+misc: merge install-setup
 	cp etc/inittab $(MDIR)/etc/
 ifneq ($(DEBUG),false)
 	sed -i 's|/bin/setup|/usr/bin/gdb /bin/setup|' $(MDIR)/etc/inittab
