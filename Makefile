@@ -180,6 +180,9 @@ check:
 		ls $(CDIR)/$$i >/dev/null || exit 1; \
 	done
 
+# this target just updates the setup source itself and the initrd, suitable for qemu testing
+quick: install-setup initrd
+
 qemu:
 	qemu -kernel vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) -initrd \
 	initrd-$(CARCH).img -append "initrd=initrd-$(CARCH).img.gz \
