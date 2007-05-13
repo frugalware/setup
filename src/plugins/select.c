@@ -479,7 +479,7 @@ int run(GList **config)
 			pacman_strerror(pm_errno));
 		return(1);
 	}
-	pacman_set_option(PM_OPT_LOGMASK, -1);
+	//pacman_set_option(PM_OPT_LOGMASK, -1);
 	pacman_set_option(PM_OPT_LOGCB, (long)cb_log);
 	if(pacman_set_option(PM_OPT_DBPATH, (long)PM_DBPATH) == -1)
 	{
