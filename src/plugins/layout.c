@@ -57,6 +57,13 @@ char *desc()
 	return _("Selecting the keyboard map");
 }
 
+int sort_layouts(gconstpointer a, gconstpointer b)
+{
+	char *pa = a;
+	char *pb = b;
+	return (strcmp(pa, pb));
+}
+
 int find(char *dirname)
 {
 	DIR *dir;
@@ -94,6 +101,7 @@ int run(GList **config)
 	FILE* fp;
 	
 	find("/usr/share/kbd/keymaps/i386");
+	layoutl = g_list_sort(layoutl, sort_layouts);
 	array = glist4dialog(layoutl, "");
 	
 	dialog_vars.backtitle=gen_backtitle(_("Configuring the keyboard"));
