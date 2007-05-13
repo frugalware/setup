@@ -83,7 +83,7 @@ clean:
 	echo "error: you cannot perform this operation unless you are root."; exit 1; \
 	fi
 	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img.gz
-	rm -rf $(packages) vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
+	rm -rf $(packages) vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	$(MAKE) -C src clean
 
 install:
