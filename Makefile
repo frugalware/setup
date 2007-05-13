@@ -82,7 +82,7 @@ clean:
 	@if [ "`id -u`" != 0 ]; then \
 	echo "error: you cannot perform this operation unless you are root."; exit 1; \
 	fi
-	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img.gz
+	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img initrd-$(CARCH).img.gz
 	rm -rf $(packages) vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	$(MAKE) -C src clean
 
@@ -160,7 +160,7 @@ initrd: clean config.mak devices
 	chown -R root.root i/
 	umount initrd-$(CARCH).img
 	rmdir i
-	gzip -9 initrd-$(CARCH).img
+	gzip -9 -c initrd-$(CARCH).img > initrd-$(CARCH).img.gz
 
 update:
 	darcs pull -a -v
