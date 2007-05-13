@@ -343,14 +343,14 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 		}
 		else
 		{
-			// we need to parse pacman.conf into pacman otherwise the db update won't work
+			LOG("parsing the pacman-g2 configuration file");
 			if (pacman_parse_config("/etc/pacman.conf", cb_db_register, "") == -1) {
 				dlg_put_backtitle();
 				dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to parse pacman-g2 configuration file (%s)"), pacman_strerror(pm_errno)), 0, 0, 1);
 				return(-1);
 			}
 			
-			// get our database
+			LOG("getting the database");
 			if (mydatabase == NULL)
 			{
 				dlg_put_backtitle();
@@ -359,9 +359,13 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			}
 			else
 			{
-				// update it
+				LOG("updating the database");
 				ret = pacman_db_update(0, mydatabase);
+				if(ret == 0) {
+					LOG("database update done");
+				}
 				if (ret == -1) {
+					LOG("database update failed");
 					if(pm_errno == PM_ERR_DB_SYNC) {
 						dlg_put_backtitle();
 						dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to synchronize %s"), PACCONF), 0, 0, 1);
@@ -372,11 +376,11 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 						return(-1);
 					}
 				} else if (ret == 1) {
-					fprintf(stderr, " %s is up to date", PACCONF);
+					LOG("the database is to up date");
 				}
 			}
 			
-			// and clean up.
+			LOG("cleaning up the database");
 			pacman_db_unregister(mydatabase);
 			mydatabase = NULL;
 		}
