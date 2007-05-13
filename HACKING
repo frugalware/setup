@@ -16,3 +16,16 @@ When you make a change, PLEASE test it by building the initrd + kernel then
 creating an ISO with mkiso, or using a network boot server. This is a core
 part of Frugalware we're talking about here, if it's broken, then it can
 render Frugalware uninstallable.
+
+Quick build
+===========
+
+Quick build means that once you built everything, and changed only the setup
+code itself and you would like to test it. Building the initrd from scratch is
+rather slow. We have three targets to prevent this problem:
+
+# make setup - this builds setup itself
+
+# make quick - this builds setup and updates the uncompressed initrd
+
+$ make qemu - boots the brand new initrd
