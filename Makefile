@@ -170,13 +170,6 @@ update:
 	sudo rm -rf merge initrd*
 	sudo $(MAKE) initrd
 
-upload:
-ifeq ($(STABLE),false)
-	scp initrd-$(CARCH).img.gz frugalware.org:/home/ftp/pub/frugalware/frugalware-current/boot/
-else
-	scp initrd-$(CARCH).img.gz frugalware.org:/home/ftp/pub/frugalware/frugalware-stable/boot/
-endif
-
 check:
 	pacman-g2 -Swd `grep 'VER =' config.mak |sed 's/VER =.*//' |tr '[A-Z]' '[a-z]'` --noconfirm
 	@for i in $(sources); do \
