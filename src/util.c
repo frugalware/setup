@@ -651,3 +651,15 @@ void show_menu(GList *plugin_list, int *state)
 	}
 	free(items);
 }
+
+int setup_log(char *file, int line, char *str)
+{
+	FILE *fp;
+
+	fp = fopen(LOGDEV, "w");
+	if(!fp)
+		return(-1);
+	fprintf(fp, "%s:%d: %s\n", file, line, str);
+	fclose(fp);
+	return(0);
+}

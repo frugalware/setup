@@ -73,3 +73,5 @@ int plugin_next();
 
 void signal_handler(int signum);
 void show_menu(GList *plugin_list, int *state);
+int setup_log(char *file, int line, char *str);
+#define LOG(str) setup_log(__FILE__, __LINE__, (str))
