@@ -1,5 +1,8 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+0.7.4         - scp is now working
+              - sort the keyboard layouts
+              - built using newer libpacman (which pulls in bugfixes)
 0.7.3         - small sppedup hacks
               - new translations (ro, sk, sv)
               - spelling fixes
