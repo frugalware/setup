@@ -414,7 +414,8 @@ dropbear:
 	mkdir -p dropbear/usr/bin
 	$(UNPACK); \
 	cp -a usr/bin/dbclient ../dropbear/usr/bin/ssh; \
-	cp -a usr/bin/dbscp ../dropbear/usr/bin/scp
+	cp -a usr/bin/dbscp ../dropbear/usr/bin/scp; \
+	ln -s ssh ../dropbear/usr/bin/dbclient
 
 bastet:
 	$(CLEANUP)
