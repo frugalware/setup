@@ -70,7 +70,7 @@ CWD=`pwd`
 
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 
-all: initrd
+all: initrd_gz
 
 compile: check ccache setup $(packages) misc
 
@@ -151,7 +151,7 @@ devices: compile
 	mknod -m 700 $(MDIR)/dev/tty2 c 4 2
 	mknod -m 700 $(MDIR)/dev/tty3 c 4 3
 
-initrd: clean config.mak devices
+initrd:
 	dd if=/dev/zero of=initrd-$(CARCH).img bs=1k count=$$(echo "$$(`which du` -s $(MDIR)|sed 's/^\(.*\)\t.*$$/\1/')+2000"|bc)
 	/sbin/mke2fs -F initrd-$(CARCH).img
 	mkdir i
@@ -161,6 +161,8 @@ initrd: clean config.mak devices
 	chown -R root.root i/
 	umount initrd-$(CARCH).img
 	rmdir i
+
+initrd_gz: clean config.mak devices initrd
 	gzip -9 -c initrd-$(CARCH).img > initrd-$(CARCH).img.gz
 
 update:
