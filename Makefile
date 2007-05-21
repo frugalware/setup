@@ -53,9 +53,11 @@ ifeq ($(CARCH),i686)
 endif
 ifeq ($(CARCH),x86_64)
 	MARCH ?= k8
+	QEMU ?= qemu-x86_64
 endif
 MARCH ?= $(CARCH)
 KARCH ?= $(CARCH)
+QEMU ?= qemu
 ifeq ($(DEBUG),false)
 export CFLAGS = -march=$(MARCH) -O2 -pipe
 else
@@ -184,9 +186,9 @@ check:
 quick: install-setup initrd
 
 qemu:
-	qemu -kernel vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) -initrd \
+	$(QEMU) -kernel vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) -initrd \
 	initrd-$(CARCH).img -append "initrd=initrd-$(CARCH).img.gz \
-	load_ramdisk=1 prompt_ramdisk=0 ramdisk_size=$(shell du --block-size=1000 initrd-i686.img|sed 's/\t.*//') \
+	load_ramdisk=1 prompt_ramdisk=0 ramdisk_size=$(shell du --block-size=1000 initrd-$(CARCH).img|sed 's/\t.*//') \
 	rw root=/dev/ram quiet vga=normal" $(QEMU_OPTS)
 
 bash:
