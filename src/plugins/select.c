@@ -205,7 +205,7 @@ char* categorysize(GList *syncs, char *category)
 	{
 		PM_SYNCPKG *sync = pacman_list_getdata(lp);
 		PM_PKG *pkg = pacman_sync_getinfo(sync, PM_SYNC_PKG);
-		size += (int)pacman_pkg_getinfo(pkg, PM_PKG_SIZE);
+		size += (long)pacman_pkg_getinfo(pkg, PM_PKG_SIZE);
 	}
 	pacman_trans_release();
 

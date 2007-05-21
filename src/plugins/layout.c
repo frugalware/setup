@@ -59,8 +59,8 @@ char *desc()
 
 int sort_layouts(gconstpointer a, gconstpointer b)
 {
-	char *pa = a;
-	char *pb = b;
+	const char *pa = a;
+	const char *pb = b;
 	return (strcmp(pa, pb));
 }
 
