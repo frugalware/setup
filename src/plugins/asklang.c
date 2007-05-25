@@ -43,7 +43,7 @@ char *langs[] =
 	"fr_FR", "French / Français",
 	"hu_HU", "Hungarian / Magyar",
         "id_ID", "Indonesian / Bahasa Indonesia",
-        "id_ID", "Italian / Italiano",
+        "it_IT", "Italian / Italiano",
 	"nl_NL", "Dutch / Nederlands",
 	"pt_BR", "Brazilian Portuguese / Português do Brasil",
 	"ro_RO", "Romanian / Românã",
