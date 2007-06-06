@@ -57,7 +57,7 @@ char *firstmirror(char *fn)
 	FILE *fp;
 	char line[PATH_MAX];
 	char *ptr;
-	
+
 	if ((fp = fopen(fn, "r"))== NULL)
 	{
 		perror(_("Could not open output file for reading"));
@@ -79,65 +79,117 @@ char *firstmirror(char *fn)
 	return(NULL);
 }
 
-int updateconfig(char *fn, char *mirror)
+GList *getmirrors(char *fn)
 {
-	FILE *fp, *tfp;
-	char line[PATH_MAX];
-	char *tfn;
-	int firstline=1;
-	
-	tfn = strdup("/tmp/setup_XXXXXX");
-	mkstemp(tfn);
-	
-	copyfile(fn, tfn);
-	if ((tfp = fopen(tfn, "r"))== NULL)
-	{
-		perror(_("Could not open output file for writing"));
-		return(1);
+	FILE *fp;
+	char line[PATH_MAX], *ptr, *country;
+	GList *mirrors=NULL;
+
+	if ((fp = fopen(fn, "r"))== NULL) { //fopen error
+		printf("Could not open output file for reading");
+		return(NULL);
 	}
+
+	while(!feof(fp)) {
+		if(fgets(line, PATH_MAX, fp) == NULL)
+			break;
+		if(line == strstr(line, "# - ")) { // country
+			ptr = strrchr(line, ' ');
+			*ptr = '\0';
+			ptr = strrchr(line, ' ')+1;
+			country = strdup(ptr);
+		}
+		if(line == strstr(line, "Server = ")) { // server
+			ptr = strrchr(line, '/'); // drops frugalware-ARCH
+			*ptr = '\0';
+			ptr = strstr(line, "Server = ")+9; //drops 'Server = ' part
+			mirrors = g_list_append(mirrors, strdup(ptr));
+			mirrors = g_list_append(mirrors, strdup(country));
+			mirrors = g_list_append(mirrors, strdup("Off")); //unchecked by default in checkbox
+		}
+	}
+	fclose(fp);
+	return (mirrors);
+}
+
+int updateconfig(char *fn, GList *mirrors)
+{
+	FILE *fp;
+	short i;
+
 	if ((fp = fopen(fn, "w"))== NULL)
 	{
 		perror(_("Could not open output file for writing"));
 		return(1);
 	}
-	while(!feof(tfp))
-	{
-		if(fgets(line, 256, tfp) == NULL)
-			break;
-		if((line == strstr(line, "Server = ")) && firstline)
-		{
-			fprintf(fp, "Server = %s/frugalware-%s\n", mirror, ARCH);
-			fprintf(fp, line);
-			firstline=0;
-		}
-		else
-			fprintf(fp, line);
+	fprintf(fp, "#\n# %s repository\n#\n\n[%s]\n\n", PACCONF, PACCONF);
+	for (i=0; i<g_list_length(mirrors); i+=2) {
+		// do not change the country style as it will cause getmirrors() misbehaviour
+		fprintf(fp, "# - %s -\n", (char *)g_list_nth_data(mirrors, i+1));
+		fprintf(fp, "Server = %s/frugalware-%s\n", (char *)g_list_nth_data(mirrors, i), ARCH);
 	}
-	fclose(tfp);
 	fclose(fp);
-	unlink(tfn);
+	g_list_free(mirrors);
 	return(0);
 }
 
-int mirrorconf(void)
+GList *mirrorconf(void)
 {
+	short i,j;
+	GList *mirrorlist=NULL, *newmirrorlist=NULL;
 	char *fn, *mirror;
+	char **arraychk;
+
 	fn = g_strdup_printf("%s/%s", PACCONFPATH, PACCONF);
-	
-	mirror = firstmirror(fn);
+
 	dialog_vars.backtitle=gen_backtitle(_("Selecting a mirror"));
 	dlg_put_backtitle();
 	dlg_clear();
-	if(fw_inputbox(_("Please select a mirror"), _("You may now specify "
-					"the mirror closest to you in order to "
-					"download the packages faster. In most "
-					"cases the default value will be "
-					"fine."), 0, 0, mirror, 0) == -1)
-		return(-1);
 
-	updateconfig(fn, dialog_vars.input_result);
-	
-	return(0);
+	mirrorlist = getmirrors(fn);
+	arraychk = glist2dialog(mirrorlist);
+
+	newmirrorlist = fw_checklist(_("Please select mirrors"),
+					_("Here you can chose one or more "
+					"nearby mirror to speed up "
+					"package dowloading."),
+					0, 0, 0,
+					g_list_length(mirrorlist)/3,
+					arraychk,
+					FLAG_CHECK);
+
+	// removes the checkbox related part (Off state)
+	for (i=0; i<g_list_length(mirrorlist); i++) {
+		if (!strcmp(g_list_nth_data(mirrorlist, i), "Off")) {
+			mirrorlist = g_list_remove(mirrorlist, g_list_nth_data(mirrorlist, i));
+		}
+	}
+	// adds country info to the selected mirrors
+	// also removes the duplicate mirrors
+	for (i=0; i<g_list_length(mirrorlist); i+=2) {
+		for (j=0; j<g_list_length(newmirrorlist); j++) {
+			if (!strcmp((char*)g_list_nth_data(mirrorlist, i), (char*)g_list_nth_data(newmirrorlist, j))) {
+				newmirrorlist = g_list_insert(newmirrorlist, g_list_nth_data(mirrorlist, i+1), j+1);
+				mirrorlist = g_list_remove(mirrorlist, g_list_nth_data(mirrorlist, i));
+				mirrorlist = g_list_remove(mirrorlist, g_list_nth_data(mirrorlist, i));
+			}
+		}
+	}
+	// merges the selected and remain mirrors
+	newmirrorlist = g_list_concat(newmirrorlist, mirrorlist);
+	mirror = firstmirror(fn);
+	if(fw_inputbox(_("Custom mirror"), _("You may now specify "
+					"a custom mirror (eg. LAN) "
+					"so you can download packages "
+					"faster. In most cases a "
+					"Cancel enough here."), 0, 0, mirror, 0) != -1) { //not cancel
+		if (strcmp(dialog_vars.input_result, "\0")) { //not empty
+				newmirrorlist = g_list_insert(newmirrorlist, strdup(dialog_vars.input_result), 0);
+				newmirrorlist = g_list_insert(newmirrorlist, strdup("CUSTOM"), 1);
+		}
+	}
+	updateconfig(fn, newmirrorlist);
+	return(newmirrorlist);
 }
 
 int run(GList **config)
@@ -156,7 +208,7 @@ int run(GList **config)
 			if(!fw_system(INTERFACESSCRIPT))
 				break;
 		}
-		if(mirrorconf() == -1)
+		if(mirrorconf() == NULL)
 			return(-1);
 	}
 	return(0);
