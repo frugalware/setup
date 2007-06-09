@@ -108,7 +108,9 @@ int run(GList **config)
 	dialog_vars.backtitle=gen_backtitle(_("Configuring the keyboard"));
 	dlg_put_backtitle();
 	dlg_clear();
-	dialog_vars.default_item=strdup("qwerty/us.map.gz");
+	/* this string should be the best keyboard layout for the given
+	 * language from /usr/share/kbd/keymaps/i386 */
+	dialog_vars.default_item=strdup(_("qwerty/us.map.gz"));
 	if(fw_menu(_("Keyboard map selection"),
 		_("You may select one of the following keyboard maps. If you "
 		"do not select a keyboard map, 'qwerty/us.map.gz' (the US "
