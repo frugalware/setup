@@ -99,7 +99,7 @@ int run(GList **config)
 	char **array;
 	char *fn, *ptr;
 	FILE* fp;
-	int ret;
+	int ret = 0;
 	
 	find("/usr/share/kbd/keymaps/i386");
 	layoutl = g_list_sort(layoutl, sort_layouts);
