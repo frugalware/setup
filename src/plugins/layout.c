@@ -99,6 +99,7 @@ int run(GList **config)
 	char **array;
 	char *fn, *ptr;
 	FILE* fp;
+	int ret;
 	
 	find("/usr/share/kbd/keymaps/i386");
 	layoutl = g_list_sort(layoutl, sort_layouts);
@@ -107,13 +108,17 @@ int run(GList **config)
 	dialog_vars.backtitle=gen_backtitle(_("Configuring the keyboard"));
 	dlg_put_backtitle();
 	dlg_clear();
+	dialog_vars.default_item=strdup("qwerty/us.map.gz");
 	if(fw_menu(_("Keyboard map selection"),
 		_("You may select one of the following keyboard maps. If you "
 		"do not select a keyboard map, 'qwerty/us.map.gz' (the US "
 		"keyboard map) is the default. Use the UP/DOWN arrow keys and "
 		"PageUp/PageDown to scroll through the whole list of choices."),
 		0, 0, 0, g_list_length(layoutl), array) == -1)
-		return(-1);
+		ret = -1;
+	FREE(dialog_vars.default_item);
+	if(ret == -1)
+		return(ret);
 	ptr=strdup(dialog_vars.input_result);
 
 	FREE(array);
