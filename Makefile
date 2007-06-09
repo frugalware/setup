@@ -481,3 +481,15 @@ expat:
 	mkdir -p expat/usr
 	$(UNPACK); \
 	cp -a usr/lib ../expat/usr/
+
+device-mapper:
+	$(CLEANUP)
+	mkdir -p device-mapper
+	$(UNPACK); \
+	cp -a lib ../device-mapper/
+
+lvm2:
+	$(CLEANUP)
+	mkdir -p lvm2
+	$(UNPACK); \
+	cp -a {etc/lvm,sbin} ../lvm2/
