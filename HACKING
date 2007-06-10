@@ -24,8 +24,6 @@ Quick build means that once you built everything, and changed only the setup
 code itself and you would like to test it. Building the initrd from scratch is
 rather slow. We have three targets to prevent this problem:
 
-# make setup - this builds setup itself
-
-# make quick - this builds setup and updates the uncompressed initrd
+# make initrd - this builds setup and updates the uncompressed initrd
 
 $ make qemu - boots the brand new initrd

@@ -155,7 +155,8 @@ devices: compile
 	mknod -m 700 $(MDIR)/dev/tty2 c 4 2
 	mknod -m 700 $(MDIR)/dev/tty3 c 4 3
 
-initrd:
+# this target just updates the setup source itself and the initrd, suitable for qemu testing
+initrd: install-setup
 	dd if=/dev/zero of=initrd-$(CARCH).img bs=1k count=$$(echo "$$(`which du` -s $(MDIR)|sed 's/^\(.*\)\t.*$$/\1/')+2000"|bc)
 	/sbin/mke2fs -F initrd-$(CARCH).img
 	mkdir i
@@ -181,9 +182,6 @@ check:
 	@for i in $(sources); do \
 		ls $(CDIR)/$$i >/dev/null || exit 1; \
 	done
-
-# this target just updates the setup source itself and the initrd, suitable for qemu testing
-quick: install-setup initrd
 
 qemu:
 	$(QEMU) -kernel vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) -initrd \
