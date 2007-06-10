@@ -82,7 +82,7 @@ char *firstmirror(char *fn)
 GList *getmirrors(char *fn)
 {
 	FILE *fp;
-	char line[PATH_MAX], *ptr, *country;
+	char line[PATH_MAX], *ptr, *country, *preferred;
 	GList *mirrors=NULL;
 
 	if ((fp = fopen(fn, "r"))== NULL) { //fopen error
@@ -90,6 +90,9 @@ GList *getmirrors(char *fn)
 		return(NULL);
 	}
 
+	/* this string should be the best mirror for the given language from
+	 * /etc/pacman.d */
+	preferred = strdup(_("ftp://ftp5."));
 	while(!feof(fp)) {
 		if(fgets(line, PATH_MAX, fp) == NULL)
 			break;
@@ -105,9 +108,13 @@ GList *getmirrors(char *fn)
 			ptr = strstr(line, "Server = ")+9; //drops 'Server = ' part
 			mirrors = g_list_append(mirrors, strdup(ptr));
 			mirrors = g_list_append(mirrors, strdup(country));
-			mirrors = g_list_append(mirrors, strdup("Off")); //unchecked by default in checkbox
+			if(!strncmp(ptr, preferred, strlen(preferred)))
+				mirrors = g_list_append(mirrors, strdup("On"));
+			else
+				mirrors = g_list_append(mirrors, strdup("Off")); //unchecked by default in checkbox
 		}
 	}
+	free(preferred);
 	fclose(fp);
 	return (mirrors);
 }
@@ -160,7 +167,9 @@ GList *mirrorconf(void)
 
 	// removes the checkbox related part (Off state)
 	for (i=0; i<g_list_length(mirrorlist); i++) {
-		if (!strcmp(g_list_nth_data(mirrorlist, i), "Off")) {
+		if (!strcmp(g_list_nth_data(mirrorlist, i), "Off") ||
+				!strcmp(g_list_nth_data(mirrorlist, i), "On"))
+		{
 			mirrorlist = g_list_remove(mirrorlist, g_list_nth_data(mirrorlist, i));
 		}
 	}
