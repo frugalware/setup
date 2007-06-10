@@ -202,7 +202,9 @@ int run(GList **config)
 		}
 		else if (ret == DLG_EXIT_EXTRA)
 		{
+			fw_end_dialog();
 			system(RAIDCONFIGSCRIPT);
+			fw_init_dialog();
 		}
 		else
 			break;
