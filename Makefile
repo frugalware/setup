@@ -34,6 +34,7 @@ VERSION=$(shell grep ^version configure |sed 's/.*"\(.*\)"/\1/')
 DIR=$(shell [ -d _darcs/pristine ] && echo pristine || echo current)
 GPG=$(shell [ -d ../releases ] && echo true || echo false)
 QEMU_OPTS ?= -hda ~/documents/qemu/hda.img
+UML_OPTS ?= ubd0=~/documents/uml/root_fs eth0=tuntap,,,192.168.0.254 mem=128MB
 
 KERNELV = $(shell echo $(KERNELVER)|sed 's/-.*//')
 KERNELREL = $(shell echo $(KERNELVER)|sed 's/.*-//')
@@ -58,6 +59,7 @@ endif
 MARCH ?= $(CARCH)
 KARCH ?= $(CARCH)
 QEMU ?= qemu
+UML ?= linux
 ifeq ($(DEBUG),false)
 export CFLAGS = -march=$(MARCH) -O2 -pipe
 else
@@ -188,6 +190,11 @@ qemu:
 	initrd-$(CARCH).img -append "initrd=initrd-$(CARCH).img.gz \
 	load_ramdisk=1 prompt_ramdisk=0 ramdisk_size=$(shell du --block-size=1000 initrd-$(CARCH).img|sed 's/\t.*//') \
 	rw root=/dev/ram quiet vga=normal" $(QEMU_OPTS)
+
+uml:
+	$(UML) $(UML_OPTS) initrd=initrd-$(CARCH).img \
+	load_ramdisk=1 prompt_ramdisk=0 ramdisk_size=$(shell du --block-size=1000 initrd-$(CARCH).img|sed 's/\t.*//') \
+	rw root=/dev/ram
 
 bash:
 	$(CLEANUP)

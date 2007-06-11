@@ -27,3 +27,7 @@ rather slow. We have three targets to prevent this problem:
 # make initrd - this builds setup and updates the uncompressed initrd
 
 $ make qemu - boots the brand new initrd
+
+or
+
+$ make uml - boots the brand new initrd
