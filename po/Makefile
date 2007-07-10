@@ -1,5 +1,5 @@
 top_srcdir =
-PO_DIR=~/darcs/translations/po
+PO_DIR=~/git/translations/po
 LANGS = $(shell ls $(PO_DIR)/setup)
 
 pos:
