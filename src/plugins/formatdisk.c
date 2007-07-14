@@ -54,7 +54,7 @@ GList *parts=NULL;
 GList *partschk=NULL;
 char *findmount(char *dev, int mode);
 
-int partdetails(PedPartition *part)
+int partdetails(PedPartition *part, int noswap)
 {
 	char *pname, *ptype, *ptr;
 	PedFileSystemType *type;
@@ -64,6 +64,9 @@ int partdetails(PedPartition *part)
 		ptype = strdup("unknown");
 	else
 		ptype = (char*)type->name;
+
+	if(noswap && !strncmp("linux-swap", ptype, 10))
+		return(0);
 
 	pname = ped_partition_get_path(part);
 
@@ -82,7 +85,7 @@ int partdetails(PedPartition *part)
 	return(0);
 }
 
-int listparts(PedDisk *disk)
+int listparts(PedDisk *disk, int noswap)
 {
 	PedPartition *part = NULL;
 	PedPartition *extpart = NULL;
@@ -94,12 +97,12 @@ int listparts(PedDisk *disk)
 		part!=NULL;part=part->next)
 	{
 		if((part->num>0) && (part->type != PED_PARTITION_EXTENDED) && !ped_partition_get_flag(part, PED_PARTITION_RAID))
-			partdetails(part);
+			partdetails(part, noswap);
 		if(part->type == PED_PARTITION_EXTENDED)
 			for(extpart=part->part_list;
 				extpart!=NULL;extpart=extpart->next)
 				if(extpart->num>0 && !ped_partition_get_flag(extpart, PED_PARTITION_RAID))
-					partdetails(extpart);
+					partdetails(extpart, noswap);
 	}
 	return(0);
 }
@@ -133,7 +136,7 @@ int detect_raids()
 			if(disk)
 			{
 				part=ped_disk_next_partition(disk, NULL);
-				partdetails(part);
+				partdetails(part, 0);
 			}
 		}
 	}
@@ -286,6 +289,9 @@ int doswap(GList *partlist, GList **config)
 	
 	// save fstab location for later
 	data_put(config, "fstab", fn);
+	// re-detect parts so that new swap partitions will recognized as swap
+	// partitions
+	detect_parts(1);
 	return(0);
 }
 
@@ -463,7 +469,7 @@ PedExceptionOption peh(PedException* ex)
 	return(PED_EXCEPTION_IGNORE);
 }
 
-int detect_parts()
+int detect_parts(int noswap)
 {
 	PedDevice *dev = NULL;
 	PedDisk *disk = NULL;
@@ -478,6 +484,7 @@ int detect_parts()
 		g_list_free(partschk);
 		partschk = NULL;
 	}
+	ped_device_free_all();
 	chdir("/");
 
 	ped_exception_set_handler(peh);
@@ -495,7 +502,7 @@ int detect_parts()
 			continue;
 		disk = ped_disk_new(dev);
 		if(disk)
-			listparts(disk);
+			listparts(disk, noswap);
 	}
 
 	// software raids
@@ -509,7 +516,7 @@ int run(GList **config)
 	int ret;
 	char my_buffer[MAX_LEN + 1] = "";
 
-	detect_parts();
+	detect_parts(0);
 
 	// select swap partitions to use
 	partlist = selswap();
