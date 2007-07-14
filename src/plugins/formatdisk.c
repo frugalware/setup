@@ -463,14 +463,10 @@ PedExceptionOption peh(PedException* ex)
 	return(PED_EXCEPTION_IGNORE);
 }
 
-int run(GList **config)
+int detect_parts()
 {
 	PedDevice *dev = NULL;
 	PedDisk *disk = NULL;
-	GList *partlist;
-	char **nrdevs, *ptr, *op, *np, *dest;
-	int ret;
-	char my_buffer[MAX_LEN + 1] = "";
 
 	if(parts)
 	{
@@ -504,6 +500,16 @@ int run(GList **config)
 
 	// software raids
 	detect_raids();
+}
+
+int run(GList **config)
+{
+	GList *partlist;
+	char **nrdevs, *ptr, *op, *np, *dest;
+	int ret;
+	char my_buffer[MAX_LEN + 1] = "";
+
+	detect_parts();
 
 	// select swap partitions to use
 	partlist = selswap();
