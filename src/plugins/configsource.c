@@ -52,33 +52,6 @@ char *desc()
 	return _("Configuring the source of the installation");
 }
 
-char *firstmirror(char *fn)
-{
-	FILE *fp;
-	char line[PATH_MAX];
-	char *ptr;
-
-	if ((fp = fopen(fn, "r"))== NULL)
-	{
-		perror(_("Could not open output file for reading"));
-		return(NULL);
-	}
-	while(!feof(fp))
-	{
-		if(fgets(line, 256, fp) == NULL)
-			break;
-		if(line == strstr(line, "Server = "))
-		{
-			fclose(fp);
-			// drop /frugalware-ARCH
-			ptr = strrchr(line, '/');
-			*ptr = '\0';
-			return(strstr(line, " = ")+3);
-		}
-	}
-	return(NULL);
-}
-
 GList *getmirrors(char *fn)
 {
 	FILE *fp;
@@ -186,12 +159,12 @@ GList *mirrorconf(void)
 	}
 	// merges the selected and remain mirrors
 	newmirrorlist = g_list_concat(newmirrorlist, mirrorlist);
-	mirror = firstmirror(fn);
 	if(fw_inputbox(_("Custom mirror"), _("You may now specify "
 					"a custom mirror (eg. LAN) "
 					"so you can download packages "
 					"faster. In most cases a "
-					"Cancel enough here."), 0, 0, mirror, 0) != -1) { //not cancel
+					"Cancel enough here."), 0, 0,
+				(char*)g_list_nth_data(newmirrorlist, 0), 0) != -1) { //not cancel
 		if (strcmp(dialog_vars.input_result, "\0")) { //not empty
 				newmirrorlist = g_list_insert(newmirrorlist, strdup(dialog_vars.input_result), 0);
 				newmirrorlist = g_list_insert(newmirrorlist, strdup("CUSTOM"), 1);
