@@ -80,7 +80,6 @@ compile: check ccache $(packages) misc
 
 prepare:
 	rm -rf config.mak
-	chmod 755 configure
 	make -C po pos
 
 clean:
@@ -101,9 +100,14 @@ distclean: clean
 	rm -rf config.mak
 
 dist:
-	darcs changes >_darcs/$(DIR)/ChangeLog
-	darcs dist -d fwsetup-$(VERSION)
-	rm _darcs/$(DIR)/ChangeLog
+	git-archive --format=tar --prefix=fwsetup-$(VERSION)/ HEAD > fwsetup-$(VERSION).tar
+	mkdir -p fwsetup-$(VERSION)/po
+	make -C po pos
+	mv po/*.{gm,p}o fwsetup-$(VERSION)/po
+	git log --no-merges |git name-rev --tags --stdin > fwsetup-$(VERSION)/Changelog
+	tar rf fwsetup-$(VERSION).tar fwsetup-$(VERSION)/po/*.{gm,p}o
+	rm -rf fwsetup-$(VERSION)
+	gzip -f -9 fwsetup-$(VERSION).tar
 ifeq ($(GPG),true)
 	gpg --comment "See http://ftp.frugalware.org/pub/README.GPG for info" -ba -u 20F55619 fwsetup-$(VERSION).tar.gz
 	mv fwsetup-$(VERSION).tar.gz.asc ../releases
@@ -111,7 +115,7 @@ ifeq ($(GPG),true)
 endif
 
 release:
-	darcs tag --checkpoint $(VERSION)
+	tag tag $(VERSION)
 	$(MAKE) dist
 
 ccache:
