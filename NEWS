@@ -1,5 +1,10 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+0.7.6         - you can now cherry-pick preferred mirrors
+              - language-specific default keyboard
+              - do not allow mount points to be used twice
+              - do not allow to mount swap partitions
+              - other random fixes 
 0.7.5         - x86_64 build fixes
               - depedency errors now are detailed on tty4
               - new Italian translation
