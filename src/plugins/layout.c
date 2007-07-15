@@ -129,7 +129,7 @@ int run(GList **config)
 		layout[strlen(layout)-7]='\0';
 	
 	//TODO: maybe there is a proper system call for this?
-	LOG("loading keymap '%s'", layout);
+	LOG("selected layout '%s'", layout);
 	ptr = g_strdup_printf("loadkeys /usr/share/kbd/keymaps/i386/%s.map.gz", layout);
 	fw_system(ptr);
 	FREE(ptr);

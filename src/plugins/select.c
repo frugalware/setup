@@ -327,7 +327,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 		{
 			makepath(pkgdb);
 			// TODO: use libarchive for this
-			system(g_strdup_printf("tar xjf %s/%s.fdb -C %s", pacbindir, repo, pkgdb));
+			fw_system(g_strdup_printf("tar xjf %s/%s.fdb -C %s", pacbindir, repo, pkgdb));
 			if ((fp = fopen("/etc/pacman.conf", "w")) == NULL)
 			{
 				perror(_("Could not open output file for writing"));

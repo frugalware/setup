@@ -75,10 +75,9 @@ int setcharset(char *name, GList **config)
 	char *ptr;
 
 	//TODO: maybe there is a proper system call for this?
-	LOG("setting font '%s'", name);
-	ptr = g_strdup_printf("setfont %s 2>&1", name);
+	ptr = g_strdup_printf("setfont %s", name);
 	fw_end_dialog();
-	system(ptr);
+	fw_system(ptr);
 	fw_init_dialog();
 	FREE(ptr);
 	// save the font for later usage
