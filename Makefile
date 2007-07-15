@@ -105,7 +105,7 @@ dist:
 	make -C po pos
 	mv po/*.{gm,p}o fwsetup-$(VERSION)/po
 	git log --no-merges |git name-rev --tags --stdin > fwsetup-$(VERSION)/Changelog
-	tar rf fwsetup-$(VERSION).tar fwsetup-$(VERSION)/po/*.{gm,p}o
+	tar rf fwsetup-$(VERSION).tar fwsetup-$(VERSION)/po/*.{gm,p}o fwsetup-$(VERSION)/Changelog
 	rm -rf fwsetup-$(VERSION)
 	gzip -f -9 fwsetup-$(VERSION).tar
 ifeq ($(GPG),true)
@@ -115,7 +115,7 @@ ifeq ($(GPG),true)
 endif
 
 release:
-	tag tag $(VERSION)
+	git tag $(VERSION)
 	$(MAKE) dist
 
 ccache:
