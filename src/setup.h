@@ -29,6 +29,7 @@
 #define _(text) gettext(text)
 
 #define LOGDEV "/dev/tty4"
+#define LOGFILE "/var/log/setup.log"
 #define SOURCEDIR "/mnt/source"
 #define TARGETDIR "/mnt/target"
 

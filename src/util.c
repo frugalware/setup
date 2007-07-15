@@ -663,7 +663,7 @@ void show_menu(GList *plugin_list, int *state)
 
 int setup_log(char *file, int line, char *fmt, ...)
 {
-	FILE *fp;
+	static FILE *ldp = NULL, *lfp = NULL;
 	va_list args;
 	char str[PATH_MAX];
 
@@ -671,11 +671,22 @@ int setup_log(char *file, int line, char *fmt, ...)
 	vsnprintf(str, PATH_MAX, fmt, args);
 	va_end(args);
 
-	fp = fopen(LOGDEV, "w");
-	if(!fp)
-		return(-1);
-	fprintf(fp, "%s:%d: %s\n", file, line, str);
-	fclose(fp);
+	if(!ldp)
+	{
+		ldp = fopen(LOGDEV, "w");
+		if(!ldp)
+			return(-1);
+	}
+	if(!lfp)
+	{
+		lfp = fopen(LOGFILE, "w");
+		if(!lfp)
+			return(-1);
+	}
+	fprintf(ldp, "%s:%d: %s\n", file, line, str);
+	fflush(ldp);
+	fprintf(lfp, "%s:%d: %s\n", file, line, str);
+	fflush(lfp);
 	return(0);
 }
 
