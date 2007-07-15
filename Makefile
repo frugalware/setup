@@ -123,7 +123,7 @@ ccache:
 
 setup:
 ifeq ($(STABLE),false)
-	$(MAKE) -C src final
+	$(MAKE) -C src current
 else
 	$(MAKE) -C src stable
 endif
@@ -179,7 +179,11 @@ initrd_gz: clean config.mak devices initrd
 update:
 	darcs pull -a -v
 	$(MAKE) -C src clean
-	$(MAKE) -C src final
+ifeq ($(STABLE),false)
+	$(MAKE) -C src current
+else
+	$(MAKE) -C src stable
+endif
 	sudo rm -rf merge initrd*
 	sudo $(MAKE) initrd
 
