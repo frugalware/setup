@@ -64,7 +64,7 @@ int installpkgs_forreal(GList *pkgs, int fast)
 			cmd = g_strdup_printf("pacman-g2 -S -r ./ --noconfirm -f --nointegrity %s", ptr);
 		else
 			cmd = g_strdup_printf("pacman-g2 -S -r ./ --noconfirm %s", ptr);
-		if (system(cmd) != 0)
+		if (fw_system_interactive(cmd) != 0)
 		{
 			printf(_("Errors occured while installing "
 			"selected packages.\n"
