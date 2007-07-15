@@ -196,7 +196,7 @@ int exit_perform(void)
 	end_dialog();
 #endif
 
-	system(g_strdup_printf("/sbin/reboot >%s 2>%s", LOGDEV, LOGDEV));
+	fw_system_interactive("/sbin/reboot");
 	exit(1);
 }
 
@@ -350,15 +350,14 @@ int fw_system(char* cmd)
 
 int fw_system_interactive(char* cmd)
 {
-	char *ptr, line[PATH_MAX];
-	FILE *pp;
+	char *ptr;
 	int ret;
 
-	LOG("running external command: '%s'", cmd);
+	LOG("running interactive external command: '%s'", cmd);
 	ptr = g_strdup_printf("%s 2>&1", cmd);
 	ret = system(ptr);
 	FREE(ptr);
-	LOG("external command returned with exit code '%d'", ret);
+	LOG("interactive external command returned with exit code '%d'", ret);
 	return (ret);
 }
 char *drop_version(char *str)

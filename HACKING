@@ -31,3 +31,13 @@ $ make qemu - boots the brand new initrd
 or
 
 $ make uml - boots the brand new initrd
+
+External commands
+=================
+
+Don't use system(). There are two wrapper functions:
+
+fw_system() is for non-interactive commands, their output is logged.
+fw_system_interactive() is for interactive commands, their path+args and return
+code are logged, but not their output. Ideally git-grep '[^_]system(' should
+return almost nothing.

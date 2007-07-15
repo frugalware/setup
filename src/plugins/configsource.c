@@ -182,7 +182,7 @@ int run(GList **config)
 		fw_end_dialog();
 		while(1)
 		{
-			system(NETCONFIGSCRIPT);
+			fw_system_interactive(NETCONFIGSCRIPT);
 			fw_init_dialog();
 			dlg_put_backtitle();
 			dialog_msgbox(_("Please wait"), _("Configuring the network "
