@@ -35,21 +35,12 @@
 #define MKSWAP "/sbin/mkswap"
 #define SWAPON "/sbin/swapon"
 
-#ifdef FINAL
 #define PLUGDIR "/lib/plugins"
 #define HOTPLUGSCRIPT "/etc/rc.d/rc.hotplug"
 #define NETCONFIGSCRIPT "netconfig -f"
 #define RAIDCONFIGSCRIPT "raidconfig"
 #define INTERFACESSCRIPT "netconfig start"
 #define PACCONFPATH "/etc/pacman.d/"
-#else
-#define PLUGDIR "plugins"
-#define HOTPLUGSCRIPT "echo /etc/rc.d/rc.hotplug"
-#define NETCONFIGSCRIPT "echo netconfig -f >/dev/tty4"
-#define RAIDCONFIGSCRIPT "echo raidconfig >/dev/tty4"
-#define INTERFACESSCRIPT "echo netconfig start"
-#define PACCONFPATH "plugins"
-#endif
 
 #ifndef STABLE
 #define PACCONF "frugalware-current"

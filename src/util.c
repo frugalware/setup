@@ -196,11 +196,7 @@ int exit_perform(void)
 	end_dialog();
 #endif
 
-#ifdef FINAL
 	system(g_strdup_printf("/sbin/reboot >%s 2>%s", LOGDEV, LOGDEV));
-#else
-	printf("/sbin/reboot\n");
-#endif
 	exit(1);
 }
 
@@ -330,11 +326,7 @@ int umount_if_needed(char *sourcedir)
 int fw_system(char* cmd)
 {
 	char *ptr;
-#ifdef FINAL
 	ptr = g_strdup_printf("%s >%s 2>%s", cmd, LOGDEV, LOGDEV);
-#else
-	ptr = g_strdup_printf("echo %s >%s 2>%s", cmd, LOGDEV, LOGDEV);
-#endif
 	int ret = system(ptr);
 	free(ptr);
 	return (ret);

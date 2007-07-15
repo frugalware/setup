@@ -311,9 +311,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 	struct stat sbuf;
 	int ret;
 	PM_DB *i;
-#ifdef FINAL
 	FILE *fp;
-#endif
 
 	pacbindir = g_strdup_printf("%s/frugalware-%s",
 		SOURCEDIR, ARCH);
@@ -330,7 +328,6 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			makepath(pkgdb);
 			// TODO: use libarchive for this
 			system(g_strdup_printf("tar xjf %s/%s.fdb -C %s", pacbindir, repo, pkgdb));
-#ifdef FINAL
 			if ((fp = fopen("/etc/pacman.conf", "w")) == NULL)
 			{
 				perror(_("Could not open output file for writing"));
@@ -339,7 +336,6 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			fprintf(fp, "[%s]\n", repo);
 			fprintf(fp, "Server = file://%s\n\n", pacbindir);
 			fclose(fp);
-#endif
 		}
 		else
 		{

@@ -22,7 +22,7 @@ CFLAGS ?= -Wall -Werror -O2 -pipe
 else
 CFLAGS ?= -g -Wall -Werror
 endif
-CFLAGS += $(FINAL) $(STABLE) -DARCH="\"$(shell arch)\""
+CFLAGS += $(STABLE) -DARCH="\"$(shell arch)\""
 LDFLAGS += -ldl -rdynamic
 CFLAGS += $(shell pkg-config --cflags glib-2.0)
 LDFLAGS += $(shell pkg-config --libs glib-2.0)
@@ -47,16 +47,16 @@ objs = setup.o util.o gtk.o
 endif
 
 all: setup
-	$(MAKE) -C plugins FINAL="$(FINAL)" UI="$(UI)"
+	$(MAKE) -C plugins UI="$(UI)"
 
 setup: $(objs)
 	$(CC) $(CFLAGS) -o $@ $(objs) $(LDFLAGS)
 
 current:
-	$(MAKE) FINAL="-DFINAL" UI="$(UI)"
+	$(MAKE) UI="$(UI)"
 
 stable:
-	$(MAKE) FINAL="-DFINAL" STABLE="-DSTABLE" UI="$(UI)"
+	$(MAKE) STABLE="-DSTABLE" UI="$(UI)"
 
 clean:
 	rm -f setup *.o
