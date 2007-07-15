@@ -52,7 +52,7 @@ all: setup
 setup: $(objs)
 	$(CC) $(CFLAGS) -o $@ $(objs) $(LDFLAGS)
 
-final:
+current:
 	$(MAKE) FINAL="-DFINAL" UI="$(UI)"
 
 stable:
