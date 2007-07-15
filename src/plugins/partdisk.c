@@ -197,7 +197,7 @@ int run(GList **config)
 				return(-1);
 			strcpy(partsw, ptr);
 			fw_end_dialog();
-			fw_system(g_strdup_printf("%s %s", partsw, path));
+			system(g_strdup_printf("%s %s", partsw, path));
 			fw_init_dialog();
 		}
 		else if (ret == DLG_EXIT_EXTRA)
