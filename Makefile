@@ -252,7 +252,7 @@ dhcpcd:
 
 frugalware:
 	$(CLEANUP)
-	mkdir -p frugalware/{var/lib/frugalware/messages/,etc}
+	mkdir -p frugalware/{var/lib/frugalware/messages/,var/log,var/run,etc}
 	$(UNPACK)
 	cp -a $(BDIR)/var/lib/frugalware/messages/rc.messages \
 	        frugalware/var/lib/frugalware/messages/
