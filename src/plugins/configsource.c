@@ -137,6 +137,8 @@ GList *mirrorconf(void)
 					g_list_length(mirrorlist)/3,
 					arraychk,
 					FLAG_CHECK);
+	for (i=0; i<g_list_length(newmirrorlist); i++)
+		LOG("selected preferred mirror '%s'", (char*)g_list_nth_data(newmirrorlist, i));
 
 	// removes the checkbox related part (Off state)
 	for (i=0; i<g_list_length(mirrorlist); i++) {
@@ -166,6 +168,7 @@ GList *mirrorconf(void)
 					"Cancel enough here."), 0, 0,
 				(char*)g_list_nth_data(newmirrorlist, 0), 0) != -1) { //not cancel
 		if (strcmp(dialog_vars.input_result, "\0")) { //not empty
+				LOG("added custom mirror '%s'", dialog_vars.input_result);
 				newmirrorlist = g_list_insert(newmirrorlist, strdup(dialog_vars.input_result), 0);
 				newmirrorlist = g_list_insert(newmirrorlist, strdup("CUSTOM"), 1);
 		}
