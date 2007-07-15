@@ -137,9 +137,15 @@ int raid_confirm(void)
 		"partitioning?"), 0, 0);
 	dialog_vars.defaultno=0;
 	if(ret==DLG_EXIT_OK)
+	{
+		LOG("selected 'enable' for raid support");
 		return(1);
+	}
 	else
+	{
+		LOG("selected 'disable' for raid support");
 		return(0);
+	}
 #endif
 }
 
