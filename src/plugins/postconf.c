@@ -150,7 +150,7 @@ int run(GList **config)
 	fw_system(g_strdup_printf("umount %s/proc", TARGETDIR));
 
 	fw_end_dialog();
-	system("chroot ./ /sbin/grubconfig");
+	fw_system_interactive("chroot ./ /sbin/grubconfig");
 	fw_init_dialog();
 
 	dlg_put_backtitle();
@@ -161,37 +161,37 @@ int run(GList **config)
 
 	// newer shadow requires /dev/stdin :/
 	ptr = g_strdup_printf("mount /dev -o bind %s/dev", TARGETDIR);
-	system(ptr);
+	fw_system(ptr);
 	free(ptr);
 	while(!has_rootpw("etc/shadow") && confirm_rootpw())
 	{
 		fw_end_dialog();
-		system("chroot ./ /usr/bin/passwd root");
+		fw_system_interactive("chroot ./ /usr/bin/passwd root");
 		fw_init_dialog();
 	}
 
 	while(!has_user("etc/passwd") && confirm_user())
 	{
 		fw_end_dialog();
-		system("chroot ./ /usr/sbin/adduser");
+		fw_system_interactive("chroot ./ /usr/sbin/adduser");
 		fw_init_dialog();
 	}
 	ptr = g_strdup_printf("umount %s/dev", TARGETDIR);
-	system(ptr);
+	fw_system(ptr);
 	free(ptr);
 
 	if((ptr = (char*)data_get(*config, "font")))
 		append_font("etc/sysconfig/font", ptr);
 
 	fw_end_dialog();
-	system("chroot ./ /sbin/netconfig");
-	system("chroot ./ /sbin/timeconfig");
-	system("chroot ./ /sbin/mouseconfig");
+	fw_system_interactive("chroot ./ /sbin/netconfig");
+	fw_system_interactive("chroot ./ /sbin/timeconfig");
+	fw_system_interactive("chroot ./ /sbin/mouseconfig");
 
 	if(!stat("usr/bin/X", &buf))
 	{
-		system("chroot ./ su -c /sbin/xconfig");
-		system("chroot ./ /sbin/xwmconfig --silent");
+		fw_system_interactive("chroot ./ su -c /sbin/xconfig");
+		fw_system_interactive("chroot ./ /sbin/xwmconfig --silent");
 	}
 	fw_init_dialog();
 
