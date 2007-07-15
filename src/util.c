@@ -348,6 +348,19 @@ int fw_system(char* cmd)
 	return (ret);
 }
 
+int fw_system_interactive(char* cmd)
+{
+	char *ptr, line[PATH_MAX];
+	FILE *pp;
+	int ret;
+
+	LOG("running external command: '%s'", cmd);
+	ptr = g_strdup_printf("%s 2>&1", cmd);
+	ret = system(ptr);
+	FREE(ptr);
+	LOG("external command returned with exit code '%d'", ret);
+	return (ret);
+}
 char *drop_version(char *str)
 {
 	char *ptr;

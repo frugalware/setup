@@ -43,6 +43,7 @@ int exit_confirm(void);
 int exit_perform(void);
 char **glist4dialog(GList *list, char *blank);
 int fw_system(char* cmd);
+int fw_system_interactive(char* cmd);
 int makepath(char *path);
 int rmrf(char *path);
 int umount_if_needed(char *sourcedir);
