@@ -197,13 +197,13 @@ int run(GList **config)
 				return(-1);
 			strcpy(partsw, ptr);
 			fw_end_dialog();
-			system(g_strdup_printf("%s %s", partsw, path));
+			fw_system_interactive(g_strdup_printf("%s %s", partsw, path));
 			fw_init_dialog();
 		}
 		else if (ret == DLG_EXIT_EXTRA)
 		{
 			fw_end_dialog();
-			system(RAIDCONFIGSCRIPT);
+			fw_system_interactive(RAIDCONFIGSCRIPT);
 			fw_init_dialog();
 		}
 		else
