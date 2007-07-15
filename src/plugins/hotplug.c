@@ -56,10 +56,10 @@ int run(GList **config)
 	dialog_vars.backtitle=gen_backtitle(_("Detecting hardware"));
 	dlg_put_backtitle();
 	dlg_clear();
+	LOG("detecting hardware using '%s'", HOTPLUGSCRIPT);
 	dialog_msgbox(_("Please wait"), _("Scanning for SCSI and PCI cards"),
 		0, 0, 0);
-	system(g_strdup_printf("%s >%s 2>%s", HOTPLUGSCRIPT,
-		LOGDEV, LOGDEV));
+	system(HOTPLUGSCRIPT);
 
 	return(0);
 }
