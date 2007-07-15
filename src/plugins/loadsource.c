@@ -110,6 +110,7 @@ int run(GList **config)
 	GList *drives=NULL;
 	int i;
 	int found = 0;
+	char *ptr;
 
 	umount_if_needed(SOURCEDIR);
 
@@ -122,7 +123,8 @@ int run(GList **config)
 	drives = grep_drives("/proc/sys/dev/cdrom/info");
 	for (i=0; i<g_list_length(drives); i++)
 	{
-		if (!system(g_strdup_printf("mount -o ro -t iso9660 /dev/%s %s >%s 2>%s", (char*)g_list_nth_data(drives, i), SOURCEDIR, LOGDEV, LOGDEV)))
+		ptr = g_strdup_printf("mount -o ro -t iso9660 /dev/%s %s", (char*)g_list_nth_data(drives, i), SOURCEDIR);
+		if (!fw_system(ptr))
 		{
 			data_put(config, "srcdev", (char*)g_list_nth_data(drives, i));
 			dlg_put_backtitle();
@@ -132,6 +134,7 @@ int run(GList **config)
 			found = 1;
 			break;
 		}
+		FREE(ptr);
 	}
 	if(!found)
 		data_put(config, "netinstall", "");
