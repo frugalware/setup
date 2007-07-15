@@ -130,8 +130,8 @@ int run(GList **config)
 	
 	//TODO: maybe there is a proper system call for this?
 	LOG("loading keymap '%s'", layout);
-	ptr = g_strdup_printf("loadkeys /usr/share/kbd/keymaps/i386/%s.map.gz 2>/dev/null", layout);
-	system(ptr);
+	ptr = g_strdup_printf("loadkeys /usr/share/kbd/keymaps/i386/%s.map.gz", layout);
+	fw_system(ptr);
 	FREE(ptr);
 	
 	fn = strdup("/tmp/setup_XXXXXX");
