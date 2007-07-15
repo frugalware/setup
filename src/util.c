@@ -665,7 +665,7 @@ int setup_log(char *file, int line, char *fmt, ...)
 {
 	static FILE *ldp = NULL, *lfp = NULL;
 	va_list args;
-	char str[PATH_MAX];
+	char str[PATH_MAX], *ptr;
 	struct stat buf;
 
 	va_start(args, fmt);
@@ -678,9 +678,20 @@ int setup_log(char *file, int line, char *fmt, ...)
 		if(!ldp)
 			return(-1);
 	}
-	if(stat(LOGFILE, &buf) || !lfp)
+	ptr = g_strdup_printf("%s/%s", TARGETDIR, LOGFILE);
+	if(stat(LOGFILE, &buf) && !stat(ptr, &buf))
 	{
-		lfp = fopen(LOGFILE, "a");
+		fclose(lfp);
+		lfp = NULL;
+	}
+	else
+	{
+		FREE(ptr);
+		ptr = strdup(LOGFILE);
+	}
+	if(!lfp)
+	{
+		lfp = fopen(ptr, "a");
 		if(!lfp)
 			return(-1);
 	}

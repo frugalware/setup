@@ -565,7 +565,6 @@ int run(GList **config)
 	np = g_strdup_printf("%s/%s", TARGETDIR, LOGFILE);
 	copyfile(LOGFILE, np);
 	unlink(LOGFILE);
-	symlink(np, LOGFILE);
 	chmod (np, S_IRUSR|S_IWUSR);
 	FREE(np);
 
