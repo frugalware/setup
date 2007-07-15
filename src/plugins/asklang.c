@@ -106,6 +106,7 @@ int run(GList **config)
 		0, 0, 0, LANGSNUM, langs) == -1)
 		return(-1);
 
+	LOG("selected language: '%s'", dialog_vars.input_result);
 	setenv("LC_ALL", dialog_vars.input_result, 1);
 	setenv("LANG",   dialog_vars.input_result, 1);
 	setlocale(LC_ALL, dialog_vars.input_result);
