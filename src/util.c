@@ -673,8 +673,5 @@ int setup_log(char *file, int line, char *fmt, ...)
 
 void cb_log(unsigned short level, char *msg)
 {
-	char str[PATH_MAX];
-
-	snprintf(str, PATH_MAX, "[libpacman] %s", msg);
-	LOG(str);
+	LOG("[libpacman, level %d] %s", level, msg);
 }

@@ -404,7 +404,6 @@ int fw_select(GList **config, int selpkgc, GList *syncs)
 	int i, j;
 	GList *cats=NULL;
 	GList *allpkgs=NULL;
-	char *ptr2;
 	PM_LIST *x;
 
 	dialog_vars.backtitle=gen_backtitle(_("Selecting packages"));
@@ -455,20 +454,16 @@ int fw_select(GList **config, int selpkgc, GList *syncs)
 		dialog_msgbox(_("Please wait"), _("Searching for missing dependencies..."),
 		0, 0, 0);
 		if(pacman_trans_prepare(&junk) == -1) {
-			ptr2 = g_strdup_printf("pacman-g2 error: %s", pacman_strerror(pm_errno));
-			LOG(ptr2);
-			free(ptr2);
+			LOG("pacman-g2 error: %s", pacman_strerror(pm_errno));
 
 			/* Well well well, LOG pacman deps error at tty4 */
 			for(x = pacman_list_first(junk); x; x = pacman_list_next(x))
 			    {
 				PM_DEPMISS *miss = pacman_list_getdata(x);
-				ptr2 = g_strdup_printf(":: %s: %s %s",
+				LOG(":: %s: %s %s",
 				    (char*)pacman_dep_getinfo(miss, PM_DEP_TARGET),
 				    (long)pacman_dep_getinfo(miss, PM_DEP_TYPE) == PM_DEP_TYPE_DEPEND ? "requires" : "is required by",
 				    (char*)pacman_dep_getinfo(miss, PM_DEP_NAME));
-				LOG(ptr2);
-				free(ptr2);
 			    }
 			pacman_list_free(junk);
 			pacman_trans_release();
