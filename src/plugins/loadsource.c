@@ -137,7 +137,10 @@ int run(GList **config)
 		FREE(ptr);
 	}
 	if(!found)
+	{
+		LOG("no package database found, performing a network installation");
 		data_put(config, "netinstall", "");
+	}
 	// disable caching for cds
 	if((char*)data_get(*config, "netinstall")==NULL)
 	{
@@ -145,11 +148,9 @@ int run(GList **config)
 		disable_cache(pacbindir);
 		FREE(pacbindir);
 	}
-	/* comment this out for now, as requested at http://forums.frugalware.org/index.php?t=rview&goto=3479#msg_3479
 	if(data_get(*config, "srcdev")==NULL)
 	{
-		dialog_msgbox(_("CD/DVD drive not found"), _("Sorry, no Frugalware install disc was found in any of your drives. Press ENTER to reboot."), 0, 0, 1);
-		return(-1);
-	}*/
+		LOG("no cd/dvd drive found, this is normal if you are running setup from a pendrive or in an emulator");
+	}
 	return(0);
 }
