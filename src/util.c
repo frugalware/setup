@@ -325,10 +325,26 @@ int umount_if_needed(char *sourcedir)
 
 int fw_system(char* cmd)
 {
-	char *ptr;
-	ptr = g_strdup_printf("%s >%s 2>%s", cmd, LOGDEV, LOGDEV);
-	int ret = system(ptr);
-	free(ptr);
+	char *ptr, line[PATH_MAX];
+	FILE *pp;
+	LOG("running external command: '%s'", cmd);
+	ptr = g_strdup_printf("%s 2>&1", cmd);
+	pp = popen(ptr, "r");
+	if(!pp)
+	{
+		LOG("call to popen falied (%s)", strerror(errno));
+		return(-1);
+	}
+	while(!feof(pp))
+	{
+		if(fgets(line, PATH_MAX, pp) == NULL)
+			break;
+		line[strlen(line)-1]='\0';
+		LOG("> %s", line);
+	}
+	int ret = pclose(pp);
+	FREE(ptr);
+	LOG("external command returned with exit code '%d'", ret);
 	return (ret);
 }
 
