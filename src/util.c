@@ -1,7 +1,7 @@
 /*
  *  util.c for Frugalware setup
  * 
- *  Copyright (c) 2005 by Miklos Vajna <vmiklos@frugalware.org>
+ *  Copyright (c) 2005-2007 by Miklos Vajna <vmiklos@frugalware.org>
  *  Copyright (c) 2006 by Alex Smith <alex@alex-smith.me.uk>
  * 
  *  This program is free software; you can redistribute it and/or modify
@@ -31,6 +31,7 @@
 #include <sys/types.h>
 #include <sys/fcntl.h>
 #include <signal.h>
+#include <stdarg.h>
 #ifdef DIALOG
 #include <dialog.h>
 #endif
@@ -652,9 +653,15 @@ void show_menu(GList *plugin_list, int *state)
 	free(items);
 }
 
-int setup_log(char *file, int line, char *str)
+int setup_log(char *file, int line, char *fmt, ...)
 {
 	FILE *fp;
+	va_list args;
+	char str[PATH_MAX];
+
+	va_start(args, fmt);
+	vsnprintf(str, PATH_MAX, fmt, args);
+	va_end(args);
 
 	fp = fopen(LOGDEV, "w");
 	if(!fp)
