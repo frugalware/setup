@@ -117,7 +117,7 @@ GList *mirrorconf(void)
 {
 	short i,j;
 	GList *mirrorlist=NULL, *newmirrorlist=NULL;
-	char *fn, *mirror;
+	char *fn;
 	char **arraychk;
 
 	fn = g_strdup_printf("%s/%s", PACCONFPATH, PACCONF);
