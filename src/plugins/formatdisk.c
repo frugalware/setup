@@ -53,6 +53,7 @@ char *desc()
 GList *parts=NULL;
 GList *partschk=NULL;
 char *findmount(char *dev, int mode);
+int detect_parts(int noswap);
 
 int partdetails(PedPartition *part, int noswap)
 {
@@ -507,6 +508,7 @@ int detect_parts(int noswap)
 
 	// software raids
 	detect_raids();
+	return(0);
 }
 
 int run(GList **config)
