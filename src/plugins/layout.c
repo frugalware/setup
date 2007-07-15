@@ -97,7 +97,7 @@ int find(char *dirname)
 int run(GList **config)
 {
 	char **array;
-	char *fn, *ptr;
+	char *fn, *ptr, *layout;
 	FILE* fp;
 	int ret = 0;
 	
@@ -121,15 +121,18 @@ int run(GList **config)
 	FREE(dialog_vars.default_item);
 	if(ret == -1)
 		return(ret);
-	ptr=strdup(dialog_vars.input_result);
+	layout=strdup(dialog_vars.input_result);
 
 	FREE(array);
 	// drop .map.gz
-	if(strlen(ptr) >= 7)
-		ptr[strlen(ptr)-7]='\0';
+	if(strlen(layout) >= 7)
+		layout[strlen(layout)-7]='\0';
 	
 	//TODO: maybe there is a proper system call for this?
-	system(g_strdup_printf("loadkeys /usr/share/kbd/keymaps/i386/%s.map.gz >%s 2>%s", ptr, LOGDEV, LOGDEV));
+	LOG("selected layout '%s'", layout);
+	ptr = g_strdup_printf("loadkeys /usr/share/kbd/keymaps/i386/%s.map.gz", layout);
+	fw_system(ptr);
+	FREE(ptr);
 	
 	fn = strdup("/tmp/setup_XXXXXX");
 	mkstemp(fn);
@@ -141,9 +144,9 @@ int run(GList **config)
 	fprintf(fp, "# /etc/sysconfig/keymap\n\n"
 		"# specify the keyboard map, maps are in "
 		"/usr/share/kbd/keymaps\n\n");
-	if(strstr(ptr, "/"))
-		fprintf(fp, "keymap=%s\n", strstr(ptr, "/")+1);
-	FREE(ptr);
+	if(strstr(layout, "/"))
+		fprintf(fp, "keymap=%s\n", strstr(layout, "/")+1);
+	FREE(layout);
 	fclose(fp);
 
 	data_put(config, "keymap", fn);

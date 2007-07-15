@@ -1,7 +1,7 @@
 /*
  *  util.c for Frugalware setup
  * 
- *  Copyright (c) 2005 by Miklos Vajna <vmiklos@frugalware.org>
+ *  Copyright (c) 2005-2007 by Miklos Vajna <vmiklos@frugalware.org>
  *  Copyright (c) 2006 by Alex Smith <alex@alex-smith.me.uk>
  * 
  *  This program is free software; you can redistribute it and/or modify
@@ -31,6 +31,7 @@
 #include <sys/types.h>
 #include <sys/fcntl.h>
 #include <signal.h>
+#include <stdarg.h>
 #ifdef DIALOG
 #include <dialog.h>
 #endif
@@ -195,11 +196,7 @@ int exit_perform(void)
 	end_dialog();
 #endif
 
-#ifdef FINAL
 	system(g_strdup_printf("/sbin/reboot >%s 2>%s", LOGDEV, LOGDEV));
-#else
-	printf("/sbin/reboot\n");
-#endif
 	exit(1);
 }
 
@@ -328,14 +325,26 @@ int umount_if_needed(char *sourcedir)
 
 int fw_system(char* cmd)
 {
-	char *ptr;
-#ifdef FINAL
-	ptr = g_strdup_printf("%s >%s 2>%s", cmd, LOGDEV, LOGDEV);
-#else
-	ptr = g_strdup_printf("echo %s >%s 2>%s", cmd, LOGDEV, LOGDEV);
-#endif
-	int ret = system(ptr);
-	free(ptr);
+	char *ptr, line[PATH_MAX];
+	FILE *pp;
+	LOG("running external command: '%s'", cmd);
+	ptr = g_strdup_printf("%s 2>&1", cmd);
+	pp = popen(ptr, "r");
+	if(!pp)
+	{
+		LOG("call to popen falied (%s)", strerror(errno));
+		return(-1);
+	}
+	while(!feof(pp))
+	{
+		if(fgets(line, PATH_MAX, pp) == NULL)
+			break;
+		line[strlen(line)-1]='\0';
+		LOG("> %s", line);
+	}
+	int ret = pclose(pp);
+	FREE(ptr);
+	LOG("external command returned with exit code '%d'", ret);
 	return (ret);
 }
 
@@ -652,9 +661,15 @@ void show_menu(GList *plugin_list, int *state)
 	free(items);
 }
 
-int setup_log(char *file, int line, char *str)
+int setup_log(char *file, int line, char *fmt, ...)
 {
 	FILE *fp;
+	va_list args;
+	char str[PATH_MAX];
+
+	va_start(args, fmt);
+	vsnprintf(str, PATH_MAX, fmt, args);
+	va_end(args);
 
 	fp = fopen(LOGDEV, "w");
 	if(!fp)
@@ -666,8 +681,5 @@ int setup_log(char *file, int line, char *str)
 
 void cb_log(unsigned short level, char *msg)
 {
-	char str[PATH_MAX];
-
-	snprintf(str, PATH_MAX, "[libpacman] %s", msg);
-	LOG(str);
+	LOG("[libpacman, level %d] %s", level, msg);
 }

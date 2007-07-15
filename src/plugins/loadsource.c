@@ -110,6 +110,7 @@ int run(GList **config)
 	GList *drives=NULL;
 	int i;
 	int found = 0;
+	char *ptr;
 
 	umount_if_needed(SOURCEDIR);
 
@@ -122,7 +123,8 @@ int run(GList **config)
 	drives = grep_drives("/proc/sys/dev/cdrom/info");
 	for (i=0; i<g_list_length(drives); i++)
 	{
-		if (!system(g_strdup_printf("mount -o ro -t iso9660 /dev/%s %s >%s 2>%s", (char*)g_list_nth_data(drives, i), SOURCEDIR, LOGDEV, LOGDEV)))
+		ptr = g_strdup_printf("mount -o ro -t iso9660 /dev/%s %s", (char*)g_list_nth_data(drives, i), SOURCEDIR);
+		if (!fw_system(ptr))
 		{
 			data_put(config, "srcdev", (char*)g_list_nth_data(drives, i));
 			dlg_put_backtitle();
@@ -132,9 +134,13 @@ int run(GList **config)
 			found = 1;
 			break;
 		}
+		FREE(ptr);
 	}
 	if(!found)
+	{
+		LOG("no package database found, performing a network installation");
 		data_put(config, "netinstall", "");
+	}
 	// disable caching for cds
 	if((char*)data_get(*config, "netinstall")==NULL)
 	{
@@ -142,11 +148,9 @@ int run(GList **config)
 		disable_cache(pacbindir);
 		FREE(pacbindir);
 	}
-	/* comment this out for now, as requested at http://forums.frugalware.org/index.php?t=rview&goto=3479#msg_3479
 	if(data_get(*config, "srcdev")==NULL)
 	{
-		dialog_msgbox(_("CD/DVD drive not found"), _("Sorry, no Frugalware install disc was found in any of your drives. Press ENTER to reboot."), 0, 0, 1);
-		return(-1);
-	}*/
+		LOG("no cd/dvd drive found, this is normal if you are running setup from a pendrive or in an emulator");
+	}
 	return(0);
 }

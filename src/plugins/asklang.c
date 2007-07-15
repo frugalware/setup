@@ -72,10 +72,14 @@ char *desc()
 
 int setcharset(char *name, GList **config)
 {
+	char *ptr;
+
 	//TODO: maybe there is a proper system call for this?
+	ptr = g_strdup_printf("setfont %s", name);
 	fw_end_dialog();
-	system(g_strdup_printf("setfont %s >%s 2>%s", name, LOGDEV, LOGDEV));
+	fw_system(ptr);
 	fw_init_dialog();
+	FREE(ptr);
 	// save the font for later usage
 	data_put(config, "font", strdup(name));
 	bind_textdomain_codeset("setup", g_ascii_strup(name, strlen(name)-1));
@@ -101,6 +105,7 @@ int run(GList **config)
 		0, 0, 0, LANGSNUM, langs) == -1)
 		return(-1);
 
+	LOG("selected language: '%s'", dialog_vars.input_result);
 	setenv("LC_ALL", dialog_vars.input_result, 1);
 	setenv("LANG",   dialog_vars.input_result, 1);
 	setlocale(LC_ALL, dialog_vars.input_result);

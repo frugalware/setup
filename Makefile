@@ -123,7 +123,7 @@ ccache:
 
 setup:
 ifeq ($(STABLE),false)
-	$(MAKE) -C src final
+	$(MAKE) -C src current
 else
 	$(MAKE) -C src stable
 endif
@@ -179,7 +179,11 @@ initrd_gz: clean config.mak devices initrd
 update:
 	darcs pull -a -v
 	$(MAKE) -C src clean
-	$(MAKE) -C src final
+ifeq ($(STABLE),false)
+	$(MAKE) -C src current
+else
+	$(MAKE) -C src stable
+endif
 	sudo rm -rf merge initrd*
 	sudo $(MAKE) initrd
 
@@ -248,7 +252,7 @@ dhcpcd:
 
 frugalware:
 	$(CLEANUP)
-	mkdir -p frugalware/{var/lib/frugalware/messages/,etc}
+	mkdir -p frugalware/{var/lib/frugalware/messages/,var/log,var/run,etc}
 	$(UNPACK)
 	cp -a $(BDIR)/var/lib/frugalware/messages/rc.messages \
 	        frugalware/var/lib/frugalware/messages/
