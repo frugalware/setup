@@ -561,6 +561,14 @@ int run(GList **config)
 	chmod (np, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
 	FREE(np);
 
+	makepath(g_strdup_printf("%s/%s", TARGETDIR, "/var/log"));
+	np = g_strdup_printf("%s/%s", TARGETDIR, LOGFILE);
+	copyfile(LOGFILE, np);
+	unlink(LOGFILE);
+	symlink(np, LOGFILE);
+	chmod (np, S_IRUSR|S_IWUSR);
+	FREE(np);
+
 	// disable caching for cds
 	// this is needed here since when the cds is loaded we had no
 	// formatted root partition

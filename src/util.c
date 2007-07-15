@@ -666,6 +666,7 @@ int setup_log(char *file, int line, char *fmt, ...)
 	static FILE *ldp = NULL, *lfp = NULL;
 	va_list args;
 	char str[PATH_MAX];
+	struct stat buf;
 
 	va_start(args, fmt);
 	vsnprintf(str, PATH_MAX, fmt, args);
@@ -677,9 +678,9 @@ int setup_log(char *file, int line, char *fmt, ...)
 		if(!ldp)
 			return(-1);
 	}
-	if(!lfp)
+	if(stat(LOGFILE, &buf) || !lfp)
 	{
-		lfp = fopen(LOGFILE, "w");
+		lfp = fopen(LOGFILE, "a");
 		if(!lfp)
 			return(-1);
 	}
