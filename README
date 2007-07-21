@@ -1,5 +1,13 @@
 This is the source of the Frugalware Linux installer.
 
+Internals
+---------
+
+The whole setup code is kept in the memory during the installation, so we try
+to keep the it small. This means that all the programs we include in the initrd
+is written in C or is a shellscript. No C++ or Python or anything else. For
+detailed developer information, see the HACKING file.
+
 Building
 --------
 
