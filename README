@@ -19,13 +19,13 @@ From scratch
 If you never compiled the setup, you need the following steps:
 
 cd ~
-mkdir darcs
-cd darcs
-darcs get --partial http://darcs.frugalware.org/repos/setup
-darcs get --partial http://darcs.frugalware.org/repos/translations
+mkdir git
+cd git
+git clone http://git.frugalware.org/repos/setup/.git
+git clone http://git.frugalware.org/repos/translations/.git
 su -
-ln -s ~user/darcs ./
-cd darcs/setup
+ln -s ~user/git ./
+cd git/setup
 
 then read the section titled "Building".
 
@@ -37,7 +37,7 @@ Cleaning up
 
 If you have built the initrd in the past and you don't want to start from
 scratch, just run 'make distclean' as root. If you are using setup from the
-darcs repo, you should run 'darcs pull', too.
+git repo, you should run 'git pull', too.
 
 Adding new translations
 -----------------------
