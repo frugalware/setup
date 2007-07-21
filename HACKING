@@ -2,12 +2,22 @@ Patches
 =======
 
 If you have made changes to the source and would like to send these changes
-to us, you can use darcs to send the changes.
+to us, you can use git format-patch to create patches:
 
-darcs send --to=frugalware-devel@frugalware.org --from=your@email.addr.ess \
-	--subject="My setup patch"
+1) Run git log to get the patch hash of the latest patch you do _not_ want to
+send:
 
-You need to make sure that Postfix or another Mail Transport Agent is running.
+$ git log --pretty=oneline
+ff5700b293015ddfb269838f1f74abb586c199c5 configsource: more LOG() calls
+cdc6f87e51d4443c774f83a4be0168d06a7927c1 postconf: use fw_system_interactive()
+1634dda91f6ecdd0ea22eff6fa3a5874b0a81f59 partdisk: use fw_system_interactive()
+
+If you want to send the first, two, then run:
+
+$ git format-patch 1634dda91f6ecdd0ea22eff6fa3a5874b0a81f59..
+
+And just subscribe to the frugalware-devel@frugalware.org mailing list and send
+the created patches to us.
 
 Testing changes
 ===============
