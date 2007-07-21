@@ -1,5 +1,6 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+0.7.8         - fix Italian translation for 0.7pre2
 0.7.7         - create /var/log/setup.log on the target system. most user
 		answers and external command calls (including the output of
 		non-interactive commands) are logged. all logged lines are
