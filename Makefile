@@ -31,7 +31,6 @@ ifeq ($(DEBUG),)
 endif
 
 VERSION=$(shell grep ^version configure |sed 's/.*"\(.*\)"/\1/')
-DIR=$(shell [ -d _darcs/pristine ] && echo pristine || echo current)
 GPG=$(shell [ -d ../releases ] && echo true || echo false)
 QEMU_OPTS ?= -hda ~/documents/qemu/hda.img
 UML_OPTS ?= ubd0=~/documents/uml/root_fs eth0=tuntap,,,192.168.0.254 mem=128MB
@@ -177,7 +176,7 @@ initrd_gz: clean config.mak devices initrd
 	gzip -9 -c initrd-$(CARCH).img > initrd-$(CARCH).img.gz
 
 update:
-	darcs pull -a -v
+	git pull
 	$(MAKE) -C src clean
 ifeq ($(STABLE),false)
 	$(MAKE) -C src current
