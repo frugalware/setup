@@ -90,6 +90,33 @@ int confirm_rootpw()
 		return(0);
 }
 
+int change_rootpw()
+{
+	char *pass1, *pass2, *ptr;
+	int ret;
+
+	while(1)
+	{
+		if(fw_inputbox(_("Password"), _("Please enter a root password"), 0, 0, "", 1) == -1)
+			continue;
+		else
+			pass1 = strdup(dialog_vars.input_result);
+		if(fw_inputbox(_("Password"), _("Please re-enter your root password"), 0, 0, "", 1) == -1)
+			continue;
+		else
+			pass2 = strdup(dialog_vars.input_result);
+		if(!strcmp(pass1, pass2))
+			break;
+		if(dialog_yesno(_("Passwords don't match"),
+					_("Sorry, the passwords do not match. Try again?"), 0, 0) != DLG_EXIT_OK)
+			return(-1);
+	}
+	ptr = g_strdup_printf("echo root:%s |chroot ./ /usr/sbin/chpasswd", pass1);
+	ret = fw_system(ptr);
+	FREE(ptr);
+	return(ret);
+}
+
 int has_user(char *fn)
 {
 	FILE *fp;
@@ -165,9 +192,7 @@ int run(GList **config)
 	free(ptr);
 	while(!has_rootpw("etc/shadow") && confirm_rootpw())
 	{
-		fw_end_dialog();
-		fw_system_interactive("chroot ./ /usr/bin/passwd root");
-		fw_init_dialog();
+		change_rootpw();
 	}
 
 	while(!has_user("etc/passwd") && confirm_user())
