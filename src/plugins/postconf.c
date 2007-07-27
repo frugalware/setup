@@ -90,17 +90,23 @@ int confirm_rootpw()
 		return(0);
 }
 
-int change_rootpw()
+int change_pw(char *user, char **passbuf)
 {
 	char *pass=NULL, *ptr;
 	int ret;
 
 	while(1)
 	{
-		if(fw_inputbox(_("Password"), _("Please enter a root password"), 0, 0, "", 1) != -1)
+		ptr = g_strdup_printf(_("Please enter a password for %s"), user);
+		ret = fw_inputbox(_("Password"), ptr, 0, 0, "", 1);
+		FREE(ptr);
+		if(ret != -1)
 		{
 			pass = strdup(dialog_vars.input_result);
-			if(fw_inputbox(_("Password"), _("Please re-enter your root password"), 0, 0, "", 1) != -1)
+			ptr = g_strdup_printf(_("Please re-enter your password for %s"), user);
+			ret = fw_inputbox(_("Password"), ptr, 0, 0, "", 1);
+			FREE(ptr);
+			if(ret != -1)
 			{
 				if(strcmp(pass, dialog_vars.input_result))
 				{
@@ -113,18 +119,27 @@ int change_rootpw()
 				}
 				else
 				{
-					ptr = g_strdup_printf("echo root:%s |chroot ./ /usr/sbin/chpasswd", pass);
-					ret = fw_system(ptr);
-					FREE(ptr);
-					FREE(pass);
-					return(ret);
+					if(!passbuf)
+					{
+						ptr = g_strdup_printf("echo %s:%s |chroot ./ /usr/sbin/chpasswd", user, pass);
+						ret = fw_system(ptr);
+						FREE(ptr);
+						FREE(pass);
+						return(ret);
+					}
+					else
+					{
+						*passbuf = pass;
+						return(0);
+					}
 				}
 			}
 		}
  
-		FREE(pass)
-		if(dialog_yesno(_("Ignore setting password"),
-				_("Are you sure you want to skip setting the root password?"), 0, 0) != DLG_EXIT_OK)
+		FREE(pass);
+		ptr = g_strdup_printf(_("Are you sure you want to skip setting the password for %s?"), user);
+		ret = dialog_yesno(_("Ignore setting password"), ptr, 0, 0);
+		if(ret != DLG_EXIT_OK)
 			return(-1);
 	}
 }
@@ -204,7 +219,7 @@ int run(GList **config)
 	free(ptr);
 	while(!has_rootpw("etc/shadow") && confirm_rootpw())
 	{
-		change_rootpw();
+		change_pw("root", NULL);
 	}
 
 	while(!has_user("etc/passwd") && confirm_user())
