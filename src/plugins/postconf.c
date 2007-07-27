@@ -92,29 +92,41 @@ int confirm_rootpw()
 
 int change_rootpw()
 {
-	char *pass1, *pass2, *ptr;
+	char *pass=NULL, *ptr;
 	int ret;
 
 	while(1)
 	{
-		if(fw_inputbox(_("Password"), _("Please enter a root password"), 0, 0, "", 1) == -1)
-			continue;
-		else
-			pass1 = strdup(dialog_vars.input_result);
-		if(fw_inputbox(_("Password"), _("Please re-enter your root password"), 0, 0, "", 1) == -1)
-			continue;
-		else
-			pass2 = strdup(dialog_vars.input_result);
-		if(!strcmp(pass1, pass2))
-			break;
-		if(dialog_yesno(_("Passwords don't match"),
-					_("Sorry, the passwords do not match. Try again?"), 0, 0) != DLG_EXIT_OK)
+		if(fw_inputbox(_("Password"), _("Please enter a root password"), 0, 0, "", 1) != -1)
+		{
+			pass = strdup(dialog_vars.input_result);
+			if(fw_inputbox(_("Password"), _("Please re-enter your root password"), 0, 0, "", 1) != -1)
+			{
+				if(strcmp(pass, dialog_vars.input_result))
+				{
+					FREE(pass);
+					if(dialog_yesno(_("Passwords don't match"),
+							_("Sorry, the passwords do not match. Try again?"), 0, 0) != DLG_EXIT_OK)
+						return(-1);
+					else
+						continue;
+				}
+				else
+				{
+					ptr = g_strdup_printf("echo root:%s |chroot ./ /usr/sbin/chpasswd", pass);
+					ret = fw_system(ptr);
+					FREE(ptr);
+					FREE(pass);
+					return(ret);
+				}
+			}
+		}
+ 
+		FREE(pass)
+		if(dialog_yesno(_("Ignore setting password"),
+				_("Are you sure you want to skip setting the root password?"), 0, 0) != DLG_EXIT_OK)
 			return(-1);
 	}
-	ptr = g_strdup_printf("echo root:%s |chroot ./ /usr/sbin/chpasswd", pass1);
-	ret = fw_system(ptr);
-	FREE(ptr);
-	return(ret);
 }
 
 int has_user(char *fn)
