@@ -92,7 +92,7 @@ int confirm_rootpw()
 
 int change_rootpw()
 {
-	char *pass1, *pass2, *ptr;
+	char *pass1=NULL, *pass2=NULL, *ptr;
 	int ret;
 
 	while(1)
@@ -105,7 +105,10 @@ int change_rootpw()
 			continue;
 		else
 			pass2 = strdup(dialog_vars.input_result);
-		if(!strcmp(pass1, pass2))
+		ret = strcmp(pass1, pass2);
+		FREE(pass1);
+		FREE(pass1);
+		if(!ret)
 			break;
 		if(dialog_yesno(_("Passwords don't match"),
 					_("Sorry, the passwords do not match. Try again?"), 0, 0) != DLG_EXIT_OK)
