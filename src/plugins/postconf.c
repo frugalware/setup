@@ -1,5 +1,5 @@
 /*
- *  skel.c for Frugalware setup
+ *  postconf.c for Frugalware setup
  * 
  *  Copyright (c) 2005 by Miklos Vajna <vmiklos@frugalware.org>
  * 
