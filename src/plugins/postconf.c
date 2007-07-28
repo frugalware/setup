@@ -144,6 +144,35 @@ int change_pw(char *user, char **passbuf)
 	}
 }
 
+int add_user()
+{
+	char *login, *fn, *pass, *ptr;
+	int ret;
+
+	if(fw_inputbox(_("Enter login"), _("Please enter the login name you should like to create:"), 0, 0, "", 0) == -1)
+		return(-1);
+	login = strdup(dialog_vars.input_result);
+	if(fw_inputbox(_("Enter full name"), _("Please enter the full name of the user you would like to create:"), 0, 0, "", 0) == -1)
+	{
+		FREE(login);
+		return(-1);
+	}
+	fn = strdup(dialog_vars.input_result);
+	if(change_pw(login, &pass) == -1)
+	{
+		FREE(login);
+		FREE(fn);
+		return(-1);
+	}
+	ptr = g_strdup_printf("yes \"\"|chroot ./ /usr/sbin/adduser %s \"%s\" %s", login, fn, pass);
+	ret = fw_system(ptr);
+	FREE(ptr);
+	FREE(login);
+	FREE(fn);
+	FREE(pass);
+	return(ret);
+}
+
 int has_user(char *fn)
 {
 	FILE *fp;
@@ -224,9 +253,7 @@ int run(GList **config)
 
 	while(!has_user("etc/passwd") && confirm_user())
 	{
-		fw_end_dialog();
-		fw_system_interactive("chroot ./ /usr/sbin/adduser");
-		fw_init_dialog();
+		add_user();
 	}
 	ptr = g_strdup_printf("umount %s/dev", TARGETDIR);
 	fw_system(ptr);
