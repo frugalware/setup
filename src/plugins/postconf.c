@@ -139,6 +139,7 @@ int change_pw(char *user, char **passbuf)
 		FREE(pass);
 		ptr = g_strdup_printf(_("Are you sure you want to skip setting the password for %s?"), user);
 		ret = dialog_yesno(_("Ignore setting password"), ptr, 0, 0);
+		FREE(ptr);
 		if(ret != DLG_EXIT_OK)
 			return(-1);
 	}
@@ -230,7 +231,9 @@ int run(GList **config)
 
 	// TODO: somehow /proc gets mounted sometimes
 	// this is just a workaround, we should find and fix the affected pkgs
-	fw_system(g_strdup_printf("umount %s/proc", TARGETDIR));
+	ptr = g_strdup_printf("umount %s/proc", TARGETDIR);
+	fw_system(ptr);
+	free(ptr);
 
 	fw_end_dialog();
 	fw_system_interactive("chroot ./ /sbin/grubconfig");
