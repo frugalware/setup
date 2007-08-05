@@ -98,11 +98,17 @@ GList *grep_drives(char *file)
 int is_netinstall(char *path)
 {
 	struct stat statbuf;
-	if(!(!stat(g_strdup_printf("%s/frugalware-%s", path, ARCH), &statbuf)
-		&& S_ISDIR(statbuf.st_mode)))
-		return(1);
+	char *ptr;
+	int ret;
+
+	ptr = g_strdup_printf("%s/frugalware-%s", path, ARCH);
+	if(!stat(ptr, &statbuf)
+		&& S_ISDIR(statbuf.st_mode))
+		ret = 0;
 	else
-		return(0);
+		ret = 1;
+	FREE(ptr);
+	return(ret);
 }
 
 int run(GList **config)
