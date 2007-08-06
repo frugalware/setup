@@ -51,13 +51,13 @@ int add_plugin(char *filename)
 
 	if ((handle = dlopen(filename, RTLD_NOW)) == NULL)
 	{
-		fprintf(stderr, "%s\n", dlerror());
+		LOG("%s", dlerror());
 		return(1);
 	}
 	
 	if ((infop = dlsym(handle, "info")) == NULL)
 	{
-		fprintf(stderr, "%s\n", dlerror());
+		LOG("%s", dlerror());
 		return(1);
 	}
 	plugin_t *plugin = infop();
@@ -87,6 +87,7 @@ int init_plugins(char *dirname)
 				(ext = strrchr(ent->d_name, '.')) != NULL)
 			if (!strcmp(ext, SHARED_LIB_EXT))
 				add_plugin(filename);
+		FREE(filename);
 	}
 	closedir(dir);
 	return(0);
@@ -136,6 +137,7 @@ int main(int argc, char *argv[])
 	for (i=0; i<g_list_length(plugin_list);)
 	{
 		plugin = g_list_nth_data(plugin_list, i);
+		LOG("Starting plugin:%s", plugin->name);
 		/* if an error occured, then show the setup menu, otherwise
 		 * just jump to the next plugin */
 		if (plugin->run(&config) == -1)
