@@ -39,7 +39,7 @@
 char *langs[] =
 {
 	"en_US", "English",
-	"da_DK", "Danish / Dansk"
+	"da_DK", "Danish / Dansk",
 	"de_DE", "German / Deutsch",
 	"fr_FR", "French / Français",
 	"hu_HU", "Hungarian / Magyar",
