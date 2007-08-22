@@ -504,4 +504,4 @@ lvm2:
 	$(CLEANUP)
 	mkdir -p lvm2
 	$(UNPACK); \
-	cp -a {etc/lvm,sbin} ../lvm2/
+	cp -a {etc,sbin} ../lvm2/
