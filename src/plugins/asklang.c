@@ -1,7 +1,7 @@
 /*
  *  asklang.c for Frugalware setup
  * 
- *  Copyright (c) 2005 by Miklos Vajna <vmiklos@frugalware.org>
+ *  Copyright (c) 2005, 2007 by Miklos Vajna <vmiklos@frugalware.org>
  *  Copyright (c) 2005 by Christian Hamar alias krix <krics@linuxforum.hu>
  * 
  *  This program is free software; you can redistribute it and/or modify
@@ -35,10 +35,11 @@
 #include <util.h>
 #include "common.h"
 
-#define LANGSNUM 11
+#define LANGSNUM 12
 char *langs[] =
 {
 	"en_US", "English",
+	"da_DK", "Danish / Dansk"
 	"de_DE", "German / Deutsch",
 	"fr_FR", "French / Français",
 	"hu_HU", "Hungarian / Magyar",
