@@ -346,12 +346,12 @@ eject:
 	$(UNPACK)
 	cp -a $(BDIR)/usr/bin/eject eject/bin/
 
-util-linux:
+util-linux-ng:
 	$(CLEANUP)
-	mkdir -p util-linux/{sbin,usr/bin}
+	mkdir -p util-linux-ng/{sbin,usr/bin}
 	$(UNPACK)
-	cp -a $(BDIR)/sbin/{cfdisk,fdisk} util-linux/sbin/
-	cp -a $(BDIR)/usr/bin/setterm util-linux/usr/bin/
+	cp -a $(BDIR)/sbin/{cfdisk,fdisk} util-linux-ng/sbin/
+	cp -a $(BDIR)/usr/bin/setterm util-linux-ng/usr/bin/
 
 netkit-base:
 	$(CLEANUP)
