@@ -149,8 +149,6 @@ endif
 	chmod +x $(MDIR)/etc/rc.d/rc.S
 	cp bin/bootstrap $(MDIR)/bin/
 	chmod +x $(MDIR)/bin/bootstrap
-	cp bin/service $(MDIR)/sbin/
-	chmod +x $(MDIR)/sbin/service
 
 devices: compile
 	mknod -m 700 $(MDIR)/dev/console c 5 1
@@ -384,6 +382,7 @@ rp-pppoe:
 	$(UNPACK); \
 	cp -a etc ../rp-pppoe/; \
 	cp -a usr/sbin ../rp-pppoe/usr/; \
+	cp bin/pppoe-start ../rp-pppoe/sbin/
 
 glib2:
 	$(CLEANUP)
