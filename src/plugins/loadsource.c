@@ -102,7 +102,11 @@ int is_netinstall(char *path)
 	int ret;
 
 	ptr = g_strdup_printf("%s/frugalware-%s", path, ARCH);
-       ret = !stat(ptr, &statbuf) && !S_ISDIR(statbuf.st_mode);
+	if(!stat(ptr, &statbuf)
+		&& S_ISDIR(statbuf.st_mode))
+		ret = 0;
+	else
+		ret = 1;
 	FREE(ptr);
 	return(ret);
 }

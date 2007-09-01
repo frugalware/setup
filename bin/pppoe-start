@@ -1,0 +1,3 @@
+#!/bin/sh
+
+pppoe-connect >/dev/tty4 2>/dev/tty4 &

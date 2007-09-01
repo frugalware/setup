@@ -148,9 +148,6 @@ endif
 	cp etc/rc.S $(MDIR)/etc/rc.d/
 	chmod +x $(MDIR)/etc/rc.d/rc.S
 	cp bin/bootstrap $(MDIR)/bin/
-	chmod +x $(MDIR)/bin/bootstrap
-	cp bin/service $(MDIR)/sbin/
-	chmod +x $(MDIR)/sbin/service
 
 devices: compile
 	mknod -m 700 $(MDIR)/dev/console c 5 1
@@ -346,12 +343,12 @@ eject:
 	$(UNPACK)
 	cp -a $(BDIR)/usr/bin/eject eject/bin/
 
-util-linux:
+util-linux-ng:
 	$(CLEANUP)
-	mkdir -p util-linux/{sbin,usr/bin}
+	mkdir -p util-linux-ng/{sbin,usr/bin}
 	$(UNPACK)
-	cp -a $(BDIR)/sbin/{cfdisk,fdisk} util-linux/sbin/
-	cp -a $(BDIR)/usr/bin/setterm util-linux/usr/bin/
+	cp -a $(BDIR)/sbin/{cfdisk,fdisk} util-linux-ng/sbin/
+	cp -a $(BDIR)/usr/bin/setterm util-linux-ng/usr/bin/
 
 netkit-base:
 	$(CLEANUP)
@@ -384,6 +381,7 @@ rp-pppoe:
 	$(UNPACK); \
 	cp -a etc ../rp-pppoe/; \
 	cp -a usr/sbin ../rp-pppoe/usr/; \
+	cp bin/pppoe-start ../rp-pppoe/sbin/
 
 glib2:
 	$(CLEANUP)
