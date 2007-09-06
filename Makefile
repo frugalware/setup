@@ -382,7 +382,7 @@ rp-pppoe:
 	$(UNPACK); \
 	cp -a etc ../rp-pppoe/; \
 	cp -a usr/sbin ../rp-pppoe/usr/; \
-	cp bin/pppoe-start ../rp-pppoe/sbin/
+	cp ../bin/pppoe-start ../rp-pppoe/usr/sbin/
 
 glib2:
 	$(CLEANUP)
