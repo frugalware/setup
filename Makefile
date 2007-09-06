@@ -213,6 +213,7 @@ busybox:
 	cp -a $(BDIR)/usr/share/busybox busybox
 	mkdir -p busybox/mnt/{source,target}
 	mkdir -p busybox/tmp
+	rm -f busybox/sbin/mkswap
 
 dialog:
 	$(CLEANUP)
@@ -347,7 +348,7 @@ util-linux-ng:
 	$(CLEANUP)
 	mkdir -p util-linux-ng/{sbin,usr/bin}
 	$(UNPACK)
-	cp -a $(BDIR)/sbin/{cfdisk,fdisk} util-linux-ng/sbin/
+	cp -a $(BDIR)/sbin/{cfdisk,fdisk,mkswap} util-linux-ng/sbin/
 	cp -a $(BDIR)/usr/bin/setterm util-linux-ng/usr/bin/
 
 netkit-base:
