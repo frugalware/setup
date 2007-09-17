@@ -292,7 +292,7 @@ kernel:
 	cp $(BDIR)/boot/vmlinuz-$(KERNELV)-fw$(KERNELREL) \
 		$(CWD)/vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	cd kernel/ && find . -name *ko|xargs gzip
-	for i in drivers/{cpufreq,telephony,hwmon,media/{dvb,radio,video}} security sound; do rm -rfv kernel/lib/modules/$(KERNELV)-fw$(KERNELREL)/kernel/$$i; done
+	for i in drivers/{cpufreq,telephony,hwmon,media/{dvb,radio,video}} security; do rm -rfv kernel/lib/modules/$(KERNELV)-fw$(KERNELREL)/kernel/$$i; done
 	cp $(BDIR)/boot/System.map-$(KERNELV)-fw$(KERNELREL) \
 		$(CWD)/System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	depmod -b kernel/ -a -e -F System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH) -r $(KERNELV)-fw$(KERNELREL)
