@@ -356,7 +356,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			else
 			{
 				LOG("updating the database");
-				ret = pacman_db_update(0, mydatabase);
+				ret = pacman_db_update(1, mydatabase);
 				if(ret == 0) {
 					LOG("database update done");
 				}
@@ -371,8 +371,6 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 						dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to update %s (%s)"), PACCONF, pacman_strerror(pm_errno)), 0, 0, 1);
 						return(-1);
 					}
-				} else if (ret == 1) {
-					LOG("the database is to up date");
 				}
 			}
 			
