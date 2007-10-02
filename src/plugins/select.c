@@ -484,7 +484,7 @@ int run(GList **config)
 
 	if(pacman_initialize("/mnt/target") == -1)
 	{
-		fprintf(stderr, "failed to initilize pacman library (%s)\n",
+		fprintf(stderr, "failed to initialize pacman library (%s)\n",
 			pacman_strerror(pm_errno));
 		return(1);
 	}
