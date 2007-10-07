@@ -114,7 +114,7 @@ ifeq ($(GPG),true)
 endif
 
 release:
-	git tag $(VERSION)
+	git tag -l |grep -q $(VERSION) || dg tag $(VERSION)
 	$(MAKE) dist
 
 ccache:
