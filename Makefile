@@ -504,3 +504,15 @@ lvm2:
 	mkdir -p lvm2
 	$(UNPACK); \
 	cp -a {etc,sbin} ../lvm2/
+
+wpa_supplicant:
+	$(CLEANUP)
+	mkdir -p wpa_supplicant/usr
+	$(UNPACK); \
+	cp -a usr/sbin/ ../wpa_supplicant/usr/
+
+openssl:
+	$(CLEANUP)
+	mkdir -p openssl/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/*.so.* ../openssl/usr/lib/
