@@ -157,7 +157,7 @@ int run(GList **config)
 #ifdef GTK
 	tv = create_asklang_view();
 	gtk_container_add(GTK_CONTAINER(frame), tv);
-	while (i <= LANGSNUM + 2) {
+	while (i <= LANGSNUM * 2) {
 		gtk_list_store_append(GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(tv))), &iter);
 		gtk_list_store_set(GTK_LIST_STORE(gtk_tree_view_get_model(GTK_TREE_VIEW(tv))), &iter,
 			0, langs[i], 1, langs[i+1], -1);
