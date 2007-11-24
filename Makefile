@@ -2,7 +2,7 @@
 #
 # Compiling Time: 2.45 SBU
 #
-# Copyright (C) 2005-2006 Miklos Vajna <vmiklos@frugalware.org>
+# Copyright (C) 2005-2007 Miklos Vajna <vmiklos@frugalware.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ export CCACHE_DIR=/var/cache/ccache/setup
 export CCACHE_NOLINK=1
 export CCACHE_UMASK=002
 DIALOG_LANGS = `find po -name *.po |sed 's/.*\/\(.*\).po/\1/' |tr '\n' ' '`
-GLIBC_LANGS = en_US da_DK de_DE fr_FR hu_HU id_ID it_IT nl_NL pt_BR ro_RO sk_SK sv_SV
+GLIBC_LANGS = en_US da_DK de_DE fr_FR hu_HU id_ID it_IT nl_NL pt_BR ro_RO sk_SK sv_SE
 CARCH ?= $(shell arch)
 ifeq ($(CARCH),i686)
 	KARCH ?= i386
@@ -114,7 +114,7 @@ ifeq ($(GPG),true)
 endif
 
 release:
-	git tag $(VERSION)
+	git tag -l |grep -q $(VERSION) || dg tag $(VERSION)
 	$(MAKE) dist
 
 ccache:
@@ -213,6 +213,7 @@ busybox:
 	cp -a $(BDIR)/usr/share/busybox busybox
 	mkdir -p busybox/mnt/{source,target}
 	mkdir -p busybox/tmp
+	rm -f busybox/sbin/mkswap
 
 dialog:
 	$(CLEANUP)
@@ -291,7 +292,7 @@ kernel:
 	cp $(BDIR)/boot/vmlinuz-$(KERNELV)-fw$(KERNELREL) \
 		$(CWD)/vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	cd kernel/ && find . -name *ko|xargs gzip
-	for i in drivers/{cpufreq,telephony,hwmon,media/{dvb,radio,video}} security sound; do rm -rfv kernel/lib/modules/$(KERNELV)-fw$(KERNELREL)/kernel/$$i; done
+	for i in drivers/{cpufreq,telephony,hwmon,media/{dvb,radio,video}} security; do rm -rfv kernel/lib/modules/$(KERNELV)-fw$(KERNELREL)/kernel/$$i; done
 	cp $(BDIR)/boot/System.map-$(KERNELV)-fw$(KERNELREL) \
 		$(CWD)/System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	depmod -b kernel/ -a -e -F System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH) -r $(KERNELV)-fw$(KERNELREL)
@@ -347,7 +348,7 @@ util-linux-ng:
 	$(CLEANUP)
 	mkdir -p util-linux-ng/{sbin,usr/bin}
 	$(UNPACK)
-	cp -a $(BDIR)/sbin/{cfdisk,fdisk} util-linux-ng/sbin/
+	cp -a $(BDIR)/sbin/{cfdisk,fdisk,mkswap} util-linux-ng/sbin/
 	cp -a $(BDIR)/usr/bin/setterm util-linux-ng/usr/bin/
 
 netkit-base:
@@ -381,7 +382,7 @@ rp-pppoe:
 	$(UNPACK); \
 	cp -a etc ../rp-pppoe/; \
 	cp -a usr/sbin ../rp-pppoe/usr/; \
-	cp bin/pppoe-start ../rp-pppoe/sbin/
+	cp ../bin/pppoe-start ../rp-pppoe/usr/sbin/
 
 glib2:
 	$(CLEANUP)
@@ -503,3 +504,15 @@ lvm2:
 	mkdir -p lvm2
 	$(UNPACK); \
 	cp -a {etc,sbin} ../lvm2/
+
+wpa_supplicant:
+	$(CLEANUP)
+	mkdir -p wpa_supplicant/usr
+	$(UNPACK); \
+	cp -a usr/sbin/ ../wpa_supplicant/usr/
+
+openssl:
+	$(CLEANUP)
+	mkdir -p openssl/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/*.so.* ../openssl/usr/lib/

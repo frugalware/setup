@@ -462,8 +462,11 @@ int fw_inputbox(const char *title, const char *cprompt, int height, int width,
 	dialog_vars.input_result = my_buffer;
 	dlg_put_backtitle();
 	dlg_clear();
+	if(password)
+		dialog_vars.insecure = 1;
 	ret = dialog_inputbox(title, cprompt, height, width, init,
 		password);
+	dialog_vars.insecure = 0;
 	if (ret != DLG_EXIT_CANCEL)
 		return(0);
 	else

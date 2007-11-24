@@ -1,5 +1,12 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+0.8.1         - maintainance release for 0.7 final
+              - a spelling fix
+              - usual translation updates
+0.8.0         - util-linux is now replaced with util-linux-ng
+              - fix for dsl connections
+              - enable wildcards for password boxes, like in netconfig
+              - drop mkswap from busybox (it does not support checking)
 0.7.9         - the password change for root and the user creation is now
                 menu-driven, too
               - updated documentation for git

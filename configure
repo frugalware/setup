@@ -14,10 +14,10 @@ packages = ['bash', 'kernel', 'busybox', 'dhcpcd', 'dialog', 'e2fsprogs',
 		'bzip2', 'libarchive', 'zlib', 'frugalwareutils',
 		'wireless_tools', 'ipw2200-firmware', 'dropbear', 'bastet',
 		'readline', 'acx100', 'shadow', 'madwifi', 'rt2500',
-		'device-mapper', 'lvm2']
+		'device-mapper', 'lvm2', 'wpa_supplicant', 'openssl']
 
 # when releasing a new setup, please update this :)
-version = "0.7.9"
+version = "0.8.1"
 
 # parse our options
 parser = OptionParser(version="configure for Frugalware Setup v%s" % (version))

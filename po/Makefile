@@ -35,4 +35,4 @@ update-po: pot
 	done
 
 distclean:
-	rm -f intltool-extract *.pot *.po
+	rm -f intltool-extract *.pot *.po *.gmo

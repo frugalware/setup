@@ -49,7 +49,7 @@ char *langs[] =
 	"pt_BR", "Brazilian Portuguese / Português do Brasil",
 	"ro_RO", "Romanian / Românã",
 	"sk_SK", "Slovak / Slovenèina",
-	"sv_SV", "Swedish / Svenska"
+	"sv_SE", "Swedish / Svenska"
 };
 
 plugin_t plugin =
