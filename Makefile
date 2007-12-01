@@ -46,7 +46,7 @@ export CCACHE_DIR=/var/cache/ccache/setup
 export CCACHE_NOLINK=1
 export CCACHE_UMASK=002
 DIALOG_LANGS = `find po -name *.po |sed 's/.*\/\(.*\).po/\1/' |tr '\n' ' '`
-GLIBC_LANGS = en_US da_DK de_DE fr_FR hu_HU id_ID it_IT nl_NL pt_BR ro_RO sk_SK sv_SE
+GLIBC_LANGS = en_US,ISO-8859-1 da_DK,ISO-8859-1 de_DE,ISO-8859-1 fr_FR,ISO-8859-1 hu_HU,ISO-8859-2 id_ID,ISO-8859-1 it_IT,ISO-8859-1 nl_NL,ISO-8859-1 pt_BR,ISO-8859-1 ro_RO,ISO-8859-2 sk_SK,ISO-8859-2 sv_SE,ISO-8859-1
 CARCH ?= $(shell arch)
 ifeq ($(CARCH),i686)
 	KARCH ?= i386
@@ -268,7 +268,7 @@ glibc:
 	cd $(BDIR) && rm -rf usr/ && mkdir -p usr/lib/locale/
 	cd $(BDIR); \
 	for i in $(GLIBC_LANGS); do \
-		localedef --prefix=./ -c -i $$i $$i; true; \
+		localedef --prefix=./ -c -f $${i##*,} -i $${i%%,*} $${i%%,*}; true; \
 	done
 	cp -a $(BDIR)/usr/lib/locale/locale-archive glibc/usr/lib/locale/
 
