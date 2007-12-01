@@ -1,5 +1,7 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+0.8.2         - release for 0.8pre1
+              - added wpa support
 0.8.1         - maintainance release for 0.7 final
               - a spelling fix
               - usual translation updates
