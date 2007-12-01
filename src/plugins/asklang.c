@@ -83,7 +83,6 @@ int setcharset(char *name, GList **config)
 	FREE(ptr);
 	// save the font for later usage
 	data_put(config, "font", strdup(name));
-	bind_textdomain_codeset("setup", g_ascii_strup(name, strlen(name)-1));
 	return(0);
 }
 
