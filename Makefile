@@ -312,21 +312,21 @@ ncurses:
 
 pacman-g2:
 	$(CLEANUP)
-	mkdir -p pacman-g2/bin pacman-g2/etc/pacman.d/ pacman-g2/usr/{lib,share}
+	mkdir -p pacman-g2/bin pacman-g2/etc/pacman-g2/repos/ pacman-g2/usr/{lib,share}
 	$(UNPACK)
 	cp -a $(BDIR)/usr/bin/pacman{,-g2} pacman-g2/bin/
 	cp -a $(BDIR)/usr/lib/libpacman.so* pacman-g2/usr/lib/
 	cp -a $(BDIR)/usr/bin/vercmp pacman-g2/bin/
 	cp -a $(BDIR)/usr/share/locale pacman-g2/usr/share/
-	cp -a $(BDIR)/etc/pacman.d/* pacman-g2/etc/pacman.d/
+	cp -a $(BDIR)/etc/pacman-g2/repos/* pacman-g2/etc/pacman-g2/repos/
 	echo "[options]" >>pacman-g2/etc/pacman.conf
 ifeq ($(STABLE),false)
-	echo "Include = /etc/pacman.d/frugalware-current" >> pacman-g2/etc/pacman.conf
+	echo "Include = /etc/pacman-g2/repos/frugalware-current" >> pacman-g2/etc/pacman.conf
 else
-	echo "Include = /etc/pacman.d/frugalware" >> pacman-g2/etc/pacman.conf
+	echo "Include = /etc/pacman-g2/repos/frugalware" >> pacman-g2/etc/pacman.conf
 endif
 ifneq ($(TESTING),false)
-	sed -i 's|current/|testing/|' pacman-g2/etc/pacman.d/frugalware-current
+	sed -i 's|current/|testing/|' pacman-g2/etc/pacman-g2/repos/frugalware-current
 endif
 
 
