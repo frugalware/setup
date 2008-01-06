@@ -65,7 +65,7 @@ else
 export CFLAGS = -g
 endif
 
-CDIR = /var/cache/pacman/pkg
+CDIR = /var/cache/pacman-g2/pkg
 CONFDIR = config
 BDIR = build
 MDIR = merge
