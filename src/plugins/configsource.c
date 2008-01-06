@@ -64,7 +64,7 @@ GList *getmirrors(char *fn)
 	}
 
 	/* this string should be the best mirror for the given language from
-	 * /etc/pacman.d */
+	 * /etc/pacman-g2/repos */
 	preferred = strdup(_("ftp://ftp5."));
 	while(!feof(fp)) {
 		if(fgets(line, PATH_MAX, fp) == NULL)
