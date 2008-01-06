@@ -335,7 +335,6 @@ udev:
 	mkdir -p udev/{proc,sys,dev}
 	$(UNPACK)
 	cp -a $(BDIR)/{etc,lib,sbin} udev/
-	sed -i 's/^source/#source/;s/msg /#msg /;s/ok /#ok /;s/rc_exec/rc_start/;s/ko/ko.gz/' udev/etc/rc.d/rc.hotplug
 	sed -i 's|^mount /|#mount /|;s/mount none/#mount none/;s|! \[ `pidof -o .*` \]|true|' udev/etc/rc.d/rc.udev
 
 eject:

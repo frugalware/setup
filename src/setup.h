@@ -37,11 +37,10 @@
 #define SWAPON "/sbin/swapon"
 
 #define PLUGDIR "/lib/plugins"
-#define HOTPLUGSCRIPT "/etc/rc.d/rc.hotplug"
 #define NETCONFIGSCRIPT "netconfig -f"
 #define RAIDCONFIGSCRIPT "raidconfig"
 #define INTERFACESSCRIPT "netconfig start"
-#define PACCONFPATH "/etc/pacman.d/"
+#define PACCONFPATH "/etc/pacman-g2/repos/"
 
 #ifndef STABLE
 #define PACCONF "frugalware-current"

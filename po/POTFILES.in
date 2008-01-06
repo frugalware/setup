@@ -3,7 +3,6 @@ src/plugins/configsource.c
 src/plugins/dolangsh.c
 src/plugins/formatdisk.c
 src/plugins/greet.c
-src/plugins/hotplug.c
 src/plugins/layout.c
 src/plugins/loadsource.c
 src/plugins/partdisk.c
@@ -14,4 +13,3 @@ src/plugins/postconf.c
 src/setup.c
 src/util.c
 src/gtk.c
-
