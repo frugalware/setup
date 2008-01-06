@@ -315,7 +315,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 
 	pacbindir = g_strdup_printf("%s/frugalware-%s",
 		SOURCEDIR, ARCH);
-	pkgdb = g_strdup_printf("%s/var/lib/pacman/%s", TARGETDIR, repo);
+	pkgdb = g_strdup_printf("%s/var/lib/pacman-g2/%s", TARGETDIR, repo);
 
 	// prepare pkgdb if necessary
 	if(stat(pkgdb, &sbuf) || !S_ISDIR(sbuf.st_mode))
