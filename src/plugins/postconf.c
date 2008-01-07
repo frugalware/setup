@@ -235,6 +235,18 @@ int run(GList **config)
 	fw_system(ptr);
 	free(ptr);
 
+	// this prevents mounting and umounting dev/proc/sys for each config
+	// tool
+	ptr = g_strdup_printf("mount /dev -o bind %s/dev", TARGETDIR);
+	fw_system(ptr);
+	free(ptr);
+	ptr = g_strdup_printf("mount /proc -o bind %s/proc", TARGETDIR);
+	fw_system(ptr);
+	free(ptr);
+	ptr = g_strdup_printf("mount /sys -o bind %s/sys", TARGETDIR);
+	fw_system(ptr);
+	free(ptr);
+
 	fw_end_dialog();
 	fw_system_interactive("chroot ./ /sbin/grubconfig");
 	fw_init_dialog();
@@ -245,10 +257,6 @@ int run(GList **config)
 		_("Updating module dependencies..."), 0, 0, 0);
 	fw_system("chroot ./ /sbin/depmod -a");
 
-	// newer shadow requires /dev/stdin :/
-	ptr = g_strdup_printf("mount /dev -o bind %s/dev", TARGETDIR);
-	fw_system(ptr);
-	free(ptr);
 	while(!has_rootpw("etc/shadow") && confirm_rootpw())
 	{
 		change_pw("root", NULL);
@@ -258,6 +266,13 @@ int run(GList **config)
 	{
 		add_user();
 	}
+
+	ptr = g_strdup_printf("umount %s/sys", TARGETDIR);
+	fw_system(ptr);
+	free(ptr);
+	ptr = g_strdup_printf("umount %s/proc", TARGETDIR);
+	fw_system(ptr);
+	free(ptr);
 	ptr = g_strdup_printf("umount %s/dev", TARGETDIR);
 	fw_system(ptr);
 	free(ptr);
