@@ -328,7 +328,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			makepath(pkgdb);
 			// TODO: use libarchive for this
 			fw_system(g_strdup_printf("tar xjf %s/%s.fdb -C %s", pacbindir, repo, pkgdb));
-			if ((fp = fopen("/etc/pacman.conf", "w")) == NULL)
+			if ((fp = fopen("/etc/pacman-g2.conf", "w")) == NULL)
 			{
 				perror(_("Could not open output file for writing"));
 				return(1);
@@ -340,7 +340,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 		else
 		{
 			LOG("parsing the pacman-g2 configuration file");
-			if (pacman_parse_config("/etc/pacman.conf", cb_db_register, "") == -1) {
+			if (pacman_parse_config("/etc/pacman-g2.conf", cb_db_register, "") == -1) {
 				dlg_put_backtitle();
 				dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to parse pacman-g2 configuration file (%s)"), pacman_strerror(pm_errno)), 0, 0, 1);
 				return(-1);

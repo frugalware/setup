@@ -319,11 +319,11 @@ pacman-g2:
 	cp -a $(BDIR)/usr/bin/vercmp pacman-g2/bin/
 	cp -a $(BDIR)/usr/share/locale pacman-g2/usr/share/
 	cp -a $(BDIR)/etc/pacman-g2/repos/* pacman-g2/etc/pacman-g2/repos/
-	echo "[options]" >>pacman-g2/etc/pacman.conf
+	echo "[options]" >>pacman-g2/etc/pacman-g2.conf
 ifeq ($(STABLE),false)
-	echo "Include = /etc/pacman-g2/repos/frugalware-current" >> pacman-g2/etc/pacman.conf
+	echo "Include = /etc/pacman-g2/repos/frugalware-current" >> pacman-g2/etc/pacman-g2.conf
 else
-	echo "Include = /etc/pacman-g2/repos/frugalware" >> pacman-g2/etc/pacman.conf
+	echo "Include = /etc/pacman-g2/repos/frugalware" >> pacman-g2/etc/pacman-g2.conf
 endif
 ifneq ($(TESTING),false)
 	sed -i 's|current/|testing/|' pacman-g2/etc/pacman-g2/repos/frugalware-current
