@@ -162,7 +162,7 @@ initrd: install-setup
 	dd if=/dev/zero of=initrd-$(CARCH).img bs=1k count=$$(echo "$$(`which du` -s $(MDIR)|sed 's/^\(.*\)\t.*$$/\1/')+2000"|bc)
 	/sbin/mke2fs -F initrd-$(CARCH).img
 	mkdir i
-	grep -q loop /proc/modules || /sbin/modprobe loop
+	grep -q loop /proc/modules || (/sbin/modprobe loop; sleep 1)
 	mount -o loop -t ext2 initrd-$(CARCH).img i
 	cp -a $(MDIR)/* i/
 	chown -R root.root i/
