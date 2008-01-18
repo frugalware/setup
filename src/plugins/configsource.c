@@ -167,7 +167,7 @@ GList *mirrorconf(void)
 					"a custom mirror (eg. LAN) "
 					"so you can download packages "
 					"faster. In most cases a "
-					"Cancel enough here."), 0, 0,
+					"Continue enough here."), 0, 0,
 				(char*)g_list_nth_data(newmirrorlist, 0), 0) != -1) { //not cancel
 		if (strcmp(dialog_vars.input_result, "\0")) { //not empty
 				LOG("added custom mirror '%s'", dialog_vars.input_result);
