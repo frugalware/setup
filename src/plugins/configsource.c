@@ -162,6 +162,7 @@ GList *mirrorconf(void)
 	// merges the selected and remain mirrors
 	newmirrorlist = g_list_concat(newmirrorlist, mirrorlist);
 	dialog_vars.defaultno=1;
+	dialog_vars.cancel_label = strdup(_("Continue"));
 	if(fw_inputbox(_("Custom mirror"), _("You may now specify "
 					"a custom mirror (eg. LAN) "
 					"so you can download packages "
@@ -175,6 +176,7 @@ GList *mirrorconf(void)
 		}
 	}
 	dialog_vars.defaultno=0;
+	FREE(dialog_vars.cancel_label);
 	updateconfig(fn, newmirrorlist);
 	return(newmirrorlist);
 }
