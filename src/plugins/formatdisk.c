@@ -77,10 +77,12 @@ int partdetails(PedPartition *part, int noswap)
 
 	// for dialog menus
 	parts = g_list_append(parts, pname);
-	parts = g_list_append(parts, g_strdup_printf("%dGB\t%s", (int)part->geom.length/1953125, ptype));
+	ptr = fsize(part->geom.length);
+	parts = g_list_append(parts, g_strdup_printf("%s\t%s", ptr, ptype));
 	// for dialog checklists
 	partschk = g_list_append(partschk, pname);
-	partschk = g_list_append(partschk, g_strdup_printf("%dGB %s", (int)part->geom.length/1953125, ptype));
+	partschk = g_list_append(partschk, g_strdup_printf("%s %s", ptr, ptype));
+	FREE(ptr);
 	partschk = g_list_append(partschk, strdup("Off"));
 
 	return(0);

@@ -77,3 +77,4 @@ void show_menu(GList *plugin_list, int *state);
 int setup_log(char *file, int line, char *fmt, ...);
 #define LOG(fmt, args...) setup_log(__FILE__, __LINE__, fmt, ##args)
 void cb_log(unsigned short level, char *msg);
+char *fsize(int length);

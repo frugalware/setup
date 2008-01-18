@@ -83,6 +83,7 @@ GList *listparts(void)
 {
 	GList *devs=NULL;
 	PedDevice *dev=NULL;
+	char *ptr;
 
 	// silly raid autodetect, md0 always created
 	if(buggy_md0())
@@ -100,7 +101,9 @@ GList *listparts(void)
 			// we don't want to partition cds ;-)
 			continue;
 		devs = g_list_append(devs, dev->path);
-		devs = g_list_append(devs, g_strdup_printf("%dGB\t%s", (int)dev->length/1953125, dev->model));
+		ptr = fsize(dev->length);
+		devs = g_list_append(devs, g_strdup_printf("%s\t%s", ptr, dev->model));
+		FREE(ptr);
 	}
 
 	return(devs);

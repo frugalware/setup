@@ -721,3 +721,11 @@ void cb_log(unsigned short level, char *msg)
 {
 	LOG("[libpacman, level %d] %s", level, msg);
 }
+
+char *fsize(int length)
+{
+	if(length/1953125 == 0)
+		return g_strdup_printf("%d MB", length/1907);
+	else
+		return g_strdup_printf("%d GB", length/1953125);
+}
