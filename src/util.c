@@ -509,19 +509,21 @@ GList* fw_checklist(const char *title, const char *cprompt, int height,
 	int width, int menu_height, int item_no, char **items, int flag)
 {
 	int ret;
-	char my_buffer[MAX_LEN + 1] = "";
 	char *ptr, *ptrn;
 	GList *list=NULL;
 
-	dialog_vars.input_result = my_buffer;
+	MALLOC(dialog_vars.input_result, item_no*256);
 	ret = dialog_checklist(title, cprompt, height, width,
 		menu_height, item_no, items, flag);
 	if (ret == DLG_EXIT_CANCEL)
 		return(NULL);
 
 	if(strlen(dialog_vars.input_result)==0)
+	{
 		// no item selected
+		FREE(dialog_vars.input_result);
 		return(list);
+	}
 
 	ptr=strstr(dialog_vars.input_result, "\"")+1;
 	while(strstr(ptr, "\" \""))
@@ -538,6 +540,7 @@ GList* fw_checklist(const char *title, const char *cprompt, int height,
 	ptrn=ptr+strlen(ptr)-1;
 	*ptrn='\0';
 	list = g_list_append(list, strdup(ptr));
+	FREE(dialog_vars.input_result);
 	return(list);
 }
 
