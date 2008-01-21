@@ -513,12 +513,10 @@ GList* fw_checklist(const char *title, const char *cprompt, int height,
 	GList *list=NULL;
 
 	MALLOC(dialog_vars.input_result, item_no*256);
+	dialog_vars.input_result[0] = '\0';
 	ret = dialog_checklist(title, cprompt, height, width,
 		menu_height, item_no, items, flag);
-	if (ret == DLG_EXIT_CANCEL)
-		return(NULL);
-
-	if(strlen(dialog_vars.input_result)==0)
+	if (ret == DLG_EXIT_CANCEL || !strlen(dialog_vars.input_result))
 	{
 		// no item selected
 		FREE(dialog_vars.input_result);
