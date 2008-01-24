@@ -2,7 +2,7 @@
 #
 # Compiling Time: 2.45 SBU
 #
-# Copyright (C) 2005-2007 Miklos Vajna <vmiklos@frugalware.org>
+# Copyright (C) 2005, 2006, 2007, 2008 Miklos Vajna <vmiklos@frugalware.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by

@@ -1,5 +1,9 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+0.8.6         - fix selecting individual packages in expert mode
+              - fixed a case when grubconfig hanged forever
+              - partitions less than 1G now shows as xM (and not 0G)
+              - some minor usability fixes (Cancel->Continue and so)
 0.8.5         - port to udev>=118
 0.8.4         - port to pacman-g2>=3.6.6
 0.8.3         - bugfix release, the previous one was broken with glibc-2.7
