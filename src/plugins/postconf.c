@@ -1,7 +1,7 @@
 /*
  *  postconf.c for Frugalware setup
  * 
- *  Copyright (c) 2005 by Miklos Vajna <vmiklos@frugalware.org>
+ *  Copyright (c) 2005, 2008 by Miklos Vajna <vmiklos@frugalware.org>
  * 
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
@@ -267,16 +267,6 @@ int run(GList **config)
 		add_user();
 	}
 
-	ptr = g_strdup_printf("umount %s/sys", TARGETDIR);
-	fw_system(ptr);
-	free(ptr);
-	ptr = g_strdup_printf("umount %s/proc", TARGETDIR);
-	fw_system(ptr);
-	free(ptr);
-	ptr = g_strdup_printf("umount %s/dev", TARGETDIR);
-	fw_system(ptr);
-	free(ptr);
-
 	if((ptr = (char*)data_get(*config, "font")))
 		append_font("etc/sysconfig/font", ptr);
 
@@ -290,6 +280,16 @@ int run(GList **config)
 		fw_system_interactive("chroot ./ su -c /sbin/xconfig");
 		fw_system_interactive("chroot ./ /sbin/xwmconfig --silent");
 	}
+	ptr = g_strdup_printf("umount %s/sys", TARGETDIR);
+	fw_system(ptr);
+	free(ptr);
+	ptr = g_strdup_printf("umount %s/proc", TARGETDIR);
+	fw_system(ptr);
+	free(ptr);
+	ptr = g_strdup_printf("umount %s/dev", TARGETDIR);
+	fw_system(ptr);
+	free(ptr);
+
 	fw_init_dialog();
 
 	return(0);
