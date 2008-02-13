@@ -17,4 +17,10 @@ modprobe -q uhci-hcd >/dev/null 2>&1
 /etc/rc.d/rc.udev
 setterm -blank 0
 
+for i in `seq 1 4`
+do
+	kbd_mode -a /dev/tty$i
+	echo -n -e '\033%@' > /dev/tty$i
+done
+
 # vim: ft=sh
