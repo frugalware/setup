@@ -276,7 +276,7 @@ kbd:
 	$(CLEANUP)
 	mkdir -p kbd/usr/{bin,share/kbd/keymaps,share/kbd/consolefonts}
 	$(UNPACK)
-	cp -a $(BDIR)/{bin/loadkeys,usr/bin/setfont} kbd/usr/bin/
+	cp -a $(BDIR)/{bin/loadkeys,usr/bin/setfont,usr/bin/kbd_mode} kbd/usr/bin/
 	cp -a $(BDIR)/usr/share/kbd/keymaps/{i386,include} \
 		kbd/usr/share/kbd/keymaps/
 	for i in $(fonts); do \
