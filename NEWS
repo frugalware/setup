@@ -1,5 +1,7 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+0.8.7         - fixed a case when xconfig hanged
+              - fixed issues introduced by kernel-2.6.24
 0.8.6         - fix selecting individual packages in expert mode
               - fixed a case when grubconfig hanged forever
               - partitions less than 1G now shows as xM (and not 0G)
