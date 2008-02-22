@@ -170,7 +170,12 @@ int run(GList **config)
 			dlg_put_backtitle();
 			dialog_msgbox(_("CD/DVD drive found"), g_strdup_printf(_("A Frugalware install disc was found in device /dev/%s."), (char*)g_list_nth_data(drives, i)), 0, 0, 0);
 			if(is_netinstall(SOURCEDIR))
+			{
 				data_put(config, "netinstall", "");
+				LOG("install medium contains no packages, performing a network installation");
+			}
+			else
+				LOG("install medium contains packages, performing an offline installation");
 			found = 1;
 			break;
 		}
