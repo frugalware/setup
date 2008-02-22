@@ -32,10 +32,16 @@
     #include <gtk/gtk.h>
 #endif
 #include <sys/stat.h>
+#include <libvolume_id.h>
+#include <sys/ioctl.h>
+#include <sys/types.h>
+#include <fcntl.h>
 
 #include <setup.h>
 #include <util.h>
 #include "common.h"
+
+#define BLKGETSIZE64 _IOR(0x12,114,size_t)
 
 plugin_t plugin =
 {
@@ -111,6 +117,29 @@ int is_netinstall(char *path)
 	return(ret);
 }
 
+static char* get_volume_id(char *device)
+{
+	int fd;
+	struct volume_id *vid = NULL;
+	uint64_t size;
+	const char *label;
+	char *ret;
+	char path[PATH_MAX];
+
+	snprintf(path, PATH_MAX, "/dev/%s", device);
+
+	fd = open(path, O_RDONLY);
+	if(fd<0)
+		return NULL;
+	vid = volume_id_open_fd(fd);
+	ioctl(fd, BLKGETSIZE64, &size);
+	volume_id_probe_all(vid, 0, size);
+	volume_id_get_label(vid, &label);
+	ret = strdup(label);
+	volume_id_close(vid);
+	return ret;
+}
+
 int run(GList **config)
 {
 	GList *drives=NULL;
@@ -129,9 +158,14 @@ int run(GList **config)
 	drives = grep_drives("/proc/sys/dev/cdrom/info");
 	for (i=0; i<g_list_length(drives); i++)
 	{
-		ptr = g_strdup_printf("mount -o ro -t iso9660 /dev/%s %s", (char*)g_list_nth_data(drives, i), SOURCEDIR);
-		if (!fw_system(ptr))
+		ptr = get_volume_id((char*)g_list_nth_data(drives, i));
+		if(ptr && !strcmp(ptr, "Frugalware Install"))
 		{
+			LOG("install medium found in %s", (char*)g_list_nth_data(drives, i));
+			FREE(ptr);
+			ptr = g_strdup_printf("mount -o ro -t iso9660 /dev/%s %s", (char*)g_list_nth_data(drives, i),
+					SOURCEDIR);
+			fw_system(ptr);
 			data_put(config, "srcdev", (char*)g_list_nth_data(drives, i));
 			dlg_put_backtitle();
 			dialog_msgbox(_("CD/DVD drive found"), g_strdup_printf(_("A Frugalware install disc was found in device /dev/%s."), (char*)g_list_nth_data(drives, i)), 0, 0, 0);
@@ -140,6 +174,8 @@ int run(GList **config)
 			found = 1;
 			break;
 		}
+		else
+			LOG("skipping non-install medium in %s", (char*)g_list_nth_data(drives, i));
 		FREE(ptr);
 	}
 	if(!found)

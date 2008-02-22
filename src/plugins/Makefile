@@ -23,7 +23,7 @@ else
 CFLAGS ?= -g -Wall -Werror
 endif
 CFLAGS += -I.. -DARCH="\"$(shell arch)\""
-LDFLAGS += -lparted -ldl -lpacman
+LDFLAGS += -lparted -ldl -lpacman -lvolume_id
 ifeq ($(shell arch),x86_64)
 CFLAGS += -fPIC
 endif
