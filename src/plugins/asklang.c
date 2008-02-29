@@ -1,7 +1,7 @@
 /*
  *  asklang.c for Frugalware setup
  * 
- *  Copyright (c) 2005, 2007 by Miklos Vajna <vmiklos@frugalware.org>
+ *  Copyright (c) 2005, 2007, 2008 by Miklos Vajna <vmiklos@frugalware.org>
  *  Copyright (c) 2005 by Christian Hamar alias krix <krics@linuxforum.hu>
  * 
  *  This program is free software; you can redistribute it and/or modify
@@ -35,18 +35,19 @@
 #include <util.h>
 #include "common.h"
 
-#define LANGSNUM 12
+#define LANGSNUM 13
 char *langs[] =
 {
-	"en_US", "English",
+	"pt_BR", "Brazilian Portuguese / Português do Brasil",
+	"cs_CZ", "Czech / Cesky",
 	"da_DK", "Danish / Dansk",
-	"de_DE", "German / Deutsch",
+	"nl_NL", "Dutch / Nederlands",
+	"en_US", "English",
 	"fr_FR", "French / Français",
+	"de_DE", "German / Deutsch",
 	"hu_HU", "Hungarian / Magyar",
         "id_ID", "Indonesian / Bahasa Indonesia",
         "it_IT", "Italian / Italiano",
-	"nl_NL", "Dutch / Nederlands",
-	"pt_BR", "Brazilian Portuguese / Português do Brasil",
 	"ro_RO", "Romanian / Românã",
 	"sk_SK", "Slovak / Slovenèina",
 	"sv_SE", "Swedish / Svenska"
@@ -99,11 +100,13 @@ int run(GList **config)
 	dialog_vars.backtitle=gen_backtitle("Selecting language");
 	dlg_put_backtitle();
 	dlg_clear();
+	dialog_vars.default_item=strdup("en_US");
 	if(fw_menu("Please select your language",
 		"Please select your language from the list. If your language "
 		"is not in the list, you probably should choose English.",
 		0, 0, 0, LANGSNUM, langs) == -1)
 		return(-1);
+	FREE(dialog_vars.default_item);
 
 	LOG("selected language: '%s'", dialog_vars.input_result);
 	setenv("LC_ALL", dialog_vars.input_result, 1);
@@ -128,6 +131,11 @@ int run(GList **config)
 	{
 		setenv("CHARSET", "iso-8859-1", 1);
 		setcharset("lat9w-16.psfu.gz", config);
+	}
+	else if(!strcmp("cs_CZ", dialog_vars.input_result))
+	{
+		setenv("CHARSET", "iso-8859-2", 1);
+		setcharset("lat2-16.psfu.gz", config);
 	}
 	else if(!strcmp("hu_HU", dialog_vars.input_result))
 	{
