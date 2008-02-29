@@ -41,7 +41,7 @@ CFLAGS += $(shell pkg-config --cflags glib-2.0)
 LDFLAGS += $(shell pkg-config --libs glib-2.0)
 
 PLUGINS=asklang dolangsh greet layout loadsource configsource partdisk \
-	formatdisk select install postconf restart
+	formatdisk select install postconf restart hotplug
 
 all: $(addsuffix .so,$(PLUGINS))
 
