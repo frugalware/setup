@@ -53,10 +53,10 @@ char *desc()
 
 int run(GList **config)
 {
-	dialog_vars.backtitle=gen_backtitle(_("Detecting hardware"));
+	dialog_vars.backtitle=gen_backtitle("Detecting hardware");
 	dlg_put_backtitle();
 	dlg_clear();
-	dialog_msgbox(_("Please wait"), _("Activating hardware detection..."),
+	dialog_msgbox("Please wait", "Activating hardware detection...",
 		0, 0, 0);
 	// TODO: this is ugly
 	fw_system("mount -t proc none /proc");
