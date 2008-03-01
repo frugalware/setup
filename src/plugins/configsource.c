@@ -152,7 +152,8 @@ GList *mirrorconf(void)
 	// also removes the duplicate mirrors
 	for (i=0; i<g_list_length(mirrorlist); i+=2) {
 		for (j=0; j<g_list_length(newmirrorlist); j++) {
-			if (!strcmp((char*)g_list_nth_data(mirrorlist, i), (char*)g_list_nth_data(newmirrorlist, j))) {
+			if (g_list_nth_data(mirrorlist, i) &&
+				!strcmp((char*)g_list_nth_data(mirrorlist, i), (char*)g_list_nth_data(newmirrorlist, j))) {
 				newmirrorlist = g_list_insert(newmirrorlist, g_list_nth_data(mirrorlist, i+1), j+1);
 				mirrorlist = g_list_remove(mirrorlist, g_list_nth_data(mirrorlist, i));
 				mirrorlist = g_list_remove(mirrorlist, g_list_nth_data(mirrorlist, i));
