@@ -1,5 +1,10 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+0.8.8	      - check for volume name to determine if a disc is a Frugalware install
+	        one
+	      - new translation: cs_CZ
+	      - added a splash for the hardware detection
+	      - fixed a bug in mirror selection
 0.8.7         - fixed a case when xconfig hanged
               - fixed issues introduced by kernel-2.6.24
 0.8.6         - fix selecting individual packages in expert mode

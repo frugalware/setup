@@ -16,8 +16,8 @@ packages = ['bash', 'kernel', 'busybox', 'dhcpcd', 'dialog', 'e2fsprogs',
 		'readline', 'acx100', 'shadow', 'madwifi', 'rt2500',
 		'device-mapper', 'lvm2', 'wpa_supplicant', 'openssl']
 
-# when releasing a new setup, please update this :)
-version = "0.8.7"
+# when releasing a new setup, please update this.
+version = "0.8.8"
 
 # parse our options
 parser = OptionParser(version="configure for Frugalware Setup v%s" % (version))
