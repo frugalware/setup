@@ -272,14 +272,14 @@ glibc:
 
 kbd:
 	$(CLEANUP)
-	mkdir -p kbd/usr/{bin,share/kbd/keymaps,share/kbd/consolefonts}
+	mkdir -p kbd/usr/{bin,share/keymaps,share/consolefonts}
 	$(UNPACK)
-	cp -a $(BDIR)/{bin/loadkeys,usr/bin/setfont,usr/bin/kbd_mode} kbd/usr/bin/
-	cp -a $(BDIR)/usr/share/kbd/keymaps/{i386,include} \
-		kbd/usr/share/kbd/keymaps/
+	cp -a $(BDIR)/usr/bin/{loadkeys,setfont,kbd_mode} kbd/usr/bin/
+	cp -a $(BDIR)/usr/share/keymaps/{i386,include} \
+		kbd/usr/share/keymaps/
 	for i in $(fonts); do \
-		cp -a $(BDIR)/usr/share/kbd/consolefonts/$$i \
-			kbd/usr/share/kbd/consolefonts/; \
+		cp -a $(BDIR)/usr/share/consolefonts/$$i \
+			kbd/usr/share/consolefonts/; \
 	done
 
 kernel:

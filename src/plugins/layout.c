@@ -101,7 +101,7 @@ int run(GList **config)
 	FILE* fp;
 	int ret = 0;
 	
-	find("/usr/share/kbd/keymaps/i386");
+	find("/usr/share/keymaps/i386");
 	layoutl = g_list_sort(layoutl, sort_layouts);
 	array = glist4dialog(layoutl, "");
 	
@@ -109,7 +109,7 @@ int run(GList **config)
 	dlg_put_backtitle();
 	dlg_clear();
 	/* this string should be the best keyboard layout for the given
-	 * language from /usr/share/kbd/keymaps/i386 */
+	 * language from /usr/share/keymaps/i386 */
 	dialog_vars.default_item=strdup(_("qwerty/us.map.gz"));
 	if(fw_menu(_("Keyboard map selection"),
 		_("You may select one of the following keyboard maps. If you "
@@ -130,7 +130,7 @@ int run(GList **config)
 	
 	//TODO: maybe there is a proper system call for this?
 	LOG("selected layout '%s'", layout);
-	ptr = g_strdup_printf("loadkeys /usr/share/kbd/keymaps/i386/%s.map.gz", layout);
+	ptr = g_strdup_printf("loadkeys /usr/share/keymaps/i386/%s.map.gz", layout);
 	fw_system(ptr);
 	FREE(ptr);
 	
@@ -143,7 +143,7 @@ int run(GList **config)
 	}
 	fprintf(fp, "# /etc/sysconfig/keymap\n\n"
 		"# specify the keyboard map, maps are in "
-		"/usr/share/kbd/keymaps\n\n");
+		"/usr/share/keymaps\n\n");
 	if(strstr(layout, "/"))
 		fprintf(fp, "keymap=%s\n", strstr(layout, "/")+1);
 	FREE(layout);
