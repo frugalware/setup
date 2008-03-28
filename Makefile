@@ -35,11 +35,13 @@ GPG=$(shell [ -d ../releases ] && echo true || echo false)
 QEMU_OPTS ?= -hda ~/documents/qemu/hda.img
 UML_OPTS ?= ubd0=~/documents/uml/root_fs eth0=tuntap,,,192.168.0.254 mem=128MB
 RAMDISK_SIZE = $(shell du --block-size=1000 initrd-$(CARCH).img|sed 's/\t.*//')
+CYL_COUNT = $(shell echo "$(shell du -c -B516096 vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz|sed -n 's/^\(.*\)\t.*$$/\1/;$$ p')+4"|bc)
 
 FWVER = $(shell echo $(FRUGALWAREVER)|sed 's/-.*//')
 RELEASE = $(shell cat merge/etc/frugalware-release)
 KERNELV = $(shell echo $(KERNELVER)|sed 's/-.*//')
 KERNELREL = $(shell echo $(KERNELVER)|sed 's/.*-//')
+KERNEL_OPTS = initrd=initrd-$(CARCH).img.gz load_ramdisk=1 prompt_ramdisk=0 ramdisk_size=$(RAMDISK_SIZE) rw root=/dev/ram quiet
 DESTDIR = $(shell source /etc/repoman.conf; [ -e ~/.repoman.conf ] && source ~/.repoman.conf; echo $$fst_root)
 
 CLEANUP = rm -rf $(BDIR) && mkdir $(BDIR) && rm -rf $@
@@ -178,8 +180,8 @@ initrd_gz: clean config.mak devices initrd
 	gzip -9 -c initrd-$(CARCH).img > initrd-$(CARCH).img.gz
 
 usb_img: check_root
-	dd if=/dev/zero of=frugalware-$(FWVER)-$(CARCH)-usb.img bs=516096c count=$$(echo "$(shell du -c -B516096 vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz|sed -n 's/^\(.*\)\t.*$$/\1/;$$ p')+4"|bc)
-	echo -e 'n\np\n1\n\n\nw'|/sbin/fdisk -u -C$$(echo "$(shell du -c -B516096 vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz|sed -n 's/^\(.*\)\t.*$$/\1/;$$ p')+4"|bc) -S63 -H16 frugalware-$(FWVER)-$(CARCH)-usb.img || true
+	dd if=/dev/zero of=frugalware-$(FWVER)-$(CARCH)-usb.img bs=516096c count=$(CYL_COUNT)
+	echo -e 'n\np\n1\n\n\nw'|/sbin/fdisk -u -C$(CYL_COUNT) -S63 -H16 frugalware-$(FWVER)-$(CARCH)-usb.img || true
 	losetup -o32256 /dev/loop0 frugalware-$(FWVER)-$(CARCH)-usb.img
 	/sbin/mke2fs -b1024 -F /dev/loop0
 	losetup -d /dev/loop0
@@ -194,10 +196,10 @@ usb_img: check_root
 		timeout=10 \n\
 		gfxmenu /boot/grub/message \n\
 		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) \n\
-		kernel /boot/vmlinuz-$(KERNELV)-fw$(KERNELREL) initrd=initrd-$(CARCH).img.gz load_ramdisk=1 prompt_ramdisk=0 ramdisk_size=$(RAMDISK_SIZE) rw root=/dev/ram quiet vga=791 \n\
+		kernel /boot/vmlinuz-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) vga=791 \n\
 		initrd /boot/initrd-$(CARCH).img.gz \n\
 		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) (nofb) \n\
-		kernel /boot/vmlinuz-$(KERNELV)-fw$(KERNELREL) initrd=initrd-$(CARCH).img.gz load_ramdisk=1 prompt_ramdisk=0 ramdisk_size=$(RAMDISK_SIZE) rw root=/dev/ram quiet \n\
+		kernel /boot/vmlinuz-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) \n\
 		initrd /boot/initrd-$(CARCH).img.gz" > i/boot/grub/menu.lst
 	umount frugalware-$(FWVER)-$(CARCH)-usb.img
 	rmdir i
@@ -225,14 +227,10 @@ check:
 
 qemu:
 	$(QEMU) -kernel vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) -initrd \
-	initrd-$(CARCH).img -append "initrd=initrd-$(CARCH).img.gz \
-	load_ramdisk=1 prompt_ramdisk=0 ramdisk_size=$(RAMDISK_SIZE) \
-	rw root=/dev/ram quiet vga=normal" $(QEMU_OPTS)
+	initrd-$(CARCH).img -append "$(KERNEL_OPTS)" $(QEMU_OPTS)
 
 uml:
-	$(UML) $(UML_OPTS) initrd=initrd-$(CARCH).img \
-	load_ramdisk=1 prompt_ramdisk=0 ramdisk_size=$(shell du --block-size=1000 initrd-$(CARCH).img|sed 's/\t.*//') \
-	rw root=/dev/ram
+	$(UML) $(UML_OPTS) $(KERNEL_OPTS)
 
 bash:
 	$(CLEANUP)
