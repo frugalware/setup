@@ -69,6 +69,9 @@ export CFLAGS = -march=$(MARCH) -O2 -pipe
 else
 export CFLAGS = -g
 endif
+ifeq ($(USB),true)
+EXTRA_TARGETS += usb_img
+endif
 
 CDIR = /var/cache/pacman-g2/pkg
 CONFDIR = config
@@ -78,7 +81,7 @@ CWD=`pwd`
 
 fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
 
-all: initrd_gz
+all: initrd_gz $(EXTRA_TARGETS)
 
 compile: check ccache $(packages) misc
 
@@ -100,6 +103,9 @@ install:
 	install -d -m0755 $(DESTDIR)$(PREFIX)/share/setup
 	install -m0644 vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(DESTDIR)$(PREFIX)/share/setup/vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	install -m0644 initrd-$(CARCH).img.gz $(DESTDIR)$(PREFIX)/share/setup/initrd-$(CARCH).img.gz
+ifeq ($(USB),true)
+	install -m0644 frugalware-$(FWVER)-$(CARCH)-usb.img $(DESTDIR)$(PREFIX)/share/setup/frugalware-$(FWVER)-$(CARCH)-usb.img
+endif
 
 distclean: clean
 	$(MAKE) -C po distclean
