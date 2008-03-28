@@ -154,6 +154,8 @@ devices: compile
 	mknod -m 700 $(MDIR)/dev/tty1 c 4 1
 	mknod -m 700 $(MDIR)/dev/tty2 c 4 2
 	mknod -m 700 $(MDIR)/dev/tty3 c 4 3
+	mknod -m 700 $(MDIR)/dev/tty4 c 4 4
+	mknod -m 700 $(MDIR)/dev/tty5 c 4 5
 
 # this target just updates the setup source itself and the initrd, suitable for qemu testing
 initrd: install-setup
