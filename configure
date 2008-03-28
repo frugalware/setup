@@ -22,10 +22,13 @@ version = "0.8.8"
 # parse our options
 parser = OptionParser(version="configure for Frugalware Setup v%s" % (version))
 parser.set_defaults(debug=False)
+parser.set_defaults(usb=False)
 parser.set_defaults(repo="current")
 parser.set_defaults(prefix="/usr/local")
 parser.add_option("--enable-debug", action="store_true", dest="debug", help="Build setup with debug options")
-parser.add_option("--disable-debug", action="store_false", dest="debug", help="Build setup without debug options")
+parser.add_option("--disable-debug", action="store_false", dest="debug", help="Build setup without debug options (default)")
+parser.add_option("--enable-usb", action="store_true", dest="usb", help="Build usb installer image")
+parser.add_option("--disable-usb", action="store_false", dest="usb", help="Don't build usb installer image (default)")
 parser.add_option("--repo", action="store", dest="repo", help="Select the repo to build for. Can be current (default), testing or stable")
 parser.add_option("--prefix", action="store", dest="prefix", help="Select the install prefix (defaults to /usr/local)")
 (options, args) = parser.parse_args()
@@ -38,6 +41,14 @@ if options.debug:
 	sys.stdout.flush()
 	packages.append('gdb')
 	packages.append('expat')
+else:
+	sys.stdout.write("no.\n")
+	sys.stdout.flush()
+
+sys.stdout.write("checking for usb support... ")
+if options.usb:
+	sys.stdout.write("yes.\n")
+	sys.stdout.flush()
 else:
 	sys.stdout.write("no.\n")
 	sys.stdout.flush()
@@ -85,9 +96,13 @@ socket = open("config.mak", "w")
 # write out our required options
 socket.write("VERSION = %s\n" % version)
 if options.debug:
-	socket.write("DEBUG = true\n\n")
+	socket.write("DEBUG = true\n")
 else:
-	socket.write("DEBUG = false\n\n")
+	socket.write("DEBUG = false\n")
+if options.usb:
+	socket.write("USB = true\n\n")
+else:
+	socket.write("USB = false\n\n")
 
 socket.write("PREFIX = %s\n" % options.prefix)
 
