@@ -34,7 +34,10 @@ VERSION=$(shell grep ^version configure |sed 's/.*"\(.*\)"/\1/')
 GPG=$(shell [ -d ../releases ] && echo true || echo false)
 QEMU_OPTS ?= -hda ~/documents/qemu/hda.img
 UML_OPTS ?= ubd0=~/documents/uml/root_fs eth0=tuntap,,,192.168.0.254 mem=128MB
+RAMDISK_SIZE = $(shell du --block-size=1000 initrd-$(CARCH).img|sed 's/\t.*//')
 
+FWVER = $(shell echo $(FRUGALWAREVER)|sed 's/-.*//')
+RELEASE = $(shell cat merge/etc/frugalware-release)
 KERNELV = $(shell echo $(KERNELVER)|sed 's/-.*//')
 KERNELREL = $(shell echo $(KERNELVER)|sed 's/.*-//')
 DESTDIR = $(shell source /etc/repoman.conf; [ -e ~/.repoman.conf ] && source ~/.repoman.conf; echo $$fst_root)
@@ -81,10 +84,12 @@ prepare:
 	rm -rf config.mak
 	make -C po pos
 
-clean:
+check_root:
 	@if [ "`id -u`" != 0 ]; then \
 	echo "error: you cannot perform this operation unless you are root."; exit 1; \
 	fi
+
+clean: check_root
 	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img initrd-$(CARCH).img.gz
 	rm -rf $(packages) vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	$(MAKE) -C src clean
@@ -172,6 +177,32 @@ initrd: install-setup
 initrd_gz: clean config.mak devices initrd
 	gzip -9 -c initrd-$(CARCH).img > initrd-$(CARCH).img.gz
 
+usb_img: check_root
+	dd if=/dev/zero of=frugalware-$(FWVER)-$(CARCH)-usb.img bs=1k count=$$(echo "$$(du -c vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz|sed -n 's/^\(.*\)\t.*$$/\1/;$$ p')+2000"|bc)
+	/sbin/mke2fs -F frugalware-$(FWVER)-$(CARCH)-usb.img
+	mkdir i
+	mount -o loop -t ext2 frugalware-$(FWVER)-$(CARCH)-usb.img i
+	mkdir -p i/boot/grub
+	cp vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) i/boot/
+	cp initrd-$(CARCH).img.gz i/boot/
+	cp /usr/lib/grub/i386-pc/stage{1,2} i/boot/grub/
+	cp /boot/grub/message-frugalware i/boot/grub/message
+	echo -e "default=0 \n\
+		timeout=10 \n\
+		gfxmenu /boot/grub/message \n\
+		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) \n\
+		kernel /boot/vmlinuz-$(KERNELV)-fw$(KERNELREL) initrd=initrd-$(CARCH).img.gz load_ramdisk=1 prompt_ramdisk=0 ramdisk_size=$(RAMDISK_SIZE) rw root=/dev/ram quiet vga=791 \n\
+		initrd initrd-$(CARCH).img.gz \n\
+		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) (nofb) \n\
+		kernel /boot/vmlinuz-$(KERNELV)-fw$(KERNELREL) initrd=initrd-$(CARCH).img.gz load_ramdisk=1 prompt_ramdisk=0 ramdisk_size=$(RAMDISK_SIZE) rw root=/dev/ram quiet \n\
+		initrd initrd-$(CARCH).img.gz" > i/boot/grub/menu.lst
+	umount frugalware-$(FWVER)-$(CARCH)-usb.img
+	rmdir i
+	echo -e "device (fd0) frugalware-$(FWVER)-$(CARCH)-usb.img \n\
+		root (fd0) \n\
+		setup (fd0) \n\
+		quit" | grub --batch --device-map=/dev/null
+
 update:
 	git pull
 	$(MAKE) -C src clean
@@ -192,7 +223,7 @@ check:
 qemu:
 	$(QEMU) -kernel vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) -initrd \
 	initrd-$(CARCH).img -append "initrd=initrd-$(CARCH).img.gz \
-	load_ramdisk=1 prompt_ramdisk=0 ramdisk_size=$(shell du --block-size=1000 initrd-$(CARCH).img|sed 's/\t.*//') \
+	load_ramdisk=1 prompt_ramdisk=0 ramdisk_size=$(RAMDISK_SIZE) \
 	rw root=/dev/ram quiet vga=normal" $(QEMU_OPTS)
 
 uml:
