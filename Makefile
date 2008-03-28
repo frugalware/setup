@@ -178,12 +178,15 @@ initrd_gz: clean config.mak devices initrd
 	gzip -9 -c initrd-$(CARCH).img > initrd-$(CARCH).img.gz
 
 usb_img: check_root
-	dd if=/dev/zero of=frugalware-$(FWVER)-$(CARCH)-usb.img bs=1k count=$$(echo "$$(du -c vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz|sed -n 's/^\(.*\)\t.*$$/\1/;$$ p')+2000"|bc)
-	/sbin/mke2fs -F frugalware-$(FWVER)-$(CARCH)-usb.img
+	dd if=/dev/zero of=frugalware-$(FWVER)-$(CARCH)-usb.img bs=516096c count=$$(echo "$(shell du -c -B516096 vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz|sed -n 's/^\(.*\)\t.*$$/\1/;$$ p')+4"|bc)
+	echo -e 'n\np\n1\n\n\nw'|/sbin/fdisk -u -C$$(echo "$(shell du -c -B516096 vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz|sed -n 's/^\(.*\)\t.*$$/\1/;$$ p')+4"|bc) -S63 -H16 frugalware-$(FWVER)-$(CARCH)-usb.img || true
+	losetup -o32256 /dev/loop0 frugalware-$(FWVER)-$(CARCH)-usb.img
+	/sbin/mke2fs -b1024 -F /dev/loop0
+	losetup -d /dev/loop0
 	mkdir i
-	mount -o loop -t ext2 frugalware-$(FWVER)-$(CARCH)-usb.img i
+	mount -o loop,offset=32256 frugalware-$(FWVER)-$(CARCH)-usb.img i
 	mkdir -p i/boot/grub
-	cp vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) i/boot/
+	cp vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) i/boot/vmlinuz-$(KERNELV)-fw$(KERNELREL)
 	cp initrd-$(CARCH).img.gz i/boot/
 	cp /usr/lib/grub/i386-pc/stage{1,2} i/boot/grub/
 	cp /boot/grub/message-frugalware i/boot/grub/message
@@ -192,15 +195,15 @@ usb_img: check_root
 		gfxmenu /boot/grub/message \n\
 		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) \n\
 		kernel /boot/vmlinuz-$(KERNELV)-fw$(KERNELREL) initrd=initrd-$(CARCH).img.gz load_ramdisk=1 prompt_ramdisk=0 ramdisk_size=$(RAMDISK_SIZE) rw root=/dev/ram quiet vga=791 \n\
-		initrd initrd-$(CARCH).img.gz \n\
+		initrd /boot/initrd-$(CARCH).img.gz \n\
 		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) (nofb) \n\
 		kernel /boot/vmlinuz-$(KERNELV)-fw$(KERNELREL) initrd=initrd-$(CARCH).img.gz load_ramdisk=1 prompt_ramdisk=0 ramdisk_size=$(RAMDISK_SIZE) rw root=/dev/ram quiet \n\
-		initrd initrd-$(CARCH).img.gz" > i/boot/grub/menu.lst
+		initrd /boot/initrd-$(CARCH).img.gz" > i/boot/grub/menu.lst
 	umount frugalware-$(FWVER)-$(CARCH)-usb.img
 	rmdir i
-	echo -e "device (fd0) frugalware-$(FWVER)-$(CARCH)-usb.img \n\
-		root (fd0) \n\
-		setup (fd0) \n\
+	echo -e "device (hd0) frugalware-$(FWVER)-$(CARCH)-usb.img \n\
+		root (hd0,0) \n\
+		setup (hd0) \n\
 		quit" | grub --batch --device-map=/dev/null
 
 update:
