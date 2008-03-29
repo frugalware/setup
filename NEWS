@@ -1,5 +1,9 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+0.8.9         - added support for generating a tftp image
+              - added support for generating an usb image
+              - added support for kbd>=1.14.1
+              - the log should appear on tty4 again
 0.8.8	      - check for volume name to determine if a disc is a Frugalware install
 	        one
 	      - new translation: cs_CZ
