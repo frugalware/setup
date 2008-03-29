@@ -27,6 +27,16 @@ creating an ISO with mkiso, or using a network boot server. This is a core
 part of Frugalware we're talking about here, if it's broken, then it can
 render Frugalware uninstallable.
 
+A few common commandlines:
+
+qemu -hda frugalware-0.8-i686-usb.img -hdb ~/documents/qemu/hda.img
+
+to test the usb image.
+
+qemu -hda ~/documents/qemu/hda.img -fda frugalware-0.8-i686-tftp.img -boot a -tftp ~/git/current/boot/
+
+to test the tftp image.
+
 Quick build
 ===========
 
