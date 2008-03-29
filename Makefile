@@ -34,6 +34,10 @@ VERSION=$(shell grep ^version configure |sed 's/.*"\(.*\)"/\1/')
 GPG=$(shell [ -d ../releases ] && echo true || echo false)
 QEMU_OPTS ?= -hda ~/documents/qemu/hda.img
 UML_OPTS ?= ubd0=~/documents/uml/root_fs eth0=tuntap,,,192.168.0.254 mem=128MB
+TFTP_BOOTCMD = bootp
+ifneq ($(TFTP_PASSWD),)
+	TFTP_GRUB_PASSWD := password --md5 $(shell echo -e 'md5crypt\n$(TFTP_PASSWD)\nquit' |/sbin/grub --batch --device-map=/dev/null |grep "^Encrypted: " |sed 's/^Encrypted: //')
+endif
 RAMDISK_SIZE = $(shell du --block-size=1000 initrd-$(CARCH).img|sed 's/\t.*//')
 CYL_COUNT = $(shell echo "$(shell du -c -B516096 vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz|sed -n 's/^\(.*\)\t.*$$/\1/;$$ p')+4"|bc)
 
@@ -212,6 +216,36 @@ usb_img: check_root
 	echo -e "device (hd0) frugalware-$(FWVER)-$(CARCH)-usb.img \n\
 		root (hd0,0) \n\
 		setup (hd0) \n\
+		quit" | grub --batch --device-map=/dev/null
+
+tftp_img: check_root
+	dd if=/dev/zero of=frugalware-$(FWVER)-$(CARCH)-tftp.img bs=1k count=1440
+	/sbin/mke2fs -F frugalware-$(FWVER)-$(CARCH)-tftp.img
+	mkdir i
+	mount -o loop frugalware-$(FWVER)-$(CARCH)-tftp.img i
+	mkdir -p i/boot/grub
+	cp /usr/lib/grub/i386-pc/stage1 i/boot/grub/
+	cp /usr/lib/grub/i386-pc/stage2.netboot i/boot/grub/stage2
+	echo -e 'default=0 \n\
+		timeout=10 \n\
+		$(TFTP_GRUB_PASSWD)\n\
+		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) \n\
+		$(TFTP_GRUB_PASSWD)\n\
+		$(TFTP_BOOTCMD)\n\
+		root (nd)\n\
+		kernel /vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(KERNEL_OPTS) vga=791 \n\
+		initrd /initrd-$(CARCH).img.gz \n\
+		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) (nofb) \n\
+		$(TFTP_GRUB_PASSWD)\n\
+		$(TFTP_BOOTCMD)\n\
+		root (nd)\n\
+		kernel /vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(KERNEL_OPTS) \n\
+		initrd /initrd-$(CARCH).img.gz' > i/boot/grub/menu.lst
+	umount i
+	rmdir i
+	echo -e "device (fd0) frugalware-$(FWVER)-$(CARCH)-tftp.img \n\
+		root (fd0) \n\
+		setup (fd0) \n\
 		quit" | grub --batch --device-map=/dev/null
 
 update:
