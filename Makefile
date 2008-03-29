@@ -76,6 +76,9 @@ endif
 ifeq ($(USB),true)
 EXTRA_TARGETS += usb_img
 endif
+ifeq ($(TFTP),true)
+EXTRA_TARGETS += tftp_img
+endif
 
 CDIR = /var/cache/pacman-g2/pkg
 CONFDIR = config
@@ -109,6 +112,9 @@ install:
 	install -m0644 initrd-$(CARCH).img.gz $(DESTDIR)$(PREFIX)/share/setup/initrd-$(CARCH).img.gz
 ifeq ($(USB),true)
 	install -m0644 frugalware-$(FWVER)-$(CARCH)-usb.img $(DESTDIR)$(PREFIX)/share/setup/frugalware-$(FWVER)-$(CARCH)-usb.img
+endif
+ifeq ($(TFTP),true)
+	install -m0644 frugalware-$(FWVER)-$(CARCH)-tftp.img $(DESTDIR)$(PREFIX)/share/setup/frugalware-$(FWVER)-$(CARCH)-tftp.img
 endif
 
 distclean: clean
