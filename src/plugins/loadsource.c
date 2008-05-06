@@ -137,6 +137,7 @@ static char* get_volume_id(char *device)
 	volume_id_get_label(vid, &label);
 	ret = strdup(label);
 	volume_id_close(vid);
+	close(fd);
 	return ret;
 }
 
