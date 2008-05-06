@@ -333,6 +333,8 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 				perror(_("Could not open output file for writing"));
 				return(1);
 			}
+			fprintf(fp, "[options]\n");
+			fprintf(fp, "LogFile     = /var/log/pacman-g2.log\n");
 			fprintf(fp, "[%s]\n", repo);
 			fprintf(fp, "Server = file://%s\n\n", pacbindir);
 			fclose(fp);
