@@ -593,3 +593,9 @@ openssl:
 	mkdir -p openssl/usr/lib
 	$(UNPACK); \
 	cp -a usr/lib/*.so.* ../openssl/usr/lib/
+
+pciutils:
+	$(CLEANUP)
+	mkdir -p pciutils/usr/share/misc
+	$(UNPACK); \
+	cp -a usr/share/misc/* ../pciutils/usr/share/misc/
