@@ -1,5 +1,11 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+0.9.0         - improved developer documentation
+              - fixed a bug when ejecting cd/dvd was not possible when
+                installing from multiple cds/dvds
+              - added pciutils package to make netconfig look nicer
+              - pacman-g2.log is now available on the installed system
+                after the setup completed
 0.8.9         - added support for generating a tftp image
               - added support for generating an usb image
               - added support for kbd>=1.14.1
