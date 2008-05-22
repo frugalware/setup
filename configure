@@ -82,7 +82,10 @@ except OSError:
 if pacman.initialize("/") == -1:
 	raise "failed to init the pacman lib"
 
-remote = pacman.db_register("frugalware-current")
+if options.repo == "stable":
+	remote = pacman.db_register("frugalware")
+else:
+	remote = pacman.db_register("frugalware-current")
 local = pacman.db_register("local")
 sys.stdout.write("reading the remote database... ")
 sys.stdout.flush()
