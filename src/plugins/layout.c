@@ -101,6 +101,11 @@ int run(GList **config)
 	FILE* fp;
 	int ret = 0;
 	
+	if (layoutl)
+	{
+		g_list_free(layoutl);
+		layoutl = NULL;
+	}
 	find("/usr/share/keymaps/i386");
 	layoutl = g_list_sort(layoutl, sort_layouts);
 	array = glist4dialog(layoutl, "");
