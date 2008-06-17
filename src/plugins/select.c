@@ -136,7 +136,7 @@ GList* group2pkgs(GList *syncs, char *group, int dialog)
 		// frugalware repo + enable the
 		// language-specific parts from
 		// locale-extra
-		addpkg = ((strcmp(getenv("LANG", "en_US")) &&
+		addpkg = ((strcmp(getenv("LANG"), "en_US") &&
 			!strcmp(group, "locale-extra") &&
 			strlen(pkgname) >= strlen(lang) &&
 			!strcmp(pkgname + strlen(pkgname) -
