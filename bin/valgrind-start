@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo -n "Preparing valgrind..."
+mount -t proc none /proc
+mount -t sysfs none /sys
+mount -t tmpfs none /tmp
+
+echo " OK. Starting setup..."
+/usr/bin/valgrind /bin/setup
+

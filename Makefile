@@ -165,8 +165,12 @@ install-setup: setup
 
 misc: merge install-setup
 	cp etc/inittab $(MDIR)/etc/
-ifneq ($(DEBUG),false)
+ifeq ($(DEBUG),gdb)
 	sed -i 's|/bin/setup|/usr/bin/gdb /bin/setup|' $(MDIR)/etc/inittab
+endif
+ifeq ($(DEBUG),valgrind)
+	sed -i 's|/bin/setup|/bin/valgrind-start|' $(MDIR)/etc/inittab
+	cp bin/valgrind-start $(MDIR)/bin/
 endif
 	cp bin/bootstrap $(MDIR)/bin/
 
@@ -189,7 +193,7 @@ initrd: install-setup
 	mount -o loop -t ext2 initrd-$(CARCH).img i
 	cp -a $(MDIR)/* i/
 	chown -R root.root i/
-	umount initrd-$(CARCH).img
+	umount i
 	rmdir i
 
 initrd_gz: clean config.mak devices initrd
@@ -564,6 +568,16 @@ gdb:
 	mkdir -p gdb/usr/bin/
 	$(UNPACK); \
 	cp -a usr/bin/gdb ../gdb/usr/bin/
+
+# Deals with only a minimal subset of valgrind to keep the initrd small
+valgrind:
+	$(CLEANUP)
+	mkdir -p valgrind/usr/bin/
+	mkdir -p valgrind/usr/lib/valgrind/x86-linux/
+	$(UNPACK); \
+	cp -a usr/bin/valgrind* ../valgrind/usr/bin/; \
+	cp -a usr/lib/valgrind/*.supp ../valgrind/usr/lib/valgrind/; \
+	cp -a usr/lib/valgrind/x86-linux/memcheck ../valgrind/usr/lib/valgrind/x86-linux/
 
 expat:
 	$(CLEANUP)

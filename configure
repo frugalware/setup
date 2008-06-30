@@ -26,8 +26,7 @@ parser.set_defaults(usb=False)
 parser.set_defaults(tftp=False)
 parser.set_defaults(repo="current")
 parser.set_defaults(prefix="/usr/local")
-parser.add_option("--enable-debug", action="store_true", dest="debug", help="Build setup with debug options")
-parser.add_option("--disable-debug", action="store_false", dest="debug", help="Build setup without debug options (default)")
+parser.add_option("--with-debug", action="store", dest="debug", help="Build setup with debug options. Can be no (default), gdb or valgrind")
 parser.add_option("--enable-usb", action="store_true", dest="usb", help="Build usb installer image")
 parser.add_option("--disable-usb", action="store_false", dest="usb", help="Don't build usb installer image (default)")
 parser.add_option("--enable-tftp", action="store_true", dest="tftp", help="Build tftp installer image")
@@ -39,11 +38,15 @@ parser.add_option("--prefix", action="store", dest="prefix", help="Select the in
 # if we want debug then we should add gdb and it's dependencies
 sys.stdout.write("checking for debug support... ")
 sys.stdout.flush()
-if options.debug:
-	sys.stdout.write("yes.\n")
+if options.debug == "gdb":
+	sys.stdout.write("gdb.\n")
 	sys.stdout.flush()
 	packages.append('gdb')
 	packages.append('expat')
+elif options.debug == "valgrind":
+	sys.stdout.write("valgrind.\n")
+	sys.stdout.flush()
+	packages.append('valgrind')
 else:
 	sys.stdout.write("no.\n")
 	sys.stdout.flush()
@@ -110,7 +113,7 @@ socket = open("config.mak", "w")
 # write out our required options
 socket.write("VERSION = %s\n" % version)
 if options.debug:
-	socket.write("DEBUG = true\n")
+	socket.write("DEBUG = %s\n" % options.debug)
 else:
 	socket.write("DEBUG = false\n")
 if options.usb:
