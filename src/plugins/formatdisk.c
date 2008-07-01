@@ -563,28 +563,6 @@ int run(GList **config)
 	chmod (np, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
 	FREE(np);
 
-	makepath(g_strdup_printf("%s/%s", TARGETDIR, "/var/log"));
-	np = g_strdup_printf("%s/%s", TARGETDIR, LOGFILE);
-	copyfile(LOGFILE, np);
-	unlink(LOGFILE);
-	chmod (np, S_IRUSR|S_IWUSR);
-	FREE(np);
-
-	// disable caching for cds
-	// this is needed here since when the cds is loaded we had no
-	// formatted root partition
-	if((char*)data_get(*config, "netinstall")==NULL)
-	{
-		char *pacbindir = g_strdup_printf("%s/frugalware-%s", SOURCEDIR, ARCH);
-		char *ptr;
-
-		ptr = g_strdup_printf("%s/var/cache/pacman/pkg", TARGETDIR);
-		makepath(ptr);
-		FREE(ptr);
-		disable_cache(pacbindir);
-		FREE(pacbindir);
-	}
-
 	// non-root partitions
 	dialog_vars.backtitle=gen_backtitle(_("Selecting other partitions"));
 	while(1)
@@ -626,6 +604,28 @@ int run(GList **config)
 		}
 		else
 			break;
+	}
+
+	makepath(g_strdup_printf("%s/%s", TARGETDIR, "/var/log"));
+	np = g_strdup_printf("%s/%s", TARGETDIR, LOGFILE);
+	copyfile(LOGFILE, np);
+	unlink(LOGFILE);
+	chmod (np, S_IRUSR|S_IWUSR);
+	FREE(np);
+
+	// disable caching for cds
+	// this is needed here since when the cds is loaded we had no
+	// formatted root partition
+	if((char*)data_get(*config, "netinstall")==NULL)
+	{
+		char *pacbindir = g_strdup_printf("%s/frugalware-%s", SOURCEDIR, ARCH);
+		char *ptr;
+
+		ptr = g_strdup_printf("%s/var/cache/pacman-g2/pkg", TARGETDIR);
+		makepath(ptr);
+		FREE(ptr);
+		disable_cache(pacbindir);
+		FREE(pacbindir);
 	}
 	return(0);
 }
