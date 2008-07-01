@@ -166,7 +166,8 @@ install-setup: setup
 misc: merge install-setup
 	cp etc/inittab $(MDIR)/etc/
 ifeq ($(DEBUG),gdb)
-	sed -i 's|/bin/setup|/usr/bin/gdb /bin/setup|' $(MDIR)/etc/inittab
+	sed -i 's|/bin/setup|/bin/gdb-start|' $(MDIR)/etc/inittab
+	cp bin/gdb-start $(MDIR)/bin/
 endif
 ifeq ($(DEBUG),valgrind)
 	sed -i 's|/bin/setup|/bin/valgrind-start|' $(MDIR)/etc/inittab
