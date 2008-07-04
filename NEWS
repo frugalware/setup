@@ -1,5 +1,11 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+0.9.1         - added support for running setup with valgrind
+              - no longer hardwire the repo name "frugalware-current" in
+                the build system
+              - fix up support for having /var as a separate partition
+              - avoid duplicated keyboard layouts when selecting layouts
+                multiple times
 0.9.0         - improved developer documentation
               - fixed a bug when ejecting cd/dvd was not possible when
                 installing from multiple cds/dvds
