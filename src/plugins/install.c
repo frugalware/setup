@@ -161,6 +161,6 @@ int run(GList **config)
 	// if the source media is cd, we don't need broken symlinks after
 	// the installtion
 	if((char*)data_get(*config, "netinstall")==NULL)
-		rmrf("var/cache/pacman/pkg");
+		rmrf("var/cache/pacman-g2/pkg");
 	return(0);
 }
