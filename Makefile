@@ -122,7 +122,7 @@ distclean: clean
 	rm -rf config.mak
 
 dist:
-	git-archive --format=tar --prefix=fwsetup-$(VERSION)/ HEAD > fwsetup-$(VERSION).tar
+	git archive --format=tar --prefix=fwsetup-$(VERSION)/ HEAD > fwsetup-$(VERSION).tar
 	mkdir -p fwsetup-$(VERSION)/po
 	make -C po pos
 	mv po/*.{gm,p}o fwsetup-$(VERSION)/po
