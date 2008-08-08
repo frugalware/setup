@@ -236,7 +236,7 @@ tftp_img: check_root
 	mount -o loop frugalware-$(FWVER)-$(CARCH)-tftp.img i
 	mkdir -p i/boot/grub
 	cp /usr/lib/grub/i386-frugalware/stage1 i/boot/grub/
-	cp /usr/lib/grub/i386-frugalware/stage2.netboot i/boot/grub/stage2
+	cp /usr/lib/grub/i386-pc/stage2.netboot i/boot/grub/stage2
 	echo -e 'default=0 \n\
 		timeout=10 \n\
 		$(TFTP_GRUB_PASSWD)\n\
