@@ -1,5 +1,6 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+0.9.2         - make the build system carch-independent
 0.9.1         - added support for running setup with valgrind
               - no longer hardwire the repo name "frugalware-current" in
                 the build system
