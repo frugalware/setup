@@ -211,7 +211,7 @@ usb_img: check_root
 	mkdir -p i/boot/grub
 	cp vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) i/boot/vmlinuz-$(KERNELV)-fw$(KERNELREL)
 	cp initrd-$(CARCH).img.gz i/boot/
-	cp /usr/lib/grub/i386-pc/stage{1,2} i/boot/grub/
+	cp /usr/lib/grub/i386-frugalware/stage{1,2} i/boot/grub/
 	cp /boot/grub/message-frugalware i/boot/grub/message
 	echo -e "default=0 \n\
 		timeout=10 \n\
@@ -235,8 +235,8 @@ tftp_img: check_root
 	mkdir i
 	mount -o loop frugalware-$(FWVER)-$(CARCH)-tftp.img i
 	mkdir -p i/boot/grub
-	cp /usr/lib/grub/i386-pc/stage1 i/boot/grub/
-	cp /usr/lib/grub/i386-pc/stage2.netboot i/boot/grub/stage2
+	cp /usr/lib/grub/i386-frugalware/stage1 i/boot/grub/
+	cp /usr/lib/grub/i386-frugalware/stage2.netboot i/boot/grub/stage2
 	echo -e 'default=0 \n\
 		timeout=10 \n\
 		$(TFTP_GRUB_PASSWD)\n\
