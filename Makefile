@@ -222,7 +222,7 @@ usb_img: check_root
 		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) (nofb) \n\
 		kernel /boot/vmlinuz-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) \n\
 		initrd /boot/initrd-$(CARCH).img.gz" > i/boot/grub/menu.lst
-	umount frugalware-$(FWVER)-$(CARCH)-usb.img
+	umount i
 	rmdir i
 	echo -e "device (hd0) frugalware-$(FWVER)-$(CARCH)-usb.img \n\
 		root (hd0,0) \n\
