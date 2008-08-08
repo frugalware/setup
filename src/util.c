@@ -513,6 +513,7 @@ GList* fw_checklist(const char *title, const char *cprompt, int height,
 	GList *list=NULL;
 
 	buf = dialog_vars.input_result;
+	dialog_vars.quoted = 1;
 	MALLOC(dialog_vars.input_result, item_no*256);
 	dialog_vars.input_result[0] = '\0';
 	ret = dialog_checklist(title, cprompt, height, width,
@@ -522,6 +523,7 @@ GList* fw_checklist(const char *title, const char *cprompt, int height,
 		// no item selected
 		FREE(dialog_vars.input_result);
 		dialog_vars.input_result = buf;
+		dialog_vars.quoted = 0;
 		return(list);
 	}
 
@@ -542,6 +544,7 @@ GList* fw_checklist(const char *title, const char *cprompt, int height,
 	list = g_list_append(list, strdup(ptr));
 	FREE(dialog_vars.input_result);
 	dialog_vars.input_result = buf;
+	dialog_vars.quoted = 0;
 	return(list);
 }
 
