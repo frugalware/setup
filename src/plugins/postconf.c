@@ -121,7 +121,7 @@ int change_pw(char *user, char **passbuf)
 				{
 					if(!passbuf)
 					{
-						ptr = g_strdup_printf("echo %s:%s |chroot ./ /usr/sbin/chpasswd", user, pass);
+						ptr = g_strdup_printf("echo '%s:%s' |chroot ./ /usr/sbin/chpasswd", user, pass);
 						ret = fw_system(ptr);
 						FREE(ptr);
 						FREE(pass);
@@ -165,7 +165,7 @@ int add_user()
 		FREE(fn);
 		return(-1);
 	}
-	ptr = g_strdup_printf("yes \"\"|chroot ./ /usr/sbin/adduser %s \"%s\" %s", login, fn, pass);
+	ptr = g_strdup_printf("yes ''|chroot ./ /usr/sbin/adduser '%s' \"%s\" '%s'", login, fn, pass);
 	ret = fw_system(ptr);
 	FREE(ptr);
 	FREE(login);
