@@ -66,7 +66,7 @@ int installpkgs_forreal(GList *pkgs, int fast)
 			cmd = g_strdup_printf("pacman-g2 -S -r ./ --noconfirm %s", ptr);
 		if (fw_system_interactive(cmd) != 0)
 		{
-			printf(_("Errors occured while installing "
+			printf(_("Errors occurred while installing "
 			"selected packages.\n"
 			"Press ENTER to continue..."));
 			fflush(stdout);
@@ -130,7 +130,7 @@ int installpkgs(GList *pkgs, GList **config)
 			else
 				return(0);
 		}
-		// see what packages can be usefull from this volume
+		// see what packages can be useful from this volume
 		for(i=0;i<g_list_length(pkgs);i++)
 		{
 			ptr = g_strdup_printf("%s/frugalware-%s/%s-%s.fpm", SOURCEDIR, ARCH,
@@ -159,7 +159,7 @@ int run(GList **config)
 	copyfile("/proc/mounts", "/etc/mtab");
 	installpkgs((GList*)data_get(*config, "packages"), config);
 	// if the source media is cd, we don't need broken symlinks after
-	// the installtion
+	// the installation
 	if((char*)data_get(*config, "netinstall")==NULL)
 		rmrf("var/cache/pacman-g2/pkg");
 	return(0);
