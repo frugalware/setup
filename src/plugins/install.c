@@ -61,7 +61,7 @@ int installpkgs_forreal(GList *pkgs, int fast)
 	{
 		fw_end_dialog();
 		if(fast)
-			cmd = g_strdup_printf("pacman-g2 -S -r ./ --noconfirm -f --nointegrity %s", ptr);
+			cmd = g_strdup_printf("pacman-g2 -S -r ./ --noconfirm -d -f --nointegrity %s", ptr);
 		else
 			cmd = g_strdup_printf("pacman-g2 -S -r ./ --noconfirm %s", ptr);
 		if (fw_system_interactive(cmd) != 0)
