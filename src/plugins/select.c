@@ -401,7 +401,8 @@ int fw_select(GList **config, int selpkgc, GList *syncs)
 	int i, j;
 	GList *cats=NULL;
 	GList *allpkgs=NULL;
-	PM_LIST *x;
+	PM_LIST *x, *lp, *junk, *sorted;
+	char *ptr;
 
 	dialog_vars.backtitle=gen_backtitle(_("Selecting packages"));
 	dlg_put_backtitle();
@@ -433,50 +434,48 @@ int fw_select(GList **config, int selpkgc, GList *syncs)
 		for(j=0;j<g_list_length(pkgs);j++)
 			allpkgs = g_list_append(allpkgs, g_list_nth_data(pkgs, j));
 	}
-		PM_LIST *lp, *junk, *sorted;
-		char *ptr;
 
-		if(pacman_trans_init(PM_TRANS_TYPE_SYNC, PM_TRANS_FLAG_NOCONFLICTS, NULL, NULL, NULL) == -1)
+	if(pacman_trans_init(PM_TRANS_TYPE_SYNC, PM_TRANS_FLAG_NOCONFLICTS, NULL, NULL, NULL) == -1)
+		return(1);
+	for(i=0;i<g_list_length(allpkgs);i++)
+	{
+		ptr = strdup((char*)g_list_nth_data(allpkgs, i));
+		if(pacman_trans_addtarget(drop_version(ptr)))
 			return(1);
-		for(i=0;i<g_list_length(allpkgs);i++)
-		{
-			ptr = strdup((char*)g_list_nth_data(allpkgs, i));
-			if(pacman_trans_addtarget(drop_version(ptr)))
-				return(1);
-			FREE(ptr);
-		}
-		g_list_free(allpkgs);
-		allpkgs=NULL;
-		dlg_put_backtitle();
-		dialog_msgbox(_("Please wait"), _("Searching for missing dependencies..."),
-		0, 0, 0);
-		if(pacman_trans_prepare(&junk) == -1) {
-			LOG("pacman-g2 error: %s", pacman_strerror(pm_errno));
+		FREE(ptr);
+	}
+	g_list_free(allpkgs);
+	allpkgs=NULL;
+	dlg_put_backtitle();
+	dialog_msgbox(_("Please wait"), _("Searching for missing dependencies..."),
+	0, 0, 0);
+	if(pacman_trans_prepare(&junk) == -1) {
+		LOG("pacman-g2 error: %s", pacman_strerror(pm_errno));
 
-			/* Well well well, LOG pacman deps error at tty4 */
-			for(x = pacman_list_first(junk); x; x = pacman_list_next(x))
-			    {
-				PM_DEPMISS *miss = pacman_list_getdata(x);
-				LOG(":: %s: %s %s",
-				    (char*)pacman_dep_getinfo(miss, PM_DEP_TARGET),
-				    (long)pacman_dep_getinfo(miss, PM_DEP_TYPE) == PM_DEP_TYPE_DEPEND ? "requires" : "is required by",
-				    (char*)pacman_dep_getinfo(miss, PM_DEP_NAME));
-			    }
-			pacman_list_free(junk);
-			pacman_trans_release();
-			return(-1);
-		}
-		sorted = pacman_trans_getinfo(PM_TRANS_PACKAGES);
-		for(lp = pacman_list_first(sorted); lp; lp = pacman_list_next(lp))
-		{
-			PM_SYNCPKG *sync = pacman_list_getdata(lp);
-			PM_PKG *pkg = pacman_sync_getinfo(sync, PM_SYNC_PKG);
-			ptr = g_strdup_printf("%s-%s", (char*)pacman_pkg_getinfo(pkg, PM_PKG_NAME),
-				(char*)pacman_pkg_getinfo(pkg, PM_PKG_VERSION));
-			allpkgs = g_list_append(allpkgs, ptr);
-		}
+		/* Well well well, LOG pacman deps error at tty4 */
+		for(x = pacman_list_first(junk); x; x = pacman_list_next(x))
+		    {
+			PM_DEPMISS *miss = pacman_list_getdata(x);
+			LOG(":: %s: %s %s",
+			    (char*)pacman_dep_getinfo(miss, PM_DEP_TARGET),
+			    (long)pacman_dep_getinfo(miss, PM_DEP_TYPE) == PM_DEP_TYPE_DEPEND ? "requires" : "is required by",
+			    (char*)pacman_dep_getinfo(miss, PM_DEP_NAME));
+		    }
+		pacman_list_free(junk);
 		pacman_trans_release();
-		data_put(config, "packages", allpkgs);
+		return(-1);
+	}
+	sorted = pacman_trans_getinfo(PM_TRANS_PACKAGES);
+	for(lp = pacman_list_first(sorted); lp; lp = pacman_list_next(lp))
+	{
+		PM_SYNCPKG *sync = pacman_list_getdata(lp);
+		PM_PKG *pkg = pacman_sync_getinfo(sync, PM_SYNC_PKG);
+		ptr = g_strdup_printf("%s-%s", (char*)pacman_pkg_getinfo(pkg, PM_PKG_NAME),
+			(char*)pacman_pkg_getinfo(pkg, PM_PKG_VERSION));
+		allpkgs = g_list_append(allpkgs, ptr);
+	}
+	pacman_trans_release();
+	data_put(config, "packages", allpkgs);
 	return(0);
 }
 int run(GList **config)
