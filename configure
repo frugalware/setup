@@ -15,7 +15,7 @@ packages = ['parted', 'pacman-g2', 'bash', 'kernel', 'busybox', 'dhcpcd', 'dialo
 		'device-mapper', 'lvm2', 'wpa_supplicant', 'openssl', 'pciutils']
 
 # when releasing a new setup, please update this.
-version = "0.9.4"
+version = "0.9.5"
 
 # parse our options
 parser = OptionParser(version="configure for Frugalware Setup v%s" % (version))
