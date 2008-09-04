@@ -3,10 +3,8 @@
 import pacman, os, sys
 from optparse import OptionParser
 
-# since we're not in chroot, we need up to date libs. but don't be too
-# agressive, we add libs to here just in case there was a bugreport about it
-# parted: #807
-libs = ['parted', 'pacman-g2']
+# since we're in chroot, we no longer have to check for up to date libs.
+libs = []
 packages = ['bash', 'kernel', 'busybox', 'dhcpcd', 'dialog', 'e2fsprogs',
 		'eject', 'frugalware', 'glibc', 'kbd', 'module-init-tools',
 		'ncurses', 'netkit-base', 'reiserfsprogs', 'udev',
