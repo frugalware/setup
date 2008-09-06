@@ -22,7 +22,7 @@ CFLAGS ?= -Wall -Werror -O2 -pipe
 else
 CFLAGS ?= -g -Wall -Werror
 endif
-CFLAGS += $(STABLE) -DARCH="\"$(shell arch)\""
+CFLAGS += $(STABLE) -DARCH="\"$(shell arch)\"" -DARCH_$(shell arch|tr [a-z] [A-Z])
 LDFLAGS += -ldl -rdynamic
 CFLAGS += $(shell pkg-config --cflags glib-2.0)
 LDFLAGS += $(shell pkg-config --libs glib-2.0)
