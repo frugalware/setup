@@ -126,6 +126,9 @@ static char* get_volume_id(char *device)
 	char *ret;
 	char path[PATH_MAX];
 
+	if(!device || !strlen(device))
+		return NULL;
+
 	snprintf(path, PATH_MAX, "/dev/%s", device);
 
 	fd = open(path, O_RDONLY);
