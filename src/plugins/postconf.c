@@ -248,7 +248,11 @@ int run(GList **config)
 	free(ptr);
 
 	fw_end_dialog();
+#ifndef ARCH_PPC
 	fw_system_interactive("chroot ./ /sbin/grubconfig");
+#else
+	fw_system_interactive("chroot ./ /sbin/yabootcfg");
+#endif
 	fw_init_dialog();
 
 	dlg_put_backtitle();
