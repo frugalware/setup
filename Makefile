@@ -62,20 +62,15 @@ export CCACHE_NOLINK=1
 export CCACHE_UMASK=002
 DIALOG_LANGS = `find po -name *.po |sed 's/.*\/\(.*\).po/\1/' |tr '\n' ' '`
 GLIBC_LANGS = en_US,ISO-8859-1 da_DK,ISO-8859-1 de_DE,ISO-8859-1 fr_FR,ISO-8859-1 hu_HU,ISO-8859-2 id_ID,ISO-8859-1 it_IT,ISO-8859-1 nl_NL,ISO-8859-1 pt_BR,ISO-8859-1 ro_RO,ISO-8859-2 sk_SK,ISO-8859-2 sv_SE,ISO-8859-1 cs_CZ,ISO-8859-2
-ifeq ($(CARCH),i686)
-	KARCH ?= i386
-endif
 ifeq ($(CARCH),x86_64)
-	MARCH ?= k8
-	QEMU ?= qemu-x86_64
+	QEMU ?= qemu-system-x86_64
 endif
-MARCH ?= $(CARCH)
-KARCH ?= $(CARCH)
+ifeq ($(CARCH),ppc)
+	QEMU ?= qemu-system-ppc
+endif
 QEMU ?= qemu
 UML ?= linux
-ifeq ($(DEBUG),false)
-export CFLAGS = -march=$(MARCH) -O2 -pipe
-else
+ifneq ($(DEBUG),false)
 export CFLAGS = -g
 endif
 ifeq ($(USB),true)
