@@ -614,9 +614,10 @@ openssl:
 
 pciutils:
 	$(CLEANUP)
-	mkdir -p pciutils/usr/share/misc
+	mkdir -p pciutils/usr/{lib,share/misc}
 	$(UNPACK); \
-	cp -a usr/share/misc/* ../pciutils/usr/share/misc/
+	cp -a usr/share/misc/* ../pciutils/usr/share/misc/; \
+	cp -a usr/lib/*.so.* ../pciutils/usr/lib/
 
 b43-fwcutter:
 	$(CLEANUP)
