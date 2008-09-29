@@ -30,6 +30,12 @@ ifeq ($(DEBUG),)
 	DEBUG = false
 endif
 
+CARCH ?= $(shell arch)
+ifneq ($(CARCH),ppc)
+	VMLINUZ=vmlinuz
+else
+	VMLINUZ=vmlinux
+endif
 VERSION=$(shell grep ^version configure |sed 's/.*"\(.*\)"/\1/')
 GPG=$(shell [ -d ../releases ] && echo true || echo false)
 QEMU_OPTS ?= -hda ~/documents/qemu/hda.img
@@ -39,7 +45,7 @@ ifneq ($(TFTP_PASSWD),)
 	TFTP_GRUB_PASSWD := password --md5 $(shell echo -e 'md5crypt\n$(TFTP_PASSWD)\nquit' |/sbin/grub --batch --device-map=/dev/null |grep "^Encrypted: " |sed 's/^Encrypted: //')
 endif
 RAMDISK_SIZE = $(shell du --block-size=1000 initrd-$(CARCH).img|sed 's/\t.*//')
-CYL_COUNT = $(shell echo "$(shell du -c -B516096 vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz|sed -n 's/^\(.*\)\t.*$$/\1/;$$ p')+4"|bc)
+CYL_COUNT = $(shell echo "$(shell du -c -B516096 $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz|sed -n 's/^\(.*\)\t.*$$/\1/;$$ p')+4"|bc)
 
 FWVER = $(shell echo $(FRUGALWAREVER)|sed 's/-.*//')
 RELEASE = $(shell cat merge/etc/frugalware-release)
@@ -56,7 +62,6 @@ export CCACHE_NOLINK=1
 export CCACHE_UMASK=002
 DIALOG_LANGS = `find po -name *.po |sed 's/.*\/\(.*\).po/\1/' |tr '\n' ' '`
 GLIBC_LANGS = en_US,ISO-8859-1 da_DK,ISO-8859-1 de_DE,ISO-8859-1 fr_FR,ISO-8859-1 hu_HU,ISO-8859-2 id_ID,ISO-8859-1 it_IT,ISO-8859-1 nl_NL,ISO-8859-1 pt_BR,ISO-8859-1 ro_RO,ISO-8859-2 sk_SK,ISO-8859-2 sv_SE,ISO-8859-1 cs_CZ,ISO-8859-2
-CARCH ?= $(shell arch)
 ifeq ($(CARCH),i686)
 	KARCH ?= i386
 endif
@@ -103,12 +108,12 @@ check_root:
 
 clean: check_root
 	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img initrd-$(CARCH).img.gz
-	rm -rf $(packages) vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
+	rm -rf $(packages) $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	$(MAKE) -C src clean
 
 install:
 	install -d -m0755 $(DESTDIR)$(PREFIX)/share/setup
-	install -m0644 vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(DESTDIR)$(PREFIX)/share/setup/vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
+	install -m0644 $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(DESTDIR)$(PREFIX)/share/setup/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	install -m0644 initrd-$(CARCH).img.gz $(DESTDIR)$(PREFIX)/share/setup/initrd-$(CARCH).img.gz
 ifeq ($(USB),true)
 	install -m0644 frugalware-$(FWVER)-$(CARCH)-usb.img $(DESTDIR)$(PREFIX)/share/setup/frugalware-$(FWVER)-$(CARCH)-usb.img
@@ -209,7 +214,7 @@ usb_img: check_root
 	mkdir i
 	mount -o loop,offset=32256 frugalware-$(FWVER)-$(CARCH)-usb.img i
 	mkdir -p i/boot/grub
-	cp vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) i/boot/vmlinuz-$(KERNELV)-fw$(KERNELREL)
+	cp $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) i/boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)
 	cp initrd-$(CARCH).img.gz i/boot/
 	cp /usr/lib/grub/i386-*/stage{1,2} i/boot/grub/
 	cp /boot/grub/message-frugalware i/boot/grub/message
@@ -217,10 +222,10 @@ usb_img: check_root
 		timeout=10 \n\
 		gfxmenu /boot/grub/message \n\
 		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) \n\
-		kernel /boot/vmlinuz-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) vga=791 \n\
+		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) vga=791 \n\
 		initrd /boot/initrd-$(CARCH).img.gz \n\
 		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) (nofb) \n\
-		kernel /boot/vmlinuz-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) \n\
+		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) \n\
 		initrd /boot/initrd-$(CARCH).img.gz" > i/boot/grub/menu.lst
 	umount i
 	rmdir i
@@ -244,13 +249,13 @@ tftp_img: check_root
 		$(TFTP_GRUB_PASSWD)\n\
 		$(TFTP_BOOTCMD)\n\
 		root (nd)\n\
-		kernel /vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(KERNEL_OPTS) vga=791 \n\
+		kernel /$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(KERNEL_OPTS) vga=791 \n\
 		initrd /initrd-$(CARCH).img.gz \n\
 		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) (nofb) \n\
 		$(TFTP_GRUB_PASSWD)\n\
 		$(TFTP_BOOTCMD)\n\
 		root (nd)\n\
-		kernel /vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(KERNEL_OPTS) \n\
+		kernel /$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(KERNEL_OPTS) \n\
 		initrd /initrd-$(CARCH).img.gz' > i/boot/grub/menu.lst
 	umount i
 	rmdir i
@@ -277,7 +282,7 @@ check:
 	done
 
 qemu:
-	$(QEMU) -kernel vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH) -initrd \
+	$(QEMU) -kernel $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) -initrd \
 	initrd-$(CARCH).img -append "$(KERNEL_OPTS)" $(QEMU_OPTS)
 
 uml:
@@ -372,8 +377,8 @@ kernel:
 	mkdir -p kernel/lib
 	$(UNPACK)
 	cp -a $(BDIR)/lib/modules kernel/lib/
-	cp $(BDIR)/boot/vmlinuz-$(KERNELV)-fw$(KERNELREL) \
-		$(CWD)/vmlinuz-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
+	cp $(BDIR)/boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) \
+		$(CWD)/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	cd kernel/ && find . -name *ko|xargs gzip
 	for i in drivers/{cpufreq,telephony,hwmon,media/{dvb,radio,video}} security; do rm -rfv kernel/lib/modules/$(KERNELV)-fw$(KERNELREL)/kernel/$$i; done
 	cp $(BDIR)/boot/System.map-$(KERNELV)-fw$(KERNELREL) \
