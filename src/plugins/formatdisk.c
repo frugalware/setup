@@ -214,12 +214,18 @@ char *selformatmode(char *dev)
 
 char *selfs(char *dev)
 {
+#ifndef ARCH_PPC
 	int fsnum=4;
+#else
+	int fsnum=3;
+#endif
 	char *fss[] =
 	{
 		"ext2", _("Standard Linux ext2fs filesystem"),
 		"ext3", _("Journalising version of the ext2fs filesystem"),
+#ifndef ARCH_PPC
 		"reiserfs", _("Hans Reiser's journalising filesystem"),
+#endif
 		"xfs", _("SGI's journalising filesystem")
 	};
 	
