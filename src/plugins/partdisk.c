@@ -111,6 +111,7 @@ GList *listparts(void)
 
 char *selpartsw()
 {
+#ifndef ARCH_PPC
 	int swnum=3;
 	char *sws[] =
 	{
@@ -118,6 +119,14 @@ char *selpartsw()
 		"fdisk", _("The traditional partitioning program for Linux"),
 		"parted", _("A partition manipulation program")
 	};
+#else
+	int swnum=2;
+	char *sws[] =
+	{
+		"mac-fdisk", _("Apple disk partitioning utility"),
+		"parted", _("A partition manipulation program")
+	};
+#endif
 	
 	dialog_vars.backtitle=gen_backtitle(_("Creating partitions"));
 	dlg_put_backtitle();
