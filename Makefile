@@ -156,6 +156,8 @@ merge: $(packages)
 	for i in $(packages); do \
 		cp -a $$i/* $(MDIR)/; \
 	done
+	touch $(MDIR)/etc/ld.so.conf
+	ldconfig -r $(MDIR)
 	make -C po mos
 
 install-setup: setup
