@@ -7,12 +7,17 @@ from optparse import OptionParser
 libs = []
 packages = ['parted', 'pacman-g2', 'bash', 'kernel', 'busybox', 'dhcpcd', 'dialog', 'e2fsprogs',
 		'eject', 'frugalware', 'glibc', 'kbd', 'module-init-tools',
-		'ncurses', 'netkit-base', 'reiserfsprogs', 'udev',
+		'ncurses', 'netkit-base', 'udev',
 		'util-linux-ng', 'mdadm', 'xfsprogs', 'ppp', 'rp-pppoe', 'glib2',
 		'bzip2', 'libarchive', 'zlib', 'frugalwareutils',
-		'wireless_tools', 'ipw2200-firmware', 'dropbear', 'bastet',
-		'readline', 'acx100', 'shadow', 'madwifi', 'rt2500',
-		'device-mapper', 'lvm2', 'wpa_supplicant', 'openssl', 'pciutils']
+		'wireless_tools', 'dropbear', 'bastet',
+		'readline', 'shadow',
+		'device-mapper', 'lvm2', 'wpa_supplicant', 'openssl', 'pciutils',
+		'b43-fwcutter']
+if os.uname()[-1] in ['i686', 'x86_64']:
+	packages.extend(['reiserfsprogs', 'ipw2200-firmware', 'acx100', 'madwifi', 'rt2500'])
+elif os.uname()[-1] == 'ppc':
+	packages.extend(['mac-fdisk'])
 
 # when releasing a new setup, please update this.
 version = "0.9.5"

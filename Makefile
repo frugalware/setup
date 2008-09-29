@@ -615,3 +615,15 @@ pciutils:
 	mkdir -p pciutils/usr/share/misc
 	$(UNPACK); \
 	cp -a usr/share/misc/* ../pciutils/usr/share/misc/
+
+b43-fwcutter:
+	$(CLEANUP)
+	mkdir b43-fwcutter
+	$(UNPACK); \
+	cp -a lib ../b43-fwcutter/
+
+mac-fdisk:
+	$(CLEANUP)
+	mkdir mac-fdisk
+	$(UNPACK); \
+	cp -a sbin ../mac-fdisk/
