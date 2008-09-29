@@ -22,7 +22,7 @@ CFLAGS ?= -Wall -Werror -O2 -pipe
 else
 CFLAGS ?= -g -Wall -Werror
 endif
-CFLAGS += -I.. -DARCH="\"$(shell arch)\""
+CFLAGS += -I.. -DARCH="\"$(shell arch)\"" -DARCH_$(shell arch|tr [a-z] [A-Z])
 LDFLAGS += -lparted -ldl -lpacman -lvolume_id
 ifeq ($(shell arch),x86_64)
 CFLAGS += -fPIC
