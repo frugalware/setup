@@ -203,6 +203,7 @@ initrd_gz: clean config.mak devices initrd
 	gzip -9 -c initrd-$(CARCH).img > initrd-$(CARCH).img.gz
 
 usb_img: check_root
+ifneq ($(CARCH),ppc)
 	dd if=/dev/zero of=frugalware-$(FWVER)-$(CARCH)-usb.img bs=516096c count=$(CYL_COUNT)
 	echo -e 'n\np\n1\n\n\nw'|/sbin/fdisk -u -C$(CYL_COUNT) -S63 -H16 frugalware-$(FWVER)-$(CARCH)-usb.img || true
 	losetup -o32256 /dev/loop0 frugalware-$(FWVER)-$(CARCH)-usb.img
@@ -230,6 +231,33 @@ usb_img: check_root
 		root (hd0,0) \n\
 		setup (hd0) \n\
 		quit" | grub --batch --device-map=/dev/null
+else
+	dd if=/dev/zero of=frugalware-$(FWVER)-$(CARCH)-usb.img bs=516096c count=$(CYL_COUNT)
+	hformat frugalware-$(FWVER)-$(CARCH)-usb.img
+	hmount frugalware-$(FWVER)-$(CARCH)-usb.img
+	hcopy -r /usr/lib/yaboot/yaboot :
+	hattrib -c UNIX -t tbxi :yaboot
+	hattrib -b :
+	humount
+	mkdir i
+	mount -o loop frugalware-$(FWVER)-$(CARCH)-usb.img i
+	cp $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) i/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)
+	cp initrd-$(CARCH).img.gz i/
+	echo -e "default=install\n\
+	root=/dev/ram\n\
+	message=/boot.msg\n\
+	image=/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)\n\
+	label=install\n\
+		initrd=/initrd-$(CARCH).img.gz\n\
+		initrd-size=$(RAMDISK_SIZE)\n\
+		read-write" > i/yaboot.conf
+	echo -e "$(RELEASE) - $(KERNELV)-fw$(KERNELREL) \n\n\
+	To boot the kernel, just hit enter, or use 'install'.\n\n\
+	If the system fails to boot at all (the typical symptom is a white screen which\n\
+	doesn't go away), use 'install video=ofonly'." > i/boot.msg
+	umount i
+	rmdir i
+endif
 
 tftp_img: check_root
 	dd if=/dev/zero of=frugalware-$(FWVER)-$(CARCH)-tftp.img bs=1k count=1440
