@@ -1,5 +1,7 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+0.9.6         - fixed cd/dvd seach on eee pc
+              - initial ppc support
 0.9.5         - add back libparted support which was removed accidently
 0.9.4         - allow special chars in passwords
               - fix installation in case a depcycle is splitted to
