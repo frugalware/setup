@@ -198,8 +198,11 @@ int run(GList **config)
 		dialog_vars.input_result = my_buffer;
 		dialog_vars.input_result[0]='\0';
 		ret = dialog_menu(_("Select a hard disk to partition"),
-		_("Please select a hard disk to partition. The following ones "
-		"are available:"), 0, 0, 0, g_list_length(lp)/2, array);
+		_("Please select a hard disk to partition. Once you are "
+		"done, or in case you don't want to partition "
+		"your disks at all, select 'Continue'. The "
+		"following ones are available:"),
+		0, 0, 0, g_list_length(lp)/2, array);
 		dialog_vars.cancel_label = '\0';
 		if(wantraid)
 		{
