@@ -29,8 +29,8 @@ If you never compiled the setup, you need the following steps:
 cd ~
 mkdir git
 cd git
-git clone http://git.frugalware.org/repos/setup/.git
-git clone http://git.frugalware.org/repos/translations/.git
+git clone git://git.frugalware.org/pub/other/setup/setup
+git clone git://git.frugalware.org/pub/other/translations
 su -
 ln -s ~user/git ./
 cd git/setup
