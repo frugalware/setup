@@ -1,5 +1,6 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+0.9.7         - documentation/help improvements, no code changes
 0.9.6         - fixed cd/dvd seach on eee pc
               - initial ppc support
 0.9.5         - add back libparted support which was removed accidently

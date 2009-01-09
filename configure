@@ -20,7 +20,7 @@ elif os.uname()[-1] == 'ppc':
 	packages.extend(['mac-fdisk'])
 
 # when releasing a new setup, please update this.
-version = "0.9.6"
+version = "0.9.7"
 
 # parse our options
 parser = OptionParser(version="configure for Frugalware Setup v%s" % (version))
