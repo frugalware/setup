@@ -7,15 +7,24 @@ pos:
 	for i in $(LANGS); \
 	do \
 		cp $(PO_DIR)/setup/$$i/setup.po $$i.po; \
-		if ! msgfmt -c --statistics -o $$i.gmo $$i.po; then \
-			echo "WARNING: $$i.po will break your build!"; \
+		charset=$$(echo $(GLIBC_LANGS)|sed 's/ /\n/g'|grep ^$$i|sed 's/.*,//'); \
+		if [ -z "$$charset" ]; then \
+			echo '$$charset empty for '$$i'!'; \
+			exit 1; \
+		fi; \
+		iconv -f UTF-8 -t $$charset < $$i.po > $$i.new.po; \
+		sed "s/UTF-8/$$charset/" $$i.new.po > $$i.po; \
+		rm $$i.new.po; \
+		if ! msgfmt -c --statistics -o /dev/null $$i.po; then \
+			echo "$$i.po would break your build!"; \
+			exit 1; \
 		fi; \
 	done
 
 mos:
 	for i in $(wildcard *.po); do \
 		echo -n "$$i: "; \
-		msgfmt -c --statistics -o ../merge/usr/share/locale/`basename $$i .po`/LC_MESSAGES/setup.mo $$i; \
+		msgfmt -o ../merge/usr/share/locale/`basename $$i .po`/LC_MESSAGES/setup.mo $$i; \
 	done
 
 pot: intltool-extract
