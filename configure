@@ -9,7 +9,7 @@ packages = ['parted', 'pacman-g2', 'bash', 'kernel', 'busybox', 'dhcpcd', 'dialo
 		'eject', 'frugalware', 'glibc', 'kbd', 'module-init-tools',
 		'ncurses', 'netkit-base', 'udev',
 		'util-linux-ng', 'mdadm', 'xfsprogs', 'ppp', 'rp-pppoe', 'glib2',
-		'bzip2', 'libarchive', 'zlib', 'frugalwareutils',
+		'bzip2', 'libarchive', 'zlib', 'frugalwareutils', 'lzma',
 		'wireless_tools', 'dropbear', 'bastet',
 		'readline', 'shadow',
 		'device-mapper', 'lvm2', 'wpa_supplicant', 'openssl', 'pciutils',

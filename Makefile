@@ -658,3 +658,9 @@ mac-fdisk:
 	mkdir mac-fdisk
 	$(UNPACK); \
 	cp -a sbin ../mac-fdisk/
+
+lzma:
+	$(CLEANUP)
+	mkdir -p lzma/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/liblzmadec.so* ../lzma/usr/lib/
