@@ -48,6 +48,8 @@ rather slow. We have three targets to prevent this problem:
 
 $ make qemu - boots the brand new initrd
 
+(example when using custom parameters: $ make qemu QEMU="qemu -vnc :1")
+
 or
 
 $ make uml - boots the brand new initrd
