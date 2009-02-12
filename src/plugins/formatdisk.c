@@ -223,7 +223,7 @@ char *selfs(char *dev)
 	{
 		"ext2", _("Standard Linux ext2fs filesystem"),
 		"ext3", _("Journalising version of the ext2fs filesystem"),
-		"ext4", _("The evolution of the of the ext3fs filesystem (EXPERIMENTAL!)"),
+		"ext4", _("The evolution of the ext3fs filesystem (EXPERIMENTAL!)"),
 #ifndef ARCH_PPC
 		"reiserfs", _("Hans Reiser's journalising filesystem"),
 #endif
