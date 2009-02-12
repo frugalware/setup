@@ -223,6 +223,7 @@ char *selfs(char *dev)
 	{
 		"ext2", _("Standard Linux ext2fs filesystem"),
 		"ext3", _("Journalising version of the ext2fs filesystem"),
+		"ext4", _("The evolution of the of the ext3fs filesystem (EXPERIMENTAL!)"),
 #ifndef ARCH_PPC
 		"reiserfs", _("Hans Reiser's journalising filesystem"),
 #endif
@@ -334,6 +335,8 @@ int mkfss(char *dev, char *fs, int check)
 		return(fw_system(g_strdup_printf("mke2fs %s %s", opts, dev)));
 	else if(!strcmp(fs, "ext3"))
 		return(fw_system(g_strdup_printf("mke2fs -j %s %s", opts, dev)));
+	else if(!strcmp(fs, "ext4"))
+		return(fw_system(g_strdup_printf("mkfs.ext4 %s %s", opts, dev)));
 	else if(!strcmp(fs, "reiserfs"))
 		return(fw_system(g_strdup_printf("echo y |mkreiserfs %s", dev)));
 	else if(!strcmp(fs, "jfs"))

@@ -341,7 +341,7 @@ e2fsprogs:
 	$(CLEANUP)
 	mkdir -p e2fsprogs/{sbin,lib}
 	$(UNPACK)
-	cp -a $(BDIR)/sbin/{mke2fs,e2fsck,badblocks,resize2fs} e2fsprogs/sbin/
+	cp -a $(BDIR)/sbin/{mke2fs,e2fsck,badblocks,resize2fs,mkfs.ext4} e2fsprogs/sbin/
 	cp -a $(BDIR)/lib/{libblkid*,libcom_err*,libe2p*,libext2fs*,libuuid*} e2fsprogs/lib/
 	mkdir e2fsprogs/etc/
 	touch e2fsprogs/etc/fstab
