@@ -222,8 +222,8 @@ char *selfs(char *dev)
 	char *fss[] =
 	{
 		"ext2", _("Standard Linux ext2fs filesystem"),
-		"ext3", _("Journalising version of the ext2fs filesystem"),
-		"ext4", _("The evolution of the ext3fs filesystem (EXPERIMENTAL!)"),
+		"ext3", _("Journalising version of the ext2 filesystem"),
+		"ext4", _("The evolution of the ext3 filesystem (EXPERIMENTAL!)"),
 #ifndef ARCH_PPC
 		"reiserfs", _("Hans Reiser's journalising filesystem"),
 #endif
