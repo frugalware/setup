@@ -1,5 +1,8 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+0.9.8         - added ext4 support
+              - added lzma read support for libarchive (it's not used
+                yet from pacman-g2)
 0.9.7         - documentation/help improvements, no code changes
 0.9.6         - fixed cd/dvd seach on eee pc
               - initial ppc support
