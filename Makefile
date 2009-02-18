@@ -125,9 +125,9 @@ dist:
 	git archive --format=tar --prefix=fwsetup-$(VERSION)/ HEAD > fwsetup-$(VERSION).tar
 	mkdir -p fwsetup-$(VERSION)/po
 	make -C po pos
-	mv po/*.{gm,p}o fwsetup-$(VERSION)/po
+	mv po/*.po fwsetup-$(VERSION)/po
 	git log --no-merges |git name-rev --tags --stdin > fwsetup-$(VERSION)/Changelog
-	tar rf fwsetup-$(VERSION).tar fwsetup-$(VERSION)/po/*.{gm,p}o fwsetup-$(VERSION)/Changelog
+	tar rf fwsetup-$(VERSION).tar fwsetup-$(VERSION)/po/*.po fwsetup-$(VERSION)/Changelog
 	rm -rf fwsetup-$(VERSION)
 	gzip -f -9 fwsetup-$(VERSION).tar
 ifeq ($(GPG),true)
@@ -138,7 +138,7 @@ endif
 
 release:
 	git tag -l |grep -q $(VERSION) || dg tag $(VERSION)
-	$(MAKE) dist
+	$(MAKE) dist GLIBC_LANGS="$(GLIBC_LANGS)"
 
 ccache:
 	install -d -m 2775 /var/cache/ccache/setup
