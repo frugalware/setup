@@ -140,7 +140,7 @@ int run(GList **config)
 	else if(!strcmp("hu_HU", dialog_vars.input_result))
 	{
 		setenv("CHARSET", "iso-8859-2", 1);
-		setcharset("lat2-16.psfu.gz", config);
+		setcharset("lat2a-16.psfu.gz", config);
 	}
 	else if(!strcmp("nl_NL", dialog_vars.input_result))
 		setenv("CHARSET", "iso-8859-1", 1);
