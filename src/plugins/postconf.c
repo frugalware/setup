@@ -149,6 +149,8 @@ int add_user()
 {
 	char *login, *fn, *pass, *ptr;
 	int ret;
+	struct stat buf;
+	char home[PATH_MAX];
 
 	if(fw_inputbox(_("Enter login"), _("Please enter the login name you should like to create:"), 0, 0, "", 0) == -1)
 		return(-1);
@@ -165,7 +167,19 @@ int add_user()
 		FREE(fn);
 		return(-1);
 	}
-	ptr = g_strdup_printf("yes ''|chroot ./ /usr/sbin/adduser '%s' \"%s\" '%s'", login, fn, pass);
+	snprintf(home, PATH_MAX, TARGETDIR "/home/%s", login);
+	if(!stat(home, &buf))
+	{
+		ptr = g_strdup_printf(_("'/home/%s' already exists! "
+				"Please change the home directory path to a non-existing directory:"), login);
+		if(fw_inputbox(_("Enter home directory"), ptr, 0, 0, "", 0) == -1)
+		{
+			FREE(ptr);
+			return(-1);
+		}
+		strncpy(home, dialog_vars.input_result, PATH_MAX);
+	}
+	ptr = g_strdup_printf("yes ''|chroot ./ /usr/sbin/adduser '%s' \"%s\" '%s' '%s'", login, fn, pass, home);
 	ret = fw_system(ptr);
 	FREE(ptr);
 	FREE(login);
