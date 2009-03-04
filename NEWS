@@ -1,5 +1,8 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+0.9.9         - added Vietnamese translation
+              - fixed Hungarian fonts
+              - detect if the home directory already exists
 0.9.8         - added ext4 support
               - added lzma read support for libarchive (it's not used
                 yet from pacman-g2)
