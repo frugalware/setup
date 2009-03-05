@@ -512,6 +512,9 @@ GList* fw_checklist(const char *title, const char *cprompt, int height,
 	char *ptr, *ptrn, *buf;
 	GList *list=NULL;
 
+	if (!item_no)
+		return NULL;
+
 	buf = dialog_vars.input_result;
 	dialog_vars.quoted = 1;
 	MALLOC(dialog_vars.input_result, item_no*256);
