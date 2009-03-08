@@ -178,6 +178,8 @@ int add_user()
 			return(-1);
 		}
 		strncpy(home, dialog_vars.input_result, PATH_MAX);
+	} else {
+		snprintf(home, PATH_MAX, "/home/%s", login);
 	}
 	ptr = g_strdup_printf("yes ''|chroot ./ /usr/sbin/adduser '%s' \"%s\" '%s' '%s'", login, fn, pass, home);
 	ret = fw_system(ptr);
