@@ -86,7 +86,7 @@ BDIR = build
 MDIR = merge
 CWD=`pwd`
 
-fonts = lat1-16.psfu.gz lat2-16.psfu.gz lat9w-16.psfu.gz
+fonts = lat1-16.psfu.gz lat2a-16.psfu.gz lat9w-16.psfu.gz
 
 all: initrd_gz $(EXTRA_TARGETS)
 
