@@ -1,5 +1,9 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.0.0         - handle the case when a new disk has no partitions and
+                the user still does not create any new partition, either.
+              - fix for the "homedir does not exists yet" bug
+              - fixed more font issues
 0.9.9         - added Vietnamese translation
               - fixed Hungarian fonts
               - detect if the home directory already exists
