@@ -331,7 +331,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			fw_system(g_strdup_printf("tar xjf %s/%s.fdb -C %s", pacbindir, repo, pkgdb));
 			if ((fp = fopen("/etc/pacman-g2.conf", "w")) == NULL)
 			{
-				perror(_("Could not open output file for writing"));
+				LOG("could not open output file '/etc/pacman-g2.conf' for writing: %s", strerror(errno));
 				return(1);
 			}
 			fprintf(fp, "[options]\n");
@@ -387,7 +387,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 	i = pacman_db_register(PACCONF);
 	if(i==NULL)
 	{
-		fprintf(stderr, "could not register '%s' database (%s)\n",
+		LOG("could not register '%s' database (%s)\n",
 			PACCONF, pacman_strerror(pm_errno));
 		return(1);
 	}
@@ -410,10 +410,16 @@ int fw_select(GList **config, int selpkgc, GList *syncs)
 	dialog_msgbox(_("Please wait"), _("Searching for categories..."),
 		0, 0, 0);
 	if(prepare_pkgdb(PACCONF, config, &syncs) == -1)
+	{
+		LOG("preparing the package database failed!");
 		return(-1);
+	}
 	cats = selcat(g_list_nth_data(syncs, 1), syncs);
 	if(cats == NULL)
+	{
+		LOG("no categories are found!");
 		return(-1);
+	}
 	if(!selpkgc)
 	{
 		dlg_put_backtitle();
@@ -427,7 +433,10 @@ int fw_select(GList **config, int selpkgc, GList *syncs)
 		{
 			pkgs = selpkg(strdup((char*)g_list_nth_data(cats, i)), syncs);
 			if(pkgs == NULL)
+			{
+				LOG("failed to select packages from category '%s'", (char*)g_list_nth_data(cats, i));
 				return(-1);
+			}
 		}
 		else
 			pkgs = group2pkgs(syncs, strdup((char*)g_list_nth_data(cats, i)), 0);
@@ -436,12 +445,18 @@ int fw_select(GList **config, int selpkgc, GList *syncs)
 	}
 
 	if(pacman_trans_init(PM_TRANS_TYPE_SYNC, PM_TRANS_FLAG_NOCONFLICTS, NULL, NULL, NULL) == -1)
+	{
+		LOG("failed to initialize the transaction!");
 		return(1);
+	}
 	for(i=0;i<g_list_length(allpkgs);i++)
 	{
 		ptr = strdup((char*)g_list_nth_data(allpkgs, i));
 		if(pacman_trans_addtarget(drop_version(ptr)))
+		{
+			LOG("failed to add package '%s' to the transaction!", (char*)g_list_nth_data(allpkgs, i));
 			return(1);
+		}
 		FREE(ptr);
 	}
 	g_list_free(allpkgs);
@@ -486,7 +501,7 @@ int run(GList **config)
 
 	if(pacman_initialize("/mnt/target") == -1)
 	{
-		fprintf(stderr, "failed to initialize pacman library (%s)\n",
+		LOG("failed to initialize pacman library (%s)",
 			pacman_strerror(pm_errno));
 		return(1);
 	}
@@ -494,14 +509,14 @@ int run(GList **config)
 	pacman_set_option(PM_OPT_LOGCB, (long)cb_log);
 	if(pacman_set_option(PM_OPT_DBPATH, (long)PM_DBPATH) == -1)
 	{
-		fprintf(stderr, "failed to set option DBPATH (%s)\n",
+		LOG("failed to set option DBPATH (%s)",
 				pacman_strerror(pm_errno));
 		return(1);
 	}
 	i = pacman_db_register("local");
 	if(i==NULL)
 	{
-		fprintf(stderr, "could not register 'local' database (%s)\n",
+		LOG("could not register 'local' database (%s)",
 			pacman_strerror(pm_errno));
 		return(1);
 	}
@@ -511,7 +526,10 @@ int run(GList **config)
 	selpkgc = selpkg_confirm();
 	chdir(TARGETDIR);
 	if(fw_select(config, selpkgc, syncs) == -1)
+	{
+		LOG("failed to select packages!");
 		ret = -1;
+	}
 	pacman_release();
 	return(ret);
 }
