@@ -4,5 +4,7 @@ echo -n "Preparing gdb..."
 mount -t proc none /proc
 
 echo " OK. Starting setup..."
-/usr/bin/gdb /bin/setup
+echo "file /bin/setup" > ~/.gdbinit
+echo "run" >> ~/.gdbinit
+/usr/bin/gdb
 
