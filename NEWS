@@ -1,5 +1,8 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.0.1         - setup is automatically started (ie no 'run' is needed in
+                gdb) in debug mode
+              - improved error reporting of the select plugin
 1.0.0         - handle the case when a new disk has no partitions and
                 the user still does not create any new partition, either.
               - fix for the "homedir does not exists yet" bug
