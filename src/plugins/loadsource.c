@@ -32,7 +32,7 @@
     #include <gtk/gtk.h>
 #endif
 #include <sys/stat.h>
-#include <libvolume_id.h>
+#include <blkid.h>
 #include <sys/ioctl.h>
 #include <sys/types.h>
 #include <fcntl.h>
@@ -117,10 +117,10 @@ int is_netinstall(char *path)
 	return(ret);
 }
 
-static char* get_volume_id(char *device)
+static char* get_blkid(char *device)
 {
 	int fd;
-	struct volume_id *vid = NULL;
+	blkid_probe pr = NULL;
 	uint64_t size;
 	const char *label;
 	char *ret;
@@ -134,12 +134,14 @@ static char* get_volume_id(char *device)
 	fd = open(path, O_RDONLY);
 	if(fd<0)
 		return NULL;
-	vid = volume_id_open_fd(fd);
+	pr = blkid_new_probe ();
+	blkid_probe_set_request (pr, BLKID_PROBREQ_LABEL);
 	ioctl(fd, BLKGETSIZE64, &size);
-	volume_id_probe_all(vid, 0, size);
-	volume_id_get_label(vid, &label);
+	blkid_probe_set_device (pr, fd, 0, size);
+	blkid_do_safeprobe (pr);
+	blkid_probe_lookup_value(pr, "LABEL", &label, NULL);
 	ret = strdup(label);
-	volume_id_close(vid);
+	blkid_free_probe (pr);
 	close(fd);
 	return ret;
 }
@@ -162,7 +164,7 @@ int run(GList **config)
 	drives = grep_drives("/proc/sys/dev/cdrom/info");
 	for (i=0; i<g_list_length(drives); i++)
 	{
-		ptr = get_volume_id((char*)g_list_nth_data(drives, i));
+		ptr = get_blkid((char*)g_list_nth_data(drives, i));
 		if(ptr && !strcmp(ptr, "Frugalware Install"))
 		{
 			LOG("install medium found in %s", (char*)g_list_nth_data(drives, i));

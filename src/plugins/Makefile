@@ -23,7 +23,9 @@ else
 CFLAGS ?= -g -Wall -Werror
 endif
 CFLAGS += -I.. -DARCH="\"$(shell arch)\"" -DARCH_$(shell arch|tr [a-z] [A-Z])
-LDFLAGS += -lparted -ldl -lpacman -lvolume_id
+LDFLAGS += -lparted -ldl -lpacman
+CFLAGS += $(shell pkg-config --cflags blkid)
+LDFLAGS += $(shell pkg-config --libs blkid)
 ifeq ($(shell arch),x86_64)
 CFLAGS += -fPIC
 endif
