@@ -323,13 +323,21 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 	if(stat(pkgdb, &sbuf) || !S_ISDIR(sbuf.st_mode))
 	{
 		// pacman can't lock & log without these
-		makepath(g_strdup_printf("%s/tmp", TARGETDIR));
-		makepath(g_strdup_printf("%s/var/log", TARGETDIR));
+		char *temp = NULL;
+
+		temp = g_strdup_printf("%s/tmp", TARGETDIR);
+		makepath(temp);
+		g_free(temp);
+		temp = g_strdup_printf("%s/var/log", TARGETDIR);
+		makepath(temp);
+		g_free(temp);
 		if((char*)data_get(*config, "netinstall")==NULL)
 		{
 			makepath(pkgdb);
 			// TODO: use libarchive for this
-			fw_system(g_strdup_printf("tar xjf %s/%s.fdb -C %s", pacbindir, repo, pkgdb));
+			temp = g_strdup_printf("tar xjf %s/%s.fdb -C %s", pacbindir, repo, pkgdb);
+			fw_system(temp);
+			g_free(temp);
 			if ((fp = fopen("/etc/pacman-g2.conf", "w")) == NULL)
 			{
 				LOG("could not open output file '/etc/pacman-g2.conf' for writing: %s", strerror(errno));
