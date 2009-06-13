@@ -271,16 +271,19 @@ GList *selpkg(char *category, GList *syncs)
 	char **arraychk;
 	GList *pkglist;
 	GList *ret;
+	char *tmp;
 
 	pkglist = group2pkgs(syncs, category, 1);
 	arraychk = glist2dialog(pkglist);
 
 	dlg_put_backtitle();
 	dlg_clear();
+	tmp = g_strdup_printf(("Please select packages to install from the %s section:"), category);
 	ret = fw_checklist(_("Selecting packages"),
-		g_strdup_printf(("Please select packages to install from the %s section:"), category),
+		tmp,
 		0, 0, 0, g_list_length(pkglist)/3, arraychk,
 		FLAG_CHECK);
+	FREE(tmp);
 	return(ret);
 }
 
