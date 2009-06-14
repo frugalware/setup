@@ -265,6 +265,7 @@ int doswap(GList *partlist, GList **config)
 	if ((fp = fopen(fn, "w")) == NULL)
 	{
 		perror(_("Could not open output file for writing"));
+		FREE(fn);
 		return(1);
 	}
 	fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n",
@@ -281,6 +282,7 @@ int doswap(GList *partlist, GList **config)
 	// format the partitions
 	for (i=0; i<g_list_length(partlist); i++)
 	{
+		char *tmp;
 		dialog_vars.input_result[0]='\0';
 		item = strdup((char*)g_list_nth_data(partlist, i));
 		ptr = selmkswapmode(item);
@@ -288,19 +290,27 @@ int doswap(GList *partlist, GList **config)
 			return(-1);
 		if(!strcmp("format", ptr))
 		{
-			fw_info(_("Formatting swap partition"),
-				g_strdup_printf(_("Formatting %s as a swap "
-				"partition"), item));
-			fw_system(g_strdup_printf("%s %s", MKSWAP, item));
+			tmp = g_strdup_printf(_("Formatting %s as a swap "
+						"partition"), item);
+			fw_info(_("Formatting swap partition"), tmp);
+			FREE(tmp);
+			tmp = g_strdup_printf("%s %s", MKSWAP, item);
+			fw_system(tmp);
+			FREE(tmp);
 		}
 		else if (!strcmp("check", ptr))
 		{
-			fw_info(_("Formatting swap partition"),
-			g_strdup_printf(_("Formatting %s as a swap "
-			"partition and checking for bad blocks"), item));
-			fw_system(g_strdup_printf("%s -c %s", MKSWAP, item));
+			tmp = g_strdup_printf(_("Formatting %s as a swap "
+						"partition and checking for bad blocks"), item);
+			fw_info(_("Formatting swap partition"), tmp);
+			FREE(tmp);
+			tmp = g_strdup_printf("%s -c %s", MKSWAP, item);
+			fw_system(tmp);
+			FREE(tmp);
 		}
-		fw_system(g_strdup_printf("%s %s", SWAPON, item));
+		ptr = g_strdup_printf("%s %s", SWAPON, item);
+		fw_system(ptr);
+		FREE(ptr);
 		fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n",
 			item, "swap", "swap", "defaults", "0", "0");
 	}
