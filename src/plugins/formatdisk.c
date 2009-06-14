@@ -196,6 +196,9 @@ char *selmkswapmode(char *dev)
 char *selformatmode(char *dev)
 {
 	int modenum=3;
+	char *ret=NULL;
+	char *title=NULL;
+	char *msg=NULL;
 	char *modes[] =
 	{
 		"format", _("Quick format with no bad block checking"),
@@ -206,15 +209,17 @@ char *selformatmode(char *dev)
 	dialog_vars.backtitle=gen_backtitle(_("Formatting partitions"));
 	dlg_put_backtitle();
 	dlg_clear();
-	if(fw_menu(g_strdup_printf(_("Format %s"), dev),
-		g_strdup_printf(_("If %s has not been formatted, you should "
+	title = g_strdup_printf(_("Format %s"), dev);
+	msg = g_strdup_printf(_("If %s has not been formatted, you should "
 		"format it.\n"
 		"NOTE: This will erase all data on %s. Would you like to "
-		"format this partition?"), dev, dev),
-		0, 0, 0, modenum, modes) == -1)
-		return(NULL);
+		"format this partition?"), dev, dev);
+	if (fw_menu(title,msg,0,0,0,modenum,modes) != -1)
+		ret = dialog_vars.input_result;
+	FREE(title);
+	FREE(msg);
 
-	return(strdup(dialog_vars.input_result));
+	return ret;
 }
 
 char *selfs(char *dev)
