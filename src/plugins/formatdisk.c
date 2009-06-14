@@ -581,7 +581,9 @@ int run(GList **config)
 
 	// move temporarily stuff to the final location
 	chdir(TARGETDIR);
-	makepath(g_strdup_printf("%s/%s", TARGETDIR, "/etc/profile.d"));
+	np = g_strdup_printf("%s/%s", TARGETDIR, "/etc/profile.d");
+	makepath(np);
+	FREE(np);
 	op = (char*)data_get(*config, "fstab");
 	np = g_strdup_printf("%s/%s", TARGETDIR, "/etc/fstab");
 	copyfile(op, np);
