@@ -164,7 +164,7 @@ int exit_fail(void)
 #ifdef DIALOG
 	int ret;
 	ret = dialog_yesno(_("Installation error"),
-		_("Errors occured while installing selected packages. It is "
+		_("Errors occurred while installing selected packages. It is "
 			"recommended to abort the installation, however you "
 			"may want to ignore this problem. Do you want to leave "
 			"the installer?"), 0, 0);
