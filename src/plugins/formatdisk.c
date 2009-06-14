@@ -371,6 +371,7 @@ int formatdev(char *dev)
 {
 	char *mode, *fs;
 	int check=0;
+	int ret=-1;
 
 	dialog_vars.input_result[0]='\0';
 	mode = selformatmode(dev);
@@ -384,9 +385,13 @@ int formatdev(char *dev)
 		check=1;
 
 	fs = selfs(dev);
-	if(fs == NULL)
-		return(-1);
-	return(mkfss(dev, fs, check));
+	if(fs != NULL)
+	{
+		ret = mkfss(dev, fs, check);
+		FREE(fs);
+	}
+
+	return ret;
 }
 
 // mode=0: fs, mode=1: mountpoint
