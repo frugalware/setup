@@ -596,8 +596,10 @@ int run(GList **config)
 	unlink(op);
 	chmod(np, S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH);
 	FREE(np);
-	
-	makepath(g_strdup_printf("%s/%s", TARGETDIR, "/etc/sysconfig"));
+
+	np = g_strdup_printf("%s/%s", TARGETDIR, "/etc/sysconfig");
+	makepath(np);
+	FREE(np);
 	op = (char*)data_get(*config, "keymap");
 	np = g_strdup_printf("%s/%s", TARGETDIR, "/etc/sysconfig/keymap");
 	copyfile(op, np);
@@ -642,6 +644,7 @@ int run(GList **config)
 			if(dest == NULL)
 				return(-1);
 			mountdev(ptr, dest, config);
+			FREE(dest);
 			FREE(ptr);
 		}
 		else
