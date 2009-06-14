@@ -429,6 +429,7 @@ char *findmount(char *dev, int mode)
 int mountdev(char *dev, char *mountpoint, GList **config)
 {
 	char *type=NULL;
+	char *tmp=NULL;
 	FILE* fp;
 
 	// open fstab
@@ -439,12 +440,19 @@ int mountdev(char *dev, char *mountpoint, GList **config)
 	}
 
 	// mount
-	makepath(g_strdup_printf("%s/%s", TARGETDIR, mountpoint));
+	tmp = g_strdup_printf("%s/%s", TARGETDIR, mountpoint);
+	makepath(tmp);
+	FREE(tmp);
+
 	umount_if_needed(mountpoint);
-	fw_system(g_strdup_printf("mount %s %s/%s",
-		dev, TARGETDIR, mountpoint));
+	tmp = g_strdup_printf("mount %s %s/%s",
+			dev, TARGETDIR, mountpoint);
+	fw_system(tmp);
+	FREE(tmp);
 	// unlink a possible stale lockfile
-	unlink(g_strdup_printf("%s/%s/tmp/pacman-g2.lck", TARGETDIR, mountpoint));
+	tmp = g_strdup_printf("%s/%s/tmp/pacman-g2.lck", TARGETDIR, mountpoint);
+	unlink(tmp);
+	FREE(tmp);
 
 	// make fstab entry
 	type = findmount(dev, 0);
