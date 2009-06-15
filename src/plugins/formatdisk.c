@@ -343,6 +343,8 @@ char *selrootdev()
 int mkfss(char *dev, char *fs, int check)
 {
 	char *opts=NULL;
+	char *cmd=NULL;
+	int ret=1;
 
 	opts = strdup(check ? "-c" : "");
 
@@ -352,19 +354,46 @@ int mkfss(char *dev, char *fs, int check)
 		fs, dev));
 	umount(findmount(dev, 1));
 	if(!strcmp(fs, "ext2"))
-		return(fw_system(g_strdup_printf("mke2fs %s %s", opts, dev)));
+	{
+		cmd = g_strdup_printf("mke2fs %s %s", opts, dev);
+		ret = fw_system(cmd);
+		goto cleanup;
+	}
 	else if(!strcmp(fs, "ext3"))
-		return(fw_system(g_strdup_printf("mke2fs -j %s %s", opts, dev)));
+	{
+		cmd = g_strdup_printf("mke2fs -j %s %s", opts, dev);
+		ret = fw_system(cmd);
+		goto cleanup;
+	}
 	else if(!strcmp(fs, "ext4"))
-		return(fw_system(g_strdup_printf("mkfs.ext4 %s %s", opts, dev)));
+	{
+		cmd = g_strdup_printf("mkfs.ext4 %s %s", opts, dev);
+		ret = fw_system(cmd);
+		goto cleanup;
+	}
 	else if(!strcmp(fs, "reiserfs"))
-		return(fw_system(g_strdup_printf("echo y |mkreiserfs %s", dev)));
+	{
+		cmd = g_strdup_printf("echo y |mkreiserfs %s", dev);
+		ret = fw_system(cmd);
+		goto cleanup;
+	}
 	else if(!strcmp(fs, "jfs"))
-		return(fw_system(g_strdup_printf("mkfs.jfs -q %s %s", opts, dev)));
+	{
+		cmd = g_strdup_printf("mkfs.jfs -q %s %s", opts, dev);
+		ret = fw_system(cmd);
+		goto cleanup;
+	}
 	else if(!strcmp(fs, "xfs"))
-		return(fw_system(g_strdup_printf("mkfs.xfs -f %s", dev)));
+	{
+		cmd = g_strdup_printf("mkfs.xfs -f %s", dev);
+		ret = fw_system(cmd);
+	}
 	// never reached
-	return(1);
+	cleanup:
+	FREE(opts);
+	if (cmd)
+		FREE(cmd);
+	return(ret);
 }
 
 int formatdev(char *dev)
@@ -391,7 +420,7 @@ int formatdev(char *dev)
 		FREE(fs);
 	}
 
-	return ret;
+	return(ret);
 }
 
 // mode=0: fs, mode=1: mountpoint
