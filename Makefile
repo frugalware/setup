@@ -665,3 +665,9 @@ lzma:
 	mkdir -p lzma/usr/lib
 	$(UNPACK); \
 	cp -a usr/lib/liblzmadec.so* ../lzma/usr/lib/
+
+iwlwifi-3945-ucode:
+	$(CLEANUP)
+	mkdir iwlwifi-3945-ucode
+	$(UNPACK); \
+	cp -a lib ../iwlwifi-3945-ucode/
