@@ -683,3 +683,9 @@ iwlwifi-5000-ucode:
 	mkdir iwlwifi-5000-ucode
 	$(UNPACK); \
 	cp -a lib ../iwlwifi-5000-ucode/
+
+ralink-firmware:
+	$(CLEANUP)
+	mkdir ralink-firmware
+	$(UNPACK); \
+	cp -a lib ../ralink-firmware/

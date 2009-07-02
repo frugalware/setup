@@ -16,7 +16,7 @@ packages = ['parted', 'pacman-g2', 'bash', 'kernel', 'busybox', 'dhcpcd', 'dialo
 		'b43-fwcutter']
 if os.uname()[-1] in ['i686', 'x86_64']:
 	packages.extend(['reiserfsprogs', 'ipw2200-firmware', 'acx100', 'madwifi', 'rt2500', 'iwlwifi-3945-ucode',
-			'iwlwifi-4965-ucode', 'iwlwifi-5000-ucode'])
+			'iwlwifi-4965-ucode', 'iwlwifi-5000-ucode', 'ralink-firmware'])
 elif os.uname()[-1] == 'ppc':
 	packages.extend(['mac-fdisk'])
 
