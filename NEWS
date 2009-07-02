@@ -1,5 +1,7 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.0.2         - ported to libblkid, dropped support for libvolumeid
+              - memleak and spelling fixes
 1.0.1         - setup is automatically started (ie no 'run' is needed in
                 gdb) in debug mode
               - improved error reporting of the select plugin
