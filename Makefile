@@ -671,3 +671,9 @@ iwlwifi-3945-ucode:
 	mkdir iwlwifi-3945-ucode
 	$(UNPACK); \
 	cp -a lib ../iwlwifi-3945-ucode/
+
+iwlwifi-4965-ucode:
+	$(CLEANUP)
+	mkdir iwlwifi-4965-ucode
+	$(UNPACK); \
+	cp -a lib ../iwlwifi-4965-ucode/
