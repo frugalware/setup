@@ -342,7 +342,7 @@ e2fsprogs:
 	mkdir -p e2fsprogs/{sbin,lib}
 	$(UNPACK)
 	cp -a $(BDIR)/sbin/{mke2fs,e2fsck,badblocks,resize2fs,mkfs.ext4} e2fsprogs/sbin/
-	cp -a $(BDIR)/lib/{libcom_err*,libe2p*,libext2fs*,libuuid*} e2fsprogs/lib/
+	cp -a $(BDIR)/lib/{libcom_err*,libe2p*,libext2fs*} e2fsprogs/lib/
 	mkdir e2fsprogs/etc/
 	touch e2fsprogs/etc/fstab
 
@@ -462,7 +462,7 @@ util-linux-ng:
 	mkdir -p util-linux-ng/{sbin,usr/bin,lib}
 	$(UNPACK)
 	cp -a $(BDIR)/sbin/{cfdisk,fdisk,mkswap} util-linux-ng/sbin/
-	cp -a $(BDIR)/lib/libblkid.so* util-linux-ng/lib/
+	cp -a $(BDIR)/lib/lib{blkid,uuid}.so* util-linux-ng/lib/
 	cp -a $(BDIR)/usr/bin/setterm util-linux-ng/usr/bin/
 
 netkit-base:
