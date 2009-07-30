@@ -1,5 +1,9 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.0.3         - add support for util-linux-ng-2.16
+              - add iwlwifi-3945, iwlwifi-4965, iwlwifi-5000 and ralink
+                wireless firmwares
+              - remove sound modules and static ncurses libs
 1.0.2         - ported to libblkid, dropped support for libvolumeid
               - memleak and spelling fixes
 1.0.1         - setup is automatically started (ie no 'run' is needed in
