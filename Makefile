@@ -691,3 +691,5 @@ ralink-firmware:
 	mkdir ralink-firmware
 	$(UNPACK); \
 	cp -a lib ../ralink-firmware/
+
+.NOTPARALLEL:
