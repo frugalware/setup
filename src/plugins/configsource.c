@@ -190,7 +190,14 @@ int run(GList **config)
 		fw_end_dialog();
 		while(1)
 		{
-			fw_system_interactive(NETCONFIGSCRIPT);
+			if (fw_system_interactive(NETCONFIGSCRIPT))
+			{
+				dialog_msgbox(_("Failed to configure the network"),
+						_("Failed to write the network configuration files. Please try again, "
+						"especially pay attention to give a valid IP address and/or netmask if "
+						"you are using a static IP configuration."), 0, 0, 1);
+				continue;
+			}
 			fw_init_dialog();
 			dlg_put_backtitle();
 			dialog_msgbox(_("Please wait"), _("Configuring the network "
