@@ -145,10 +145,12 @@ ccache:
 	install -d -m 2775 /var/cache/ccache/setup
 
 setup:
+ifeq ($(GUI),false)
 ifeq ($(STABLE),false)
 	$(MAKE) -C src current
 else
 	$(MAKE) -C src stable
+endif
 endif
 
 merge: $(packages)
@@ -162,9 +164,11 @@ merge: $(packages)
 	make -C po mos
 
 install-setup: setup
+ifeq ($(GUI),false)
 	mkdir -p $(MDIR)/lib/plugins
 	cp src/setup $(MDIR)/bin/
 	cp src/plugins/*.so $(MDIR)/lib/plugins/
+endif
 
 misc: merge install-setup
 	cp etc/inittab $(MDIR)/etc/
