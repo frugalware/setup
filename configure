@@ -37,6 +37,7 @@ parser.add_option("--enable-tftp", action="store_true", dest="tftp", help="Build
 parser.add_option("--disable-tftp", action="store_false", dest="tftp", help="Don't build tftp installer image (default)")
 parser.add_option("--repo", action="store", dest="repo", help="Select the repo to build for. Can be current (default), testing or stable")
 parser.add_option("--prefix", action="store", dest="prefix", help="Select the install prefix (defaults to /usr/local)")
+parser.add_option("--enable-gui", action="store_true", dest="gui", help="Build Fwife installer image")
 (options, args) = parser.parse_args()
 
 # if we want debug then we should add gdb and it's dependencies
@@ -128,6 +129,10 @@ if options.tftp:
 	socket.write("TFTP = true\n")
 else:
 	socket.write("TFTP = false\n")
+if options.gui:
+	socket.write("GUI = true\n")
+else:
+	socket.write("GUI = false\n")
 
 socket.write("PREFIX = %s\n" % options.prefix)
 
