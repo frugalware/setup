@@ -222,10 +222,10 @@ ifneq ($(CARCH),ppc)
 		timeout=10 \n\
 		gfxmenu /boot/grub/message \n\
 		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) \n\
-		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) vga=791 \n\
+		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS)  \n\
 		initrd /boot/initrd-$(CARCH).img.gz \n\
-		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) (nofb) \n\
-		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) \n\
+		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) (vga fb) \n\
+		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) vga=791 \n\
 		initrd /boot/initrd-$(CARCH).img.gz" > i/boot/grub/menu.lst
 	umount i
 	rmdir i
