@@ -205,7 +205,7 @@ initrd_gz: clean config.mak devices initrd
 usb_img: check_root
 ifneq ($(CARCH),ppc)
 	dd if=/dev/zero of=frugalware-$(FWVER)-$(CARCH)-usb.img bs=516096c count=$(CYL_COUNT)
-	echo -e 'n\np\n1\n\n\nw'|/sbin/fdisk -u -C$(CYL_COUNT) -S63 -H16 frugalware-$(FWVER)-$(CARCH)-usb.img || true
+	echo -e 'n\np\n1\n\n\na\n1\nw'|/sbin/fdisk -u -C$(CYL_COUNT) -S63 -H16 frugalware-$(FWVER)-$(CARCH)-usb.img || true
 	losetup -d /dev/loop0 || true
 	losetup -o32256 /dev/loop0 frugalware-$(FWVER)-$(CARCH)-usb.img
 	/sbin/mke2fs -b1024 -F /dev/loop0
