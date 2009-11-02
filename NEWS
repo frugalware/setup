@@ -1,5 +1,9 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.0.5         - errors from netconfig are no longer ignored
+              - added kms support
+              - mark the first usb partition as bootable in the usb
+                installer
 1.0.4         - minor smp fix
 1.0.3         - add support for util-linux-ng-2.16
               - add iwlwifi-3945, iwlwifi-4965, iwlwifi-5000 and ralink
