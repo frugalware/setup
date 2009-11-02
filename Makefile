@@ -358,9 +358,9 @@ reiserfsprogs:
 
 dhcpcd:
 	$(CLEANUP)
-	mkdir -p dhcpcd/usr/sbin
+	mkdir -p dhcpcd/usr/{libexec,sbin}
 	$(UNPACK)
-	cp -a $(BDIR)/usr/sbin/dhcpcd dhcpcd/usr/sbin/
+	cp -a $(BDIR)/usr/{libexec,sbin} dhcpcd/usr/
 
 frugalware:
 	$(CLEANUP)
