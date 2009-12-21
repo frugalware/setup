@@ -253,9 +253,6 @@ int run(GList **config)
 
 	// this prevents mounting and umounting dev/proc/sys for each config
 	// tool
-	ptr = g_strdup_printf("mount /dev -o bind %s/dev", TARGETDIR);
-	fw_system(ptr);
-	free(ptr);
 	ptr = g_strdup_printf("mount /proc -o bind %s/proc", TARGETDIR);
 	fw_system(ptr);
 	free(ptr);
