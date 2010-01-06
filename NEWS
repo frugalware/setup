@@ -1,5 +1,7 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.0.6         - dhcpcd-5.x support
+              - devtmpfs support
 1.0.5         - errors from netconfig are no longer ignored
               - added kms support
               - mark the first usb partition as bootable in the usb
