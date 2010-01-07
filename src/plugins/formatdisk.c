@@ -641,9 +641,8 @@ int run(GList **config)
 	// so that 1) the user can't mount a partition as /dev because
 	// it'll be used 2) install scriptlets will be able to do
 	// >/dev/null
-	ptr = g_strdup_printf("mount /dev -o bind %s/dev", TARGETDIR);
-	fw_system(ptr);
-	free(ptr);
+	makepath(TARGETDIR "/dev");
+	fw_system("mount /dev -o bind " TARGETDIR "/dev");
 
 	// non-root partitions
 	dialog_vars.backtitle=gen_backtitle(_("Selecting other partitions"));
