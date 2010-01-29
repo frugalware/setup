@@ -321,7 +321,7 @@ int doswap(GList *partlist, GList **config)
 	data_put(config, "fstab", fn);
 	// re-detect parts so that new swap partitions will recognized as swap
 	// partitions
-	detect_parts(1);
+	detect_parts(0);
 	return(0);
 }
 
