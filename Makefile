@@ -60,7 +60,7 @@ export PATH := /usr/lib/ccache/bin:$(PATH)
 export CCACHE_DIR=/var/cache/ccache/setup
 export CCACHE_NOLINK=1
 export CCACHE_UMASK=002
-DIALOG_LANGS = `find po -name *.po |sed 's/.*\/\(.*\).po/\1/' |tr '\n' ' '`
+DIALOG_LANGS = $(shell find po -name *.po |sed 's/.*\/\(.*\).po/\1/' |tr '\n' ' ')
 GLIBC_LANGS = en_US,ISO-8859-1 da_DK,ISO-8859-1 de_DE,ISO-8859-1 fr_FR,ISO-8859-1 hu_HU,ISO-8859-2 id_ID,ISO-8859-1 it_IT,ISO-8859-1 nl_NL,ISO-8859-1 pt_BR,ISO-8859-1 ro_RO,ISO-8859-2 sk_SK,ISO-8859-2 sv_SE,ISO-8859-1 cs_CZ,ISO-8859-2 es_ES,ISO-8859-1 ru_RU,ISO-8859-5 tr_TR,ISO-8859-9 vi_VI,UTF-8
 ifeq ($(CARCH),x86_64)
 	QEMU ?= qemu-system-x86_64
@@ -97,7 +97,7 @@ prepare:
 	make -C po pos GLIBC_LANGS="$(GLIBC_LANGS)"
 
 check_root:
-	@if [ "`id -u`" != 0 ]; then \
+	@if [ "$(shell id -u)" != 0 ]; then \
 	echo "error: you cannot perform this operation unless you are root."; exit 1; \
 	fi
 
@@ -189,7 +189,7 @@ devices: compile
 
 # this target just updates the setup source itself and the initrd, suitable for qemu testing
 initrd: install-setup
-	dd if=/dev/zero of=initrd-$(CARCH).img bs=1k count=$$(echo "$$(`which du` -s $(MDIR)|sed 's/^\(.*\)\t.*$$/\1/')+2000"|bc)
+	dd if=/dev/zero of=initrd-$(CARCH).img bs=1k count=$(shell echo "$(shell $(shell which du) -s $(MDIR)|sed 's/^\(.*\)\t.*$$/\1/')+2000"|bc)
 	/sbin/mke2fs -F initrd-$(CARCH).img
 	mkdir i
 	grep -q loop /proc/modules || (/sbin/modprobe loop; sleep 1)
@@ -303,7 +303,7 @@ endif
 	sudo $(MAKE) initrd
 
 check:
-	pacman-g2 -Swd `grep 'VER =' config.mak |sed 's/VER =.*//' |tr '[A-Z]' '[a-z]'` --noconfirm
+	pacman-g2 -Swd $(shell grep 'VER =' config.mak |sed 's/VER =.*//' |tr '[A-Z]' '[a-z]') --noconfirm
 	@for i in $(sources); do \
 		ls $(CDIR)/$$i >/dev/null || exit 1; \
 	done
