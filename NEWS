@@ -1,5 +1,7 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.0.7         - devtmpfs and formatdisk fixes
+              - libuuid and libblkid support
 1.0.6         - dhcpcd-5.x support
               - devtmpfs support
 1.0.5         - errors from netconfig are no longer ignored
