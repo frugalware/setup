@@ -465,8 +465,19 @@ util-linux-ng:
 	mkdir -p util-linux-ng/{sbin,usr/bin,lib}
 	$(UNPACK)
 	cp -a $(BDIR)/sbin/{cfdisk,fdisk,mkswap} util-linux-ng/sbin/
-	cp -a $(BDIR)/lib/lib{blkid,uuid}.so* util-linux-ng/lib/
 	cp -a $(BDIR)/usr/bin/setterm util-linux-ng/usr/bin/
+
+libblkid:
+	$(CLEANUP)
+	mkdir -p libblkid/lib
+	$(UNPACK)
+	cp -a $(BDIR)/lib/libblkid.so* libblkid/lib/
+
+libuuid:
+	$(CLEANUP)
+	mkdir -p libuuid/lib
+	$(UNPACK)
+	cp -a $(BDIR)/lib/libuuid.so* libuuid/lib/
 
 netkit-base:
 	$(CLEANUP)
