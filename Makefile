@@ -718,4 +718,10 @@ libxau:
 	$(UNPACK); \
 	cp -a usr/lib/libXau.so* ../libxau/usr/lib
 
+libxcb:
+	$(CLEANUP)
+	mkdir -p libxcb/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/libxcb.so* ../libxcb/usr/lib
+
 .NOTPARALLEL:
