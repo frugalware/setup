@@ -712,4 +712,10 @@ tzdata:
 	$(UNPACK); \
 	cp -a usr/share/zoneinfo/zone.tab ../tzdata/usr/share/zoneinfo/
 
+libxau:
+	$(CLEANUP)
+	mkdir -p libxau/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/libXau.so* ../libxau/usr/lib
+
 .NOTPARALLEL:
