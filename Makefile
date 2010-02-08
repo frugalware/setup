@@ -739,4 +739,10 @@ libx11:
 	cp -a usr/share/X11 ../libx11/usr/share/; \
 	rm -rf ../libx11/usr/share/X11/locales
 
+libfontenc:
+	$(CLEANUP)
+	mkdir -p libfontenc/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/libfontenc.so* ../libfontenc/usr/lib
+
 .NOTPARALLEL:
