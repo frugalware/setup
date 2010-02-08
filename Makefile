@@ -769,4 +769,10 @@ libxrandr:
 	$(UNPACK); \
 	cp -a usr/lib/libXrandr.so* ../libxrandr/usr/lib
 
+libxft:
+	$(CLEANUP)
+	mkdir -p libxft/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/libXft.so* ../libxft/usr/lib
+
 .NOTPARALLEL:

@@ -43,7 +43,7 @@ parser.add_option("--enable-gui", action="store_true", dest="gui", help="Build F
 # if we want the gui image, add appropriate package and remove useless ones
 if options.gui:
 	packages.extend(['coreutils', 'tzdata', 'libxau', 'libxcb', 'libxdmcp', 'libx11', 'libfontenc', 'libxfont', 'libxext',
-			'libxrender', 'libxrandr'])
+			'libxrender', 'libxrandr', 'libxft'])
 
 # if we want debug then we should add gdb and it's dependencies
 sys.stdout.write("checking for debug support... ")
