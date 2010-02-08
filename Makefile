@@ -799,4 +799,10 @@ libsm:
 	$(UNPACK); \
 	cp -a usr/lib/libSM.so* ../libsm/usr/lib
 
+pixman:
+	$(CLEANUP)
+	mkdir -p pixman/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/libpixman-1.so* ../pixman/usr/lib
+
 .NOTPARALLEL:
