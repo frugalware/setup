@@ -763,4 +763,10 @@ libxrender:
 	$(UNPACK); \
 	cp -a usr/lib/libXrender.so* ../libxrender/usr/lib
 
+libxrandr:
+	$(CLEANUP)
+	mkdir -p libxrandr/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/libXrandr.so* ../libxrandr/usr/lib
+
 .NOTPARALLEL:
