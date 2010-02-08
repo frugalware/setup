@@ -787,4 +787,10 @@ libxkbfile:
 	$(UNPACK); \
 	cp -a usr/lib/*.so* ../libxkbfile/usr/lib
 
+libice:
+	$(CLEANUP)
+	mkdir -p libice/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/libICE.so* ../libice/usr/lib
+
 .NOTPARALLEL:
