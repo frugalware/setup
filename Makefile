@@ -706,4 +706,10 @@ coreutils:
 	$(UNPACK)
 	cp -a $(BDIR)/bin/nice coreutils/bin/
 
+tzdata:
+	$(CLEANUP)
+	mkdir -p tzdata/usr/share/zoneinfo
+	$(UNPACK); \
+	cp -a usr/share/zoneinfo/zone.tab ../tzdata/usr/share/zoneinfo/
+
 .NOTPARALLEL:
