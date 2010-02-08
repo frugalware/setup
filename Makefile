@@ -730,4 +730,13 @@ libxdmcp:
 	$(UNPACK); \
 	cp -a usr/lib/libXdmcp.so* ../libxdmcp/usr/lib
 
+libx11:
+	$(CLEANUP)
+	mkdir -p libx11/usr/{lib,share}
+	$(UNPACK); \
+	cp -a usr/lib/libX11.so* ../libx11/usr/lib/; \
+	cp -a usr/lib/X11 ../libx11/usr/lib/; \
+	cp -a usr/share/X11 ../libx11/usr/share/; \
+	rm -rf ../libx11/usr/share/X11/locales
+
 .NOTPARALLEL:
