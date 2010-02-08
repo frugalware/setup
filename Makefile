@@ -745,4 +745,10 @@ libfontenc:
 	$(UNPACK); \
 	cp -a usr/lib/libfontenc.so* ../libfontenc/usr/lib
 
+libxfont:
+	$(CLEANUP)
+	mkdir -p libxfont/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/libXfont.so* ../libxfont/usr/lib
+
 .NOTPARALLEL:
