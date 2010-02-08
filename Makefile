@@ -577,8 +577,12 @@ rp-pppoe:
 glib2:
 	$(CLEANUP)
 	mkdir -p glib2/usr/lib
-	$(UNPACK); \
-	cp -a usr/lib/libglib-2.0.so* ../glib2/usr/lib/
+	$(UNPACK)
+ifeq ($(GUI),false)
+	cp -a $(BDIR)/usr/lib/libglib-2.0.so* glib2/usr/lib/
+else
+	cp -a $(BDIR)/usr/lib/*.so* glib2/usr/lib/
+endif
 
 parted:
 	$(CLEANUP)
