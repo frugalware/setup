@@ -751,4 +751,10 @@ libxfont:
 	$(UNPACK); \
 	cp -a usr/lib/libXfont.so* ../libxfont/usr/lib
 
+libxext:
+	$(CLEANUP)
+	mkdir -p libxext/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/libXext.so* ../libxext/usr/lib
+
 .NOTPARALLEL:
