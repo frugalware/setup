@@ -805,4 +805,10 @@ pixman:
 	$(UNPACK); \
 	cp -a usr/lib/libpixman-1.so* ../pixman/usr/lib
 
+libpciaccess:
+	$(CLEANUP)
+	mkdir -p libpciaccess/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/libpciaccess.so* ../libpciaccess/usr/lib
+
 .NOTPARALLEL:
