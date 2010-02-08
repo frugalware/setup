@@ -757,4 +757,10 @@ libxext:
 	$(UNPACK); \
 	cp -a usr/lib/libXext.so* ../libxext/usr/lib
 
+libxrender:
+	$(CLEANUP)
+	mkdir -p libxrender/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/libXrender.so* ../libxrender/usr/lib
+
 .NOTPARALLEL:
