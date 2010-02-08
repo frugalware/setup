@@ -700,4 +700,10 @@ ralink-firmware:
 	$(UNPACK); \
 	cp -a lib ../ralink-firmware/
 
+coreutils:
+	$(CLEANUP)
+	mkdir -p coreutils/bin
+	$(UNPACK)
+	cp -a $(BDIR)/bin/nice coreutils/bin/
+
 .NOTPARALLEL:
