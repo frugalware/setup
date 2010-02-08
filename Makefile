@@ -817,4 +817,10 @@ setxkbmap:
 	$(UNPACK); \
 	cp -a usr/bin/setxkbmap ../setxkbmap/usr/bin
 
+xkbcomp:
+	$(CLEANUP)
+	mkdir -p xkbcomp/usr/bin
+	$(UNPACK); \
+	cp -a usr/bin/xkbcomp ../xkbcomp/usr/bin
+
 .NOTPARALLEL:
