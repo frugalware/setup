@@ -724,4 +724,10 @@ libxcb:
 	$(UNPACK); \
 	cp -a usr/lib/libxcb.so* ../libxcb/usr/lib
 
+libxdmcp:
+	$(CLEANUP)
+	mkdir -p libxdmcp/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/libXdmcp.so* ../libxdmcp/usr/lib
+
 .NOTPARALLEL:
