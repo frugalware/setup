@@ -781,4 +781,10 @@ libxpm:
 	$(UNPACK); \
 	cp -a usr/lib/libXpm.so* ../libxpm/usr/lib
 
+libxkbfile:
+	$(CLEANUP)
+	mkdir -p libxkbfile/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/*.so* ../libxkbfile/usr/lib
+
 .NOTPARALLEL:
