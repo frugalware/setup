@@ -793,4 +793,10 @@ libice:
 	$(UNPACK); \
 	cp -a usr/lib/libICE.so* ../libice/usr/lib
 
+libsm:
+	$(CLEANUP)
+	mkdir -p libsm/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/libSM.so* ../libsm/usr/lib
+
 .NOTPARALLEL:
