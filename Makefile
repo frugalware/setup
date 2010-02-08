@@ -823,4 +823,10 @@ xkbcomp:
 	$(UNPACK); \
 	cp -a usr/bin/xkbcomp ../xkbcomp/usr/bin
 
+xkeyboard-config:
+	$(CLEANUP)
+	mkdir -p xkeyboard-config/usr/share
+	$(UNPACK); \
+	cp -a usr/share/X11 ../xkeyboard-config/usr/share/
+
 .NOTPARALLEL:
