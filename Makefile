@@ -811,4 +811,10 @@ libpciaccess:
 	$(UNPACK); \
 	cp -a usr/lib/libpciaccess.so* ../libpciaccess/usr/lib
 
+setxkbmap:
+	$(CLEANUP)
+	mkdir -p setxkbmap/usr/bin
+	$(UNPACK); \
+	cp -a usr/bin/setxkbmap ../setxkbmap/usr/bin
+
 .NOTPARALLEL:
