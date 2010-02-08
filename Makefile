@@ -775,4 +775,10 @@ libxft:
 	$(UNPACK); \
 	cp -a usr/lib/libXft.so* ../libxft/usr/lib
 
+libxpm:
+	$(CLEANUP)
+	mkdir -p libxpm/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/libXpm.so* ../libxpm/usr/lib
+
 .NOTPARALLEL:
