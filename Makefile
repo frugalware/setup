@@ -829,4 +829,12 @@ xkeyboard-config:
 	$(UNPACK); \
 	cp -a usr/share/X11 ../xkeyboard-config/usr/share/
 
+xorg-server-minimal:
+	$(CLEANUP)
+	mkdir -p xorg-server-minimal/{var/{log,lib/xkb},usr/{bin,lib/{X11,xorg/modules/extensions}}}
+	$(UNPACK); \
+	cp -a usr/bin/Xorg-fwife ../xorg-server-minimal/usr/bin/Xorg; \
+	cp -a usr/lib/xorg-fwife/modules/*.so ../xorg-server-minimal/usr/lib/xorg/modules/; \
+	cp -a usr/lib/xorg-fwife/modules/extensions/*.so ../xorg-server-minimal/usr/lib/xorg/modules/extensions/
+
 .NOTPARALLEL:
