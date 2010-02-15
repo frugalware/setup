@@ -843,4 +843,10 @@ xf86-input-keyboard:
 	$(UNPACK); \
 	cp -a usr/lib/xorg/modules/input/*.so ../xf86-input-keyboard/usr/lib/xorg/modules/input/
 
+xf86-input-mouse:
+	$(CLEANUP)
+	mkdir -p xf86-input-mouse/usr/lib/xorg/modules/input
+	$(UNPACK); \
+	cp -a usr/lib/xorg/modules/input/*.so ../xf86-input-mouse/usr/lib/xorg/modules/input/
+
 .NOTPARALLEL:
