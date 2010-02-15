@@ -893,4 +893,10 @@ libxml2:
 	$(UNPACK); \
 	cp -a usr/lib/*.so* ../libxml2/usr/lib
 
+atk:
+	$(CLEANUP)
+	mkdir -p atk/usr/{lib,share}
+	$(UNPACK); \
+	cp -a usr/lib/*.so* ../atk/usr/lib
+
 .NOTPARALLEL:
