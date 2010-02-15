@@ -875,4 +875,10 @@ shared-mime-info:
 	$(UNPACK); \
 	cp -a usr/share/mime ../shared-mime-info/usr/share
 
+giblib:
+	$(CLEANUP)
+	mkdir -p giblib/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/*.so* ../giblib/usr/lib
+
 .NOTPARALLEL:
