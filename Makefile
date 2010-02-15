@@ -950,4 +950,11 @@ cairo-minimal:
 	$(UNPACK); \
 	cp -a usr/lib/cairo-fwife/libcairo.so* ../cairo-minimal/usr/lib
 
+pango-minimal:
+	$(CLEANUP)
+	mkdir -p pango-minimal/{etc/pango,usr/{bin,lib}}
+	$(UNPACK); \
+	cp -a usr/lib/pango-fwife/libpango*.so* ../pango-minimal/usr/lib; \
+	cp -a etc/pango-fwife/* ../pango-minimal/etc/pango/
+
 .NOTPARALLEL:
