@@ -905,4 +905,10 @@ libpng:
 	$(UNPACK); \
 	cp -a usr/lib/*.so* ../libpng/usr/lib
 
+libjpeg:
+	$(CLEANUP)
+	mkdir -p libjpeg/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/*.so* ../libjpeg/usr/lib
+
 .NOTPARALLEL:
