@@ -899,4 +899,10 @@ atk:
 	$(UNPACK); \
 	cp -a usr/lib/*.so* ../atk/usr/lib
 
+libpng:
+	$(CLEANUP)
+	mkdir -p libpng/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/*.so* ../libpng/usr/lib
+
 .NOTPARALLEL:
