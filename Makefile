@@ -911,4 +911,10 @@ libjpeg:
 	$(UNPACK); \
 	cp -a usr/lib/*.so* ../libjpeg/usr/lib
 
+libstdc++:
+	$(CLEANUP)
+	mkdir -p libstdc++/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/*.so* ../libstdc++/usr/lib
+
 .NOTPARALLEL:
