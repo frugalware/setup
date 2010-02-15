@@ -412,7 +412,12 @@ e2fsprogs:
 	$(CLEANUP)
 	mkdir -p e2fsprogs/{sbin,lib}
 	$(UNPACK)
+# mkfs.ext{2,3} is used by gparted
+ifeq ($(GUI),false)
 	cp -a $(BDIR)/sbin/{mke2fs,e2fsck,badblocks,resize2fs,mkfs.ext4} e2fsprogs/sbin/
+else
+	cp -a $(BDIR)/sbin/{mke2fs,e2fsck,badblocks,resize2fs,mkfs.ext4,mkfs.ext2,mkfs.ext3} e2fsprogs/sbin/
+endif
 	cp -a $(BDIR)/lib/{libcom_err*,libe2p*,libext2fs*} e2fsprogs/lib/
 	mkdir e2fsprogs/etc/
 	touch e2fsprogs/etc/fstab
