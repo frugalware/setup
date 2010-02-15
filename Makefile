@@ -329,6 +329,37 @@ gui-iso:
          -boot-load-size 4 -boot-info-table -o fwife-$(FWIFE-MINIMALVER)-$(CARCH).iso iso
 	rm -rf iso
 
+gui-usb_img: check_root
+	dd if=/dev/zero of=fwife-$(FWIFE-MINIMALVER)-$(CARCH)-usb.img bs=516096c count=$(shell echo $(CYL_COUNT) + 2 | bc)
+	echo -e 'n\np\n1\n\n\na\n1\nw'|/sbin/fdisk -u -C$(shell echo $(CYL_COUNT) + 2 | bc) -S63 -H16 fwife-$(FWIFE-MINIMALVER)-$(CARCH)-usb.img || true
+	losetup -d /dev/loop1 || true
+	losetup -o32256 /dev/loop1 fwife-$(FWIFE-MINIMALVER)-$(CARCH)-usb.img
+	/sbin/mke2fs -b1024 -F /dev/loop1
+	sleep 1
+	losetup -d /dev/loop1
+	mkdir i
+	mount -o loop,offset=32256 fwife-$(FWIFE-MINIMALVER)-$(CARCH)-usb.img i
+	mkdir -p i/boot/grub
+	cp $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) i/boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)
+	cp initrd-$(CARCH).img.gz i/boot/
+	cp /usr/lib/grub/i386-*/stage{1,2} i/boot/grub/
+	cp /boot/grub/message-frugalware i/boot/grub/message
+	echo -e "default=0 \n\
+		timeout=10 \n\
+		gfxmenu /boot/grub/message \n\
+		title Fwife $(FWIFE-MINIMALVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH) \n\
+		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) autodetectx \n\
+		initrd /boot/initrd-$(CARCH).img.gz \n\
+		title Fwife $(FWIFE-MINIMALVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH) (generic) \n\
+		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) \n\
+		initrd /boot/initrd-$(CARCH).img.gz" > i/boot/grub/menu.lst
+	umount i
+	rmdir i
+	echo -e "device (hd0) fwife-$(FWIFE-MINIMALVER)-$(CARCH)-usb.img \n\
+		root (hd0,0) \n\
+		setup (hd0) \n\
+		quit" | grub --batch --device-map=/dev/null
+
 update:
 	git pull
 	$(MAKE) -C src clean
