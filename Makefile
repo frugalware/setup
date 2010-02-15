@@ -923,4 +923,10 @@ libgcc:
 	$(UNPACK); \
 	cp -a usr/lib/*.so* ../libgcc/usr/lib
 
+libsigc++2:
+	$(CLEANUP)
+	mkdir -p libsigc++2/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/*.so* ../libsigc++2/usr/lib
+
 .NOTPARALLEL:
