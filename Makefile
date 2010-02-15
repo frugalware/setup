@@ -937,4 +937,11 @@ imlib2:
 	cp -a usr/lib/imlib2/loaders/*.so ../imlib2/usr/lib/imlib2/loaders/; \
 	cp -a usr/lib/imlib2/filters/*.so ../imlib2/usr/lib/imlib2/filters/
 
+openbox-minimal:
+	$(CLEANUP)
+	mkdir -p openbox-minimal/usr/{bin,lib}
+	$(UNPACK); \
+	cp -a usr/bin/openbox-fwife ../openbox-minimal/usr/bin/openbox; \
+	cp -a usr/lib/openbox-fwife/*.so* ../openbox-minimal/usr/lib
+
 .NOTPARALLEL:
