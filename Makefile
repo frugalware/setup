@@ -310,6 +310,25 @@ tftp_img: check_root
 		setup (fd0) \n\
 		quit" | grub --batch --device-map=/dev/null
 
+gui-iso:
+	mkdir -p iso/boot/grub
+	cp /usr/lib/grub/i386-frugalware/stage2_eltorito iso/boot/grub
+	cp /boot/grub/message-frugalware iso/boot/grub/message
+	cp initrd-$(CARCH).img.gz iso/boot/
+	cp $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) iso/boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)
+	echo -e "default=0 \n\
+		timeout=10 \n\
+		gfxmenu /boot/grub/message \n\
+		title Fwife $(FWIFE-MINIMALVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH) \n\
+		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) autodetectx \n\
+		initrd /boot/initrd-$(CARCH).img.gz \n\
+		title Fwife $(FWIFE-MINIMALVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH)  (generic) \n\
+		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) \n\
+		initrd /boot/initrd-$(CARCH).img.gz" > iso/boot/grub/menu.lst
+	mkisofs -R -b boot/grub/stage2_eltorito -no-emul-boot \
+         -boot-load-size 4 -boot-info-table -o fwife-$(FWIFE-MINIMALVER)-$(CARCH).iso iso
+	rm -rf iso
+
 update:
 	git pull
 	$(MAKE) -C src clean
