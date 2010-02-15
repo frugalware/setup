@@ -837,4 +837,10 @@ xorg-server-minimal:
 	cp -a usr/lib/xorg-fwife/modules/*.so ../xorg-server-minimal/usr/lib/xorg/modules/; \
 	cp -a usr/lib/xorg-fwife/modules/extensions/*.so ../xorg-server-minimal/usr/lib/xorg/modules/extensions/
 
+xf86-input-keyboard:
+	$(CLEANUP)
+	mkdir -p xf86-input-keyboard/usr/lib/xorg/modules/input
+	$(UNPACK); \
+	cp -a usr/lib/xorg/modules/input/*.so ../xf86-input-keyboard/usr/lib/xorg/modules/input/
+
 .NOTPARALLEL:
