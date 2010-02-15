@@ -177,6 +177,7 @@ ifeq ($(GUI),true)
 	cp gui/startx.sh $(MDIR)/bin/
 	chmod +x $(MDIR)/bin/start.sh
 	chmod +x $(MDIR)/bin/startx.sh
+	mkfontdir $(MDIR)/usr/lib/X11/fonts/TTF
 else
 	cp etc/inittab $(MDIR)/etc/
 endif
