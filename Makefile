@@ -179,6 +179,7 @@ ifeq ($(GUI),true)
 	chmod +x $(MDIR)/bin/startx.sh
 	mkfontdir $(MDIR)/usr/lib/X11/fonts/TTF
 	update-mime-database $(MDIR)/usr/share/mime
+	ln -s /usr/share/X11/xkb $(MDIR)/usr/lib/X11/xkb
 else
 	cp etc/inittab $(MDIR)/etc/
 endif
