@@ -881,4 +881,10 @@ giblib:
 	$(UNPACK); \
 	cp -a usr/lib/*.so* ../giblib/usr/lib
 
+feh:
+	$(CLEANUP)
+	mkdir -p feh/usr/bin
+	$(UNPACK); \
+	cp -a usr/bin/feh ../feh/usr/bin/
+
 .NOTPARALLEL:
