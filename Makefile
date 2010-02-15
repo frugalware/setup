@@ -929,4 +929,12 @@ libsigc++2:
 	$(UNPACK); \
 	cp -a usr/lib/*.so* ../libsigc++2/usr/lib
 
+imlib2:
+	$(CLEANUP)
+	mkdir -p imlib2/usr/lib/imlib2/{loaders,filters}
+	$(UNPACK); \
+	cp -a usr/lib/libImlib2.so* ../imlib2/usr/lib; \
+	cp -a usr/lib/imlib2/loaders/*.so ../imlib2/usr/lib/imlib2/loaders/; \
+	cp -a usr/lib/imlib2/filters/*.so ../imlib2/usr/lib/imlib2/filters/
+
 .NOTPARALLEL:
