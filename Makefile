@@ -490,7 +490,7 @@ ncurses:
 	$(CLEANUP)
 	mkdir -p ncurses/{lib,usr/share/terminfo/l}
 	$(UNPACK)
-	cp -a $(BDIR)/lib/libncurses*.so* ncurses/lib/
+	cp -a $(BDIR)/lib/libncurses.so* ncurses/lib/
 	cp -a $(BDIR)/usr/share/terminfo/l/linux ncurses/usr/share/terminfo/l/
 
 pacman-g2:
