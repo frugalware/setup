@@ -944,4 +944,10 @@ openbox-minimal:
 	cp -a usr/bin/openbox-fwife ../openbox-minimal/usr/bin/openbox; \
 	cp -a usr/lib/openbox-fwife/*.so* ../openbox-minimal/usr/lib
 
+cairo-minimal:
+	$(CLEANUP)
+	mkdir -p cairo-minimal/usr/lib/
+	$(UNPACK); \
+	cp -a usr/lib/cairo-fwife/libcairo.so* ../cairo-minimal/usr/lib
+
 .NOTPARALLEL:
