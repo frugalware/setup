@@ -849,4 +849,10 @@ xf86-input-mouse:
 	$(UNPACK); \
 	cp -a usr/lib/xorg/modules/input/*.so ../xf86-input-mouse/usr/lib/xorg/modules/input/
 
+xf86-video-vesa:
+	$(CLEANUP)
+	mkdir -p xf86-video-vesa/usr/lib/xorg/modules/drivers/
+	$(UNPACK); \
+	cp -a usr/lib/xorg/modules/drivers/*.so ../xf86-video-vesa/usr/lib/xorg/modules/drivers/
+
 .NOTPARALLEL:
