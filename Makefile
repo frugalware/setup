@@ -171,7 +171,15 @@ ifeq ($(GUI),false)
 endif
 
 misc: merge install-setup
+ifeq ($(GUI),true)
+	cp gui/inittab $(MDIR)/etc/
+	cp gui/start.sh $(MDIR)/bin/
+	cp gui/startx.sh $(MDIR)/bin/
+	chmod +x $(MDIR)/bin/start.sh
+	chmod +x $(MDIR)/bin/startx.sh
+else
 	cp etc/inittab $(MDIR)/etc/
+endif
 ifeq ($(DEBUG),gdb)
 	sed -i 's|/bin/setup|/bin/gdb-start|' $(MDIR)/etc/inittab
 	cp bin/gdb-start $(MDIR)/bin/
