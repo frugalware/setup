@@ -47,7 +47,7 @@ if options.gui:
 			'setxkbmap', 'xkbcomp', 'xkeyboard-config', 'xorg-server-minimal', 'xf86-input-keyboard', 'xf86-input-mouse',
 			'xf86-video-vesa', 'freetype2', 'fontconfig', 'shared-mime-info', 'giblib', 'feh', 'libxml2', 'atk',
 			'libpng', 'libjpeg', 'libstdc++', 'libgcc', 'libsigc++2', 'imlib2', 'openbox-minimal',
-			'cairo-minimal', 'pango-minimal'])
+			'cairo-minimal', 'pango-minimal', 'gtk+2-minimal'])
 
 # if we want debug then we should add gdb and it's dependencies
 sys.stdout.write("checking for debug support... ")

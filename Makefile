@@ -62,6 +62,7 @@ export CCACHE_NOLINK=1
 export CCACHE_UMASK=002
 DIALOG_LANGS = $(shell find po -name *.po |sed 's/.*\/\(.*\).po/\1/' |tr '\n' ' ')
 GLIBC_LANGS = en_US,ISO-8859-1 da_DK,ISO-8859-1 de_DE,ISO-8859-1 fr_FR,ISO-8859-1 hu_HU,ISO-8859-2 id_ID,ISO-8859-1 it_IT,ISO-8859-1 nl_NL,ISO-8859-1 pt_BR,ISO-8859-1 ro_RO,ISO-8859-2 sk_SK,ISO-8859-2 sv_SE,ISO-8859-1 cs_CZ,ISO-8859-2 es_ES,ISO-8859-1 ru_RU,ISO-8859-5 tr_TR,ISO-8859-9 vi_VI,UTF-8
+GTK_LANGS = cs da de fr hu id it nl pt_BR ro sk sv
 ifeq ($(CARCH),x86_64)
 	QEMU ?= qemu-system-x86_64
 endif
@@ -956,5 +957,14 @@ pango-minimal:
 	$(UNPACK); \
 	cp -a usr/lib/pango-fwife/libpango*.so* ../pango-minimal/usr/lib; \
 	cp -a etc/pango-fwife/* ../pango-minimal/etc/pango/
+
+gtk+2-minimal:
+	$(CLEANUP)
+	mkdir -p gtk+2-minimal/usr/{share/locale,lib}
+	$(UNPACK); \
+	cp -a usr/lib/gtk-fwife/*.so* ../gtk+2-minimal/usr/lib
+	for i in $(GTK_LANGS); do \
+		if [ -d $(BDIR)/usr/share/locale-fwife/$$i ]; then cp -a $(BDIR)/usr/share/locale-fwife/$$i gtk+2-minimal/usr/share/locale; fi; \
+	done
 
 .NOTPARALLEL:
