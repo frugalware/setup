@@ -869,4 +869,10 @@ fontconfig:
 	cp -a etc ../fontconfig/; \
 	cp -a usr/bin ../fontconfig/
 
+shared-mime-info:
+	$(CLEANUP)
+	mkdir -p shared-mime-info/usr/share
+	$(UNPACK); \
+	cp -a usr/share/mime ../shared-mime-info/usr/share
+
 .NOTPARALLEL:
