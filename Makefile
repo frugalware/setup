@@ -861,4 +861,12 @@ freetype2:
 	$(UNPACK); \
 	cp -a usr/lib/*.so* ../freetype2/usr/lib
 
+fontconfig:
+	$(CLEANUP)
+	mkdir -p fontconfig/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/*.so* ../fontconfig/usr/lib; \
+	cp -a etc ../fontconfig/; \
+	cp -a usr/bin ../fontconfig/
+
 .NOTPARALLEL:
