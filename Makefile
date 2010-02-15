@@ -855,4 +855,10 @@ xf86-video-vesa:
 	$(UNPACK); \
 	cp -a usr/lib/xorg/modules/drivers/*.so ../xf86-video-vesa/usr/lib/xorg/modules/drivers/
 
+freetype2:
+	$(CLEANUP)
+	mkdir -p freetype2/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/*.so* ../freetype2/usr/lib
+
 .NOTPARALLEL:
