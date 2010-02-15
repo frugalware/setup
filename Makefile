@@ -887,4 +887,10 @@ feh:
 	$(UNPACK); \
 	cp -a usr/bin/feh ../feh/usr/bin/
 
+libxml2:
+	$(CLEANUP)
+	mkdir -p libxml2/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/*.so* ../libxml2/usr/lib
+
 .NOTPARALLEL:
