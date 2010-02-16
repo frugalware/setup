@@ -1052,4 +1052,10 @@ xf86-video-openchrome:
 	$(UNPACK); \
 	cp -a usr/lib/xorg/modules/drivers/*.so ../xf86-video-openchrome/usr/lib/xorg/modules/drivers/
 
+libdrm:
+	$(CLEANUP)
+	mkdir -p libdrm/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/*.so* ../libdrm/usr/lib
+
 .NOTPARALLEL:
