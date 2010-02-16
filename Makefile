@@ -1007,4 +1007,10 @@ gparted-minimal:
 		if [ -d $(BDIR)/usr/share/locale-fwife/$$i ]; then cp -a $(BDIR)/usr/share/locale-fwife/$$i gparted-minimal/usr/share/locale; fi; \
 	done
 
+dejavu-ttf:
+	$(CLEANUP)
+	mkdir -p dejavu-ttf/usr/lib/X11/fonts/TTF
+	$(UNPACK); \
+	cp -a usr/lib/X11/fonts/TTF/{DejaVuSans-Bold.ttf,DejaVuSans.ttf,DejaVuSans-Oblique.ttf} ../dejavu-ttf/usr/lib/X11/fonts/TTF
+
 .NOTPARALLEL:
