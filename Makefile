@@ -1046,4 +1046,10 @@ xf86-video-nv:
 	$(UNPACK); \
 	cp -a usr/lib/xorg/modules/drivers/*.so ../xf86-video-nv/usr/lib/xorg/modules/drivers/
 
+xf86-video-openchrome:
+	$(CLEANUP)
+	mkdir -p xf86-video-openchrome/usr/lib/xorg/modules/drivers/
+	$(UNPACK); \
+	cp -a usr/lib/xorg/modules/drivers/*.so ../xf86-video-openchrome/usr/lib/xorg/modules/drivers/
+
 .NOTPARALLEL:
