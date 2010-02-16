@@ -1040,4 +1040,10 @@ xf86-video-intel:
 	$(UNPACK); \
 	cp -a usr/lib/xorg/modules/drivers/*.so ../xf86-video-intel/usr/lib/xorg/modules/drivers/
 
+xf86-video-nv:
+	$(CLEANUP)
+	mkdir -p xf86-video-nv/usr/lib/xorg/modules/drivers/
+	$(UNPACK); \
+	cp -a usr/lib/xorg/modules/drivers/*.so ../xf86-video-nv/usr/lib/xorg/modules/drivers/
+
 .NOTPARALLEL:
