@@ -980,4 +980,10 @@ glibmm:
 	$(UNPACK); \
 	cp -a usr/lib/*.so* ../glibmm/usr/lib
 
+cairomm-minimal:
+	$(CLEANUP)
+	mkdir -p cairomm-minimal/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/cairomm-fwife/*.so* ../cairomm-minimal/usr/lib
+
 .NOTPARALLEL:
