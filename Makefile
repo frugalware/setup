@@ -1028,4 +1028,10 @@ xf86-video-ati:
 	$(UNPACK); \
 	cp -a usr/lib/xorg/modules/drivers/*.so ../xf86-video-ati/usr/lib/xorg/modules/drivers/
 
+xf86-video-geode:
+	$(CLEANUP)
+	mkdir -p xf86-video-geode/usr/lib/xorg/modules/drivers/
+	$(UNPACK); \
+	cp -a usr/lib/xorg/modules/drivers/*.so ../xf86-video-geode/usr/lib/xorg/modules/drivers/
+
 .NOTPARALLEL:
