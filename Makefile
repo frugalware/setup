@@ -992,4 +992,10 @@ pangomm-minimal:
 	$(UNPACK); \
 	cp -a usr/lib/pangomm-fwife/*.so* ../pangomm-minimal/usr/lib
 
+gtkmm-minimal:
+	$(CLEANUP)
+	mkdir -p gtkmm-minimal/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/gtkmm-fwife/*.so* ../gtkmm-minimal/usr/lib
+
 .NOTPARALLEL:
