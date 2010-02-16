@@ -967,4 +967,11 @@ gtk+2-minimal:
 		if [ -d $(BDIR)/usr/share/locale-fwife/$$i ]; then cp -a $(BDIR)/usr/share/locale-fwife/$$i gtk+2-minimal/usr/share/locale; fi; \
 	done
 
+fwife-minimal:
+	$(CLEANUP)
+	mkdir -p fwife-minimal/usr/lib/fwife/plugins/
+	$(UNPACK); \
+	cp -a usr/share/fwife-minimal/usr/{share,bin} ../fwife-minimal/usr/; \
+	cp -a usr/share/fwife-minimal/usr/lib/fwife/plugins/*.so ../fwife-minimal/usr/lib/fwife/plugins/
+
 .NOTPARALLEL:
