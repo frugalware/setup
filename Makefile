@@ -974,4 +974,10 @@ fwife-minimal:
 	cp -a usr/share/fwife-minimal/usr/{share,bin} ../fwife-minimal/usr/; \
 	cp -a usr/share/fwife-minimal/usr/lib/fwife/plugins/*.so ../fwife-minimal/usr/lib/fwife/plugins/
 
+glibmm:
+	$(CLEANUP)
+	mkdir -p glibmm/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/*.so* ../glibmm/usr/lib
+
 .NOTPARALLEL:
