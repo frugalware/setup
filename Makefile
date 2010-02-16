@@ -986,4 +986,10 @@ cairomm-minimal:
 	$(UNPACK); \
 	cp -a usr/lib/cairomm-fwife/*.so* ../cairomm-minimal/usr/lib
 
+pangomm-minimal:
+	$(CLEANUP)
+	mkdir -p pangomm-minimal/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/pangomm-fwife/*.so* ../pangomm-minimal/usr/lib
+
 .NOTPARALLEL:
