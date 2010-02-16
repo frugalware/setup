@@ -1022,4 +1022,10 @@ fwifecd-config:
 	cp -a usr/share/fwifecd-config/gtk/gtkrc ../fwifecd-config/etc/gtk-2.0/; \
 	cp -a usr/share/fwifecd-config/openbox/* ../fwifecd-config/usr/share/
 
+xf86-video-ati:
+	$(CLEANUP)
+	mkdir -p xf86-video-ati/usr/lib/xorg/modules/drivers/
+	$(UNPACK); \
+	cp -a usr/lib/xorg/modules/drivers/*.so ../xf86-video-ati/usr/lib/xorg/modules/drivers/
+
 .NOTPARALLEL:
