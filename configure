@@ -49,7 +49,7 @@ if options.gui:
 			'libpng', 'libjpeg', 'libstdc++', 'libgcc', 'libsigc++2', 'imlib2', 'openbox-minimal',
 			'cairo-minimal', 'pango-minimal', 'gtk+2-minimal', 'fwife-minimal', 'glibmm', 'cairomm-minimal',
 			'pangomm-minimal', 'gtkmm-minimal', 'gparted-minimal', 'dejavu-ttf', 'fwifecd-config', 'xf86-video-ati',
-			'xf86-video-geode'])
+			'xf86-video-geode', 'xf86-video-intel'])
 
 # if we want debug then we should add gdb and it's dependencies
 sys.stdout.write("checking for debug support... ")
