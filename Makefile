@@ -74,11 +74,18 @@ UML ?= linux
 ifneq ($(DEBUG),false)
 export CFLAGS = -g
 endif
+ifeq ($(GUI),true)
+EXTRA_TARGETS += gui-iso
+ifeq ($(USB),true)
+EXTRA_TARGETS += gui-usb_img
+endif
+else
 ifeq ($(USB),true)
 EXTRA_TARGETS += usb_img
 endif
 ifeq ($(TFTP),true)
 EXTRA_TARGETS += tftp_img
+endif
 endif
 
 CDIR = /var/cache/pacman-g2/pkg
@@ -109,6 +116,12 @@ clean: check_root
 
 install:
 	install -d -m0755 $(DESTDIR)$(PREFIX)/share/setup
+ifeq ($(GUI),true)
+	install -m0644 fwife-$(FWIFE-MINIMALVER)-$(CARCH).iso $(DESTDIR)$(PREFIX)/share/setup/fwife-$(FWIFE-MINIMALVER)-$(CARCH).iso
+ifeq ($(USB),true)
+	install -m0644 fwife-$(FWIFE-MINIMALVER)-$(CARCH)-usb.img $(DESTDIR)$(PREFIX)/share/setup/fwife-$(FWIFE-MINIMALVER)-$(CARCH)-usb.img
+endif
+else
 	install -m0644 $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(DESTDIR)$(PREFIX)/share/setup/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	install -m0644 initrd-$(CARCH).img.gz $(DESTDIR)$(PREFIX)/share/setup/initrd-$(CARCH).img.gz
 ifeq ($(USB),true)
@@ -116,6 +129,7 @@ ifeq ($(USB),true)
 endif
 ifeq ($(TFTP),true)
 	install -m0644 frugalware-$(FWVER)-$(CARCH)-tftp.img $(DESTDIR)$(PREFIX)/share/setup/frugalware-$(FWVER)-$(CARCH)-tftp.img
+endif
 endif
 
 distclean: clean
