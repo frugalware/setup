@@ -176,6 +176,9 @@ ifeq ($(DEBUG),valgrind)
 	cp bin/valgrind-start $(MDIR)/bin/
 endif
 	cp bin/bootstrap $(MDIR)/bin/
+	cp bin/dhcpcd $(MDIR)/sbin/
+	mkdir -p $(MDIR)/usr/share/udhcpc/
+	cp bin/default.script $(MDIR)/usr/share/udhcpc/
 
 devices: compile
 	mknod -m 700 $(MDIR)/dev/console c 5 1
@@ -355,13 +358,6 @@ reiserfsprogs:
 	cp -a $(BDIR)/sbin/{mkreiserfs,reiserfsck,resize_reiserfs} reiserfsprogs/sbin/
 	mkdir reiserfsprogs/etc/
 	touch reiserfsprogs/etc/fstab
-
-dhcpcd:
-	$(CLEANUP)
-	mkdir -p dhcpcd/usr
-	$(UNPACK)
-	cp -a $(BDIR)/usr/libexec dhcpcd/usr/
-	cp -a $(BDIR)/sbin dhcpcd/
 
 frugalware:
 	$(CLEANUP)

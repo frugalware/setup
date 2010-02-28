@@ -5,7 +5,7 @@ from optparse import OptionParser
 
 # since we're in chroot, we no longer have to check for up to date libs.
 libs = []
-packages = ['parted', 'pacman-g2', 'bash', 'kernel', 'busybox', 'dhcpcd', 'dialog', 'e2fsprogs',
+packages = ['parted', 'pacman-g2', 'bash', 'kernel', 'busybox', 'dialog', 'e2fsprogs',
 		'eject', 'frugalware', 'glibc', 'kbd', 'module-init-tools',
 		'ncurses', 'netkit-base', 'udev',
 		'util-linux-ng', 'mdadm', 'xfsprogs', 'ppp', 'rp-pppoe', 'glib2',

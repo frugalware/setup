@@ -1,0 +1,10 @@
+#!/bin/sh
+
+last=
+while [ ! -z "$1" ]
+do
+	last=$1
+	shift
+done
+ifconfig $last up
+exec udhcpc "$@"
