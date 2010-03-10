@@ -7,4 +7,4 @@ do
 	shift
 done
 ifconfig $last up
-exec udhcpc "$@"
+exec udhcpc -n -i $last
