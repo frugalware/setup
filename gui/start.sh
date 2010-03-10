@@ -177,8 +177,18 @@ export DISPLAY=:0
 MOUSE=/dev/input/mice
 
 ## launch dhcpcd, if an interface is finded it'll be detected by fwife, so the user don't need to configure it
-echo " * Starting dhcpcd.."
-dhcpcd -b -L -t 15
+echo " * Starting dhcp.."
+mkdir -p /var/run/dhcpcd/resolv.conf/
+listiface=`ls /sys/class/net`
+for i in $listiface; do
+	ifconfig $i up
+	udhcpc -n -t 2 -i $i
+	if [[ "$?" == "0" ]]; then
+		# used by fwife to find working dhcp connection
+		touch /var/run/dhcpcd/resolv.conf/$i
+		break
+	fi
+done
 
 echo " * Parsing kernel cmdline for Fwife options.."
 
