@@ -117,9 +117,9 @@ clean: check_root
 install:
 	install -d -m0755 $(DESTDIR)$(PREFIX)/share/setup
 ifeq ($(GUI),true)
-	install -m0644 fwife-$(FWIFE-MINIMALVER)-$(CARCH).iso $(DESTDIR)$(PREFIX)/share/setup/fwife-$(FWIFE-MINIMALVER)-$(CARCH).iso
+	install -m0644 fwife-$(FWVER)-$(CARCH).iso $(DESTDIR)$(PREFIX)/share/setup/fwife-$(FWVER)-$(CARCH).iso
 ifeq ($(USB),true)
-	install -m0644 fwife-$(FWIFE-MINIMALVER)-$(CARCH)-usb.img $(DESTDIR)$(PREFIX)/share/setup/fwife-$(FWIFE-MINIMALVER)-$(CARCH)-usb.img
+	install -m0644 fwife-$(FWVER)-$(CARCH)-usb.img $(DESTDIR)$(PREFIX)/share/setup/fwife-$(FWVER)-$(CARCH)-usb.img
 endif
 else
 	install -m0644 $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(DESTDIR)$(PREFIX)/share/setup/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
@@ -333,26 +333,26 @@ gui-iso:
 	echo -e "default=0 \n\
 		timeout=10 \n\
 		gfxmenu /boot/grub/message \n\
-		title Fwife $(FWIFE-MINIMALVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH) \n\
+		title Fwife $(FWVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH) \n\
 		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) autodetectx \n\
 		initrd /boot/initrd-$(CARCH).img.gz \n\
-		title Fwife $(FWIFE-MINIMALVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH)  (generic) \n\
+		title Fwife $(FWVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH)  (generic) \n\
 		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) \n\
 		initrd /boot/initrd-$(CARCH).img.gz" > iso/boot/grub/menu.lst
 	mkisofs -R -b boot/grub/stage2_eltorito -no-emul-boot \
-         -boot-load-size 4 -boot-info-table -o fwife-$(FWIFE-MINIMALVER)-$(CARCH).iso iso
+         -boot-load-size 4 -boot-info-table -o fwife-$(FWVER)-$(CARCH).iso iso
 	rm -rf iso
 
 gui-usb_img: check_root
-	dd if=/dev/zero of=fwife-$(FWIFE-MINIMALVER)-$(CARCH)-usb.img bs=516096c count=$(shell echo $(CYL_COUNT) + 2 | bc)
-	echo -e 'n\np\n1\n\n\na\n1\nw'|/sbin/fdisk -u -C$(shell echo $(CYL_COUNT) + 2 | bc) -S63 -H16 fwife-$(FWIFE-MINIMALVER)-$(CARCH)-usb.img || true
+	dd if=/dev/zero of=fwife-$(FWVER)-$(CARCH)-usb.img bs=516096c count=$(shell echo $(CYL_COUNT) + 2 | bc)
+	echo -e 'n\np\n1\n\n\na\n1\nw'|/sbin/fdisk -u -C$(shell echo $(CYL_COUNT) + 2 | bc) -S63 -H16 fwife-$(FWVER)-$(CARCH)-usb.img || true
 	losetup -d /dev/loop1 || true
-	losetup -o32256 /dev/loop1 fwife-$(FWIFE-MINIMALVER)-$(CARCH)-usb.img
+	losetup -o32256 /dev/loop1 fwife-$(FWVER)-$(CARCH)-usb.img
 	/sbin/mke2fs -b1024 -F /dev/loop1
 	sleep 1
 	losetup -d /dev/loop1
 	mkdir i
-	mount -o loop,offset=32256 fwife-$(FWIFE-MINIMALVER)-$(CARCH)-usb.img i
+	mount -o loop,offset=32256 fwife-$(FWVER)-$(CARCH)-usb.img i
 	mkdir -p i/boot/grub
 	cp $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) i/boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)
 	cp initrd-$(CARCH).img.gz i/boot/
@@ -361,15 +361,15 @@ gui-usb_img: check_root
 	echo -e "default=0 \n\
 		timeout=10 \n\
 		gfxmenu /boot/grub/message \n\
-		title Fwife $(FWIFE-MINIMALVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH) \n\
+		title Fwife $(FWVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH) \n\
 		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) autodetectx \n\
 		initrd /boot/initrd-$(CARCH).img.gz \n\
-		title Fwife $(FWIFE-MINIMALVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH) (generic) \n\
+		title Fwife $(FWVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH) (generic) \n\
 		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) \n\
 		initrd /boot/initrd-$(CARCH).img.gz" > i/boot/grub/menu.lst
 	umount i
 	rmdir i
-	echo -e "device (hd0) fwife-$(FWIFE-MINIMALVER)-$(CARCH)-usb.img \n\
+	echo -e "device (hd0) fwife-$(FWVER)-$(CARCH)-usb.img \n\
 		root (hd0,0) \n\
 		setup (hd0) \n\
 		quit" | grub --batch --device-map=/dev/null
