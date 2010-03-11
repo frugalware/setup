@@ -225,9 +225,9 @@ char *selformatmode(char *dev)
 char *selfs(char *dev)
 {
 #ifndef ARCH_PPC
-	int fsnum=4;
+	int fsnum=5;
 #else
-	int fsnum=3;
+	int fsnum=4;
 #endif
 	char *fss[] =
 	{
