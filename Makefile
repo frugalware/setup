@@ -1146,4 +1146,10 @@ libdrm:
 	$(UNPACK); \
 	cp -a usr/lib/*.so* ../libdrm/usr/lib
 
+xz:
+	$(CLEANUP)
+	mkdir -p xz/usr
+	$(UNPACK); \
+	cp -a usr/lib/*.so* ../xz/usr/
+
 .NOTPARALLEL:
