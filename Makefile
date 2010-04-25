@@ -714,7 +714,7 @@ expat:
 	$(CLEANUP)
 	mkdir -p expat/usr
 	$(UNPACK); \
-	cp -a usr/lib ../expat/usr/
+	cp -a usr/lib/*.so* ../expat/usr/
 
 device-mapper:
 	$(CLEANUP)
