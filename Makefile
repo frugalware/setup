@@ -712,9 +712,9 @@ valgrind:
 
 expat:
 	$(CLEANUP)
-	mkdir -p expat/usr
+	mkdir -p expat/usr/lib
 	$(UNPACK); \
-	cp -a usr/lib/*.so* ../expat/usr/
+	cp -a usr/lib/*.so* ../expat/usr/lib/
 
 device-mapper:
 	$(CLEANUP)
@@ -1148,8 +1148,8 @@ libdrm:
 
 xz:
 	$(CLEANUP)
-	mkdir -p xz/usr
+	mkdir -p xz/usr/lib
 	$(UNPACK); \
-	cp -a usr/lib/*.so* ../xz/usr/
+	cp -a usr/lib/*.so* ../xz/usr/lib/
 
 .NOTPARALLEL:
