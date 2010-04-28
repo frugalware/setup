@@ -84,6 +84,14 @@ else:
 	sys.stdout.write("no.\n")
 	sys.stdout.flush()
 
+sys.stdout.write("checking for gui support... ")
+if options.gui:
+	sys.stdout.write("yes.\n")
+	sys.stdout.flush()
+else:
+	sys.stdout.write("no.\n")
+	sys.stdout.flush()
+
 def pkgGetVers(db, names, ret={}):
 	lp = pacman.db_getpkgcache(db)
 	while lp:
