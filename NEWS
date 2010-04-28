@@ -1,5 +1,8 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.1.0         - merged Elentir's GUI installer, see --enable-gui
+              - support for newer cfdisk and libarchive
+              - fixed xfs support
 1.0.8         - release for 1.2
               - use udhcpc from busybox instead of external dhcpcd
 1.0.7         - devtmpfs and formatdisk fixes
