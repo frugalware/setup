@@ -21,6 +21,7 @@ ifeq ($(DEBUG),false)
 CFLAGS ?= -Wall -Werror -O2 -pipe
 else
 CFLAGS ?= -g -Wall -Werror
+LDFLAGS += -pthread
 endif
 CFLAGS += $(STABLE) -DARCH="\"$(shell arch)\"" -DARCH_$(shell arch|tr [a-z] [A-Z])
 LDFLAGS += -ldl -rdynamic
