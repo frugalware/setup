@@ -55,7 +55,7 @@ KERNEL_OPTS = initrd=initrd-$(CARCH).img.gz load_ramdisk=1 prompt_ramdisk=0 ramd
 DESTDIR = $(shell source /etc/repoman.conf; [ -e ~/.repoman.conf ] && source ~/.repoman.conf; echo $$fst_root)
 
 CLEANUP = rm -rf $(BDIR) && mkdir $(BDIR) && rm -rf $@
-UNPACK = cd $(BDIR) && tar xf $(CDIR)/$@-$($(shell echo $@|tr '[a-z]' '[A-Z]')VER)-$(CARCH).fpm
+UNPACK = cd $(BDIR) && bsdtar xf $(CDIR)/$@-$($(shell echo $@|tr '[a-z]' '[A-Z]')VER)-$(CARCH).fpm
 export PATH := /usr/lib/ccache/bin:$(PATH)
 export CCACHE_DIR=/var/cache/ccache/setup
 export CCACHE_NOLINK=1
