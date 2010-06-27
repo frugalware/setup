@@ -38,7 +38,7 @@ else
 endif
 VERSION=$(shell grep ^version configure |sed 's/.*"\(.*\)"/\1/')
 GPG=$(shell [ -d ../releases ] && echo true || echo false)
-QEMU_OPTS ?= -hda ~/documents/qemu/hda.img
+QEMU_OPTS ?= -hda ~/documents/qemu/hda.img -m 1024
 UML_OPTS ?= ubd0=~/documents/uml/root_fs eth0=tuntap,,,192.168.0.254 mem=128MB
 TFTP_BOOTCMD = bootp
 ifneq ($(TFTP_PASSWD),)
