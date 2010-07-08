@@ -294,7 +294,6 @@ int run(GList **config)
 
 	if(!stat("usr/bin/X", &buf))
 	{
-		fw_system_interactive("chroot ./ su -c /sbin/xconfig");
 		fw_system_interactive("chroot ./ /sbin/xwmconfig --silent");
 	}
 	ptr = g_strdup_printf("umount %s/sys", TARGETDIR);
