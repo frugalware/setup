@@ -334,9 +334,6 @@ gui-iso:
 		timeout=10 \n\
 		gfxmenu /boot/grub/message \n\
 		title Fwife $(FWVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH) \n\
-		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) autodetectx \n\
-		initrd /boot/initrd-$(CARCH).img.gz \n\
-		title Fwife $(FWVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH)  (generic) \n\
 		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) \n\
 		initrd /boot/initrd-$(CARCH).img.gz" > iso/boot/grub/menu.lst
 	mkisofs -R -b boot/grub/stage2_eltorito -no-emul-boot \
@@ -362,9 +359,6 @@ gui-usb_img: check_root
 		timeout=10 \n\
 		gfxmenu /boot/grub/message \n\
 		title Fwife $(FWVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH) \n\
-		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) autodetectx \n\
-		initrd /boot/initrd-$(CARCH).img.gz \n\
-		title Fwife $(FWVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH) (generic) \n\
 		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) \n\
 		initrd /boot/initrd-$(CARCH).img.gz" > i/boot/grub/menu.lst
 	umount i
