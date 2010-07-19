@@ -923,6 +923,7 @@ xorg-server-minimal:
 	mkdir -p xorg-server-minimal/{var/{log,lib/xkb},usr/{bin,lib/{X11,xorg/modules/extensions}}}
 	$(UNPACK); \
 	cp -a usr/bin/Xorg-fwife ../xorg-server-minimal/usr/bin/Xorg; \
+	cp -a etc ../xorg-server-minimal/; \
 	cp -a usr/lib/xorg-fwife/modules/*.so ../xorg-server-minimal/usr/lib/xorg/modules/; \
 	cp -a usr/lib/xorg-fwife/modules/extensions/*.so ../xorg-server-minimal/usr/lib/xorg/modules/extensions/
 
