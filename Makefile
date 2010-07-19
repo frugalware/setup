@@ -1039,7 +1039,9 @@ gtk+2-minimal:
 	$(CLEANUP)
 	mkdir -p gtk+2-minimal/usr/{share/locale,lib}
 	$(UNPACK); \
-	cp -a usr/lib/gtk-fwife/*.so* ../gtk+2-minimal/usr/lib
+	cp -a usr/lib/gtk-fwife/lib{gdk,gtk}*.so* ../gtk+2-minimal/usr/lib; \
+	cp -a usr/lib/gtk-fwife/gtk-2.0 ../gtk+2-minimal/usr/lib; \
+	rm -rf ../gtk+2-minimal/usr/lib/gtk-2.0/{include,*/*/*.la,modules/*.la}
 	for i in $(GTK_LANGS); do \
 		if [ -d $(BDIR)/usr/share/locale-fwife/$$i ]; then cp -a $(BDIR)/usr/share/locale-fwife/$$i gtk+2-minimal/usr/share/locale; fi; \
 	done
