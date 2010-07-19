@@ -1097,12 +1097,11 @@ dejavu-ttf:
 
 fwifecd-config:
 	$(CLEANUP)
-	mkdir -p fwifecd-config/{etc/{gtk-2.0,X11},usr/{lib/X11,share}}
+	mkdir -p fwifecd-config/{etc,usr/share}
 	$(UNPACK); \
-	cp -a usr/share/fwifecd-config/xorg/xorg.conf ../fwifecd-config/etc/X11/; \
-	cp -a usr/share/fwifecd-config/xorg/Options ../fwifecd-config/usr/lib/X11/; \
-	cp -a usr/share/fwifecd-config/gtk/gtkrc ../fwifecd-config/etc/gtk-2.0/; \
-	cp -a usr/share/fwifecd-config/openbox/* ../fwifecd-config/usr/share/
+	cp -a usr/share/fwifecd-config/openbox/* ../fwifecd-config/usr/share/; \
+	cp -a usr/share/fwifecd-config/gtk/lib ../fwifecd-config/usr/; \
+	cp -a usr/share/fwifecd-config/gtk/gtk-2.0 ../fwifecd-config/etc/
 
 xf86-video-ati:
 	$(CLEANUP)
