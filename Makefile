@@ -926,17 +926,11 @@ xorg-server-minimal:
 	cp -a usr/lib/xorg-fwife/modules/*.so ../xorg-server-minimal/usr/lib/xorg/modules/; \
 	cp -a usr/lib/xorg-fwife/modules/extensions/*.so ../xorg-server-minimal/usr/lib/xorg/modules/extensions/
 
-xf86-input-keyboard:
+xf86-input-evdev:
 	$(CLEANUP)
-	mkdir -p xf86-input-keyboard/usr/lib/xorg/modules/input
+	mkdir -p xf86-input-evdev/usr/lib/xorg/modules/input
 	$(UNPACK); \
-	cp -a usr/lib/xorg/modules/input/*.so ../xf86-input-keyboard/usr/lib/xorg/modules/input/
-
-xf86-input-mouse:
-	$(CLEANUP)
-	mkdir -p xf86-input-mouse/usr/lib/xorg/modules/input
-	$(UNPACK); \
-	cp -a usr/lib/xorg/modules/input/*.so ../xf86-input-mouse/usr/lib/xorg/modules/input/
+	cp -a usr/lib/xorg/modules/input/*.so ../xf86-input-evdev/usr/lib/xorg/modules/input/
 
 xf86-video-vesa:
 	$(CLEANUP)

@@ -44,7 +44,7 @@ parser.add_option("--enable-gui", action="store_true", dest="gui", help="Build F
 if options.gui:
 	packages.extend(['coreutils', 'tzdata', 'libxau', 'libxcb', 'libxdmcp', 'libx11', 'libfontenc', 'libxfont', 'libxext',
 			'libxrender', 'libxrandr', 'libxft', 'libxpm', 'libxkbfile', 'libice', 'libsm', 'pixman', 'libpciaccess',
-			'setxkbmap', 'xkbcomp', 'xkeyboard-config', 'xorg-server-minimal', 'xf86-input-keyboard', 'xf86-input-mouse',
+			'setxkbmap', 'xkbcomp', 'xkeyboard-config', 'xorg-server-minimal', 'xf86-input-evdev',
 			'xf86-video-vesa', 'freetype2', 'fontconfig', 'shared-mime-info', 'giblib', 'feh', 'libxml2', 'atk',
 			'libpng', 'libjpeg', 'libstdc++', 'libgcc', 'libsigc++2', 'imlib2', 'openbox-minimal',
 			'cairo-minimal', 'pango-minimal', 'gtk+2-minimal', 'fwife-minimal', 'glibmm', 'cairomm-minimal',
