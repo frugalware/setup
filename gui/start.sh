@@ -200,12 +200,8 @@ do
 			echo " * Setting system keymap to: $KEYMAP.."
 			loadkeys ${opt#kmap=}
 			;;
-		autodetectx)
-			Xorg -configure
-			mv xorg.conf.new /etc/X11/xorg.conf
-			AUTOCONF=true ;;
-		screen=*)
-			SCREEN=${opt#screen=} ;;
+		text)
+			SCREEN="text" ;;
 		mouse=*)
 			MOUSE=${opt#mouse=} ;;
 		*)
@@ -214,32 +210,10 @@ do
 done
 
 
-echo " * Create link for the mouse.."
-ln -fs $MOUSE /dev/mouse
+#echo " * Create link for the mouse.."
+#ln -fs $MOUSE /dev/mouse
 
-
-# Screen size config
-if [ -z "$SCREEN" ]; then
-	if [ -z "$AUTOCONF" ]; then
-		sed -i 's# Modes# Modes "1280x1024" "1280x800" "1024x768" "800x600"#g' /etc/X11/xorg.conf
-	fi
-	NEW_SCREEN="auto"
-else
-	case "$SCREEN" in
-		text)
-			;;
-		*)
-			# Use specified screen resolution.
-			if [ -z "$AUTOCONF" ]; then
-				echo " * Use default resolution $SCREEN .."
-				sed -i "s# Modes# Modes \"$SCREEN\"#g" /etc/X11/xorg.conf
-			fi
-			NEW_SCREEN=$SCREEN
-			;;
-	esac
-fi
-
-if [ -z "$NEW_SCREEN" ]; then
+if [[ "$SCREEN" == "text" ]]; then
 	echo " * Trying to start a shell.."
 	exec /bin/sh
 else
