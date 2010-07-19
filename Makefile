@@ -1081,7 +1081,7 @@ gparted-minimal:
 	$(CLEANUP)
 	mkdir -p gparted-minimal/usr/{bin,share/locale}
 	$(UNPACK); \
-	cp -a usr/sbin/gpartedbin-fwife ../gparted-minimal/usr/bin/gparted; \
+	cp -a usr/sbin/gpartedbin-fwife ../gparted-minimal/usr/bin/gparted
 	for i in $(GTK_LANGS); do \
 		if [ -d $(BDIR)/usr/share/locale-fwife/$$i ]; then cp -a $(BDIR)/usr/share/locale-fwife/$$i gparted-minimal/usr/share/locale; fi; \
 	done
