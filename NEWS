@@ -1,5 +1,9 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.1.1         - fix usb_img target on x86_64
+              - handle xz-compressed fpms
+              - no longer run xconfig by default
+              - various GUI improvements
 1.1.0         - merged Elentir's GUI installer, see --enable-gui
               - support for newer cfdisk and libarchive
               - fixed xfs support
