@@ -191,7 +191,7 @@ ifeq ($(GUI),true)
 	cp gui/startx.sh $(MDIR)/bin/
 	chmod +x $(MDIR)/bin/start.sh
 	chmod +x $(MDIR)/bin/startx.sh
-	mkfontdir $(MDIR)/usr/share/X11/fonts/TTF
+	mkfontdir $(MDIR)/usr/share/fonts/X11/TTF
 	update-mime-database $(MDIR)/usr/share/mime
 	ln -s /usr/share/X11/xkb $(MDIR)/usr/lib/X11/xkb
 else
@@ -1088,9 +1088,9 @@ gparted-minimal:
 
 dejavu-ttf:
 	$(CLEANUP)
-	mkdir -p dejavu-ttf/usr/share/X11/fonts/TTF
+	mkdir -p dejavu-ttf/usr/share/fonts/X11/TTF
 	$(UNPACK); \
-	cp -a usr/share/X11/fonts/TTF/{DejaVuSans-Bold.ttf,DejaVuSans.ttf,DejaVuSans-Oblique.ttf} ../dejavu-ttf/usr/share/X11/fonts/TTF
+	cp -a usr/share/fonts/X11/TTF/{DejaVuSans-Bold.ttf,DejaVuSans.ttf,DejaVuSans-Oblique.ttf} ../dejavu-ttf/usr/share/fonts/X11/TTF
 
 fwifecd-config:
 	$(CLEANUP)
