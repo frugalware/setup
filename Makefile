@@ -2,7 +2,7 @@
 #
 # Compiling Time: 2.45 SBU
 #
-# Copyright (C) 2005, 2006, 2007, 2008, 2009 Miklos Vajna <vmiklos@frugalware.org>
+# Copyright (C) 2005, 2006, 2007, 2008, 2009, 2010 Miklos Vajna <vmiklos@frugalware.org>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -46,6 +46,7 @@ ifneq ($(TFTP_PASSWD),)
 endif
 RAMDISK_SIZE = $(shell du --block-size=1000 initrd-$(CARCH).img|sed 's/\t.*//')
 CYL_COUNT = $(shell echo "$(shell du -c -B516096 $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz|sed -n 's/^\(.*\)\t.*$$/\1/;$$ p')+8"|bc)
+OFFSET = $(shell echo "$(shell fdisk -u -l frugalware-$(FWVER)-$(CARCH)-usb.img | sed -ne "s|^frugalware-$(FWVER)-$(CARCH)-usb.img1[ *]*\([0-9]*\).*|\1|p")*512"|bc)
 
 FWVER = $(shell echo $(FRUGALWAREVER)|sed 's/-.*//')
 RELEASE = $(shell cat merge/etc/frugalware-release)
@@ -240,12 +241,12 @@ ifneq ($(CARCH),ppc)
 	dd if=/dev/zero of=frugalware-$(FWVER)-$(CARCH)-usb.img bs=516096c count=$(CYL_COUNT)
 	echo -e 'n\np\n1\n\n\na\n1\nw'|/sbin/fdisk -u -C$(CYL_COUNT) -S63 -H16 frugalware-$(FWVER)-$(CARCH)-usb.img || true
 	losetup -d /dev/loop0 || true
-	losetup -o32256 /dev/loop0 frugalware-$(FWVER)-$(CARCH)-usb.img
+	losetup -o$(OFFSET) /dev/loop0 frugalware-$(FWVER)-$(CARCH)-usb.img
 	/sbin/mke2fs -b1024 -F /dev/loop0
 	sleep 1
 	losetup -d /dev/loop0
 	mkdir i
-	mount -o loop,offset=32256 frugalware-$(FWVER)-$(CARCH)-usb.img i
+	mount -o loop,offset=$(OFFSET) frugalware-$(FWVER)-$(CARCH)-usb.img i
 	mkdir -p i/boot/grub
 	cp $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) i/boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)
 	cp initrd-$(CARCH).img.gz i/boot/
@@ -344,12 +345,12 @@ gui-usb_img: check_root
 	dd if=/dev/zero of=fwife-$(FWVER)-$(CARCH)-usb.img bs=516096c count=$(shell echo $(CYL_COUNT) + 2 | bc)
 	echo -e 'n\np\n1\n\n\na\n1\nw'|/sbin/fdisk -u -C$(shell echo $(CYL_COUNT) + 2 | bc) -S63 -H16 fwife-$(FWVER)-$(CARCH)-usb.img || true
 	losetup -d /dev/loop1 || true
-	losetup -o32256 /dev/loop1 fwife-$(FWVER)-$(CARCH)-usb.img
+	losetup -o$(OFFSET) /dev/loop1 fwife-$(FWVER)-$(CARCH)-usb.img
 	/sbin/mke2fs -b1024 -F /dev/loop1
 	sleep 1
 	losetup -d /dev/loop1
 	mkdir i
-	mount -o loop,offset=32256 fwife-$(FWVER)-$(CARCH)-usb.img i
+	mount -o loop,offset=$(OFFSET) fwife-$(FWVER)-$(CARCH)-usb.img i
 	mkdir -p i/boot/grub
 	cp $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) i/boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)
 	cp initrd-$(CARCH).img.gz i/boot/
