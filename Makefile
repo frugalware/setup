@@ -46,7 +46,7 @@ ifneq ($(TFTP_PASSWD),)
 endif
 RAMDISK_SIZE = $(shell du --block-size=1000 initrd-$(CARCH).img|sed 's/\t.*//')
 CYL_COUNT = $(shell echo "$(shell du -c -B516096 $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz|sed -n 's/^\(.*\)\t.*$$/\1/;$$ p')+8"|bc)
-OFFSET = $(shell echo "$(shell fdisk -u -l frugalware-$(FWVER)-$(CARCH)-usb.img | sed -ne "s|^frugalware-$(FWVER)-$(CARCH)-usb.img1[ *]*\([0-9]*\).*|\1|p")*512"|bc)
+OFFSET = $(shell echo "$(shell /sbin/fdisk -u -l frugalware-$(FWVER)-$(CARCH)-usb.img | sed -ne "s|^frugalware-$(FWVER)-$(CARCH)-usb.img1[ *]*\([0-9]*\).*|\1|p")*512"|bc)
 
 FWVER = $(shell echo $(FRUGALWAREVER)|sed 's/-.*//')
 RELEASE = $(shell cat merge/etc/frugalware-release)
