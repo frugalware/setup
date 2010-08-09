@@ -90,8 +90,8 @@ int ask_cdchange(void)
 	ret = dialog_yesno(_("Insert next disc"),
 		_("Please insert the next Frugalware install disc and press "
 		"ENTER to continue installing packages. If you don't "
-		"have more disk, choose NO, and then you can finish up "
-		"the installation. Have you inserted the next disk?"), 0, 0);
+		"have more discs, choose NO, and then you can finish  "
+		"the installation. Have you inserted the next disc?"), 0, 0);
 	if(ret==DLG_EXIT_OK)
 		return(1);
 	else
