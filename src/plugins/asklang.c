@@ -103,7 +103,7 @@ int run(GList **config)
 	dialog_vars.default_item=strdup("en_US");
 	if(fw_menu("Please select your language",
 		"Please select your language from the list. If your language "
-		"is not in the list, you probably should choose English.",
+		"is not in the list, you should probably choose English.",
 		0, 0, 0, LANGSNUM, langs) == -1)
 		return(-1);
 	FREE(dialog_vars.default_item);
