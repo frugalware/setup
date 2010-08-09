@@ -166,7 +166,7 @@ int exit_fail(void)
 	ret = dialog_yesno(_("Installation error"),
 		_("Errors occurred while installing selected packages. It is "
 			"recommended to abort the installation, however you "
-			"may want to ignore this problem. Do you want to leave "
+			"may want to ignore this problem. Do you want to exit "
 			"the installer?"), 0, 0);
 	if(ret==DLG_EXIT_OK)
 		return(1);
@@ -668,8 +668,8 @@ void show_menu(GList *plugin_list, int *state)
 		dlg_put_backtitle();
 		dlg_clear();
 		ret = dialog_menu(_("Select task to continue with"),
-		_("You selected to change the way normally Frugalware is "
-			"installed. Here are the list of tasks you can continue "
+		_("You chose to change the way Frugalware is normally "
+			"installed. Here are the tasks you can continue "
 			"with:"),
 		0, 0, 0, g_list_length(menu)/2, items);
 		if (ret != DLG_EXIT_CANCEL)
