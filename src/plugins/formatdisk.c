@@ -232,12 +232,12 @@ char *selfs(char *dev)
 	char *fss[] =
 	{
 		"ext2", _("Standard Linux ext2fs filesystem"),
-		"ext3", _("Journalising version of the ext2 filesystem"),
+		"ext3", _("Journaling version of the ext2 filesystem"),
 		"ext4", _("The evolution of the ext3 filesystem (EXPERIMENTAL!)"),
 #ifndef ARCH_PPC
-		"reiserfs", _("Hans Reiser's journalising filesystem"),
+		"reiserfs", _("Hans Reiser's journaling filesystem"),
 #endif
-		"xfs", _("SGI's journalising filesystem")
+		"xfs", _("SGI's journaling filesystem")
 	};
 	
 	dialog_vars.backtitle=gen_backtitle(_("Formatting partitions"));
