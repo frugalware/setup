@@ -130,8 +130,8 @@ GList *mirrorconf(void)
 	arraychk = glist2dialog(mirrorlist);
 
 	newmirrorlist = fw_checklist(_("Please select mirrors"),
-					_("Here you can chose one or more "
-					"nearby mirror to speed up "
+					_("Here you can choose one or more "
+					"nearby mirrors to speed up "
 					"package dowloading."),
 					0, 0, 0,
 					g_list_length(mirrorlist)/3,
@@ -167,8 +167,8 @@ GList *mirrorconf(void)
 	if(fw_inputbox(_("Custom mirror"), _("You may now specify "
 					"a custom mirror (eg. LAN) "
 					"so you can download packages "
-					"faster. In most cases a "
-					"Continue enough here."), 0, 0,
+					"faster. If you don't have a "
+					"custom mirror, select Continue."), 0, 0,
 				(char*)g_list_nth_data(newmirrorlist, 0), 0) != -1) { //not cancel
 		if (strcmp(dialog_vars.input_result, "\0")) { //not empty
 				LOG("added custom mirror '%s'", dialog_vars.input_result);
@@ -194,7 +194,7 @@ int run(GList **config)
 			{
 				dialog_msgbox(_("Failed to configure the network"),
 						_("Failed to write the network configuration files. Please try again, "
-						"especially pay attention to give a valid IP address and/or netmask if "
+						"especially pay attention to giving a valid IP address and/or netmask if "
 						"you are using a static IP configuration."), 0, 0, 1);
 				continue;
 			}
