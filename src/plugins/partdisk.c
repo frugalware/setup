@@ -144,8 +144,8 @@ int raid_confirm(void)
 #ifdef DIALOG
 	int ret;
 	dialog_vars.defaultno=1;
-	ret = dialog_yesno(_("Want to create RAID?"),
-		_("Do you want to create software raid partitions during "
+	ret = dialog_yesno(_("Want to create RAID partitions?"),
+		_("Do you want to create software RAID partitions during "
 		"partitioning?"), 0, 0);
 	dialog_vars.defaultno=0;
 	if(ret==DLG_EXIT_OK)
