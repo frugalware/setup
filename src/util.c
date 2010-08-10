@@ -332,7 +332,7 @@ int fw_system(char* cmd)
 	pp = popen(ptr, "r");
 	if(!pp)
 	{
-		LOG("call to popen falied (%s)", strerror(errno));
+		LOG("call to popen failed (%s)", strerror(errno));
 		return(-1);
 	}
 	while(!feof(pp))
