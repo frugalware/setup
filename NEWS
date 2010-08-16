@@ -1,5 +1,8 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.1.2         - support for newer xorg-server having fonts under /usr/share/fonts/X11
+              - fix grub installation for usb images
+              - grammatical fixes here and there
 1.1.1         - fix usb_img target on x86_64
               - handle xz-compressed fpms
               - no longer run xconfig by default
