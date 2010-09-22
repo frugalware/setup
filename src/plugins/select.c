@@ -56,7 +56,7 @@ char *desc()
 
 PM_DB *mydatabase;
 
-void cb_db_register(char *section, PM_DB *db)
+void cb_db_register(const char *section, PM_DB *db)
 {
 	mydatabase = db;
 }
