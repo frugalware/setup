@@ -236,10 +236,14 @@ initrd: install-setup
 initrd_gz: clean config.mak devices initrd
 	gzip -9 -c initrd-$(CARCH).img > initrd-$(CARCH).img.gz
 
-usb_img: check_root
-ifneq ($(CARCH),ppc)
+create_usb_img:
 	dd if=/dev/zero of=frugalware-$(FWVER)-$(CARCH)-usb.img bs=516096c count=$(CYL_COUNT)
+ifneq ($(CARCH),ppc)
 	echo -e 'n\np\n1\n\n\na\n1\nw'|/sbin/fdisk -u -C$(CYL_COUNT) -S63 -H16 frugalware-$(FWVER)-$(CARCH)-usb.img || true
+endif
+
+usb_img: check_root create_usb_img
+ifneq ($(CARCH),ppc)
 	losetup -d /dev/loop0 || true
 	losetup -o$(OFFSET) /dev/loop0 frugalware-$(FWVER)-$(CARCH)-usb.img
 	/sbin/mke2fs -b1024 -F /dev/loop0
@@ -268,7 +272,6 @@ ifneq ($(CARCH),ppc)
 		setup (hd0) \n\
 		quit" | grub --batch --device-map=/dev/null
 else
-	dd if=/dev/zero of=frugalware-$(FWVER)-$(CARCH)-usb.img bs=516096c count=$(CYL_COUNT)
 	hformat frugalware-$(FWVER)-$(CARCH)-usb.img
 	hmount frugalware-$(FWVER)-$(CARCH)-usb.img
 	hcopy -r /usr/lib/yaboot/yaboot :
