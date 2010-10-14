@@ -1,5 +1,7 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.1.3         - warning fixes
+              - support make-3.82
 1.1.2         - support for newer xorg-server having fonts under /usr/share/fonts/X11
               - fix grub installation for usb images
               - grammatical fixes here and there
