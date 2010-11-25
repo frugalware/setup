@@ -1146,4 +1146,10 @@ xz:
 	$(UNPACK); \
 	cp -a usr/lib/*.so* ../xz/usr/lib/
 
+dbus:
+	$(CLEANUP)
+	mkdir -p dbus/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/*.so* ../dbus/usr/lib/
+
 .NOTPARALLEL:

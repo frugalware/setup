@@ -12,7 +12,7 @@ packages = ['parted', 'pacman-g2', 'bash', 'kernel', 'busybox', 'dialog', 'e2fsp
 		'bzip2', 'libarchive', 'zlib', 'frugalwareutils', 'lzma',
 		'wireless_tools', 'dropbear', 'bastet',
 		'readline', 'shadow',
-		'device-mapper', 'lvm2', 'wpa_supplicant', 'openssl', 'pciutils',
+		'device-mapper', 'lvm2', 'dbus', 'wpa_supplicant', 'openssl', 'pciutils',
 		'b43-fwcutter', 'libblkid', 'libuuid', 'expat', 'xz']
 if os.uname()[-1] in ['i686', 'x86_64']:
 	packages.extend(['reiserfsprogs', 'ipw2200-firmware', 'acx100', 'madwifi', 'rt2500', 'iwlwifi-3945-ucode',
