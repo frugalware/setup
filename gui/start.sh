@@ -16,7 +16,7 @@ echo " * Mounting metafilesystems.."
 mount -t sysfs  none  /sys
 mount -t tmpfs none /tmp
 echo " * Initialising mtab.."
-cat /proc/mounts >/etc/mtab
+ln -sf /proc/self/mounts /etc/mtab
 echo " * Load kernel modules.."
 modprobe isofs
 modprobe ntfs

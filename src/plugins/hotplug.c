@@ -62,7 +62,7 @@ int run(GList **config)
 	fw_system("mount -t proc none /proc");
 	fw_system("mount -t sysfs none /sys");
 	fw_system("mount -t tmpfs none /tmp");
-	fw_system("cat /proc/mounts >/etc/mtab");
+	fw_system("ln -sf /proc/self/mounts /etc/mtab");
 	fw_system("modprobe isofs");
 	fw_system("modprobe ntfs");
 	fw_system("modprobe BusLogic");

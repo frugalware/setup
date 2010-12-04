@@ -154,9 +154,6 @@ int installpkgs(GList *pkgs, GList **config)
 
 int run(GList **config)
 {
-	/* update /etc/mtab so that statvfs() will detect the free space of the
-	 * just mounted partitions */
-	copyfile("/proc/mounts", "/etc/mtab");
 	installpkgs((GList*)data_get(*config, "packages"), config);
 	// if the source media is cd, we don't need broken symlinks after
 	// the installation
