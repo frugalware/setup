@@ -330,6 +330,7 @@ tftp_img: check_root
 
 gui-iso:
 	mkdir -p iso/boot/grub
+ifneq ($(CARCH),ppc)
 	cp /usr/lib/grub/i386-frugalware/stage2_eltorito iso/boot/grub
 	cp /boot/grub/message-frugalware iso/boot/grub/message
 	cp initrd-$(CARCH).img.gz iso/boot/
@@ -342,6 +343,7 @@ gui-iso:
 		initrd /boot/initrd-$(CARCH).img.gz" > iso/boot/grub/menu.lst
 	mkisofs -R -b boot/grub/stage2_eltorito -no-emul-boot \
          -boot-load-size 4 -boot-info-table -o fwife-$(FWVER)-$(CARCH).iso iso
+endif
 	rm -rf iso
 
 gui-usb_img: check_root
