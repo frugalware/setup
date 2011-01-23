@@ -338,7 +338,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 		{
 			makepath(pkgdb);
 			// TODO: use libarchive for this
-			temp = g_strdup_printf("tar xf %s/%s.fdb -C %s", pacbindir, repo, pkgdb);
+			temp = g_strdup_printf("xz -dc %s/%s.fdb | tar x -C %s", pacbindir, repo, pkgdb);
 			fw_system(temp);
 			g_free(temp);
 			if ((fp = fopen("/etc/pacman-g2.conf", "w")) == NULL)
