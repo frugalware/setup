@@ -1,5 +1,6 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.1.6         - support for xz-compressed fdb files in the offline installer
 1.1.5         - ppc fix for usb installer
 1.1.4         - get rid of static /etc/mtab in the initrd
               - fix wpa support
