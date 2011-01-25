@@ -607,7 +607,7 @@ parted:
 	$(CLEANUP)
 	mkdir -p parted/usr/{lib,sbin,share/locale}
 	$(UNPACK); \
-	cp -a usr/lib/{libparted.so,libparted-*} ../parted/usr/lib/; \
+	cp -a usr/lib/{libparted.so*,libparted-*} ../parted/usr/lib/; \
 	cp -a usr/sbin/* ../parted/usr/sbin/; \
 	cp -a usr/share/locale/* ../parted/usr/share/locale/
 
