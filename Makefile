@@ -541,12 +541,12 @@ eject:
 	$(UNPACK)
 	cp -a $(BDIR)/usr/bin/eject eject/bin/
 
-util-linux-ng:
+util-linux:
 	$(CLEANUP)
-	mkdir -p util-linux-ng/{sbin,usr/bin,lib}
+	mkdir -p util-linux/{sbin,usr/bin,lib}
 	$(UNPACK)
-	cp -a $(BDIR)/sbin/{cfdisk,fdisk,mkswap} util-linux-ng/sbin/
-	cp -a $(BDIR)/usr/bin/setterm util-linux-ng/usr/bin/
+	cp -a $(BDIR)/sbin/{cfdisk,fdisk,mkswap} util-linux/sbin/
+	cp -a $(BDIR)/usr/bin/setterm util-linux/usr/bin/
 
 libblkid:
 	$(CLEANUP)
