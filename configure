@@ -46,7 +46,7 @@ if options.gui:
 			'libxrender', 'libxrandr', 'libxft', 'libxpm', 'libxkbfile', 'libice', 'libsm', 'pixman', 'libpciaccess',
 			'setxkbmap', 'xkbcomp', 'xkeyboard-config', 'xorg-server-minimal', 'xf86-input-evdev',
 			'xf86-video-vesa', 'freetype2', 'fontconfig', 'shared-mime-info', 'giblib', 'feh', 'libxml2', 'atk',
-			'libpng', 'libjpeg', 'libstdc++', 'libgcc', 'libsigc++2', 'imlib2', 'openbox-minimal',
+			'libpng', 'libjpeg', 'libstdc++', 'libgcc', 'libsigc++2', 'imlib2', 'openbox-minimal', 'gdk-pixbuf2-minimal',
 			'cairo-minimal', 'pango-minimal', 'gtk+2-minimal', 'fwife-minimal', 'glibmm', 'cairomm-minimal',
 			'pangomm-minimal', 'gtkmm-minimal', 'gparted-minimal', 'dejavu-ttf', 'fwifecd-config', 'xf86-video-ati',
 			'xf86-video-geode', 'xf86-video-intel', 'xf86-video-nv', 'xf86-video-openchrome', 'libdrm'])

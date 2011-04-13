@@ -460,7 +460,7 @@ glibc:
 	mkdir -p glibc/{lib,usr/lib/locale}
 	$(UNPACK)
 	cp -a $(BDIR)/lib/{ld*,libc*,libm*,libdl*,libnss*,libresolv*,libutil*,libnsl*,librt*,libpthread*,libthread*} glibc/lib/
-	
+
 	# generate the necessary locales
 	cd $(BDIR) && rm -rf usr/ && mkdir -p usr/lib/locale/
 	cd $(BDIR); \
@@ -1040,6 +1040,12 @@ pango-minimal:
 	$(UNPACK); \
 	cp -a usr/lib/pango-fwife/libpango*.so* ../pango-minimal/usr/lib; \
 	cp -a etc/pango-fwife/* ../pango-minimal/etc/pango/
+
+gdk-pixbuf2-minimal:
+	$(CLEANUP)
+	mkdir -p gdk-pixbuf2-minimal/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/gdk-pixbuf2-fwife/libgdk_pixbuf-2.0.so* ../gdk-pixbuf2-minimal/usr/lib
 
 gtk+2-minimal:
 	$(CLEANUP)
