@@ -233,7 +233,7 @@ char *selfs(char *dev)
 	{
 		"ext2", _("Standard Linux ext2fs filesystem"),
 		"ext3", _("Journaling version of the ext2 filesystem"),
-		"ext4", _("The evolution of the ext3 filesystem (EXPERIMENTAL!)"),
+		"ext4", _("The evolution of the ext3 filesystem"),
 #ifndef ARCH_PPC
 		"reiserfs", _("Hans Reiser's journaling filesystem"),
 #endif
@@ -243,7 +243,7 @@ char *selfs(char *dev)
 	dialog_vars.backtitle=gen_backtitle(_("Formatting partitions"));
 	dlg_put_backtitle();
 	dlg_clear();
-	dialog_vars.default_item=strdup("ext3");
+	dialog_vars.default_item=strdup("ext4");
 	if(fw_menu(g_strdup_printf(_("Selecting filesystem for %s"), dev),
 		g_strdup_printf(_("Please select the type of filesystem to "
 		"use for %s."), dev), 0, 0, 0, fsnum, fss) == -1)
