@@ -15,7 +15,8 @@ packages = ['parted', 'pacman-g2', 'bash', 'kernel', 'busybox', 'dialog', 'e2fsp
 		'device-mapper', 'lvm2', 'dbus', 'wpa_supplicant', 'openssl', 'pciutils',
 		'b43-fwcutter', 'libblkid', 'libuuid', 'expat', 'xz']
 if os.uname()[-1] in ['i686', 'x86_64']:
-	packages.extend(['reiserfsprogs', 'ipw2200-firmware', 'acx100', 'madwifi', 'linux-firmware' ])
+	packages.extend(['reiserfsprogs', 'ipw2200-firmware', 'acx100', 'madwifi', 'linux-firmware',
+		'libgcc', 'libstdc++', 'icu4c', 'gptfdisk' ])
 elif os.uname()[-1] == 'ppc':
 	packages.extend(['mac-fdisk'])
 

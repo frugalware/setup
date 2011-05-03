@@ -1130,6 +1130,18 @@ libdrm:
 	$(UNPACK); \
 	cp -a usr/lib/*.so* ../libdrm/usr/lib
 
+icu4c:
+	$(CLEANUP)
+	mkdir -p icu4c/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/*.so* ../icu4c/usr/lib
+
+gptfdisk:
+	$(CLEANUP)
+	mkdir -p gptfdisk/sbin
+	$(UNPACK); \
+	cp -a sbin/{gdisk,fixparts} ../gptfdisk/sbin
+
 xz:
 	$(CLEANUP)
 	mkdir -p xz/usr/lib
