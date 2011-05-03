@@ -765,29 +765,11 @@ lzma:
 	$(UNPACK); \
 	cp -a usr/lib/liblzmadec.so* ../lzma/usr/lib/
 
-iwlwifi-3945-ucode:
+linux-firmware:
 	$(CLEANUP)
-	mkdir iwlwifi-3945-ucode
+	mkdir linux-firmware
 	$(UNPACK); \
-	cp -a lib ../iwlwifi-3945-ucode/
-
-iwlwifi-4965-ucode:
-	$(CLEANUP)
-	mkdir iwlwifi-4965-ucode
-	$(UNPACK); \
-	cp -a lib ../iwlwifi-4965-ucode/
-
-iwlwifi-5000-ucode:
-	$(CLEANUP)
-	mkdir iwlwifi-5000-ucode
-	$(UNPACK); \
-	cp -a lib ../iwlwifi-5000-ucode/
-
-ralink-firmware:
-	$(CLEANUP)
-	mkdir ralink-firmware
-	$(UNPACK); \
-	cp -a lib ../ralink-firmware/
+	cp -a lib ../linux-firmware/
 
 coreutils:
 	$(CLEANUP)
