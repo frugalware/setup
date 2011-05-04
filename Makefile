@@ -45,7 +45,7 @@ ifneq ($(TFTP_PASSWD),)
 	TFTP_GRUB_PASSWD := password --md5 $(shell echo -e 'md5crypt\n$(TFTP_PASSWD)\nquit' |/sbin/grub --batch --device-map=/dev/null |grep "^Encrypted: " |sed 's/^Encrypted: //')
 endif
 RAMDISK_SIZE = $(shell du --block-size=1000 initrd-$(CARCH).img|sed 's/\t.*//')
-CYL_COUNT = $(shell echo "$(shell du -c -B516096 $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz|sed -n 's/^\(.*\)\t.*$$/\1/;$$ p')+8"|bc)
+CYL_COUNT = $(shell echo "$(shell du -c -B516096 $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz|sed -n 's/^\(.*\)\t.*$$/\1/;$$ p')+10"|bc)
 OFFSET = $(shell echo "$(shell /sbin/fdisk -u -l frugalware-$(FWVER)-$(CARCH)-usb.img | sed -ne "s|^frugalware-$(FWVER)-$(CARCH)-usb.img1[ *]*\([0-9]*\).*|\1|p")*512"|bc)
 
 FWVER = $(shell echo $(FRUGALWAREVER)|sed 's/-.*//')
