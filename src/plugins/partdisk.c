@@ -112,7 +112,6 @@ GList *listparts(void)
 char *selpartsw()
 {
 #ifndef ARCH_PPC
-	int swnum=3;
 	char *sws[] =
 	{
 		"cfdisk", _("User friendly (curses based) version of fdisk"),
@@ -121,13 +120,18 @@ char *selpartsw()
 		"parted", _("A partition manipulation program")
 	};
 #else
-	int swnum=2;
 	char *sws[] =
 	{
 		"mac-fdisk", _("Apple disk partitioning utility"),
 		"parted", _("A partition manipulation program")
 	};
 #endif
+	/*
+		Start with the size of the whole array of pointers.
+		Divide by the size of each pointer to get the number of pointers.
+		Divide by two to get the actual number of partition programs.
+	*/
+	int swnum = sizeof(sws) / sizeof(*sws) / 2;
 
 	dialog_vars.backtitle=gen_backtitle(_("Creating partitions"));
 	dlg_put_backtitle();
