@@ -545,7 +545,7 @@ util-linux:
 	$(CLEANUP)
 	mkdir -p util-linux/{sbin,usr/bin,lib}
 	$(UNPACK)
-	cp -a $(BDIR)/sbin/{cfdisk,fdisk,mkswap} util-linux/sbin/
+	cp -a $(BDIR)/sbin/{cfdisk,fdisk,mkswap,blkid} util-linux/sbin/
 	cp -a $(BDIR)/usr/bin/setterm util-linux/usr/bin/
 
 libblkid:
