@@ -62,6 +62,7 @@ int run(GList **config)
 	fw_system("mount -t proc none /proc");
 	fw_system("mount -t sysfs none /sys");
 	fw_system("mount -t tmpfs none /tmp");
+	fw_system("mount -t tmpfs none /run");
 	fw_system("ln -sf /proc/self/mounts /etc/mtab");
 	fw_system("modprobe isofs");
 	fw_system("modprobe ntfs");
@@ -73,7 +74,10 @@ int run(GList **config)
 	fw_system("modprobe -q uhci-hcd");
 
 	// the real hw detect
-	fw_system("/etc/rc.d/rc.udev");
+	fw_system("udevd --daemon");
+	fw_system("udevadm trigger --type=subsystems");
+	fw_system("udevadm trigger --type=devices");
+	fw_system("udevadm settle");
 
 	fw_system("setterm -blank 0");
 

@@ -25,7 +25,10 @@ modprobe -q ehci-hcd
 modprobe -q ohci-hcd
 modprobe -q uhci-hcd
  echo -e "\033[1;6;34m* Detecting hardware - This can take some time..\033[0m"
-/etc/rc.d/rc.udev
+udevd --daemon
+udevadm trigger --type=subsystems
+udevadm trigger --type=devices
+udevadm settle
 
 ## Ugly hack for gparted witch use hal when a new partition is created but we don't have hal here :).
 ## Creating all possible nodes do the trick.

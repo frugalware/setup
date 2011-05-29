@@ -530,10 +530,9 @@ endif
 
 udev:
 	$(CLEANUP)
-	mkdir -p udev/{proc,sys,dev}
+	mkdir -p udev/{proc,sys,dev,run}
 	$(UNPACK)
 	cp -a $(BDIR)/{etc,lib,sbin} udev/
-	sed -i 's|^mount /|#mount /|;s/mount none/#mount none/;s|! \[ `pidof -o .*` \]|true|' udev/etc/rc.d/rc.udev
 
 eject:
 	$(CLEANUP)
