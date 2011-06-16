@@ -1,5 +1,7 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.1.9         - support for gdisk/partitioning gpt
+              - no longer depend on rc script of udev
 1.1.8         - support gdk-pixbuf2 (gui)
               - support util-linux
               - default fs is now ext4
