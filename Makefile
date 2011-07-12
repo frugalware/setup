@@ -699,6 +699,14 @@ gdb:
 	$(UNPACK); \
 	cp -a usr/bin/gdb ../gdb/usr/bin/
 
+# A minimal libpython, just to make gdb happy
+python:
+	$(CLEANUP)
+	mkdir -p python/usr/lib/python2.7
+	$(UNPACK); \
+	cp -a usr/lib/libpython* ../python/usr/lib/; \
+	touch ../python/usr/lib/python2.7/site.py
+
 # Deals with only a minimal subset of valgrind to keep the initrd small
 valgrind:
 	$(CLEANUP)

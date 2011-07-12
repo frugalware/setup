@@ -60,6 +60,7 @@ if options.debug == "gdb":
 	sys.stdout.write("gdb.\n")
 	sys.stdout.flush()
 	packages.append('gdb')
+	packages.append('python')
 elif options.debug == "valgrind":
 	sys.stdout.write("valgrind.\n")
 	sys.stdout.flush()
