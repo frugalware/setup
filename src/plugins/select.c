@@ -337,9 +337,9 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 		if((char*)data_get(*config, "netinstall")==NULL)
 		{
 			makepath(pkgdb);
-			// TODO: use libarchive for this
-			temp = g_strdup_printf("xz -dc %s/%s.fdb | tar x -C %s", pacbindir, repo, pkgdb);
-			fw_system(temp);
+			// TODO: use libpacman for this
+			temp = g_strdup_printf("%s/%s.fdb", pacbindir, repo);
+			copyfile(temp, pkgdb);
 			g_free(temp);
 			if ((fp = fopen("/etc/pacman-g2.conf", "w")) == NULL)
 			{
