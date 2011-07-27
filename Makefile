@@ -1101,6 +1101,12 @@ fwifecd-config:
 	cp -a usr/share/fwifecd-config/gtk/lib ../fwifecd-config/usr/; \
 	cp -a usr/share/fwifecd-config/gtk/gtk-2.0 ../fwifecd-config/etc/
 
+nouveau-firmware:
+	$(CLEANUP)
+	mkdir -p nouveau-firmware/lib/firmware/nouveau
+	$(UNPACK); \
+	cp -a lib/firmware/nouveau/* ../nouveau-firmware/lib/firmware/nouveau/
+
 xf86-video-ati:
 	$(CLEANUP)
 	mkdir -p xf86-video-ati/usr/lib/xorg/modules/drivers/
@@ -1119,11 +1125,11 @@ xf86-video-intel:
 	$(UNPACK); \
 	cp -a usr/lib/xorg/modules/drivers/*.so ../xf86-video-intel/usr/lib/xorg/modules/drivers/
 
-xf86-video-nv:
+xf86-video-nouveau:
 	$(CLEANUP)
-	mkdir -p xf86-video-nv/usr/lib/xorg/modules/drivers/
+	mkdir -p xf86-video-nouveau/usr/lib/xorg/modules/drivers/
 	$(UNPACK); \
-	cp -a usr/lib/xorg/modules/drivers/*.so ../xf86-video-nv/usr/lib/xorg/modules/drivers/
+	cp -a usr/lib/xorg/modules/drivers/*.so ../xf86-video-nouveau/usr/lib/xorg/modules/drivers/
 
 xf86-video-openchrome:
 	$(CLEANUP)
