@@ -948,17 +948,11 @@ shared-mime-info:
 	$(UNPACK); \
 	cp -a usr/share/mime ../shared-mime-info/usr/share
 
-giblib:
+xloadimage:
 	$(CLEANUP)
-	mkdir -p giblib/usr/lib
+	mkdir -p xloadimage/usr/bin
 	$(UNPACK); \
-	cp -a usr/lib/*.so* ../giblib/usr/lib
-
-feh:
-	$(CLEANUP)
-	mkdir -p feh/usr/bin
-	$(UNPACK); \
-	cp -a usr/bin/feh ../feh/usr/bin/
+	cp -a usr/bin/xloadimage ../xloadimage/usr/bin/
 
 libxml2:
 	$(CLEANUP)
@@ -1001,14 +995,6 @@ libsigc++2:
 	mkdir -p libsigc++2/usr/lib
 	$(UNPACK); \
 	cp -a usr/lib/*.so* ../libsigc++2/usr/lib
-
-imlib2:
-	$(CLEANUP)
-	mkdir -p imlib2/usr/lib/imlib2/{loaders,filters}
-	$(UNPACK); \
-	cp -a usr/lib/libImlib2.so* ../imlib2/usr/lib; \
-	cp -a usr/lib/imlib2/loaders/*.so ../imlib2/usr/lib/imlib2/loaders/; \
-	cp -a usr/lib/imlib2/filters/*.so ../imlib2/usr/lib/imlib2/filters/
 
 openbox-minimal:
 	$(CLEANUP)
