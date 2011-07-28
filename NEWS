@@ -1,5 +1,8 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.2.0         - fix gdb support
+              - support reading pacman-g2 fdb files directly
+              - fwife updates
 1.1.9         - support for gdisk/partitioning gpt
               - no longer depend on rc script of udev
 1.1.8         - support gdk-pixbuf2 (gui)
