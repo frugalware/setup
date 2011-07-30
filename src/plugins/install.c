@@ -54,7 +54,7 @@ char *desc()
 
 int installpkgs_forreal(GList *pkgs, int fast)
 {
-	char *ptr, *cmd;
+	char *ptr, *cmd = NULL;
 
 	ptr = g_list_display(pkgs, " ");
 	if(ptr!=NULL && strlen(ptr))
