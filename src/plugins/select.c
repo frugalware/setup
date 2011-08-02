@@ -320,10 +320,10 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 
 	pacbindir = g_strdup_printf("%s/frugalware-%s",
 		SOURCEDIR, ARCH);
-	pkgdb = g_strdup_printf("%s/var/lib/pacman-g2/%s", TARGETDIR, repo);
+	pkgdb = g_strdup_printf("%s/var/lib/pacman-g2/%s.fdb", TARGETDIR, repo);
 
 	// prepare pkgdb if necessary
-	if(stat(pkgdb, &sbuf) || !S_ISDIR(sbuf.st_mode))
+	if(stat(pkgdb, &sbuf))
 	{
 		// pacman can't lock & log without these
 		char *temp = NULL;
@@ -336,7 +336,6 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 		g_free(temp);
 		if((char*)data_get(*config, "netinstall")==NULL)
 		{
-			makepath(pkgdb);
 			// TODO: use libpacman for this
 			temp = g_strdup_printf("%s/%s.fdb", pacbindir, repo);
 			copyfile(temp, pkgdb);
