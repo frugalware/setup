@@ -1,5 +1,9 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.2.1         - add bg_BG to GLIBC_LANGS
+              - qemu: enable kvm by default
+              - installpkgs_forreal: avoid reading uninitialized value
+              - select: pkgdb is no longer a directory
 1.2.0         - fix gdb support
               - support reading pacman-g2 fdb files directly
               - fwife updates
