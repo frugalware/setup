@@ -741,6 +741,12 @@ wpa_supplicant:
 	$(UNPACK); \
 	cp -a usr/sbin/ ../wpa_supplicant/usr/
 
+libnl:
+	$(CLEANUP)
+	mkdir -p libnl/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/*.so.* ../libnl/usr/lib/
+
 openssl:
 	$(CLEANUP)
 	mkdir -p openssl/usr/lib
