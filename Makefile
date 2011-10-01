@@ -52,7 +52,6 @@ FWVER = $(shell echo $(FRUGALWAREVER)|sed 's/-.*//')
 RELEASE = $(shell cat merge/etc/frugalware-release)
 KERNELV = $(shell echo $(KERNELVER)|sed 's/-.*//')
 KERNELREL = $(shell echo $(KERNELVER)|sed 's/.*-//')
-KERNEL_OPTS = initrd=initrd-$(CARCH).img.gz load_ramdisk=1 prompt_ramdisk=0 ramdisk_size=$(RAMDISK_SIZE) rw root=/dev/ram quiet
 DESTDIR = $(shell source /etc/repoman.conf; [ -e ~/.repoman.conf ] && source ~/.repoman.conf; echo $$fst_root)
 
 CLEANUP = rm -rf $(BDIR) && mkdir $(BDIR) && rm -rf $@
@@ -252,10 +251,10 @@ ifneq ($(CARCH),ppc)
 		timeout=10 \n\
 		gfxmenu /boot/grub/message \n\
 		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) \n\
-		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS)  \n\
+		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) \n\
 		initrd /boot/initrd-$(CARCH).img.gz \n\
 		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) (vga fb) \n\
-		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) vga=791 \n\
+		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) vga=791 \n\
 		initrd /boot/initrd-$(CARCH).img.gz" > i/boot/grub/menu.lst
 	umount i
 	rmdir i
@@ -305,13 +304,13 @@ tftp_img: check_root
 		$(TFTP_GRUB_PASSWD)\n\
 		$(TFTP_BOOTCMD)\n\
 		root (nd)\n\
-		kernel /$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(KERNEL_OPTS) vga=791 \n\
+		kernel /$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) vga=791 \n\
 		initrd /initrd-$(CARCH).img.gz \n\
 		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) (nofb) \n\
 		$(TFTP_GRUB_PASSWD)\n\
 		$(TFTP_BOOTCMD)\n\
 		root (nd)\n\
-		kernel /$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(KERNEL_OPTS) \n\
+		kernel /$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) \n\
 		initrd /initrd-$(CARCH).img.gz' > i/boot/grub/menu.lst
 	umount i
 	rmdir i
@@ -331,7 +330,7 @@ ifneq ($(CARCH),ppc)
 		timeout=10 \n\
 		gfxmenu /boot/grub/message \n\
 		title Fwife $(FWVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH) \n\
-		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) \n\
+		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) \n\
 		initrd /boot/initrd-$(CARCH).img.gz" > iso/boot/grub/menu.lst
 	mkisofs -R -b boot/grub/stage2_eltorito -no-emul-boot \
          -boot-load-size 4 -boot-info-table -o fwife-$(FWVER)-$(CARCH).iso iso
@@ -357,7 +356,7 @@ gui-usb_img: check_root
 		timeout=10 \n\
 		gfxmenu /boot/grub/message \n\
 		title Fwife $(FWVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH) \n\
-		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) $(KERNEL_OPTS) \n\
+		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) \n\
 		initrd /boot/initrd-$(CARCH).img.gz" > i/boot/grub/menu.lst
 	umount i
 	rmdir i
@@ -384,11 +383,10 @@ check:
 	done
 
 qemu:
-	$(QEMU) -kernel $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) -initrd \
-	initrd-$(CARCH).img -append "$(KERNEL_OPTS)" $(QEMU_OPTS)
+	$(QEMU) -kernel $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) -initrd initrd-$(CARCH).img $(QEMU_OPTS)
 
 uml:
-	$(UML) $(UML_OPTS) $(KERNEL_OPTS)
+	$(UML) $(UML_OPTS)
 
 bash:
 	$(CLEANUP)
