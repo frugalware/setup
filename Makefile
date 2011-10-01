@@ -223,15 +223,7 @@ devices: compile
 
 # this target just updates the setup source itself and the initrd, suitable for qemu testing
 initrd: install-setup
-	dd if=/dev/zero of=initrd-$(CARCH).img bs=1k count=$(shell echo "$(shell $(shell which du) -s $(MDIR)|sed 's/^\(.*\)\t.*$$/\1/')+2000"|bc)
-	/sbin/mke2fs -F initrd-$(CARCH).img
-	mkdir i
-	grep -q loop /proc/modules || (/sbin/modprobe loop; sleep 1)
-	mount -o loop -t ext2 initrd-$(CARCH).img i
-	cp -a $(MDIR)/* i/
-	chown -R root.root i/
-	umount i
-	rmdir i
+	cd $(MDIR); find . |cpio -R 0:0 -H newc -o --quiet > ../initrd-$(CARCH).img
 
 initrd_gz: clean config.mak devices initrd
 	gzip -9 -c initrd-$(CARCH).img > initrd-$(CARCH).img.gz
@@ -412,6 +404,7 @@ busybox:
 	mkdir -p busybox/mnt/{source,target}
 	mkdir -p busybox/tmp
 	rm -f busybox/sbin/mkswap
+	ln -s linuxrc busybox/init
 
 dialog:
 	$(CLEANUP)
