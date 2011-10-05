@@ -1150,4 +1150,10 @@ dbus:
 	$(UNPACK); \
 	cp -a usr/lib/*.so* ../dbus/usr/lib/
 
+libffi:
+	$(CLEANUP)
+	mkdir -p libffi/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/libffi.so* ../libffi/usr/lib
+
 .NOTPARALLEL:
