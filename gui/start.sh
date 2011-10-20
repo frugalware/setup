@@ -19,6 +19,9 @@ echo " * Initialising mtab.."
 ln -sf /proc/self/mounts /etc/mtab
 echo " * Load kernel modules.."
 modprobe isofs
+modprobe ext2
+modprobe ext3
+modprobe ext4
 modprobe ntfs
 modprobe BusLogic
 modprobe -q ehci-hcd
