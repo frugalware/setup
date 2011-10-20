@@ -22,6 +22,7 @@ modprobe isofs
 modprobe ext2
 modprobe ext3
 modprobe ext4
+modprobe reiserfs
 modprobe ntfs
 modprobe BusLogic
 modprobe -q ehci-hcd
