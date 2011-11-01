@@ -225,41 +225,12 @@ initrd_gz: clean config.mak devices initrd
 	gzip -9 -c initrd-$(CARCH).img > initrd-$(CARCH).img.gz
 
 create_usb_img:
+ifeq ($(CARCH),ppc)
 	dd if=/dev/zero of=frugalware-$(FWVER)-$(CARCH)-usb.img bs=516096c count=$(shell echo $(CYL_COUNT) + 2 | bc)
-ifneq ($(CARCH),ppc)
-	echo -e 'n\np\n1\n\n\na\n1\nw'|/sbin/fdisk -u -C$(shell echo $(CYL_COUNT) + 2 | bc) -S63 -H16 frugalware-$(FWVER)-$(CARCH)-usb.img || true
 endif
 
 usb_img: check_root create_usb_img
-ifneq ($(CARCH),ppc)
-	losetup -d /dev/loop0 || true
-	losetup -o$(OFFSET) /dev/loop0 frugalware-$(FWVER)-$(CARCH)-usb.img
-	/sbin/mke2fs -b1024 -F /dev/loop0
-	sleep 1
-	losetup -d /dev/loop0
-	mkdir i
-	mount -o loop,offset=$(OFFSET) frugalware-$(FWVER)-$(CARCH)-usb.img i
-	mkdir -p i/boot/grub
-	cp $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) i/boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)
-	cp initrd-$(CARCH).img.gz i/boot/
-	cp /usr/lib/grub/i386-*/stage{1,2} i/boot/grub/
-	cp /boot/grub/message-frugalware i/boot/grub/message
-	echo -e "default=0 \n\
-		timeout=10 \n\
-		gfxmenu /boot/grub/message \n\
-		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) \n\
-		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) \n\
-		initrd /boot/initrd-$(CARCH).img.gz \n\
-		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) (vga fb) \n\
-		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) vga=791 \n\
-		initrd /boot/initrd-$(CARCH).img.gz" > i/boot/grub/menu.lst
-	umount i
-	rmdir i
-	echo -e "device (hd0) frugalware-$(FWVER)-$(CARCH)-usb.img \n\
-		root (hd0,0) \n\
-		setup (hd0) \n\
-		quit" | grub --batch --device-map=/dev/null
-else
+ifeq ($(CARCH),ppc)
 	hformat frugalware-$(FWVER)-$(CARCH)-usb.img
 	hmount frugalware-$(FWVER)-$(CARCH)-usb.img
 	hcopy -r /usr/lib/yaboot/yaboot :
