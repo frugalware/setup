@@ -85,7 +85,7 @@ EXTRA_TARGETS += tftp_img
 endif
 endif
 
-CDIR = /var/cache/pacman-g2/pkg
+CDIR = $(PWD)/cache
 CONFDIR = config
 BDIR = build
 MDIR = merge
@@ -171,7 +171,7 @@ merge: $(packages)
 		cp -a $$i/* $(MDIR)/; \
 	done
 	touch $(MDIR)/etc/ld.so.conf
-	ldconfig -r $(MDIR)
+	/sbin/ldconfig -r $(MDIR)
 	make -C po mos
 
 install-setup: setup
@@ -316,8 +316,12 @@ endif
 	sudo rm -rf merge initrd*
 	sudo $(MAKE) initrd
 
-check:
-	pacman-g2 -Swd $(shell grep 'VER =' config.mak |sed 's/VER =.*//' |tr '[A-Z]' '[a-z]') --noconfirm
+pacman-g2.conf:
+	sed 's|/var/log/pacman-g2.log|$(PWD)/pacman-g2.log|' /etc/pacman-g2.conf > pacman-g2.conf
+	sed -i 's|LogFile|CacheDir = $(CDIR)\nLogFile|' pacman-g2.conf
+
+check: pacman-g2.conf
+	pacman-g2 --config pacman-g2.conf -Swd $(shell grep 'VER =' config.mak |sed 's/VER =.*//' |tr '[A-Z]' '[a-z]') --noconfirm
 	@for i in $(sources); do \
 		ls $(CDIR)/$$i >/dev/null || exit 1; \
 	done
@@ -423,7 +427,7 @@ kernel:
 	for i in drivers/{cpufreq,telephony,hwmon,media/{dvb,radio,video}} security sound; do rm -rfv kernel/lib/modules/$(KERNELV)-fw$(KERNELREL)/kernel/$$i; done
 	cp $(BDIR)/boot/System.map-$(KERNELV)-fw$(KERNELREL) \
 		$(CWD)/System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
-	depmod -b kernel/ -a -e -F System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH) -r $(KERNELV)-fw$(KERNELREL)
+	/sbin/depmod -b kernel/ -a -e -F System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH) -r $(KERNELV)-fw$(KERNELREL)
 
 module-init-tools:
 	$(CLEANUP)
