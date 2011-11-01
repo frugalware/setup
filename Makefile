@@ -115,9 +115,6 @@ install:
 	install -d -m0755 $(DESTDIR)$(PREFIX)/share/setup
 ifeq ($(GUI),true)
 	install -m0644 fwife-$(FWVER)-$(CARCH).iso $(DESTDIR)$(PREFIX)/share/setup/fwife-$(FWVER)-$(CARCH).iso
-ifeq ($(USB),true)
-	install -m0644 fwife-$(FWVER)-$(CARCH)-usb.img $(DESTDIR)$(PREFIX)/share/setup/fwife-$(FWVER)-$(CARCH)-usb.img
-endif
 else
 	install -m0644 $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(DESTDIR)$(PREFIX)/share/setup/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	install -m0644 initrd-$(CARCH).img.gz $(DESTDIR)$(PREFIX)/share/setup/initrd-$(CARCH).img.gz
