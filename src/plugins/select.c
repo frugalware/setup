@@ -219,13 +219,11 @@ char* categorysize(GList *syncs, char *category)
 
 GList *selcat(PM_DB *db, GList *syncs)
 {
-	char *name, *ptr;
+	char *ptr;
 	GList *catlist=NULL;
 	char **arraychk;
 	GList *ret;
 	PM_LIST *lp;
-
-	name = pacman_db_getinfo(db, PM_DB_TREENAME);
 
 	for(lp = pacman_db_getgrpcache(db); lp; lp = pacman_list_next(lp))
 	{
