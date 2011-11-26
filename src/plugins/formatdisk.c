@@ -26,10 +26,13 @@
 #include <limits.h>
 #include <sys/stat.h>
 #include <sys/mount.h>
+#include <blkid.h>
 
 #include <setup.h>
 #include <util.h>
 #include "common.h"
+
+#define BLKGETSIZE64 _IOR(0x12,114,size_t)
 
 plugin_t plugin =
 {
@@ -253,6 +256,37 @@ char *selfs(char *dev)
 	return(strdup(dialog_vars.input_result));
 }
 
+static char* get_uuid(char *device)
+{
+	char path[PATH_MAX];
+	int fd;
+	blkid_probe pr = NULL;
+	uint64_t size;
+	const char *uuid;
+	char *ret;
+
+	if(!device || !strlen(device))
+		return NULL;
+
+	fd = open(device, O_RDONLY);
+
+	if (fd < 0)
+		return NULL;
+
+	pr = blkid_new_probe();
+	blkid_probe_set_request (pr, BLKID_PROBREQ_UUID);
+	ioctl(fd, BLKGETSIZE64, &size);
+	blkid_probe_set_device(pr, fd, 0, size);
+	blkid_do_safeprobe(pr);
+	blkid_probe_lookup_value(pr, "UUID", &uuid, NULL);
+	snprintf(path, PATH_MAX, "/dev/disk/by-uuid/%s", uuid);
+	ret = strdup(path);
+	blkid_free_probe(pr);
+	close(fd);
+
+	return ret;
+}
+
 int doswap(GList *partlist, GList **config)
 {
 	char *fn, *item, *ptr;
@@ -311,8 +345,10 @@ int doswap(GList *partlist, GList **config)
 		ptr = g_strdup_printf("%s %s", SWAPON, item);
 		fw_system(ptr);
 		FREE(ptr);
+		char *uuid = get_uuid(item);
 		fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n",
-			item, "swap", "swap", "defaults", "0", "0");
+			uuid, "swap", "swap", "defaults", "0", "0");
+		free(uuid);
 	}
 	
 	fclose(fp);
@@ -485,8 +521,10 @@ int mountdev(char *dev, char *mountpoint, GList **config)
 
 	// make fstab entry
 	type = findmount(dev, 0);
-	fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n", dev, mountpoint,
+	char *uuid = get_uuid(dev);
+	fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n", uuid, mountpoint,
 		type, "defaults", "1", "1");
+	free(uuid);
 	fclose(fp);
 	return(0);
 }
