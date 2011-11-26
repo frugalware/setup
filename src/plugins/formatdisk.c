@@ -484,7 +484,7 @@ char *findmount(char *dev, int mode)
 				if(*(ptr+i)==' ')
 					*(ptr+i)='\0';
 			fclose(fp);
-			return(ptr);
+			return(strdup(ptr));
 		}
 	}
 	fclose(fp);
@@ -525,6 +525,7 @@ int mountdev(char *dev, char *mountpoint, GList **config)
 	fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n", uuid, mountpoint,
 		type, "defaults", "1", "1");
 	free(uuid);
+	free(type);
 	fclose(fp);
 	return(0);
 }
