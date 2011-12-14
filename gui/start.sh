@@ -29,7 +29,7 @@ modprobe -q ehci-hcd
 modprobe -q ohci-hcd
 modprobe -q uhci-hcd
  echo -e "\033[1;6;34m* Detecting hardware - This can take some time..\033[0m"
-udevd --daemon
+/lib/udev/udevd --daemon
 udevadm trigger --type=subsystems
 udevadm trigger --type=devices
 udevadm settle
