@@ -1,5 +1,9 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.2.3         - drop x86 part of usb image generation, replaced by isohybrid
+              - add support for udevd under /lib/udev
+              - add support for UUID in fstab
+              - warning fixes
 1.2.2         - gui installer now depends on libffi
               - wpa_supplicant now depends on libnl
               - use initramfs instead of initrd
