@@ -9,8 +9,7 @@ pos:
 		cp $(PO_DIR)/setup/$$i/setup.po $$i.po; \
 		charset=$$(echo $(GLIBC_LANGS)|sed 's/ /\n/g'|grep ^$$i|sed 's/.*,//'); \
 		if [ -z "$$charset" ]; then \
-			echo '$$charset empty for '$$i'!'; \
-			exit 1; \
+			continue; \
 		fi; \
 		iconv -f UTF-8 -t $$charset < $$i.po > $$i.new.po; \
 		sed "s/UTF-8/$$charset/" $$i.new.po > $$i.po; \
