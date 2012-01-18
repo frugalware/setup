@@ -56,10 +56,6 @@ DESTDIR = $(shell source /etc/repoman.conf; [ -e ~/.repoman.conf ] && source ~/.
 
 CLEANUP = rm -rf $(BDIR) && mkdir $(BDIR) && rm -rf $@
 UNPACK = cd $(BDIR) && bsdtar xf $(CDIR)/$@-$($(shell echo $@|tr '[a-z]' '[A-Z]')VER)-$(CARCH).fpm
-export PATH := /usr/lib/ccache/bin:$(PATH)
-export CCACHE_DIR=/var/cache/ccache/setup
-export CCACHE_NOLINK=1
-export CCACHE_UMASK=002
 DIALOG_LANGS = $(shell find po -name *.po |sed 's/.*\/\(.*\).po/\1/' |tr '\n' ' ')
 GLIBC_LANGS = en_US,ISO-8859-1 da_DK,ISO-8859-1 de_DE,ISO-8859-1 fr_FR,ISO-8859-1 hu_HU,ISO-8859-2 id_ID,ISO-8859-1 it_IT,ISO-8859-1 nl_NL,ISO-8859-1 pt_BR,ISO-8859-1 ro_RO,ISO-8859-2 sk_SK,ISO-8859-2 sv_SE,ISO-8859-1 cs_CZ,ISO-8859-2 es_ES,ISO-8859-1 ru_RU,ISO-8859-5 tr_TR,ISO-8859-9 bg_BG,UTF-8
 GTK_LANGS = cs da de fr hu id it nl pt_BR ro sk sv tr
@@ -95,7 +91,7 @@ fonts = lat1-16.psfu.gz lat2a-16.psfu.gz lat9w-16.psfu.gz
 
 all: initrd_gz $(EXTRA_TARGETS)
 
-compile: check ccache $(packages) misc
+compile: check $(packages) misc
 
 prepare:
 	rm -rf config.mak
@@ -148,9 +144,6 @@ endif
 release:
 	git tag -l |grep -q $(VERSION) || dg tag $(VERSION)
 	$(MAKE) dist GLIBC_LANGS="$(GLIBC_LANGS)"
-
-ccache:
-	install -d -m 2775 /var/cache/ccache/setup
 
 setup:
 ifeq ($(GUI),false)
