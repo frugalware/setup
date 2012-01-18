@@ -345,6 +345,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 			}
 			fprintf(fp, "[options]\n");
 			fprintf(fp, "LogFile     = /var/log/pacman-g2.log\n");
+			fprintf(fp, "MaxTries = 5\n");
 			fprintf(fp, "[%s]\n", repo);
 			fprintf(fp, "Server = file://%s\n\n", pacbindir);
 			fclose(fp);

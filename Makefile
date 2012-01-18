@@ -450,6 +450,7 @@ pacman-g2:
 	cp -a $(BDIR)/etc/pacman-g2/repos/* pacman-g2/etc/pacman-g2/repos/
 	echo "[options]" >>pacman-g2/etc/pacman-g2.conf
 	echo "LogFile     = /var/log/pacman-g2.log" >>pacman-g2/etc/pacman-g2.conf
+	echo "MaxTries = 5" >>pacman-g2/etc/pacman-g2.conf
 ifeq ($(STABLE),false)
 	echo "Include = /etc/pacman-g2/repos/frugalware-current" >> pacman-g2/etc/pacman-g2.conf
 else
