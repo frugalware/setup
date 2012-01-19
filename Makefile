@@ -916,6 +916,12 @@ libstdc++:
 	$(UNPACK); \
 	cp -a usr/lib/*.so* ../libstdc++/usr/lib
 
+libboost:
+	$(CLEANUP)
+	mkdir -p libboost/usr/lib
+	$(UNPACK); \
+	cp -a usr/lib/libboost_program_options.so.* ../libboost/usr/lib
+
 libgcc:
 	$(CLEANUP)
 	mkdir -p libgcc/usr/lib
