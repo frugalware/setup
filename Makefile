@@ -419,11 +419,13 @@ kernel:
 		$(CWD)/System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	/sbin/depmod -b kernel/ -a -e -F System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH) -r $(KERNELV)-fw$(KERNELREL)
 
-module-init-tools:
+kmod:
 	$(CLEANUP)
-	mkdir -p module-init-tools/{bin,sbin}
+	mkdir -p kmod/{sbin,usr/lib,usr/bin}
 	$(UNPACK)
-	cp -a $(BDIR)/sbin/* module-init-tools/sbin/
+	cp -a $(BDIR)/sbin/* kmod/sbin/
+	cp -a $(BDIR)/usr/bin/* kmod/usr/bin/
+	cp -a $(BDIR)/usr/lib/lib*.so* kmod/usr/lib/
 
 ncurses:
 	$(CLEANUP)
