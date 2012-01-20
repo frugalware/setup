@@ -1080,7 +1080,7 @@ gptfdisk:
 	$(CLEANUP)
 	mkdir -p gptfdisk/sbin
 	$(UNPACK); \
-	cp -a sbin/{gdisk,fixparts} ../gptfdisk/sbin
+	cp -a sbin/{cgdisk,gdisk,fixparts} ../gptfdisk/sbin
 
 xz:
 	$(CLEANUP)

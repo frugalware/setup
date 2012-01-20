@@ -116,6 +116,7 @@ char *selpartsw()
 	{
 		"cfdisk", _("User friendly (curses based) version of fdisk"),
 		"fdisk", _("The traditional partitioning program for Linux"),
+		"cgdisk", _("Works like cfdisk, but uses GPT instead of MBR."),
 		"gdisk", _("Works like fdisk, but uses GPT instead of MBR."),
 		"parted", _("A partition manipulation program")
 	};
