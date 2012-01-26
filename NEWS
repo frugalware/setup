@@ -1,5 +1,7 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.2.4         - set maxtries by default, should help virtualbox users
+              - fix up missing deps for bastet and lvm
 1.2.3         - drop x86 part of usb image generation, replaced by isohybrid
               - add support for udevd under /lib/udev
               - add support for UUID in fstab
