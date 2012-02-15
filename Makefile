@@ -45,7 +45,7 @@ ifneq ($(TFTP_PASSWD),)
 	TFTP_GRUB_PASSWD := password --md5 $(shell echo -e 'md5crypt\n$(TFTP_PASSWD)\nquit' |/sbin/grub --batch --device-map=/dev/null |grep "^Encrypted: " |sed 's/^Encrypted: //')
 endif
 RAMDISK_SIZE = $(shell du --block-size=1000 initrd-$(CARCH).img|sed 's/\t.*//')
-CYL_COUNT = $(shell echo "$(shell du -c -B516096 $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.gz|sed -n 's/^\(.*\)\t.*$$/\1/;$$ p')+10"|bc)
+CYL_COUNT = $(shell echo "$(shell du -c -B516096 $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) initrd-$(CARCH).img.xz|sed -n 's/^\(.*\)\t.*$$/\1/;$$ p')+10"|bc)
 OFFSET = $(shell echo "$(shell /sbin/fdisk -u -l frugalware-$(FWVER)-$(CARCH)-usb.img | sed -ne "s|^frugalware-$(FWVER)-$(CARCH)-usb.img1[ *]*\([0-9]*\).*|\1|p")*512"|bc)
 
 FWVER = $(shell echo $(FRUGALWAREVER)|sed 's/-.*//')
@@ -89,7 +89,7 @@ CWD=`pwd`
 
 fonts = lat1-16.psfu.gz lat2a-16.psfu.gz lat9w-16.psfu.gz
 
-all: initrd_gz $(EXTRA_TARGETS)
+all: initrd_xz $(EXTRA_TARGETS)
 
 compile: check $(packages) misc
 
@@ -103,7 +103,7 @@ check_root:
 	fi
 
 clean: check_root
-	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img initrd-$(CARCH).img.gz
+	rm -rf $(BDIR) $(MDIR) initrd-$(CARCH).img initrd-$(CARCH).img.xz
 	rm -rf $(packages) $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
 	$(MAKE) -C src clean
 
@@ -113,7 +113,7 @@ ifeq ($(GUI),true)
 	install -m0644 fwife-$(FWVER)-$(CARCH).iso $(DESTDIR)$(PREFIX)/share/setup/fwife-$(FWVER)-$(CARCH).iso
 else
 	install -m0644 $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(DESTDIR)$(PREFIX)/share/setup/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
-	install -m0644 initrd-$(CARCH).img.gz $(DESTDIR)$(PREFIX)/share/setup/initrd-$(CARCH).img.gz
+	install -m0644 initrd-$(CARCH).img.xz $(DESTDIR)$(PREFIX)/share/setup/initrd-$(CARCH).img.xz
 ifeq ($(USB),true)
 	install -m0644 frugalware-$(FWVER)-$(CARCH)-usb.img $(DESTDIR)$(PREFIX)/share/setup/frugalware-$(FWVER)-$(CARCH)-usb.img
 endif
@@ -211,8 +211,8 @@ devices: compile
 initrd: install-setup
 	cd $(MDIR); find . |cpio -R 0:0 -H newc -o --quiet > ../initrd-$(CARCH).img
 
-initrd_gz: clean config.mak devices initrd
-	gzip -9 -c initrd-$(CARCH).img > initrd-$(CARCH).img.gz
+initrd_xz: clean config.mak devices initrd
+	xz < initrd-$(CARCH).img > initrd-$(CARCH).img.xz
 
 create_usb_img:
 ifeq ($(CARCH),ppc)
@@ -230,13 +230,13 @@ ifeq ($(CARCH),ppc)
 	mkdir i
 	mount -o loop frugalware-$(FWVER)-$(CARCH)-usb.img i
 	cp $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) i/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)
-	cp initrd-$(CARCH).img.gz i/
+	cp initrd-$(CARCH).img.xz i/
 	echo -e "default=install\n\
 	root=/dev/ram\n\
 	message=/boot.msg\n\
 	image=/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)\n\
 	label=install\n\
-		initrd=/initrd-$(CARCH).img.gz\n\
+		initrd=/initrd-$(CARCH).img.xz\n\
 		initrd-size=$(RAMDISK_SIZE)\n\
 		read-write" > i/yaboot.conf
 	echo -e "$(RELEASE) - $(KERNELV)-fw$(KERNELREL) \n\n\
@@ -263,13 +263,13 @@ tftp_img: check_root
 		$(TFTP_BOOTCMD)\n\
 		root (nd)\n\
 		kernel /$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) vga=791 \n\
-		initrd /initrd-$(CARCH).img.gz \n\
+		initrd /initrd-$(CARCH).img.xz \n\
 		title $(RELEASE) - $(KERNELV)-fw$(KERNELREL) (nofb) \n\
 		$(TFTP_GRUB_PASSWD)\n\
 		$(TFTP_BOOTCMD)\n\
 		root (nd)\n\
 		kernel /$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) \n\
-		initrd /initrd-$(CARCH).img.gz' > i/boot/grub/menu.lst
+		initrd /initrd-$(CARCH).img.xz' > i/boot/grub/menu.lst
 	umount i
 	rmdir i
 	echo -e "device (fd0) frugalware-$(FWVER)-$(CARCH)-tftp.img \n\
@@ -282,14 +282,14 @@ gui-iso:
 ifneq ($(CARCH),ppc)
 	cp /usr/lib/grub/i386-frugalware/stage2_eltorito iso/boot/grub
 	cp /boot/grub/message-frugalware iso/boot/grub/message
-	cp initrd-$(CARCH).img.gz iso/boot/
+	cp initrd-$(CARCH).img.xz iso/boot/
 	cp $(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH) iso/boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)
 	echo -e "default=0 \n\
 		timeout=10 \n\
 		gfxmenu /boot/grub/message \n\
 		title Fwife $(FWVER) - $(KERNELV)-fw$(KERNELREL)-$(CARCH) \n\
 		kernel /boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) \n\
-		initrd /boot/initrd-$(CARCH).img.gz" > iso/boot/grub/menu.lst
+		initrd /boot/initrd-$(CARCH).img.xz" > iso/boot/grub/menu.lst
 	mkisofs -R -b boot/grub/stage2_eltorito -no-emul-boot \
          -boot-load-size 4 -boot-info-table -o fwife-$(FWVER)-$(CARCH).iso iso
 endif
