@@ -413,7 +413,6 @@ kernel:
 	cp -a $(BDIR)/lib/modules kernel/lib/
 	cp $(BDIR)/boot/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL) \
 		$(CWD)/$(VMLINUZ)-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
-	cd kernel/ && find . -name *ko|xargs gzip
 	for i in drivers/{cpufreq,telephony,hwmon,media/{dvb,radio,video}} security sound; do rm -rfv kernel/lib/modules/$(KERNELV)-fw$(KERNELREL)/kernel/$$i; done
 	cp $(BDIR)/boot/System.map-$(KERNELV)-fw$(KERNELREL) \
 		$(CWD)/System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
