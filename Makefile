@@ -212,7 +212,7 @@ initrd: install-setup
 	cd $(MDIR); find . |cpio -R 0:0 -H newc -o --quiet > ../initrd-$(CARCH).img
 
 initrd_xz: clean config.mak devices initrd
-	xz < initrd-$(CARCH).img > initrd-$(CARCH).img.xz
+	xz --check=crc32 --lzma2=dict=1MiB < initrd-$(CARCH).img > initrd-$(CARCH).img.xz
 
 create_usb_img:
 ifeq ($(CARCH),ppc)
