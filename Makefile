@@ -459,7 +459,7 @@ udev:
 	$(CLEANUP)
 	mkdir -p udev/{proc,sys,dev,run}
 	$(UNPACK)
-	cp -a $(BDIR)/{etc,lib,sbin} udev/
+	cp -a $(BDIR)/{etc,lib,usr/bin} udev/
 
 eject:
 	$(CLEANUP)
