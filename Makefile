@@ -471,7 +471,7 @@ util-linux:
 	$(CLEANUP)
 	mkdir -p util-linux/{sbin,usr/bin,lib}
 	$(UNPACK)
-	cp -a $(BDIR)/sbin/{cfdisk,fdisk,mkswap,blkid} util-linux/sbin/
+	cp -a $(BDIR)/sbin/{fdisk,mkswap,blkid} util-linux/sbin/
 	cp -a $(BDIR)/usr/bin/setterm util-linux/usr/bin/
 
 libblkid:
@@ -1079,7 +1079,7 @@ gptfdisk:
 	$(CLEANUP)
 	mkdir -p gptfdisk/sbin
 	$(UNPACK); \
-	cp -a sbin/{cgdisk,gdisk,fixparts} ../gptfdisk/sbin
+	cp -a sbin/{gdisk,fixparts} ../gptfdisk/sbin
 
 xz:
 	$(CLEANUP)
