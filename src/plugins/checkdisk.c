@@ -92,10 +92,10 @@ int starts_on_sector_2048(const char *path)
 }
 
 static
-int setup_for_grub(const char *path)
+int setup_for_mbr_grub(const char *path)
 {
-	PedDevice *device = 0;
-	PedDisk *disk = 0;
+	PedDevice *device = NULL;
+	PedDisk *disk = NULL;
 	PedPartition *partition;
 	int rv = 0;
 
@@ -115,16 +115,16 @@ int setup_for_grub(const char *path)
 		goto bail;
 	}
 
-	for( partition = ped_disk_next_partition(disk,0) ; partition && partition->num != 1 ; partition = ped_disk_next_partition(disk,partition) )
+	for( partition = ped_disk_next_partition(disk,NULL) ; partition && partition->num == -1 ; partition = ped_disk_next_partition(disk,partition) )
 		;
 
 	if(!partition)
 		goto bail;
 
-	for( ; partition && !ped_partition_get_flag(partition,PED_PARTITION_BIOS_GRUB) ; partition = ped_disk_next_partition(disk,partition) )
+	for( ; partition && partition->num != -1 && !ped_partition_get_flag(partition,PED_PARTITION_BIOS_GRUB) ; partition = ped_disk_next_partition(disk,partition) )
 		;
 
-	if(!partition)
+	if(!partition || partition->num == -1)
 		goto bail;
 
 	rv = 1;
