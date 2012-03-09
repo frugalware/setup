@@ -91,6 +91,55 @@ int starts_on_sector_2048(const char *path)
 	return rv;
 }
 
+static
+int setup_for_grub(const char *path)
+{
+	PedDevice *device = 0;
+	PedDisk *disk = 0;
+	PedPartition *partition;
+	int rv = 0;
+
+	device = ped_device_get(path);
+
+	if(!device)
+		goto bail;
+
+	disk = ped_disk_new(device);
+
+	if(!disk)
+		goto bail;
+
+	if(strcmp(disk->type->name,"gpt"))
+	{
+		rv = 1;
+		goto bail;
+	}
+
+	for( partition = ped_disk_next_partition(disk,0) ; partition && partition->num != 1 ; partition = ped_disk_next_partition(disk,partition) )
+		;
+
+	if(!partition)
+		goto bail;
+
+	for( ; partition && !ped_partition_get_flag(partition,PED_PARTITION_BIOS_GRUB) ; partition = ped_disk_next_partition(disk,partition) )
+		;
+
+	if(!partition)
+		goto bail;
+
+	rv = 1;
+
+	bail:
+
+	if(disk)
+		ped_disk_destroy(disk);
+
+	if(device)
+		ped_device_destroy(device);
+
+	return rv;
+}
+
 int run(GList **config)
 {
 
