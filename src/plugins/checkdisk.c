@@ -124,7 +124,7 @@ int setup_for_mbr_grub(const char *path)
 	for( ; partition && partition->num != -1 && !ped_partition_get_flag(partition,PED_PARTITION_BIOS_GRUB) ; partition = ped_disk_next_partition(disk,partition) )
 		;
 
-	if(!partition || partition->num == -1)
+	if(!partition || partition->num == -1 || ped_unit_get_size(device,PED_UNIT_SECTOR) * partition->geom.length < PED_MEGABYTE_SIZE)
 		goto bail;
 
 	rv = 1;
