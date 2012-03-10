@@ -656,13 +656,6 @@ device-mapper:
 	$(UNPACK); \
 	cp -a lib ../device-mapper/
 
-lvm2:
-	$(CLEANUP)
-	mkdir -p lvm2/lib
-	$(UNPACK); \
-	cp -a {etc,sbin} ../lvm2/; \
-	cp -a lib/*.so.* ../lvm2/lib/
-
 wpa_supplicant:
 	$(CLEANUP)
 	mkdir -p wpa_supplicant/usr
