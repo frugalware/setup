@@ -293,7 +293,7 @@ int run(GList **config)
 			" this extra space to be able to successfully install itself, if you are using a"
 			" MSDOS disk label. GPT disk labels use a different installation method, but the"
 			" first reason still applies in those cases. It is advised that you repartition"
-			" your disks to meet this requirement. If you choose to proceed without doing so,"
+			" your disk to meet this requirement. If you choose to proceed without doing so,"
 			" you do so at your own peril. Proceed anyway?"
 			)
 			);
@@ -301,7 +301,23 @@ int run(GList **config)
 			return -1;
 	}
 
-	setup_for_mbr_grub(device);
+	pass = setup_for_mbr_grub(device);
+
+	if(!pass)
+	{
+		ignore = user_ignore_warning(_("GPT BIOS Setup"),
+			_(
+			"You must have a BIOS boot partition on the hard drive your root partition is located on"
+			" and it must be greater than or equal to a megabyte in size. Since you have chosen a GPT"
+			" disk label for this drive, it is mandatory that you meet these two conditions for GRUB2"
+			" to be able to install itself to this drive. It is advised that you repartition your disk"
+			" to meet these requirements. If you choose to proceed without doing so, you do so at your"
+			" own peril. Proceed anyway?"
+			)
+			);
+		if(!ignore)
+			return -1;
+	}
 
 	return 0;
 }
