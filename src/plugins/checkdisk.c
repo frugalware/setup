@@ -51,51 +51,53 @@ char *desc()
 static
 char *get_root_device(char *s,size_t n)
 {
-        FILE *file;
-        char line[LINE_MAX], *dev, *dir, *p;
-        regex_t re;
-        regmatch_t mat;
+	FILE *file;
+	char line[LINE_MAX], *dev, *dir, *p;
+	regex_t re;
+	regmatch_t mat;
 
-        file = fopen("/proc/mounts","rb");
+	file = fopen("/proc/mounts","rb");
 
-        if(!file)
-                return 0;
+	if(!file)
+		return 0;
 
-        if(regcomp(&re,"^/dev/[hsv]d[a-z]",REG_EXTENDED))
-        {
-                fclose(file);
+	if(regcomp(&re,"^/dev/[hsv]d[a-z]",REG_EXTENDED))
+	{
+		fclose(file);
 
-                return 0;
-        }
+		return 0;
+	}
 
-        for( *s = 0 ; fgets(line,sizeof line,file) ; )
-        {
-                dev = strtok_r(line," ",&p);
+	*s = 0;
 
-                if(!dev)
-                        continue;
+	while(fgets(line,sizeof line,file))
+	{
+		dev = strtok_r(line," ",&p);
 
-                dir = strtok_r(0," ",&p);
+		if(!dev)
+	        continue;
 
-                if(!dir)
-                        continue;
+		dir = strtok_r(0," ",&p);
 
-                if(strcmp(dir,"/"))
-                        continue;
+		if(!dir)
+			continue;
 
-                if(regexec(&re,dev,1,&mat,0))
-                        continue;
+		if(strcmp(dir,"/"))
+			continue;
 
-                snprintf(s,n,"%.*s",mat.rm_eo - mat.rm_so,dev);
+		if(regexec(&re,dev,1,&mat,0))
+			continue;
 
-                break;
-        }
+		snprintf(s,n,"%.*s",mat.rm_eo - mat.rm_so,dev);
 
-        fclose(file);
+		break;
+	}
 
-        regfree(&re);
+	fclose(file);
 
-        return *s ? s : 0;
+	regfree(&re);
+
+	return *s ? s : 0;
 }
 
 static
