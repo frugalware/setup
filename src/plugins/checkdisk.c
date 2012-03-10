@@ -34,7 +34,7 @@ plugin_t plugin =
 {
 	"checkdisk",
 	desc,
-	45,
+	41,
 	run,
 	NULL // dlopen handle
 };
@@ -44,7 +44,7 @@ plugin_t *info()
 	return &plugin;
 }
 
-static
+
 char *desc()
 {
 	return _("Basic sanity checks on the hard drive the root partition is on.");
@@ -163,6 +163,24 @@ char *get_first_device(char *s,size_t n)
 }
 
 static
+int user_ignore_warning(const char *prompt,const char *body)
+{
+	int rv;
+
+	dialog_vars.defaultno = 1;
+
+	dlg_put_backtitle();
+
+	dlg_clear();
+
+	rv = dialog_yesno(prompt,body,0,0);
+
+	dialog_vars.defaultno = 0;
+
+	return rv == DLG_EXIT_OK;
+}
+
+static
 int starts_on_sector_2048(const char *path)
 {
 	PedDevice *device = NULL;
@@ -254,19 +272,36 @@ int setup_for_mbr_grub(const char *path)
 	return rv;
 }
 
-static
 int run(GList **config)
 {
+	char device[PATH_MAX];
+	int pass, ignore;
 
+	if(!get_root_device(device,sizeof device) && !get_first_device(device,sizeof device))
+		return -1;
 
+	pass = starts_on_sector_2048(device);
 
-	// sample: gets the string titled "stuff" from the config list
-	//printf("%s\n", (char*)data_get(*config, "stuff"));
+	if(!pass)
+	{
+		ignore = user_ignore_warning(_("Drive Alignment"),
+			_(
+			"The first partition of the hard drive your root partition is located on"
+			" does not start at sector 2048. This is now required for two reasons. First,"
+			" if you are using a new hard drive with 4096 byte sectors, the old alignment"
+			" at sector 63 will cause serious performance degradation. Second, GRUB2 requires"
+			" this extra space to be able to successfully install itself, if you are using a"
+			" MSDOS disk label. GPT disk labels use a different installation method, but the"
+			" first reason still applies in those cases. It is advised that you repartition"
+			" your disks to meet this requirement. If you choose to proceed without doing so,"
+			" you do so at your own peril. Proceed anyway?"
+			)
+			);
+		if(!ignore)
+			return -1;
+	}
 
-	// sample: adds a "content" string titled "stuff" to the config list
-	//data_put(config, "stuff", "content");
+	setup_for_mbr_grub(device);
 
-
-
-	return(0);
+	return 0;
 }
