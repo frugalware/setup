@@ -22,7 +22,7 @@
 #include <stdio.h>
 #include <dialog.h>
 #include <parted/parted.h>
-
+#include <regex.h>
 #include <setup.h>
 #include <util.h>
 #include <string.h>
@@ -46,6 +46,56 @@ plugin_t *info()
 char *desc()
 {
 	return _("Basic sanity checks on the hard drive the root partition is on.");
+}
+
+static
+char *get_root_device(char *s,size_t n)
+{
+        FILE *file;
+        char line[LINE_MAX], *dev, *dir, *p;
+        regex_t re;
+        regmatch_t mat;
+
+        file = fopen("/proc/mounts","rb");
+
+        if(!file)
+                return 0;
+
+        if(regcomp(&re,"^/dev/[hsv]d[a-z]",REG_EXTENDED))
+        {
+                fclose(file);
+
+                return 0;
+        }
+
+        for( *s = 0 ; fgets(line,sizeof line,file) ; )
+        {
+                dev = strtok_r(line," ",&p);
+
+                if(!dev)
+                        continue;
+
+                dir = strtok_r(0," ",&p);
+
+                if(!dir)
+                        continue;
+
+                if(strcmp(dir,"/"))
+                        continue;
+
+                if(regexec(&re,dev,1,&mat,0))
+                        continue;
+
+                snprintf(s,n,"%.*s",mat.rm_eo - mat.rm_so,dev);
+
+                break;
+        }
+
+        fclose(file);
+
+        regfree(&re);
+
+        return *s ? s : 0;
 }
 
 static
