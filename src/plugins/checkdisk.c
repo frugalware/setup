@@ -29,6 +29,7 @@
 #include <limits.h>
 #include "common.h"
 
+static
 plugin_t plugin =
 {
 	"checkdisk",
@@ -43,6 +44,7 @@ plugin_t *info()
 	return &plugin;
 }
 
+static
 char *desc()
 {
 	return _("Basic sanity checks on the hard drive the root partition is on.");
@@ -52,8 +54,8 @@ static
 char *get_root_device(char *s,size_t n)
 {
 	FILE *file;
-	char line[LINE_MAX], *dev, *dir, *p;
 	regex_t re;
+	char line[LINE_MAX], *dev, *dir, *p;
 	regmatch_t mat;
 
 	file = fopen("/proc/mounts","rb");
@@ -252,6 +254,7 @@ int setup_for_mbr_grub(const char *path)
 	return rv;
 }
 
+static
 int run(GList **config)
 {
 
