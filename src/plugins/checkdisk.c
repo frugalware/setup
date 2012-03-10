@@ -101,6 +101,66 @@ char *get_root_device(char *s,size_t n)
 }
 
 static
+char *get_first_device(char *s,size_t n)
+{
+	FILE *file;
+	regex_t re;
+	int i = 1;
+	char line[LINE_MAX], *p, *dev;
+
+	file = fopen("/proc/partitions","rb");
+
+	if(!file)
+		return 0;
+
+	if(regcomp(&re,"^[hsv]d[a-z]$",REG_EXTENDED | REG_NOSUB))
+	{
+		fclose(file);
+
+		return 0;
+	}
+
+	*s = 0;
+
+	while(fgets(line,sizeof line,file))
+	{
+		if(i < 3)
+		{
+			++i;
+
+			continue;
+		}
+
+		if(!strtok_r(line," \n",&p))
+			continue;
+
+		if(!strtok_r(0," \n",&p))
+			continue;
+
+		if(!strtok_r(0," \n",&p))
+			continue;
+
+		dev = strtok_r(0," \n",&p);
+
+		if(!dev)
+			continue;
+
+		if(regexec(&re,dev,0,0,0))
+			continue;
+
+		snprintf(s,n,"/dev/%s",dev);
+
+		break;
+	}
+
+	fclose(file);
+
+	regfree(&re);
+
+	return *s ? s : 0;
+}
+
+static
 int starts_on_sector_2048(const char *path)
 {
 	PedDevice *device = NULL;
