@@ -84,7 +84,7 @@ char *get_root_device(char *s,size_t n)
 		if(!dir)
 			continue;
 
-		if(strcmp(dir,"/"))
+		if(strcmp(dir,"/mnt/target"))
 			continue;
 
 		if(regexec(&re,dev,1,&mat,0))
