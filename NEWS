@@ -1,5 +1,7 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.2.5         - add checks for basic necessities on installation hard drive
+              - now supports installation to GPT labels in MBR mode
 1.2.4         - set maxtries by default, should help virtualbox users
               - fix up missing deps for bastet and lvm
 1.2.3         - drop x86 part of usb image generation, replaced by isohybrid
@@ -132,7 +134,7 @@ VERSION         DESCRIPTION
               - language-specific default keyboard
               - do not allow mount points to be used twice
               - do not allow to mount swap partitions
-              - other random fixes 
+              - other random fixes
 0.7.5         - x86_64 build fixes
               - dependency errors now are detailed on tty4
               - new Italian translation
