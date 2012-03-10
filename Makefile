@@ -1099,4 +1099,12 @@ libffi:
 	$(UNPACK); \
 	cp -a usr/lib/libffi.so* ../libffi/usr/lib
 
+lvm2:
+	$(CLEANUP)
+	mkdir -p lvm2/{lib,usr/lib,sbin}
+	$(UNPACK); \
+	cp -a lib/lib*.so* ../lvm2/lib; \
+	cp -a usr/lib/lib*.so* ../lvm2/usr/lib; \
+	cp -a sbin/* ../lvm2/sbin
+
 .NOTPARALLEL:
