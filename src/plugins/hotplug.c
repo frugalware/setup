@@ -1,8 +1,8 @@
 /*
  *  hotplug.c for Frugalware setup
- * 
+ *
  *  Copyright (c) 2008 by Miklos Vajna <vmiklos@frugalware.org>
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
  *  USA.
  */
 
@@ -59,6 +59,7 @@ int run(GList **config)
 	dialog_msgbox("Please wait", "Activating hardware detection...",
 		0, 0, 0);
 	// TODO: this is ugly
+	fw_system("mount -t devtmpfs none /dev");
 	fw_system("mount -t proc none /proc");
 	fw_system("mount -t sysfs none /sys");
 	fw_system("mount -t tmpfs none /tmp");
