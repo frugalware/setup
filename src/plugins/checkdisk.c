@@ -34,7 +34,7 @@ plugin_t plugin =
 {
 	"checkdisk",
 	desc,
-	41,
+	39,
 	run,
 	NULL // dlopen handle
 };
