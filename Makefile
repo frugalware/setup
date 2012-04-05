@@ -70,15 +70,11 @@ UML ?= linux
 ifneq ($(DEBUG),false)
 export CFLAGS = -g
 endif
-ifeq ($(GUI),true)
-EXTRA_TARGETS += gui-iso
-else
 ifeq ($(USB),true)
 EXTRA_TARGETS += usb_img
 endif
 ifeq ($(TFTP),true)
 EXTRA_TARGETS += tftp_img
-endif
 endif
 
 CDIR = $(PWD)/cache
