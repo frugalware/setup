@@ -1,8 +1,8 @@
 /*
  *  formatdisk.c for Frugalware setup
- * 
+ *
  *  Copyright (c) 2005, 2006, 2007, 2008 by Miklos Vajna <vmiklos@frugalware.org>
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
  *  USA.
  */
 
@@ -179,7 +179,7 @@ char *selmkswapmode(char *dev)
 		"format", _("Quick format with no bad block checking"),
 		"check", _("Slow format that checks for bad blocks")
 	};
-	
+
 	dialog_vars.backtitle=gen_backtitle(_("Formatting partitions"));
 	dlg_put_backtitle();
 	dlg_clear();
@@ -208,7 +208,7 @@ char *selformatmode(char *dev)
 		"check", _("Slow format that checks for bad blocks"),
 		"noformat", _("Do not format, just mount the partition")
 	};
-	
+
 	dialog_vars.backtitle=gen_backtitle(_("Formatting partitions"));
 	dlg_put_backtitle();
 	dlg_clear();
@@ -242,7 +242,7 @@ char *selfs(char *dev)
 #endif
 		"xfs", _("SGI's journaling filesystem")
 	};
-	
+
 	dialog_vars.backtitle=gen_backtitle(_("Formatting partitions"));
 	dlg_put_backtitle();
 	dlg_clear();
@@ -350,9 +350,9 @@ int doswap(GList *partlist, GList **config)
 			uuid, "swap", "swap", "defaults", "0", "0");
 		free(uuid);
 	}
-	
+
 	fclose(fp);
-	
+
 	// save fstab location for later
 	data_put(config, "fstab", fn);
 	// re-detect parts so that new swap partitions will recognized as swap
@@ -364,7 +364,7 @@ int doswap(GList *partlist, GList **config)
 char *selrootdev()
 {
 	char **array;
-	
+
 	array = glist2dialog(parts);
 	dialog_vars.backtitle=gen_backtitle(_("Setting up the root partition"));
 	dlg_put_backtitle();
@@ -681,7 +681,11 @@ int run(GList **config)
 	// it'll be used 2) install scriptlets will be able to do
 	// >/dev/null
 	makepath(TARGETDIR "/dev");
-	fw_system("mount /dev -o bind " TARGETDIR "/dev");
+	makepath(TARGETDIR "/proc");
+	makepath(TARGETDIR "/sys");
+	fw_system("mount none -t devtmpfs " TARGETDIR "/dev");
+	fw_system("mount none -t proc " TARGETDIR "/proc");
+	fw_system("mount none -t sysfs " TARGETDIR "/sys");
 
 	// non-root partitions
 	dialog_vars.backtitle=gen_backtitle(_("Selecting other partitions"));
