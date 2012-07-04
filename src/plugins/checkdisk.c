@@ -192,7 +192,7 @@ char **get_device_list(const char *root)
 				n == -1                                       ||
 				n == (ssize_t) sizeof buf                     ||
 				strncmp(buf,"dev-",4)                         ||
-				snprintf(dev,sizeof dev,"/dev/%3s",buf+4) < 0 ||
+				snprintf(dev,sizeof dev,"/dev/%.3s",buf+4) < 0 ||
 				stat(dev,&st)
 			)
 			{
