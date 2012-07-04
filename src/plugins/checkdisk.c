@@ -27,6 +27,7 @@
 #include <util.h>
 #include <string.h>
 #include <limits.h>
+#include <sys/stat.h>
 #include "common.h"
 
 static
@@ -51,7 +52,7 @@ char *desc()
 }
 
 static
-char *get_root_device(char *s,size_t n)
+char *get_root_device(const char *root,char *s,size_t n)
 {
 	FILE *file;
 	regex_t re;
@@ -63,7 +64,7 @@ char *get_root_device(char *s,size_t n)
 	if(!file)
 		return 0;
 
-	if(regcomp(&re,"^/dev/[hsv]d[a-z]",REG_EXTENDED))
+	if(regcomp(&re,"^/dev/(sd[a-z]|hd[a-z]|vd[a-z]|md[0-9]+)",REG_EXTENDED))
 	{
 		fclose(file);
 
@@ -77,14 +78,14 @@ char *get_root_device(char *s,size_t n)
 		dev = strtok_r(line," ",&p);
 
 		if(!dev)
-	        continue;
+			continue;
 
 		dir = strtok_r(0," ",&p);
 
 		if(!dir)
 			continue;
 
-		if(strcmp(dir,"/mnt/target"))
+		if(strcmp(dir,root))
 			continue;
 
 		if(regexec(&re,dev,1,&mat,0))
@@ -100,6 +101,131 @@ char *get_root_device(char *s,size_t n)
 	regfree(&re);
 
 	return *s ? s : 0;
+}
+
+static
+char *get_sysfs_contents(const char *path)
+{
+	FILE *file;
+	char line[LINE_MAX], *s;
+
+	file = fopen(path,"rb");
+
+	if(!file)
+		return 0;
+
+	if(!fgets(line,sizeof line,file))
+	{
+		fclose(file);
+
+		return 0;
+	}
+
+	s = strchr(line,'\n');
+
+	if(s)
+		*s = 0;
+
+	s = strdup(line);
+
+	fclose(file);
+
+	return s;
+}
+
+static
+void free_device_list(char **devices)
+{
+	char **p = devices;
+
+	while(*p)
+		free(*p++);
+
+	free(devices);
+}
+
+static
+char **get_device_list(const char *root)
+{
+	char **devices = 0;
+
+	if(!strncmp(root,"/dev/md",7))
+	{
+		int disks_count, i;
+		char path[PATH_MAX], *level = 0, *disks = 0;
+		struct stat st;
+
+		snprintf(path,sizeof path,"/sys/block/%s/md/level",root+5);
+
+		level = get_sysfs_contents(path);
+
+		snprintf(path,sizeof path,"/sys/block/%s/md/raid_disks",root+5);
+
+		disks = get_sysfs_contents(path);
+
+		if(!level || !disks || strcmp(level,"raid1") || atoi(disks) < 2)
+		{
+			free(level);
+
+			free(disks);
+
+			return 0;
+		}
+
+		disks_count = atoi(disks);
+
+		devices = malloc(sizeof(char *) * (disks_count + 1));
+
+		for( i = 0 ; i < disks_count ; ++i )
+		{
+			char buf[PATH_MAX], dev[PATH_MAX];
+			ssize_t n;
+
+			snprintf(path,sizeof path,"/sys/block/%s/md/rd%d",root+5,i);
+
+			n = readlink(path,buf,sizeof buf);
+
+			if(n >= 0 && n < (ssize_t) sizeof buf)
+				buf[n] = 0;
+
+			if(
+				n == -1                                       ||
+				n == (ssize_t) sizeof buf                     ||
+				strncmp(buf,"dev-",4)                         ||
+				snprintf(dev,sizeof dev,"/dev/%3s",buf+4) < 0 ||
+				stat(dev,&st)
+			)
+			{
+				free(level);
+
+				free(disks);
+
+				devices[i] = 0;
+
+				free_device_list(devices);
+
+				return 0;
+			}
+
+			devices[i] = strdup(dev);
+		}
+
+		devices[i] = 0;
+
+		free(level);
+
+		free(disks);
+	}
+	else
+	{
+		devices = malloc(sizeof(char *) * 2);
+
+		devices[0] = strdup(root);
+
+		devices[1] = 0;
+	}
+
+	return devices;
 }
 
 static
@@ -214,13 +340,24 @@ int setup_for_mbr_grub(const char *path)
 
 int run(GList **config)
 {
-	char device[PATH_MAX];
+	char dev[PATH_MAX], **devices = 0, **p;
 	int pass, ignore;
 
-	if(!get_root_device(device,sizeof device))
+	if(!get_root_device("/mnt/target",dev,sizeof dev))
 		return -1;
 
-	pass = starts_on_sector_2048(device);
+	devices = get_device_list(dev);
+
+	if(!devices)
+		return -1;
+
+	for( p = devices ; *p ; ++p )
+	{
+		pass = starts_on_sector_2048(*p);
+
+		if(!pass)
+			break;
+	}
 
 	if(!pass)
 	{
@@ -238,10 +375,19 @@ int run(GList **config)
 			)
 			);
 		if(!ignore)
+		{
+			free_device_list(devices);
 			return -1;
+		}
 	}
 
-	pass = setup_for_mbr_grub(device);
+	for( p = devices ; *p ; ++p )
+	{
+		pass = setup_for_mbr_grub(*p);
+
+		if(!pass)
+			break;
+	}
 
 	if(!pass)
 	{
@@ -256,8 +402,13 @@ int run(GList **config)
 			)
 			);
 		if(!ignore)
+		{
+			free_device_list(devices);
 			return -1;
+		}
 	}
+
+	free_device_list(devices);
 
 	return 0;
 }
