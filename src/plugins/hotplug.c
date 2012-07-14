@@ -69,6 +69,9 @@ int run(GList **config)
 	fw_system("modprobe ext2");
 	fw_system("modprobe ext3");
 	fw_system("modprobe ext4");
+	fw_system("modprobe jfs");
+	fw_system("modprobe xfs");
+	fw_system("modprobe btrfs");
 	fw_system("modprobe reiserfs");
 	fw_system("modprobe ntfs");
 	fw_system("modprobe BusLogic");
