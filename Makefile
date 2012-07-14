@@ -363,6 +363,12 @@ btrfs-progs:
 	$(UNPACK)
 	cp -a $(BDIR)/usr/bin/* btrfs-progs/usr/bin/
 
+jfsutils:
+	$(CLEANUP)
+	mkdir -p jfsutils/sbin
+	$(UNPACK)
+	cp -a $(BDIR)/sbin/* jfsutils/sbin/
+
 reiserfsprogs:
 	$(CLEANUP)
 	mkdir -p reiserfsprogs/sbin
