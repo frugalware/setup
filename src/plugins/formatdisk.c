@@ -123,8 +123,8 @@ int detect_raids()
 
 	if ((fp = fopen("/proc/mdstat", "r"))== NULL)
 	{
-		perror("Could not open output file for writing");
-		return(1);
+		//perror("Could not open output file for writing");
+		return(-1);
 	}
 	MALLOC(line, PATH_MAX);
 	while(!feof(fp))
@@ -228,7 +228,7 @@ char *selformatmode(char *dev)
 char *selfs(char *dev)
 {
 #ifndef ARCH_PPC
-	int fsnum=5;
+	int fsnum=7;
 #else
 	int fsnum=4;
 #endif
@@ -240,6 +240,7 @@ char *selfs(char *dev)
 #ifndef ARCH_PPC
 		"reiserfs", _("Hans Reiser's journaling filesystem"),
 #endif
+		"jfs", _("Journaled File System"),
 		"xfs", _("SGI's journaling filesystem"),
 		"btrfs", _("B-tree file system (EXPERIMENTAL)")
 	};
@@ -297,11 +298,11 @@ int doswap(GList *partlist, GList **config)
 	// create an initial fstab
 	fn = strdup("/tmp/setup_XXXXXX");
 	mkstemp(fn);
-	if ((fp = fopen(fn, "w")) == NULL)
+	if ((fp = fopen(fn, "wb")) == NULL)
 	{
 		perror(_("Could not open output file for writing"));
 		FREE(fn);
-		return(1);
+		return(-1);
 	}
 	fprintf(fp, "%-16s %-16s %-11s %-16s %-3s %s\n",
 		"none", "/proc", "proc", "defaults", "0", "0");
@@ -509,7 +510,7 @@ int mountdev(char *dev, char *mountpoint, GList **config)
 	if ((fp = fopen((char*)data_get(*config, "fstab"), "a")) == NULL)
 	{
 		perror(_("Could not open output file for writing"));
-		return(1);
+		return(-1);
 	}
 
 	// mount
