@@ -357,6 +357,12 @@ endif
 	mkdir e2fsprogs/etc/
 	touch e2fsprogs/etc/fstab
 
+btrfs-progs:
+	$(CLEANUP)
+	mkdir -p btrfs-progs/usr/bin
+	$(UNPACK)
+	cp -a $(BDIR)/usr/bin/* btrfs-progs/usr/bin/
+
 reiserfsprogs:
 	$(CLEANUP)
 	mkdir -p reiserfsprogs/sbin
