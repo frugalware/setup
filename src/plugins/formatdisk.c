@@ -240,7 +240,8 @@ char *selfs(char *dev)
 #ifndef ARCH_PPC
 		"reiserfs", _("Hans Reiser's journaling filesystem"),
 #endif
-		"xfs", _("SGI's journaling filesystem")
+		"xfs", _("SGI's journaling filesystem"),
+		"btrfs", _("B-tree file system (EXPERIMENTAL)")
 	};
 
 	dialog_vars.backtitle=gen_backtitle(_("Formatting partitions"));
@@ -423,6 +424,13 @@ int mkfss(char *dev, char *fs, int check)
 	{
 		cmd = g_strdup_printf("mkfs.xfs -f %s", dev);
 		ret = fw_system(cmd);
+		goto cleanup;
+	}
+	else if(!strcmp(fs, "btrfs"))
+	{
+		cmd = g_strdup_printf("mkfs.btrfs %s", dev);
+		ret = fw_system(cmd);
+		goto cleanup;
 	}
 	// never reached
 	cleanup:
