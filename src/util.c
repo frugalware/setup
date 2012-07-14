@@ -1,9 +1,9 @@
 /*
  *  util.c for Frugalware setup
- * 
+ *
  *  Copyright (c) 2005-2007 by Miklos Vajna <vmiklos@frugalware.org>
  *  Copyright (c) 2006 by Alex Smith <alex@alex-smith.me.uk>
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
  *  USA.
  */
 
@@ -75,7 +75,7 @@ char *get_version(void)
 data_t *data_new(void)
 {
 	data_t *data=NULL;
-	
+
 	data = (data_t*)malloc(sizeof(data_t));
 	if(data==NULL)
 		return(NULL);
@@ -88,7 +88,7 @@ void *data_get(GList *config, char *title)
 {
 	int i;
 	data_t *data;
-	
+
 	for (i=0; i<g_list_length(config); i++)
 	{
 		data = g_list_nth_data(config, i);
@@ -102,7 +102,7 @@ void data_put(GList **config, char *name, void *data)
 {
 	int i;
 	data_t *dp;
-	
+
 	for (i=0; i<g_list_length(*config); i++)
 	{
 		dp = g_list_nth_data(*config, i);
@@ -112,7 +112,7 @@ void data_put(GList **config, char *name, void *data)
 			return;
 		}
 	}
-	
+
 	dp = data_new();
 	dp->name = name;
 	dp->data = data;
@@ -206,7 +206,7 @@ char **glist4dialog(GList *list, char *blank)
 	char **array;
 
 	MALLOC(array, 2*g_list_length(list)*sizeof(char*));
-	
+
 	for (i=0; i<2*g_list_length(list); i=i+2)
 	{
 		array[i] = (char*)g_list_nth_data(list, i/2);
@@ -299,7 +299,7 @@ int umount_if_needed(char *sourcedir)
 	int i;
 
 	realdir = g_strdup_printf("%s/%s", TARGETDIR, sourcedir);
-	
+
 	if ((fp = fopen("/proc/mounts", "r")) == NULL)
 	{
 		perror(_("Could not open output file for writing"));
@@ -477,7 +477,7 @@ int fw_init_dialog(void)
 {
 	FILE *input = stdin;
 	dialog_state.output = stderr;
-	
+
 	init_dialog(input, dialog_state.output);
 	return(0);
 }
@@ -530,6 +530,8 @@ GList* fw_checklist(const char *title, const char *cprompt, int height,
 		return(list);
 	}
 
+// This code no longer works, but shall be preserved for now. (July 14th, 2012)
+#if 0
 	ptr=strstr(dialog_vars.input_result, "\"")+1;
 	while(strstr(ptr, "\" \""))
 	{
@@ -544,7 +546,11 @@ GList* fw_checklist(const char *title, const char *cprompt, int height,
 	}
 	ptrn=ptr+strlen(ptr)-1;
 	*ptrn='\0';
+#endif
+	ptr = strtok_r(dialog_vars.input_result," ",&ptrn);
 	list = g_list_append(list, strdup(ptr));
+	while((ptr = strtok_r(0," ",&ptrn)))
+		list = g_list_append(list, strdup(ptr));
 	FREE(dialog_vars.input_result);
 	dialog_vars.input_result = buf;
 	dialog_vars.quoted = 0;
@@ -576,7 +582,7 @@ void gtk_draw_framework()
 {
 	GtkWidget *mainwindow;
 	GtkWidget *hbox, *vbox, *label, *button;
-	
+
 	mainwindow = gtk_window_new(GTK_WINDOW_TOPLEVEL);
 	g_signal_connect(G_OBJECT(mainwindow), "destroy", G_CALLBACK(fw_end_gtk), NULL);
 	gtk_widget_show(mainwindow);
