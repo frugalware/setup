@@ -1,5 +1,7 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.2.6         - initial btrfs support
+              - raid fixes
 1.2.5         - add checks for basic necessities on installation hard drive
               - now supports installation to GPT labels in MBR mode
               - fix /dev not being mounted at startup
