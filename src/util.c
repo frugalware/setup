@@ -462,6 +462,7 @@ int fw_inputbox(const char *title, const char *cprompt, int height, int width,
 	char my_buffer[MAX_LEN + 1] = "";
 
 	dialog_vars.input_result = my_buffer;
+	dialog_vars.default_button = -1;
 	dlg_put_backtitle();
 	dlg_clear();
 	if(password)
