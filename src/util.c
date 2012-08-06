@@ -180,9 +180,11 @@ int exit_confirm(void)
 #ifdef DIALOG
 	int ret;
 	dialog_vars.defaultno=1;
+	dialog_vars.default_button=DLG_EXIT_CANCEL;
 	ret = dialog_yesno(_("Exit from the installer"),
 		_("Are you sure you want to exit from the installer?"), 0, 0);
 	dialog_vars.defaultno=0;
+	dialog_vars.default_button=DLG_EXIT_OK;
 	if(ret==DLG_EXIT_OK)
 		return(1);
 	else

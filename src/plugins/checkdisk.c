@@ -234,6 +234,7 @@ int user_ignore_warning(const char *prompt,const char *body)
 	int rv;
 
 	dialog_vars.defaultno = 1;
+	dialog_vars.default_button=DLG_EXIT_CANCEL;
 
 	dlg_put_backtitle();
 
@@ -242,6 +243,7 @@ int user_ignore_warning(const char *prompt,const char *body)
 	rv = dialog_yesno(prompt,body,0,0);
 
 	dialog_vars.defaultno = 0;
+	dialog_vars.default_button=DLG_EXIT_OK;
 
 	return rv == DLG_EXIT_OK;
 }

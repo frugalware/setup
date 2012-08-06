@@ -1,8 +1,8 @@
 /*
  *  configsource.c for Frugalware setup
- * 
+ *
  *  Copyright (c) 2005 by Miklos Vajna <vmiklos@frugalware.org>
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -15,7 +15,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
  *  USA.
  */
 
@@ -163,6 +163,7 @@ GList *mirrorconf(void)
 	// merges the selected and remain mirrors
 	newmirrorlist = g_list_concat(newmirrorlist, mirrorlist);
 	dialog_vars.defaultno=1;
+	dialog_vars.default_button=DLG_EXIT_CANCEL;
 	dialog_vars.cancel_label = strdup(_("Continue"));
 	if(fw_inputbox(_("Custom mirror"), _("You may now specify "
 					"a custom mirror (eg. LAN) "
@@ -177,6 +178,7 @@ GList *mirrorconf(void)
 		}
 	}
 	dialog_vars.defaultno=0;
+	dialog_vars.default_button=DLG_EXIT_OK;
 	FREE(dialog_vars.cancel_label);
 	updateconfig(fn, newmirrorlist);
 	return(newmirrorlist);

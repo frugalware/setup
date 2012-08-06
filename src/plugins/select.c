@@ -1,9 +1,9 @@
 /*
  *  select.c for Frugalware setup
- * 
+ *
  *  Copyright (c) 2005 by Miklos Vajna <vmiklos@frugalware.org>
  *  Copyright (c) 2006 by Alex Smith <alex@alex-smith.me.uk>
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +16,7 @@
  *
  *  You should have received a copy of the GNU General Public License
  *  along with this program; if not, write to the Free Software
- *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307,
  *  USA.
  */
 
@@ -289,6 +289,7 @@ int selpkg_confirm(void)
 {
 	int ret;
 	dialog_vars.defaultno=1;
+	dialog_vars.default_button=DLG_EXIT_CANCEL;
 	dlg_put_backtitle();
 	dlg_clear();
 	ret = dialog_yesno(_("Use expert menus?"),
@@ -301,6 +302,7 @@ int selpkg_confirm(void)
 		"functioning of your system. Choose 'no' for using normal "
 		"menus that select groups of packages, or choose 'yes' for "
 		"using expert menus with a switch for each package."), 0, 0);
+	dialog_vars.default_button=DLG_EXIT_OK;
 	dialog_vars.defaultno=0;
 	if(ret==DLG_EXIT_OK)
 		return(1);
@@ -358,7 +360,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 				dialog_msgbox(_("Error"), g_strdup_printf(_("Failed to parse pacman-g2 configuration file (%s)"), pacman_strerror(pm_errno)), 0, 0, 1);
 				return(-1);
 			}
-			
+
 			LOG("getting the database");
 			if (mydatabase == NULL)
 			{
@@ -386,7 +388,7 @@ int prepare_pkgdb(char *repo, GList **config, GList **syncs)
 					}
 				}
 			}
-			
+
 			LOG("cleaning up the database");
 			pacman_db_unregister(mydatabase);
 			mydatabase = NULL;
