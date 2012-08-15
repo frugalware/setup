@@ -1,5 +1,7 @@
 VERSION         DESCRIPTION
 -----------------------------------------------------------------------------
+1.2.7         - port to newer depmod
+              - dialog fixes
 1.2.6         - initial btrfs support
               - raid fixes
 1.2.5         - add checks for basic necessities on installation hard drive
