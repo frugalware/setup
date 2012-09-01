@@ -82,7 +82,7 @@ int run(GList **config)
 	fw_system("modprobe -q uhci-hcd");
 
 	// the real hw detect
-	fw_system("/lib/udev/udevd --daemon");
+	fw_system("/lib/systemd/systemd-udevd --daemon");
 	fw_system("udevadm trigger --type=subsystems");
 	fw_system("udevadm trigger --type=devices");
 	fw_system("udevadm settle");

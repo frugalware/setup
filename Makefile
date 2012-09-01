@@ -424,7 +424,7 @@ kernel:
 	for i in drivers/{cpufreq,telephony,hwmon,media/{dvb,radio,video}} security sound; do rm -rfv kernel/lib/modules/$(KERNELV)-fw$(KERNELREL)/kernel/$$i; done
 	cp $(BDIR)/boot/System.map-$(KERNELV)-fw$(KERNELREL) \
 		$(CWD)/System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
-	/sbin/depmod -b kernel/ -a -e -F System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH)
+	/sbin/depmod -b kernel/ -a -e -F System.map-$(KERNELV)-fw$(KERNELREL)-$(CARCH) $(KERNELV)-fw$(KERNELREL)
 
 kmod:
 	$(CLEANUP)
@@ -463,11 +463,15 @@ ifneq ($(TESTING),false)
 endif
 
 
-udev:
+systemd:
 	$(CLEANUP)
-	mkdir -p udev/{proc,sys,dev,run}
+	mkdir -p systemd/{proc,sys,dev,run,etc/udev,lib/udev,lib/systemd,usr/bin,usr/lib}
 	$(UNPACK)
-	cp -a $(BDIR)/{etc,lib,usr/bin} udev/
+	cp -a $(BDIR)/etc/udev/* systemd/etc/udev/
+	cp -a $(BDIR)/lib/udev/* systemd/lib/udev/
+	cp -a $(BDIR)/lib/systemd/systemd-udevd systemd/lib/systemd/
+	cp -a $(BDIR)/usr/bin/udevadm systemd/usr/bin/
+	cp -a $(BDIR)/usr/lib/libudev* systemd/usr/lib/
 
 eject:
 	$(CLEANUP)

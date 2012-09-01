@@ -7,7 +7,7 @@ from optparse import OptionParser
 libs = []
 packages = ['parted', 'pacman-g2', 'bash', 'kernel', 'busybox', 'dialog', 'e2fsprogs',
 		'eject', 'frugalware', 'glibc', 'kbd', 'kmod',
-		'ncurses', 'netkit-base', 'udev',
+		'ncurses', 'netkit-base', 'systemd',
 		'util-linux', 'mdadm', 'xfsprogs', 'ppp', 'rp-pppoe', 'glib2',
 		'bzip2', 'libarchive', 'zlib', 'frugalwareutils', 'lzma',
 		'wireless_tools', 'dropbear', 'bastet', 'libboost',
