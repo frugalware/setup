@@ -441,6 +441,22 @@ ncurses:
 	cp -a $(BDIR)/lib/libncurses*.so* ncurses/lib/
 	cp -a $(BDIR)/usr/share/terminfo/l/linux ncurses/usr/share/terminfo/l/
 
+xfsprogs-attr:
+	$(CLEANUP)
+	mkdir -p xfsprogs-attr/{lib,usr/lib,usr/bin}
+	$(UNPACK)
+	cp -a $(BDIR)/usr/bin/* xfsprogs-attr/usr/bin/
+	cp -a $(BDIR)/lib/lib* xfsprogs-attr/lib/
+	cp -a $(BDIR)/usr/lib/lib* xfsprogs-attr/usr/lib/
+
+xfsprogs-acl:
+	$(CLEANUP)
+	mkdir -p xfsprogs-acl/{usr/lib,usr/bin,usr/libexec}
+	$(UNPACK)
+	cp -a $(BDIR)/usr/lib/lib* xfsprogs-acl/usr/lib/
+	cp -a $(BDIR)/usr/libexec/lib* xfsprogs-acl/usr/libexec/
+	cp -a $(BDIR)/usr/bin/* xfsprogs-acl/usr/bin/
+
 pacman-g2:
 	$(CLEANUP)
 	mkdir -p pacman-g2/bin pacman-g2/etc/pacman-g2/repos/ pacman-g2/usr/{lib,share}

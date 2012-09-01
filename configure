@@ -11,7 +11,7 @@ packages = ['parted', 'pacman-g2', 'bash', 'kernel', 'busybox', 'dialog', 'e2fsp
 		'util-linux', 'mdadm', 'xfsprogs', 'ppp', 'rp-pppoe', 'glib2',
 		'bzip2', 'libarchive', 'zlib', 'frugalwareutils', 'lzma',
 		'wireless_tools', 'dropbear', 'bastet', 'libboost',
-		'readline', 'shadow',
+		'readline', 'shadow', 'xfsprogs-acl', 'xfsprogs-attr',
 		'device-mapper', 'lvm2', 'dbus', 'wpa_supplicant', 'libnl', 'openssl', 'pciutils',
 		'b43-fwcutter', 'libblkid', 'libuuid', 'expat', 'xz' ]
 if os.uname()[-1] in ['i686', 'x86_64']:
