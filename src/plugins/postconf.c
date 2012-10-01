@@ -267,9 +267,9 @@ int run(GList **config)
 
 	dlg_put_backtitle();
 	dlg_clear();
-	dialog_msgbox(_("Configuring kernel modules"),
-		_("Updating module dependencies..."), 0, 0, 0);
-	fw_system("chroot ./ /sbin/depmod -a");
+//	dialog_msgbox(_("Configuring kernel modules"),
+//		_("Updating module dependencies..."), 0, 0, 0);
+//	fw_system("chroot ./ /sbin/depmod -a");
 
 	while(!has_rootpw("etc/shadow") && confirm_rootpw())
 	{
@@ -287,12 +287,12 @@ int run(GList **config)
 	fw_end_dialog();
 	fw_system_interactive("chroot ./ /sbin/netconfig");
 	fw_system_interactive("chroot ./ /sbin/timeconfig");
-	fw_system_interactive("chroot ./ /sbin/mouseconfig");
+//	fw_system_interactive("chroot ./ /sbin/mouseconfig");
 
-	if(!stat("usr/bin/X", &buf))
-	{
-		fw_system_interactive("chroot ./ /sbin/xwmconfig --silent");
-	}
+//	if(!stat("usr/bin/X", &buf))
+//	{
+//		fw_system_interactive("chroot ./ /sbin/xwmconfig --silent");
+//	}
 	ptr = g_strdup_printf("umount %s/sys", TARGETDIR);
 	fw_system(ptr);
 	free(ptr);
