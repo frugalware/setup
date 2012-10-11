@@ -241,7 +241,7 @@ int append_font(char *fn, char *font)
 int run(GList **config)
 {
 	char *ptr;
-	struct stat buf;
+	//struct stat buf;
 
 	dialog_vars.backtitle=gen_backtitle(_("Post-install configuration"));
 
