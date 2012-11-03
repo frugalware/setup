@@ -359,9 +359,9 @@ endif
 
 btrfs-progs:
 	$(CLEANUP)
-	mkdir -p btrfs-progs/usr/bin
+	mkdir -p btrfs-progs/sbin
 	$(UNPACK)
-	cp -a $(BDIR)/usr/bin/* btrfs-progs/usr/bin/
+	cp -a $(BDIR)/sbin/* btrfs-progs/sbin/
 
 jfsutils:
 	$(CLEANUP)
