@@ -679,12 +679,6 @@ int run(GList **config)
 	np = g_strdup_printf("%s/%s", TARGETDIR, "/etc/sysconfig");
 	makepath(np);
 	FREE(np);
-	op = (char*)data_get(*config, "keymap");
-	np = g_strdup_printf("%s/%s", TARGETDIR, "/etc/sysconfig/keymap");
-	copyfile(op, np);
-	unlink(op);
-	chmod (np, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
-	FREE(np);
 
 	// so that 1) the user can't mount a partition as /dev because
 	// it'll be used 2) install scriptlets will be able to do

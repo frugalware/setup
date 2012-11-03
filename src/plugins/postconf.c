@@ -233,7 +233,8 @@ int append_font(char *fn, char *font)
 		perror("Could not open output file for appending");
 		return(1);
 	}
-	fprintf(fp, "font=%s\n", font);
+	fprintf(fp, "# specify the console font\n");
+	fprintf(fp, "FONT=%s\n", font);
 	fclose(fp);
 	return(0);
 }
@@ -281,8 +282,14 @@ int run(GList **config)
 		add_user();
 	}
 
+	char* op = (char*)data_get(*config, "vconsole.conf");
+	char* np = g_strdup_printf("%s/%s", TARGETDIR, "/etc/vconsole.conf");
+	copyfile(op, np);
+	unlink(op);
+	chmod (np, S_IRUSR|S_IWUSR|S_IRGRP|S_IROTH);
+	FREE(np);
 	if((ptr = (char*)data_get(*config, "font")))
-		append_font("etc/sysconfig/font", ptr);
+		append_font("etc/vconsole.conf", ptr);
 
 	fw_end_dialog();
 	fw_system_interactive("chroot ./ /sbin/netconfig");

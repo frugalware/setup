@@ -146,14 +146,14 @@ int run(GList **config)
 		perror(_("Could not open output file for writing"));
 		return(1);
 	}
-	fprintf(fp, "# /etc/sysconfig/keymap\n\n"
+	fprintf(fp, "# /etc/vconsole.conf\n\n"
 		"# specify the keyboard map, maps are in "
 		"/usr/share/keymaps\n\n");
 	if(strstr(layout, "/"))
-		fprintf(fp, "keymap=%s\n", strstr(layout, "/")+1);
+		fprintf(fp, "KEYMAP=%s\n", strstr(layout, "/")+1);
 	FREE(layout);
 	fclose(fp);
 
-	data_put(config, "keymap", fn);
+	data_put(config, "vconsole.conf", fn);
 	return(0);
 }
