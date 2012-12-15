@@ -669,13 +669,6 @@ int run(GList **config)
 	data_put(config, "fstab", strdup(np));
 	FREE(np);
 
-	op = (char*)data_get(*config, "lang.sh");
-	np = g_strdup_printf("%s/%s", TARGETDIR, "/etc/profile.d/lang.sh");
-	copyfile(op, np);
-	unlink(op);
-	chmod(np, S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH);
-	FREE(np);
-
 	np = g_strdup_printf("%s/%s", TARGETDIR, "/etc/sysconfig");
 	makepath(np);
 	FREE(np);

@@ -239,10 +239,24 @@ int append_font(char *fn, char *font)
 	return(0);
 }
 
+void write_locale(GList **config)
+{
+	char *op, *np;
+
+	op = (char*)data_get(*config, "lang.sh");
+	np = g_strdup_printf("%s/%s", TARGETDIR, "/etc/locale.conf");
+	copyfile(op, np);
+	unlink(op);
+	chmod(np, S_IRUSR|S_IWUSR|S_IXUSR|S_IRGRP|S_IXGRP|S_IROTH|S_IXOTH);
+	FREE(np);
+}
+
 int run(GList **config)
 {
 	char *ptr;
 	//struct stat buf;
+
+	write_locale(config);
 
 	dialog_vars.backtitle=gen_backtitle(_("Post-install configuration"));
 
