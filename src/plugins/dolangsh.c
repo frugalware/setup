@@ -48,41 +48,6 @@ char *desc()
 
 int run(GList **config)
 {
-	char *fn;
-	FILE* fp;
-
-	fn = strdup("/tmp/setup_XXXXXX");
-	mkstemp(fn);
-	if ((fp = fopen(fn, "w")) == NULL)
-	{
-		perror(_("Could not open output file for writing"));
-		return(1);
-	}
-	fprintf(fp, "#!/bin/sh\n\n"
-		"# /etc/profile.d/lang.sh\n\n"
-		"# Set the system locale\n"
-		"# For a list of locales which are supported by this machine, "
-		"type: locale -a\n\n");
-	if(!getenv("LANG") || strcmp(getenv("LANG"), "zh_CN"))
-		fprintf(fp, "export LANG=%s\n", getenv("LANG"));
-	else
-	{
-		fprintf(fp, "if [ \"$TERM\" = \"linux\" ]; then\n\techo -ne \"\\e%%G\"\nfi\n");
-		fprintf(fp, "export LANG=zh_CN.utf8\n");
-	}
-	fprintf(fp, "export LC_ALL=$LANG\n");
-	if(getenv("CHARSET"))
-		fprintf(fp, "export CHARSET=%s\n", getenv("CHARSET"));
-	fclose(fp);
-
-	// sample: adds a "content" string titled "stuff" to the config list
-	data_put(config, "lang.sh", fn);
-	return(0);
-}
-
-#if 0
-int run2(GList **config)
-{
 	const char *lang;
 	char *fn;
 	FILE* fp;
@@ -144,4 +109,3 @@ int run2(GList **config)
 	data_put(config, "lang.sh", fn);
 	return(0);
 }
-#endif
