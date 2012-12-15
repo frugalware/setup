@@ -83,13 +83,12 @@ int run(GList **config)
 #if 0
 int run2(GList **config)
 {
+	const char *lang;
 	char *fn;
 	FILE* fp;
-	const char *lang;
 	int i = 0;
 	static const char *vars[] =
 	{
-		"LANG",
 		"LANGUAGE",
 		"LC_CTYPE",
 		"LC_NUMERIC",
@@ -106,6 +105,13 @@ int run2(GList **config)
 		0
 	};
 
+	if((lang = getenv("LANG")) == 0)
+	{
+		perror(_("Could not retrieve the language settings."));
+		fclose(fp);
+		return(1);
+	}
+
 	fn = strdup("/tmp/setup_XXXXXX");
 	mkstemp(fn);
 	if ((fp = fopen(fn, "w")) == NULL)
@@ -114,25 +120,24 @@ int run2(GList **config)
 		return(1);
 	}
 
-	if((lang = getenv("LANG")) == 0 && (lang = getenv("LANGUAGE")) == 0)
-	{
-		perror(_("Could not retrieve the language settings."));
-		fclose(fp);
-		return(1);
-	}
-
 	fprintf(fp,
 		"# /etc/locale.conf\n"
-		"#\n"
-		"# The system wide locale is defined below.\n"
-		"#\n"
-		"# For a complete list of supported locales, run this shell command: locale -a\n"
+		"# The system wide locale(s) is defined below.\n"
+		"# Changes to these locale(s) require a reboot.\n"
+		"# For a complete list of supported locales, run this shell command:\n"
+		"# locale -a\n"
 		"\n"
+		"LANG=%s.utf8\n"
+		"\n"
+		"# The settings below should only be used for advanced configurations.\n"
+		"# Please read the locale man page 7 for more information.\n"
+		"\n",
+		lang
 	);
-	
+
 	for( ; vars[i] != 0 ; ++i )
-		fprintf(fp,"%s=%s.utf8\n",vars[i],lang);
-	
+		fprintf(fp,"#%s=\n",vars[i]);
+
 	fclose(fp);
 
 	// sample: adds a "content" string titled "stuff" to the config list
