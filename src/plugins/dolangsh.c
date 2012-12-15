@@ -73,7 +73,6 @@ int run(GList **config)
 	if((lang = getenv("LANG")) == 0)
 	{
 		perror(_("Could not retrieve the language settings."));
-		fclose(fp);
 		return(1);
 	}
 
