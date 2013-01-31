@@ -151,6 +151,7 @@ int run(GList **config)
 		"/usr/share/keymaps\n\n");
 	if(strstr(layout, "/"))
 		fprintf(fp, "KEYMAP=%s\n", strstr(layout, "/")+1);
+	fprintf(fp,"\n# specify the console font\nFONT=lat1-16.psfu.gz\n");
 	FREE(layout);
 	fclose(fp);
 
